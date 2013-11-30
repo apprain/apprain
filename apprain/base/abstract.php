@@ -1,0 +1,105 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copy right  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+
+abstract class appRain_Base_Abstract
+{
+
+    private static $__connection = NULL;
+    const PRIMARY = 'primary';
+    const _APP = '_app';
+    public $_cname = null;
+
+    /**
+     * Get the taga object in to the system
+     *
+     * @return object
+     */
+    protected function get_conn($cname = null)
+    {
+
+        $this->defineCName($cname);
+
+        if (!isset(App::$__appData["db_connection"][$this->_cname])) {
+            try {
+                $db_config = $this->readdbconfig();
+
+                App::$__appData["db_connection"][$this->_cname] = new PDO(
+                    strtolower($db_config['type']) . ":host={$db_config['host']};dbname={$db_config['dbname']}",
+                    $db_config['username'],
+                    $db_config['password'],
+                    $this->getDBOptions()
+                );
+                App::$__appData["db_prefix"][$this->_cname] = $db_config["prefix"];
+            }
+            catch (Exception $e) {
+                echo "<pre>";
+                echo ("<strong>" . $e->getMessage() . "</strong>");
+                echo ("\n\n<strong>Hints</strong>\nWe are unable to connect database. Please edit databse definition xml (Path: development/definition/database.xml)");
+                echo ("\n\n<strong>Trace:</strong>\n" . $e->getTraceAsString());
+                echo "</pre>";
+                die();
+            }
+        }
+        return App::$__appData["db_connection"][$this->_cname];
+    }
+
+    private function defineCName($cname = null)
+    {
+        if (isset($cname)) {
+            $this->_cname = $cname;
+        }
+        else if (isset($this->conn) && $this->conn != 'auto' && !is_bool($this->conn)) {
+            $this->_cname = $this->conn;
+        }
+        else {
+            $this->_cname = self::PRIMARY;
+        }
+    }
+
+    private function getDBOptions()
+    {
+        return
+            array(
+                1002 => "SET NAMES {$this->readdbconfig('charset')}"
+            );
+    }
+
+    /**
+     *  Return Database configuration
+     *
+     * @parameter null
+     * @return array
+     */
+    public function readdbconfig($key = null, $cname = self::PRIMARY)
+    {
+        $cnf = App::Module("definition")
+            ->getDBConfig(null, $this->_cname);
+        return isset($cnf[$key]) ? $cnf[$key] : $cnf;
+    }
+}
