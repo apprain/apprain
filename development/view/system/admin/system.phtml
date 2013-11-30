@@ -1,0 +1,109 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<div id="login">
+
+    <!-- login -->
+    <div class="title">
+        <h5><?php echo $this->__('Sign In to Administrative Panel');?>
+            (<?php echo App::Config()->siteInfo('site_title');?>)</h5>
+
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+    </div>
+
+    <?php if ($error != ""): ?>
+    <div class="messages">
+        <div id="message-error" class="message message-error">
+            <div class="image">
+                <img src="<?php echo $this->baseUrl('/themeroot/admin/images/icons/error.png');?>" alt="Error"
+                     height="32"/>
+            </div>
+            <div class="text">
+                <strong>&nbsp;</strong><br/>
+                <span><?php echo $error;?></span>
+            </div>
+            <div class="dismiss">
+                <a href="#message-error"></a>
+            </div>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <div class="inner">
+        <form action="<?php echo $this->baseurl('/admin/system');?>" method="post">
+            <div class="form">
+                <!-- fields -->
+                <div class="fields">
+                    <div class="field">
+                        <div class="label">
+                            <label for="username"><?php echo $this->__("Username");?>:</label>
+                        </div>
+                        <div class="input">
+                            <input type="text" id="username" name="data[Admin][admin_id]" size="40"
+                                   value="<?php echo $remember_super_admin_name; ?>" class="focus"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="password"><?php echo $this->__("Password");?>:</label>
+                        </div>
+                        <div class="input">
+                            <input type="password" id="password" name="data[Admin][admin_password]" size="40"
+                                   value="<?php echo $remember_super_admin_password; ?>" class="focus"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember" name="data[Admin][remember_me]"/>
+                            <label for="remember"><?php echo $this->__("Remember me");?></label>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="floatleft">
+                            <a href="<?php echo $this->baseurl('/admin/forgotlogin'); ?>"><?php echo $this->__("Forgot Login?");?></a>
+                            <a href="<?php echo $this->baseurl('/'); ?>"><?php echo $this->__("View Website?");?></a>
+                        </div>
+                        <input type="submit" value="SIGN IN"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="auth-copy-right">
+	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.com">
+		<img src="<?php echo $this->baseUrl('/images/smalllogo.gif');?>" alt="<?php echo $this->__('appRain Content Management Framework');?>">
+	</a>
+	<div class="copy-right-text">
+		<?php echo $this->__('Content Management Framework.');?>
+		<?php echo $this->__('Copyright &copy;' . date('Y'));?>, <a title="appRain Content Management Framework" target="_blank" href="http://www.apprain.com/license"><?php echo $this->__('License');?></a>.		
+	</div>
+</div>

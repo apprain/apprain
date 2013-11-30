@@ -1,0 +1,52 @@
+<div class="box box-left">
+    <div class="title">
+        <h5>
+			<?php echo $this->__("Setting");?></h5>
+    </div>
+    <div class="form">			
+		<form action="<?php echo $this->baseUrl("/comingsoon/preference"); ?>" method="post" enctype="multipart/form-data" >
+            <div class="fields">
+                <div class="field ">
+                    <div class="label">
+                        <label for="input"><?php echo $this->__('Display Mode');?></label> 
+                    </div>
+                    <div class="input">
+                       <?php echo App::Helper('Html')->selectTag('data[Preference][comingsoon_mode]',array('Image'=>'Image','Script'=>'Script'),App::Config()->setting('comingsoon_mode','Script'),null,array('off_blank'=>'Yes')); ?>
+                    </div>
+                </div>	
+                <div class="field ">
+                    <div class="label">
+                        <label for="input"><?php echo $this->__('Upload Image');?></label>
+                    </div>
+                    <div class="input">
+						<?php if(App::Config()->setting('comingsoon_image')!=''):?>
+							<img src="<?php echo($this->baseUrl("/uploads/filemanager/" . App::Config()->setting('comingsoon_image')));?>" width="100" />
+							<br />
+						<?php endif;?>
+						<?php echo App::Helper('Html')->fileTag('data[Preference][comingsoon_image]'); ?>
+                    </div>
+                </div>	
+                <div class="field ">
+                    <div class="label">
+                        <label for="input"><?php echo $this->__('Script');?></label>
+                    </div>
+                    <div class="input">
+                       <?php echo App::Helper('Html')->textareaTag('data[Preference][comingsoon_script]',App::Config()->setting('comingsoon_script',"<h1>\n <?php echo \"Coming Soon\"; ?>\n</h1>"),array('class'=>'large','rows'=>'8')); ?>
+                    </div>
+                </div>				
+                <div class="buttons">
+                    <input type="submit" name="submit" value="SAVE"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="box box-right">
+    <div class="title">
+        <h5><?php echo $this->__('Preview');?></h5>
+    </div>
+    <div class="form align-center">
+        <iframe width="100%" height="360" src="<?php echo $this->baseUrl();?>"> </iframe>
+		<a href="<?php echo $this->baseUrl();?>" target="_blank">View Website</a>
+    </div>
+</div>

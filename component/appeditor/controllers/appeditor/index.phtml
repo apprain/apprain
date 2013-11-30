@@ -1,0 +1,165 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<div class="box">	
+	<div class="title">	
+		<h5>Editor</h5>
+		<div class="search">
+			<div class="button">
+				<input type="submit" title="Open Folders" id="dialog-modal-open" value="Open" name="Button[button_save]" /> 
+			</div>
+		</div>
+		<?php if(!empty($fileeditorqueue)):?>
+			<ul class="links">			
+			<?php foreach($fileeditorqueue as $row):?>
+				<? $farr = explode('/',$row);?>			    
+				<?php if( $row == $loc):?>
+					<li class="ui-tabs-selected">
+						<a href="?loc=<?php echo $row ;?>" title="<?php echo $row ;?>"><?php echo(end($farr)); ?></a>						
+					</li>
+				<?php else: ?>
+					<li>
+						<a href="?loc=<?php echo $row ;?>" title="<?php echo $row ;?>"><?php echo(end($farr));?></a>
+						<span class="closefiletab">X</span>						
+					</li>
+				<?php endif;?>
+			<?php endforeach;?>
+			</ul>
+		<?php endif;?>
+	</div>
+	<div class="form" style="padding:0 0 15px 0">	
+		<div id="code-editor"><?php
+			if($loc != ''){
+				echo htmlentities(App::Utility()->fatchfilecontent(App::Config()->rootDir("/{$loc}")));
+			}
+			else{
+				echo App::Component('AppEditor')->Helper('Data')->editordefaulttext();
+			}
+		?></div> 
+		<div class="fields">
+			<div class="buttons">
+				<input type="button" class="save_data" name="Save" value="Save" />
+				<input type="button" name="Button[Back]"  onclick="javascript:history.go(-1)"  value="<< Back" />
+			</div>
+		</div>
+	</div>	
+</div>
+
+<div id="dialog-modal" title="All Page Codes">
+	<div id="script-path">&nbsp;</div>
+	<div style="text-align:right">					
+		<a href="javascript:void(0)" id="create_new_file">Create New File</a> | 
+		<a href="javascript:void(0)" id="create_new_folder">Create New Folder</a> | 
+		<a href="<?php echo App::Config()->baseUrl("/developer/clearcache") ?>">Clear Cache</a>
+	</div>
+	<div style="height:350px;overflow:auto">
+		<ul class="filetree">
+			<li><span class="folder" title=""><?php echo App::Config()->Setting('site_title'); ?></span>
+				<?php echo App::Component('appEditor')->Helper('Data')->getFullDirLisingTreeUI(App::Config()->rootDir());  ?>
+			</li>
+		</ul>		
+	</div>	
+	<?php echo App::Component('AppEditor')->Helper('Data')->getQuickLinks();?>
+</div>
+
+<script>
+	jQuery(document).ready(function () {
+		jQuery(".closefiletab").click(function(event){
+			jQuery(this).parent('li').hide();
+			jQuery.ajax(siteInfo.baseUrl + "/appeditor/index/clear" + jQuery(this).prev('a').attr('href'));
+		});
+		jQuery(".save_data").click(function(event) {
+		<?php if($loc != ''):?>
+			event.preventDefault();
+			jQuery('#loading').remove();
+			jQuery('.buttons').css('background','url("' + siteInfo.baseUrl + '/images/loading.gif") no-repeat 150px center');
+			jQuery.ajax({
+				url: siteInfo.baseUrl + "/appeditor/index?loc=<?php echo $loc; ?>",
+				context: document.body,
+				type: "POST",
+				data:{content:editor.getSession().getValue()}
+			})
+			.done(function(data) {
+				if(data != ''){
+					obj = eval('(' + data + ')');
+					jQuery('.buttons').append('<span id="loading" style="color:#ff0000">' + obj._message + '</span>');
+				}
+				else {
+					jQuery('.buttons').append('<span id="loading" style="color:green">Saved Succeffully.</span>');
+				}
+			    jQuery('.buttons').css('background','none');
+			});
+		<?php else:?>
+			alert('Please select a file to edit.');
+		<?php endif;?>
+		});
+		
+		jQuery("#create_new_file,#create_new_folder").click(function(event) {	
+			var type = (jQuery(this).attr('id') == 'create_new_file') ? 'file' : 'folder';
+			var loc = jQuery('#script-path').html();
+			var resname = prompt('Enter name(No alphabatic and lower case character only)');
+				if(resname != ''){
+					jQuery.ajax({
+					url: siteInfo.baseUrl + "/appeditor/createresource",
+					context: document.body,
+					type: "POST",
+					data:{loc:loc,resname:resname,type:type}
+					}).done(function(data) {
+						if(data == ''){
+							if(type == 'file'){
+								window.location = siteInfo.baseUrl + '/appeditor?loc=' + loc + '/' + resname;
+							}
+							else{
+								alert('Folder has been create. We are reloding the page.');
+								window.location = siteInfo.baseUrl + '/appeditor';
+							}
+						}
+						else{
+							alert(data);
+						}
+				});
+			}
+			else {
+				alert('Please enter a file name');
+			}
+		});
+	});
+
+	var editor = ace.edit("code-editor");
+	<?php if(!in_array(App::__def()->SysConfig('CODE_EDITOR_THEME'),array('default',''))):?> 
+		editor.setTheme("ace/theme/<?php echo App::__def()->SysConfig('CODE_EDITOR_THEME');?>");
+	<?php endif;?>
+    editor.getSession().setMode("ace/mode/<?php echo $mode; ?>");
+	
+	function resizeAce() {			
+	  return jQuery('#code-editor').height(jQuery(window).height()-200);
+	};
+	jQuery(window).resize(resizeAce);
+	resizeAce();
+</script> 

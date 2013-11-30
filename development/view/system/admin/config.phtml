@@ -1,0 +1,96 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<form class="app_form" method="post" enctype="multipart/form-data" action="<?php echo $this->baseUrl("/admin/config/$section")?>">
+
+    <?php App::Helper('Toolbar')->setTitle($definition['base']['title'])->setBtnSave()->setBtnFileManager()->setBtnBack()->Render(array('code' => 'sitesetting_top', 'definition' => $definition)); ?>
+
+    <?php $i = 0; foreach ($definition['groups'] as $selection_key => $selection): ?>
+
+    <h3 <?php if (!$i): ?>class="first"<?php endif;?>><?php $i = 0; echo $selection['title'];?></h3>
+
+    <?php
+    $Grid = App::Module('DataGrid')->Clear()->setDisplay('FormListing');
+    foreach ($selection['selection'] as $soption_key => $soption) :
+        $soption['hints'] = App::Helper('Utility')->codeFormated($soption['hints']);
+        $soption['title'] = App::Helper('Utility')->codeFormated($soption['title']);
+        $value = $this->get_config($soption_key);
+        $value = isset($value) ? $value : $soption['default'];
+        $soption['options'] = isset($soption['options']) ? $soption['options'] : Array();
+        switch ($soption['type']) {
+            case "passwordTag"  :
+                $Grid->addRow($soption['title'], App::load("Helper/Html")->passwordTag("data[sconfig][{$soption_key}]", $value, array("class" => "large")), $soption['hints']);
+                break;
+            case "selectTag"    :
+                $soption['options'] = ($soption_key == 'time_zone') ? App::Load("Helper/Date")->getTimeZoneList() : $soption['options'];
+                $Grid->addRow($soption['title'], App::load("Helper/Html")->selectTag("data[sconfig][{$soption_key}]", $soption['options'], $value), $soption['hints']);
+                break;
+            case "radioTag"    :
+                $Grid->addRow($soption['title'], App::load("Helper/Html")->radioTag("data[sconfig][{$soption_key}]", $soption['options'], $value), $soption['hints']);
+                break;
+            case "fileTag"    :
+                $app_file_name = "";
+                $value = ($value != "") ? $value : $soption['default'];
+                if ($value != "") {
+                    $path = $this->get_config("filemanager_path") . "/" . $value;
+                    $str = App::load("Helper/Utility")->is_image($value) ? App::load("Helper/Html")->imgDTag($path) : $soption['default'];
+                    $app_file_name = (App::load("Helper/Utility")->is_image($value)) ? App::load("Helper/Html")->linkTag($this->baseurl("/common/download/" . base64_encode($path)), $str) : $str;
+                    $app_file_name .= App::load("Helper/Html")->linkTag("javascript:void(0)", " " . App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/remove.gif'), NULL, array('id' => "{$soption_key}", 'class' => 'delete_sitesettings_file'))) . '<br />';
+                }
+                $Grid->addRow($soption['title'], "<span>$app_file_name</span>" . App::load("Helper/Html")->fileTag("data[sconfig][{$soption_key}]",null,$soption['options']), $soption['hints']);
+                break;
+            case "textareaTag"    :
+                $Grid->addRow($soption['title'], App::load("Helper/Html")->textareaTag("data[sconfig][{$soption_key}]", $value, array("class" => "app_textarea", "rows" => "5")), $soption['hints']);
+                break;
+            default             :
+                $Grid->addRow($soption['title'], App::load("Helper/Html")->inputTag("data[sconfig][{$soption_key}]", $value, array("class" => "large")), $soption['hints']);
+                break;
+        }
+    endforeach;
+    $Grid->render();
+    ?>
+    <?php $i++; endforeach; ?>
+    <?php App::Helper('Toolbar')->setFormJustified(true)->setBtnSave()->setBtnBack()->Render(array('code' => 'sitesetting_bottom', 'definition' => $definition)); ?>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('.delete_sitesettings_file').live('click', function () {
+            if (confirm("Are you sure to delete the image that can not be undone.\n\nPlease press 'Ok' to delete and 'Cancele' to remain as it is. ")) {
+                var obj = jQuery(this).parents('span');
+                this.src = siteInfo.baseUrl + '/images/loading.gif';
+                jQuery(this).css('margin-left', '5px');				
+				jQuery.get(siteInfo.baseUrl + '/common/delete_row/delete_sitesettings_file/' + this.id, function(data) {
+					obj.css('display', 'none');
+				});
+            }
+        });
+    });
+</script>

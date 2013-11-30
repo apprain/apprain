@@ -1,0 +1,146 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<div id="login">
+
+    <!-- login -->
+    <div class="title">
+        <h5><?php echo $this->__('Fotgoet Password');?></h5>
+
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+    </div>
+
+    <?php if ($message != ""): ?>
+    <div class="messages">
+        <div id="message-warning" class="message message-warning">
+            <div class="image">
+                <img src="<?php echo $this->baseUrl('/themeroot/admin/images/icons/warning.png');?>" alt="warning"
+                     height="32"/>
+            </div>
+            <div class="text">
+                <br/>
+                <span><?php echo $message;?></span>
+            </div>
+            <div class="dismiss">
+                <a href="#message-warning"></a>
+            </div>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <div class="inner">
+        <form action="<?php echo $this->baseurl("/admin/forgotlogin/{$sid}");?>" method="post">
+            <div class="form">
+                <!-- fields -->
+                <div class="fields">
+                    <?php if ($sid != ""): ?>
+                    <div class="field">
+                        <div class="label">
+                            <label for="password"><?php echo $this->__('New Password:');?></label>
+                        </div>
+                        <div class="input">
+                            <input type="text" id="password" name="data[Admin][password]" size="40" value=""
+                                   class="focus"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="cpassword"><?php echo $this->__('Confirm Password:');?></label>
+                        </div>
+                        <div class="input">
+                            <input type="password" id="cpassword" name="data[Admin][cpassword]" size="40" value=""
+                                   class="focus"/>
+                        </div>
+                    </div>
+                    <!-- Spacer -->
+                    <div class="field">
+                        <div class="label">
+                            <label for="cpassword">&nbsp</label>
+                        </div>
+                        <div class="input">
+                            &nbsp
+                        </div>
+                    </div>
+                    <!-- Spacer End -->
+                    <div class="buttons">
+                        <div style="float:left;margin-top:5px"><a
+                            href="<?php echo $this->baseurl('/'); ?>"><?php echo $this->__('View Website?');?></a></div>
+                        <input type="submit" value="Rest Password"/>
+                    </div>
+                    <?php else: ?>
+                    <div class="field">
+                        <div class="label">
+                            <label for="email"><?php echo $this->__('Email Address:');?></label>
+                        </div>
+                        <div class="input">
+                            <input type="text" id="email" name="data[Admin][email]" size="40"
+                                   value="<?php echo isset($this->data['Admin']['email']) ? $this->data['Admin']['email'] : "" ?>"
+                                   class="focus"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="capacha">
+                                <?php echo $this->__('Fillup the text:');?>
+                            </label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper('Html')->capachaTag("adminpasswordreset");?>
+                            <br/>
+                            <input type="text" id="capacha" name="data[Admin][capacha]" size="40" value=""
+                                   class="focus"/>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="floatleft">
+                            <a href="<?php echo $this->baseurl('/'); ?>"><?php echo $this->__('View Website?');?></a> 
+							<a href="<?php echo $this->baseurl('/admin'); ?>"><?php echo $this->__('Login Admin Panel.');?></a>
+                        </div>
+                        <input type="submit" value="Send Password"/>
+                    </div>
+                    <?php endif;?>
+                </div>
+                <!-- end fields -->
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<div class="auth-copy-right">
+	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.com">
+		<img src="<?php echo $this->baseUrl('/images/smalllogo.gif');?>" alt="<?php echo $this->__('appRain Content Management Framework');?>">
+	</a>
+	<div class="copy-right-text">
+		<?php echo $this->__('Content Management Framework.');?>
+		<?php echo $this->__('Copyright &copy;' . date('Y'));?>, <a title="appRain Content Management Framework" target="_blank" href="http://www.apprain.com/license"><?php echo $this->__('License');?></a>.		
+	</div>
+</div>

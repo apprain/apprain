@@ -1,0 +1,84 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php
+App::Helper('Toolbar')
+    ->setTitle('Components Online')
+    ->setBtnComponentSrcBox()
+    ->setBtnCustomHTML(
+    App::load("Helper/Html")->buttonTag("Button[Toggle]", "Refresh", array("onclick" => "window.location=siteInfo.baseUrl + '/developer/componentsonline/refresh';")) . ' ' .
+        App::load("Helper/Html")->buttonTag("Button[Toggle]", "Component List", array("onclick" => "window.location=siteInfo.baseUrl + '/developer/components';"))
+)
+    ->setBtnBack()
+    ->Render(array('code' => 'install_component_top'));
+?>
+<?php
+if (!empty($onlineComponent['data'])) {
+    $DataGrid = App::Module('DataGrid');
+    $DataGrid->clear()->setHeader(array('Name', 'Component Information'));
+    foreach ($onlineComponent['data'] as $component) {
+        $info = '';
+        if ($component['info'] != '') {
+            $info = "<span class=\"info\">{$component['info']}</span>";
+        }
+        $warning = '';
+        if ($component['info'] != '') {
+            $warning = "<span class=\"warning\">{$component['warning']}</span>";
+        }
+		
+		$titlelink = "<strong>" . App::Helper('Html')->linkTag($component['parmauri'], $this->__($component['title']), array( "target" => "_blank")) . "</strong>";
+		$imagelink = "<strong>" . App::Helper('Html')->linkTag($component['parmauri'],"<img src=\"{$component['thumuri']}\" style=\"margin-top:5px;width:60px;height:60px;\" />", array( "target" => "_blank")) . "</strong>";
+		$detaillink = "<strong>" . App::Helper('Html')->linkTag($component['parmauri'], $this->__('DESCRIPTION'), array('class' => "button", "target" => "_blank")) . "</strong>";
+		$downloadlink = " - <strong>" . App::Helper('Html')->linkTag($component['downloaduri'], $this->__('DOWNLOAD'), array('class' => "button", "target" => "_blank")) . "</strong>";
+		
+		$reletedComponent = '';
+		if(!empty($component['relatedcomponents'])){
+			$reletedComponent = " - <strong>" . App::Helper('Html')->linkTag($component['relatedcomponents'], $this->__('RELATED COMPONENTS'), array('class' => "button", "target" => "_blank")) . "</strong>";
+		}
+        $DataGrid->addRow(
+            "   {$titlelink}<br />
+				{$imagelink}",
+				App::Helper('Utility')->codeFormated($component['description']) . "<br /><br />
+				{$info}
+				{$warning}
+				<br />Version: {$component['version']} | Category: {$component['categoryname']}<br /><br />
+				{$detaillink}	
+				{$downloadlink}	
+				{$reletedComponent}
+			</div>
+		");
+    }
+    $DataGrid->setFooter($onlineComponent['paging_str']);
+    $DataGrid->Render();
+}
+else {
+    echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'warning', 'message' => 'Online repository not found. Check your connection and click "Refresh" button.'));
+}
+?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'component_list_bottom')); ?>

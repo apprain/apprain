@@ -1,0 +1,74 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php if (!isset($xml)): ?>
+<?php App::Helper('Toolbar')->setTitle("Language Manager" . App::Helper('Html')->helpTag('language_manager'))->setBtnBack()->Render(array('code' => 'language_list_top')); ?>
+<?php
+    foreach ($lang_fiels as $info):
+        $lcode = App::Helper('Utility')->getName($info['name']);
+        if ($lcode == App::Module('Language')->getCode()):
+            App::Module('DataGrid')->addRow($info['name'], $this->get_tag('a', Array('href' => $this->baseurl("/developer/language/{$info['name']}")), 'Edit'), 'Active');
+        else:
+            App::Module('DataGrid')->addRow($info['name'], $this->get_tag('a', Array('href' => $this->baseurl("/developer/language/{$info['name']}")), 'Edit'), App::Helper('Html')->linkTag($this->baseUrl("/developer/languageswitch/{$lcode}"), 'Inactive'));
+        endif;
+    endforeach;
+
+    App::Module('DataGrid')->setHeader(array('Language File', 'Option', 'Status'))
+        ->Render();
+    ?>
+<?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->Render(array('code' => 'language_list_bottom')); ?>
+<?php else: ?>
+<?php App::Helper('Toolbar')->setTitle("{$xml->base->title} ({$xml->base->code})" . App::Helper('Html')->helpTag('language_manager'))->setBtnBack()->Render(array('code' => 'language_edit_top')); ?>
+<br class="clearboth"/>
+<form method="post" action="<?php echo $this->baseurl("/developer/language/{$lang_file}") ?>">
+<input size="40" type="hidden" name="data[code]" value="<?php echo $xml->base->code;?>"/>
+    <input size="40" type="hidden" name="data[title]" value="<?php echo $xml->base->title ?>"/>
+
+    <?php
+    $Grid = App::Module('DataGrid');
+
+    $order = 0;
+    foreach ($xml->langs->lang as $val) {
+        $Grid->addRow(
+            '<input class="app_input" type="text" name="data[lang][' . $order . '][key]" value="' . $val->key . '" />',
+            '<input class="app_input" type="text" name="data[lang][' . $order . '][value]" value="' . $val->val . '" />'
+        );
+
+        $order++;
+    }
+
+    $Grid->addRow(
+        '<input class="app_input" type="text" name="data[lang][' . ($order + 1) . '][key]" value="" />',
+        '<input class="app_input" type="text" name="data[lang][' . ($order + 1) . '][value]" value="" />'
+    );
+    $Grid->setHeader(array('Language Code', 'Value'))
+        ->Render();
+    ?>
+    <?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->Render(array('code' => 'language_edit_bottom')); ?>
+    <?php endif; ?>

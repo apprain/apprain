@@ -1,0 +1,114 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php App::Module('Notification')->Display();?>
+<?php if($action == 'upload'):?>
+<form method="post" action="<?php echo App::Config()->baseUrl("/admin/filemanager/upload");?>" enctype="multipart/form-data"> 
+<div class="box box-left box-padding box-left-tabs">
+    <div class="title">
+        <h5><?php echo $this->__('Regular Upload');?></h5>
+    </div>
+    <div id="box-left-forms">
+        <div class="form">
+			<div class="fields">
+                 <div class="field first">
+                    <div class="label">
+                        <label for="input"><?php echo $this->__('Select File:');?></label>
+                    </div>
+                    <div class="input">
+                        <input type="file" name="data[filemanager][image]" />
+                    </div>
+                </div>
+				<div class="buttons">
+                    <input type="submit" name="submit" value="Upload"/>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+</form>
+<div class="box box-right">
+    <div class="title">
+        <h5><?php echo $this->__('Batch Upload');?></h5>
+    </div>
+    <div class="form">
+		<?php if(App::Config()->setting('flash_file_uploader','No') == 'Yes'):?>
+			<form action="<?php echo $this->baseUrl("/admin/sendMessage?flag=ajax"); ?>" method="post">
+				<div class="fields">               
+					<div class="field first">
+						<div class="label">
+							<label for="input"></label>
+						</div>
+						<div class="input">
+						   <input id="file_upload"  name="file_upload" type="text" />
+						</div>
+					</div>                
+					<div class="buttons">
+						<h3 class="first"><a href="<?php echo App::Config()->baseUrl("/admin/filemanager/dfu"); ?>">Disable</a> flash base Multiple file uploader</a></h3>
+					</div>
+				</div>
+			</form>
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+					jQuery('#file_upload').uploadify({
+					  'uploader'  : siteInfo.baseUrl + '/addons/uploadify/uploadify.swf',
+					  'script'    : '<?php echo $this->baseUrl('/common/batchupload');?>',
+					  'cancelImg' : siteInfo.baseUrl + '/addons/uploadify/cancel.png',
+					  'multi'     : true,
+					  'auto'      : true,
+					  'onAllComplete' 	: function(event,data){
+							alert(data.filesUploaded + ' files uploaded successfully!');
+							window.location = "";
+						  }
+					  });
+				});
+			</script>
+		<?php else:?>
+			<h3 class="first"><a href="<?php echo App::Config()->baseUrl("/admin/filemanager/efu"); ?>">Enable</a> flash base Multiple file uploader</a></h3>
+			<strong style="color:red">For security reasons please disable the upload when you have finished.</strong>
+		<?php endif;?>
+    </div>
+</div>
+
+<br class="clearboth" />
+
+<?php endif;?>
+	<?php 
+		App::Helper('Toolbar')->setTitle($this->__("File Manager"))->setBtnFilemanagerSrcBox($srcstr);			
+		if($viewtype == 'list'){
+			App::Helper('Toolbar')->setBtnCustomHTML(' <input onclick="window.location = siteInfo.baseUrl + \'/admin/filemanager?view=grid\'" type="button" value="VIEW IN GRID" />  <input onclick="window.location = siteInfo.baseUrl + \'/admin/filemanager/upload\'" type="button" value="UPLOAD" /> ');
+		}
+		else{
+			App::Helper('Toolbar')->setBtnCustomHTML(' <input onclick="window.location = siteInfo.baseUrl + \'/admin/filemanager?view=list\'" type="button" value="VIEW IN LIST" /> <input onclick="window.location = siteInfo.baseUrl + \'/admin/filemanager/upload\'" type="button" value="UPLOAD" />');
+		} 
+		App::Helper('Toolbar')->Render(array('code' => 'filemanager_top')); 
+	?>
+	<?php App::Module('FileManager')->displayFileList($viewtype,"{$srcstr}"); ?>
+	
+	<?php echo App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'filemanager_bottom')); ?>

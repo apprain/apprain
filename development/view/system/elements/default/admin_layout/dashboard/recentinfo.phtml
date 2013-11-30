@@ -1,0 +1,109 @@
+<!-- box / left -->
+<div class="box box-left box-padding box-left-tabs">
+    <?php if (App::Config()->setting('activity_widget', 'Yes') == 'Yes'): ?>
+    <!-- box / title -->
+    <div class="title">
+        <h5>
+		<input type="button" title="Close" class="widget-closer" id="closer_activity_widget" />
+		<?php echo $this->__('Activity') . App::Helper('Html')->helpTag('dashboard-quick-activity-widget');?></h5>
+        <ul class="links">
+            <li><a href="#box-left-forms"><?php echo $this->__('Common');?></a></li>
+            <li><a href="#box-left-other"><?php echo $this->__("Cache");?></a></li>
+            <?php App::Hook('UI')->Render('admin_dashboard_recent_activity_tab'); #User Interface Hook ?>
+        </ul>
+    </div>
+    <!-- end box / title -->
+    <div id="box-left-forms">
+        <?php App::Hook('UI')->Render('admin_dashboard_recent_activity_right_top'); #User Interface Hook ?>
+		<div class="form">
+			<h6><?php echo $this->__("Last Login");?></h6>
+			
+			<p><?php echo App::Module('AdminpanelUI')->loadAdminLogin(); ?></p>
+			<br/>
+			<h6><?php echo $this->__("Page Manager");?></h6>
+
+			<p><?php echo $this->__("Static Page:"); ?> <?php echo App::Module('adminPanelUI')->pageCount();?>,
+				<?php echo $this->__("Snip:"); ?> <?php echo App::Module('adminPanelUI')->pageCount('Snip');?></p>
+			<br/>
+			<h6><?php echo $this->__("Components");?></h6>
+
+			<p>Active : <?php echo App::Module('Component')->Count('Active');?>,
+				Inactive: <?php echo App::Module('Component')->Count('Inactive');?></p>
+			<br/>
+			<h6><?php echo $this->__("Last Backup Date");?></h6>
+
+			<p>
+				<?php if (App::Module('Dbimexport')->lastDBDate() != ""): ?>
+				<?php echo App::Helper('Date')->dateFormated(App::Module('Dbimexport')->lastDBDate(), 'long'); ?>
+				<?php else: ?>
+				<?php echo $this->__("No Backup found"); ?>
+				<?php endif;?>
+			</p>
+			<br/>
+			<h6><?php echo $this->__("Theme");?></h6>
+
+			<p><?php echo App::Module('adminPanelUI')->themeInfo($this->theme);?></p>
+			<?php App::Hook('UI')->Render('admin_dashboard_recent_activity_right_bottom'); #User Interface Hook ?>
+		</div>
+    </div>
+    <div id="box-left-other">
+        <div class="form"><?php App::Module('adminPanelUI')->cacheChart();?></div>
+    </div>
+    <?php endif;?>
+    <?php App::Hook('UI')->Render('admin_dashboard_recent_activity_tab_content'); #User Interface Hook ?>
+</div>
+<!-- end box / left -->
+<!-- box / right -->
+<div class="box box-right">
+    <?php if (App::Config()->siteInfo('leave_amessage_widget', 0) == 'Yes'): ?>
+    <!-- box / title -->
+    <div class="title">
+        <h5>
+			<input type="button" title="Close" class="widget-closer" id="closer_leave_amessage_widget" />
+			<?php echo $this->__("Leave a message") . App::Helper('Html')->helpTag('dashboard-quick-leave-a-message');?></h5>
+    </div>
+    <!-- end box / title -->
+    <div class="form">
+
+        <form action="<?php echo $this->baseUrl("/admin/sendMessage?flag=ajax"); ?>" method="post">
+            <div class="fields">
+                <div class="field">
+                    <div class="label">
+                        <label for="autocomplete-left"><?php echo $this->__('Email Address:');?></label>
+                    </div>
+                    <div class="input">
+                        <input type="text" id="autocomplete-left" name="data[Message][email]"
+                               value="Start typing email address" class="large focus adminemails check_email"/>
+                        <?php echo App::Module('adminPanelUI')->autoCompleteInfo('input.adminemails');?>
+                    </div>
+                </div>
+                <div class="field first">
+                    <div class="label">
+                        <label for="input"><?php echo $this->__('Subject:');?></label>
+                    </div>
+                    <div class="input">
+                        <input type="text" name="data[Message][subject]" class="large check_notempty"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="label label-textarea">
+                        <label for="textarea"><?php echo $this->__('Message:');?></label>
+                    </div>
+                    <div class="input">
+                        <textarea id="textarea1" name="data[Message][message]" cols="50" class="textarea large check_notempty"  rows="9"></textarea>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <input type="submit" name="submit" value="Send"/>
+
+                </div>
+            </div>
+        </form>
+        <div class="error-leave-a-msg"></div>
+
+        <?php App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => true, 'messageElement' => '.error-leave-a-msg', 'loaderElement' => '.error-leave-a-msg'))->appForm('form'); ?>
+    </div>
+
+    <?php endif;?>
+</div>
+<br class="clearboth" />

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Language>
+    <base>
+        <code>lipsum</code>
+        <title>Dummy Language</title>
+    </base>
+    <langs>
+        <lang>
+            <key>Home</key>
+            <val>Lorem ipsum</val>
+        </lang>
+    </langs>
+</Language>

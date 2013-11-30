@@ -1,0 +1,43 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<form method="post" action="<?php echo $this->baseurl("/developer/clearcache");?>">
+    <?php App::Helper('Toolbar')->setTitle("Clear Temporary Cache" . App::Helper('Html')->helpTag('clear_temporary_cache'))->setBtnSave(array('name' => 'Clear Cache'))->setBtnBack()->Render(array('code' => 'clear_cache_top'));?>
+    <div class="box-left">
+        <h3 class="first"><?php echo $this->__("Cache Type");?></h3>
+
+        <div id="box-left-forms">
+            <?php echo App::Load("Helper/Html")->radioTag("data[Cache][type]", $cacheAllDef, "", null, array('html_wrapper' => 'br'));?>
+        </div>
+    </div>
+    <div class="box-right">
+        <?php App::Module('adminPanelUI')->cacheChart();?>
+    </div>
+    <?php App::Helper('Toolbar')->Render(array('code' => 'clear_cache_bottom'));?>
+</form>

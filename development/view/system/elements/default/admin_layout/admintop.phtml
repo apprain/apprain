@@ -1,0 +1,94 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+
+$NAVAccess = App::Module('ACL')->readNAVAccess('top');
+$__AdminNavDefs = $this->get_admin_nav();
+?>
+<div id="header">
+    <div id="logo">
+        <h1><a href="<?php echo App::Module('adminPanelUi')->dashBoardLink(); ?>"><?php echo App::Helper('Config')->setting('site_title'); ?></a></h1>
+    </div>
+    <!-- user -->
+    <ul id="user">
+        <li class="first"><?php echo App::Module('AdminpanelUI')->currentDate(); ?></li>
+        <li class="first"><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>
+        <li><a href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("Account"); ?></a></li>
+        <li><a href="<?php echo $this->baseUrl('/admin/logout');?>"><?php echo $this->__("Logout"); ?></a></li>
+        <li class="highlight last"><a href="<?php echo $this->baseUrl();?>" target="_blank"><?php echo $this->__("View Site"); ?></a></li>
+		
+    </ul>
+    <!-- end user -->
+    <div id="header-inner">
+        <div id="home">
+            <a href="<?php echo App::Module('adminPanelUi')->dashBoardLink(); ?>" title="Home"></a>
+        </div>         
+        <?php echo App::Module('AdminPanelUi')->LPCollapseLink();?>
+        <!-- quick -->
+        <ul id="quick">
+            <?php foreach ($NAVAccess as $assigntab): ?>
+            <?php if (isset($__AdminNavDefs[$assigntab])): ?>
+                <?php $__AdminNavDef = $__AdminNavDefs[$assigntab]; ?>
+                <li>
+                    <a href="<?php echo $this->baseUrl($__AdminNavDef['parent']['action']);?>"
+                       title="<?php echo $__AdminNavDef['parent']['title'];?>"
+                       class="<?php echo ($this->admin_tab == $assigntab) ? "selected" : "normal"; ?> ">
+                        <?php if (file_exists($this->baseDir($__AdminNavDef['parent']['icon'])) && $__AdminNavDef['parent']['icon'] != '' && App::Config()->setting('disable_menu_icon') != 'Yes'): ?>
+                        <span class="icon"><img src="<?php echo $this->baseUrl($__AdminNavDef['parent']['icon']) ?>" alt="<?php echo $__AdminNavDef['parent']['title'];?>"/></span>
+                        <?php endif;?>
+                        <span class="normal"><?php echo $__AdminNavDef['parent']['title'];?></span></a>
+                    <?php if (isset($__AdminNavDef['parent']['submenu']) && !empty($__AdminNavDef['parent']['submenu'])): ?>
+                    <ul>
+                        <?php foreach ($__AdminNavDef['parent']['submenu'] as $skey => $submenu): ?>
+                        <li <?php if (((count($__AdminNavDef['parent']['submenu']) - 1)) == $skey): ?>class="last"<?php endif;?>>
+                            <?php if (isset($submenu['child']) && !empty($submenu['child'])): ?>
+                            <a href="<?php echo $this->baseUrl($submenu['link']);?>" class="childs"
+                               title="<?php echo $submenu['title'];?>"><?php echo $submenu['title'];?></a>
+                            <ul>
+                                <?php foreach ($submenu['child'] as $ckey => $child): ?>
+                                <li <?php if (((count($submenu['child']) - 1)) == $ckey): ?>class="last"<?php endif;?>>
+                                    <a href="<?php echo $this->baseUrl($child['link']);?>"
+                                       title="<?php echo $child['title'];?>"><?php echo $child['title'];?></a></li>
+                                <?php endforeach;?>
+                            </ul>
+                            <?php else: ?>
+                            <a href="<?php echo $this->baseUrl($submenu['link']);?>"  title="<?php echo $submenu['title'];?>"><?php echo $submenu['title'];?></a>
+                            <?php endif;?>
+                        </li>
+                        <?php endforeach;?>
+                    </ul>
+                    <?php endif;?>
+                </li>
+                <?php endif; ?>
+            <?php endforeach;?>
+        </ul>
+        <!-- end quick -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+    </div>
+</div>

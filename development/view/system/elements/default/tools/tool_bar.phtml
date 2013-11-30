@@ -1,0 +1,81 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php $position = isset($position) ? $position : "top"; ?>
+
+<?php if ($position == 'top'): ?>
+<h2 class="tool_bar_header"><?php echo $title;?></h2>
+            <div class="tool_bar tool_bar_top">
+<?php else: ?>
+			<div class="tool_bar tool_bar_bottom">
+<?php endif; ?>
+
+    &nbsp;&nbsp;
+
+<?php foreach ($buttons as $key => $val): ?>
+    <?php
+    switch ($val['type']):
+        case "file_manager"                :
+            echo ' <input type="button" onclick="var win = window.open(\'' . $this->baseurl('/admin/filemanager') . '\',\'Window1\',\'menubar=no,width=860,height=750,toolbar=no,scrollbars=yes\');win.focus()" value="Image Manager" /> ';
+            break;
+        case "save"                        :
+            echo ' <input type="submit" name="Button[button_save]" title="Quick Save" value="Save" /> ';
+            break;
+        case "delete"                    :
+            echo ' <input type="submit" name="Button[button_delete]" title="Delete" class="_deletebtn" value="Delete" /> ';
+            break;
+        case "save_and_add"                :
+            echo ' <input type="submit" name="Button[button_save_and_add]" title="Save and add" value="save_and_add"  /> ';
+            break;
+        case "save_and_update"            :
+            echo ' <input type="submit" name="Button[button_save_and_update]" title="Save and update" value="Update"/> ';
+            break;
+        case "ok"                        :
+            echo ' <input type="submit" name="Button[button_save]" title="Ok" value="Ok" />';
+            break;
+        case "back"                        :
+            echo ' ' . App::load("Helper/Html")->buttonTag("Button[Back]", "<< Back", array("onclick" => "javascript:history.go(-1)"));
+            break;
+            break;
+        case "view_hidden_content"        :
+            echo ' ' . App::load("Helper/Html")->buttonTag("Button[Toggle]", "Toggle", array("class" => "view_hidden_content"));
+            break;
+        case "upload"                    :
+            echo ' ' . App::load("Helper/Html")->buttonTag("Button[Toggle]", "Upload", array("class" => "upload"));
+            break;
+        default                            :
+            break;
+    endswitch;
+    ?>
+    <?php endforeach; ?>
+
+<?php echo isset($custom_html) ? $custom_html : ""; ?>
+</div>
+<br class="clearboth"/>

@@ -1,0 +1,52 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<form method="post" action="<?php echo $this->baseurl("/developer/clearcache");?>">
+    <?php App::Helper('Toolbar')->setTitle("Log")->setBtnCustomHTML(App::Helper("Html")->ButtonTag("ClearDbLog", "Flush All Log", array("onclick" => "document.location='" . $this->baseurl("/developer/debug-log/{$mode}/clear") . "';")))->setBtnBack()->Render(array('code' => 'debug_top'));?>
+    <?php if ($mode == 'file'): ?>
+    <div class="field field-first">
+        <textarea class="app_input" style="height:500px;width:99%;margin:auto"
+                  readonly="readonly"><?php echo $logData;?></textarea></div>
+    <?php else: ?>
+    <?php
+    if (!empty($logData['data'])):
+        $Grid = App::Module('DataGrid');
+        foreach ($logData['data'] as $row):
+            $Grid->addRow($row['id'], $row['fkey'], $row['type'], App::Helper('Date')->dateFormated($row['dated'], 'long'), App::Helper('Html')->textareaTag('Log', $row['data'], Array("readonly" => "readonly", 'style' => 'width:95%', 'class' => 'app_input')));
+        endforeach;
+        $Grid->setHeader(Array('ID', 'Ref#', 'Type', 'Dated', 'Data'));
+        $Grid->setFooter("{$logData['paging_str']}");
+        $Grid->render();
+    else:
+        echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'notice', 'message' => $this->__("No Log found to display")));
+    endif;
+    ?>
+    <?php endif;?>
+    <?php App::Helper('Toolbar')->Render(array('code' => 'debug_top'));?>
+</form>

@@ -1,0 +1,90 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<form class="app_form" method="post" enctype="multipart/form-data" >
+<?php App::Helper('Toolbar')->setTitle("Information Set List")->setBtnBack()->Render(array('code' => 'manage_addon_list_top')); ?>
+<?php foreach($inforList as $key=>$InformationSet):?>
+	<h3 class="pointer <?php if(!$key):?>first<?php endif; ?>" onclick="jQuery('#infoset_<?php echo "{$key}"?>').toggle();">
+		<?php echo($InformationSet['base']['title']); ?>
+	</h3>
+	<div class="displaynone" id="infoset_<?php echo "{$key}"?>">
+		<?php 
+			$FiendCount = count($InformationSet['fields']);
+			App::Module('DataGrid')
+				->Clear()
+				->setDisplay('FormListing')
+				->addRow('Version',$InformationSet['base']['version'])
+				->addRow('Mode',$InformationSet['base']['mode'])
+				->addRow('Admin Tab',$InformationSet['base']['admin_tab'])
+				->addRow('Total Fields',$FiendCount)				
+				->addRow('Defination Path',$InformationSet['base']['path'])
+				->addRow('Edit Source',App::Html()->LinkTag(App::Config()->baseUrl("/developer/editor/" . base64_encode(dirname($InformationSet['base']['path']))),'Edit Source'))
+				->Render();			
+		?>
+			<br class="clear" />
+		<?php
+			$Grid = App::Module('DataGrid')
+				->Clear()
+				->setHeader(array("Ord",'Name','Type','DB Attr.','Validation',"Parameter"));
+			$ord = 0;
+			foreach($InformationSet['fields'] as $field){
+				$rules = array();
+				foreach($field['validation'] as $rule){
+					$rules[] = 	$rule['type'];
+				}
+
+				$parameters = array();
+				if(!empty($field['parameters'])){
+					foreach($field['parameters'] as $pkey=>$parameter){
+						$parameters[] = 	"{$pkey}=>{$parameter}";
+					}
+				}
+				
+				$dbattributes = array();
+				if(!empty($field['db-attributes'])){
+					foreach($field['db-attributes'] as $dbkey=>$dbattribute){
+						$dbattributes[] = 	"{$dbkey}=>{$dbattribute}";
+					}
+				}
+				
+				$Grid ->addRow(
+					++$ord,
+					$field['title'],
+					$field['type'],
+					implode("<br />",$dbattributes),
+					implode("<br />",$rules),
+					implode("<br />",$parameters)
+				);
+			}			
+			$Grid->Render();		
+		?>
+	</div>
+<?php endforeach;?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'manage_addon_list_bottom')); ?>
+</form>

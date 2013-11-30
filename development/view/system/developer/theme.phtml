@@ -1,0 +1,105 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php App::Helper('Toolbar')->setTitle("Theme" . App::Helper('Html')->helpTag('theme'))->setBtnBack()->setBtnCustomHTML(App::load("Helper/Html")->buttonTag("Button[Toggle]", "Install New Theme", array("class" => "installtheme")))->Render(array('code' => 'theme_top')); ?>
+    <div id="hidden_content" <?php if ($action != 'install'): ?>class="displaynone"<?php endif; ?>">
+<h3 class="first">Upload a theme in ZIP format form your computer.</h3>
+<form method="post" action="<?php echo $this->baseUrl("/developer/theme");?>" enctype="multipart/form-data">
+    <div class="field  field-first">
+        <div class="label">
+            <label for="input-small"><?php echo $this->__("Upload File*");?></label>
+        </div>
+        <div class="input">
+            <input type="file" name="data[Theme][resourcefile]"/>
+        </div>
+    </div>
+    <div class="buttons">
+        <input type="submit" name="submit" value="Install" class="app_button"/> <a id="dialog-modal-open" href="#">Save
+        FTP Information(Recommandad)</a>
+    </div>
+</form>
+</div>
+<?php echo $this->callElement("default/admin_layout/ftpform"); ?>
+<?php if(!empty($themes_default)):?>
+	<br/>
+	<h3 class="first">Current Theme </h3>
+	<div>
+		<?php echo App::load("Helper/Html")->imgDTag("{$themes_default['basepath']}/definition/{$themes_default['image']}", "/200/fix");?>
+		<ul>
+			<li><strong><?php echo $themes_default['title'];?></strong> Created By <a
+				href="<?php echo $themes_default['author_uri'];?>"><?php echo $themes_default['author'];?></a></li>
+			<li><?php echo $themes_default['description']; ?></li>
+		</ul>
+	</div>
+<?php endif;?>
+
+<h3>Theme Collection</h3>
+<table>
+<tr>
+    <?php foreach ($themes as $key => $val): ?>
+
+    <?php if ($key % 2 == 0): ?>
+            </tr><tr>
+                <td class="dgtd">
+        <?php elseif ($key != 0): ?>
+                <td class="dgtd">
+        <?php else: ?>
+                <td class="dgtd last">
+        <?php endif; ?>
+
+    <ul>
+        <li><?php echo App::load("Helper/Html")->imgDTag("{$val['basepath']}/definition/{$val['image']}", "/300/fix");?></li>
+        <li><strong><?php echo $val['title'];?></strong></li>
+        <li> Created by <?php echo App::load("Helper/Html")->linkTag($val['author_uri'], $val['author']);?></li>
+        <li>
+            <a href="<?php echo $this->baseUrl("/developer/theme/" . base64_encode($val['name']));?>">Install</a> |
+            <a href="<?php echo $this->baseUrl("/developer/theme/{$val['name']}/remove");?>"
+               class="confirm-link">Remove</a>
+        </li>
+        <li><?php echo $val['description'];?></li>
+    </ul>
+        </td>
+    <?php endforeach;?>
+</tr>
+</table>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'theme_bottom')); ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery(".installtheme").live("click", function (e) {
+            if (jQuery("#hidden_content").css("display") == 'none') {
+                jQuery("#hidden_content").css("display", "block");
+            }
+            else {
+                jQuery("#hidden_content").css("display", "none");
+            }
+        });
+    });
+</script>

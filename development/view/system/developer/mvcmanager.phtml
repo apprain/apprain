@@ -1,0 +1,55 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php 
+	App::Helper('Toolbar')
+		->setTitle("MVC Manager" . App::Helper('Html')->helpTag('mvc_manager'))
+		->setBtnBack()->Render(array('code' => 'mvc_manager_list_top')); 
+?>
+
+<?php foreach ($mvcdata as $mvckey => $mvcval): ?>
+		<h3 <?php  if(!isset($flat) && $flat=true):?>class="first"<?php endif; ?> onclick="jQuery('#mvc_<?php echo "{$mvckey}"?>').toggle();"> <?php echo $mvcval['model']['name']; ?> (<?php echo $mvcval['model']['version']; ?>)</h3>
+		<div class="displaynone" id="mvc_<?php echo "{$mvckey}"?>">
+		<?php
+			$Grid = App::Module('DataGrid')->clear()->setDisplay('FormListing');
+			$Grid->addRow("Model Name", $mvcval['model']['name'] )
+				->addRow("Model Version", $mvcval['model']['version'])
+				->addRow("Model Table", ($mvcval['model']['db_table']) ? $mvcval['model']['db_table'] : "<span style=\"color:#FF0000\">No Available</span>");
+
+			if ($mvcval['model']['insteller']['exists']):
+				$Grid->addRow("Installer", "Yes");
+			else:
+				$Grid->addRow("Installer", "<span style=\"color:#FF0000\">No Available</span>");
+			endif;    
+			$Grid->Render();
+		?>
+		</div>
+<?php endforeach; ?>
+
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'mvc_manager_list_bottom')); ?>

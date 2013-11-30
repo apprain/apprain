@@ -1,0 +1,69 @@
+<div id="dialog-modal" title="Add FTP Account">
+    <div class="message"></div>
+    <form method="post" action="<?php echo $this->baseUrl("/developer/uinstallarftp");?>" class="addftp"
+          onsubmit="return false;">
+        <p>
+            <strong><?php echo $this->__('Sever Name:');?></strong><br/>
+            <input type="text" name="data[Ftp][servername]" value="<?php echo App::Config()->setting('ftpserver'); ?>"
+                   id="servername" longdesc="Enter a valid ftp server address (Example: ftp.example.com)"
+                   class="app_input check_notempty"/>
+        </p>
+
+        <p>
+            <strong><?php echo $this->__('User Name:');?></strong><br/>
+            <input type="text" name="data[Ftp][username]" id="username"
+                   value="<?php echo App::Config()->setting('ftpusername'); ?>" longdesc="Enter FTP Server User Name"
+                   class="app_input check_notempty"/>
+        </p>
+
+        <p>
+            <strong><?php echo $this->__('Password:');?></strong><br/>
+            <input type="password" name="data[Ftp][password]" id="password"
+                   value="<?php echo App::Config()->setting('ftppassword'); ?>" longdesc="Enter FTP Server password"
+                   class="app_input check_notempty"/>
+        </p>
+
+        <p>
+            <strong><?php echo $this->__('Port:');?></strong><br/>
+            <input type="text" name="data[Ftp][Port]" id="port"
+                   value="<?php echo (App::Config()->setting('ftpport') == null) ? App::Config()->setting('ftpserver') : '21'; ?>"
+                   longdesc="Enter FTP port. (Example: 21)" class="app_input check_notempty"/>
+        </p>
+
+        <p>
+            <strong><?php echo $this->__('Status:');?></strong><br/>
+            <?php echo App::Helper('Html')->selectTag('data[Ftp][Status]', array('Enable' => 'Enable', 'Disabled' => 'Disabled'), App::Config()->setting('ftpstatus'), array('id' => 'status'));?>
+        </p>
+
+        <p class="buttons">
+            <input type="submit" name="data[Ftp][Submit]" onclick="saveFtp()" value="SAVE" id="savebutton"
+                   class="common-button"/>
+        </p>
+
+        <form>
+            <?php App::Helper('JavaScript')->setValidation(array('autoSubmit' => false))->appForm('.addftp'); ?>
+</div>
+<script type="text/javascript">
+    function saveFtp() {
+
+        var server = jQuery('#servername').attr('value');
+        var username = jQuery('#username').attr('value');
+        var password = jQuery('#password').attr('value');
+        var port = jQuery('#port').attr('value');
+        var status = jQuery('#status').attr('value');
+
+        if (server != '' && username != '' && password != '' && port != '') {
+            jQuery('#savebutton').attr('value', 'Saving...');
+            jQuery.ajax({
+                type:"POST",
+                url:siteInfo.baseUrl + '/developer/uinstallarftp',
+                data:"data[FTP][server]=" + server + "&data[FTP][username]=" + username + "&data[FTP][password]=" + password + "&data[FTP][port]=" + port + "&data[FTP][status]=" + status,
+                success:function (msg) {
+                    jQuery('#savebutton').attr('value', 'Save');
+                    if (msg == '1') alert('Data Saved successfully. Now close the window and start installation.');
+                    else alert("Sorry! Could not connect to FTP Server.\nContact with your hosting company to collect the ftp information.\n\n Please do not hesitate to contact us for more clarification");
+                }
+            });
+        }
+    }
+</script>

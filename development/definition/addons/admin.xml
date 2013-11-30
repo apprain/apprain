@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<Addons>
+    <addon name="admin">
+        <title><![CDATA[Admin Resource]]></title>
+		<description><![CDATA[Load admin Resources]]></description>	
+        <javascripts>
+            <src>/themeroot/admin/js/smooth.js</src>
+            <src>/themeroot/admin/js/smooth.menu.js</src>
+            <src>/themeroot/admin/js/smooth.table.js</src>
+            <src>/themeroot/admin/js/smooth.form.js</src>
+            <src>/themeroot/admin/js/jquery.ui.selectmenu.js</src>
+			<src>/themeroot/admin/js/common.js</src>
+        </javascripts>
+        <style_sheets>
+            <link>/themeroot/admin/css/reset.css</link>
+            <link>/themeroot/admin/css/style.css</link>
+            <link>/themeroot/admin/css/colors/blue.css</link>
+        </style_sheets>
+        <code><![CDATA[
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		style_path = '{baseurl}/themeroot/admin/css/colors';
+		jQuery("#date-picker").datepicker();
+		jQuery(".box-tabs, .box-left-tabs").tabs();
+		
+		/*if( jQuery('#content').attr('offsetHeight') < 350){
+			if(jQuery.browser.msie){               
+				if(jQuery.browser.version=="6.0"){
+					jQuery('.content-left-bg').css('height', '100%');       
+				}
+			}
+		}*/
+	});
+</script>
+]]></code>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>
+        <layouts>Admin</layouts>
+        <layouts_except></layouts_except>
+        <status>Active</status>
+        <load>Always</load>
+    </addon>
+</Addons>

@@ -1,0 +1,107 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<script type="text/javascript">
+    /*
+    // Default POST or GET Value
+    // Example : var post_value = 'username=jon&email=jon@mysite.com';
+    */
+    var post_value = '';
+    var get_value = '';
+
+    function simpledebugger() {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                document.getElementById('result').innerHTML = xmlhttp.responseText;
+            }
+        }
+
+        document.getElementById('result').innerHTML = 'Loading...';
+        xmlhttp.open("POST", document.getElementById('url').value + '?' + get_value, true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.setRequestHeader("Content-length", post_value.length);
+        xmlhttp.setRequestHeader("Connection", "close");
+        xmlhttp.send(post_value);
+    }
+
+
+    function add_post() {
+        var pv = prompt("Add/Edit POST (Example:username=jon)", post_value);
+
+        /*
+        // If you want to add data in multiple click
+        //post_value += (post_value =='') ? pv : '&' + pv;
+        */
+
+        post_value = pv;
+        if (get_value != null)document.getElementById('post_val').innerHTML = "POST Value :" + post_value;
+    }
+
+    function add_get() {
+        var pv = prompt("Add/Edit GET (Example:state=start)", get_value);
+
+        /*
+        // If you want to add data in multiple click
+        //get_value += (get_value =='') ? pv : '&' + pv;
+        */
+
+        get_value = pv;
+        if (get_value != null) document.getElementById('get_val').innerHTML = "GET Value :" + get_value;
+    }
+</script>
+<?php echo $this->callElement("default/tools/tool_bar", array("buttons" => array(array("type" => "back")), "title" => " Simple Code Debugger ")); ?>
+
+<div class="app_form">
+    <br/>
+    <a href="javascript:void(0)" onclick="add_post()"> Add/Edit POST Value </a> &nbsp; <a href="javascript:void(0)"
+                                                                                          onclick="add_get()"> Add/Edit
+    GET Value </a>
+    <br/><br/>
+
+    <span id="post_val"></span>
+    <span id="get_val"></span>
+
+    <input type="input" value="<?php echo $this->baseurl("/home/debug_test"); ?>" size="40" id="url" class="app_input"/>
+    <br/>
+    <input type="submit" value="DEBUG" name="username" class="app_button" onclick="simpledebugger();"/>
+    <br/><br/>
+
+    <div id="result"></div>
+    <br/>
+</div>
+
+<?php echo $this->callElement("default/tools/tool_bar", array("buttons" => array(array("type" => "back")), "title" => NULL)); ?>

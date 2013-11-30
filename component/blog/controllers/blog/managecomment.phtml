@@ -1,0 +1,58 @@
+<?php if($action=='update'):?>
+	<form action="<?php echo $this->baseurl("/manage-comments/update/{$id}") ?>" method="post">
+	<?php App::Helper('Toolbar')->setTitle("View Comment")->setBtnSave()->setBtnSaveAndUpdate()->setBtnFileManager()->setBtnBack()->Render(array('code'=>'blog_post_update_top','id'=>$id)); ?>
+	<?php
+		App::Module('DataGrid') 
+			->setDisplay('FormListing')
+			->addRow('Name',App::load("Helper/Html")->inputTag("data[BlogComment][name]",$comment['name'],array("id"=>"f_name","class"=>"app_input check_notempty")) )
+			->addRow('Email Address',App::load("Helper/Html")->inputTag("data[BlogComment][email]",$comment['email'],array("id"=>"f_name","class"=>"app_input check_notempty")) )
+			->addRow('Post',App::InformationSet('blogpost')->idToName($comment['postid'],'title','Yes',Array('')))
+			->addRow('Comments',App::load("Helper/Html")->textareaTag("data[BlogComment][comment]",$comment['comment'],array("class"=>"app_input check_notempty richtexteditor")) )
+			->addRow('Website',App::load("Helper/Html")->inputTag("data[BlogComment][website]",$comment['website'],array("class"=>"app_input")) )
+			->addRow('Submit On',App::load("Helper/Html")->dateTimeTag("data[BlogComment][dated]",$comment['dated']) )
+			->addRow('Status',App::load("Helper/Html")->selectTag("data[BlogComment][status]",array("Active"=>"Active","Inactive"=>"Inactive",),$comment['status']))
+			->Render();
+	?>
+	<?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->setFormJustified(true)->Render(array('code'=>'blog_post_update_bottom')); ?>
+	</form>
+<?php else:?>
+
+	<?php App::Helper('Toolbar')->setTitle("View Blog Commnets")->setBtnBack()->Render(array('code'=>'blog_comments_list_view_top')); ?>
+	<?php
+
+		if(!empty($comments['data']))
+		{
+			$Grid = App::Module('DataGrid');
+			$Grid->setHeader(array($this->get_tag('input',array('type'=>'checkbox','id'=>'checkall','class'=>"checkall")),'#','Author', 'Comments', 'Post','Status','Options'));
+			$Grid->setFooter($comments['paging_str']);
+			foreach($comments['data'] as $key => $comment)
+			{
+				$Grid->addRow(
+					$this->get_tag('input',array('type'=>'checkbox','value'=>"{$comment['id']}","class"=>"checkrow")),
+
+					(($comments["page"] - 1) * App::Helper('Config')->siteInfo('default_pagination') + $key + 1),
+
+					"<strong>{$comment['name']}</strong><br />
+					 {$comment['email']}<br />" .
+					 (($comment['website'] !="") ? App::Helper('Html')->linkTag($comment['website'],$comment['website']) : ""),
+
+					App::Helper('Date')->dateFormated($comment['dated'],'long') .
+					"<br />{$comment['comment']}",
+
+					App::InformationSet('blogpost')->idToName($comment['postid'],'title','Yes',Array('')),
+					$comment['status'],
+					App::load("Helper/Html")->linkTag($this->baseurl('/manage-comments/update/' . $comment['id']),App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/edit.gif'),NULL,array('title'=>'Edit ','alt' => 'Edit',"class"=>"icon")),array("title"=>"Edit user information"))
+					  . App::load("Helper/Html")->linkTag("javascript:void(0)",App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/remove.gif'),NULL,array('title'=>'Delete','alt'=>'Delete')),array('id'=>'Comment','class'=>'link_delete icon', 'title'=>'Comment_' . $comment['id']))
+				);
+			}
+			$Grid->Render();
+		}
+		else
+		{
+			echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'message', 'message' => $this->__('No Commetns posted yeat')));
+		}
+	?>
+
+	<?php App::Helper('Toolbar')->setBtnDelete(Array("id"=>"{'mode':'Comment'}"))->setBtnBack()->Render(array('code'=>'blog_comments_list_view_top')); ?>
+
+<?php endif;?>

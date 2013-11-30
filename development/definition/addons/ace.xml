@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addons>
+    <addon name="ace">
+        <title><![CDATA[Ace]]></title>
+        <description><![CDATA[Code Editor]]></description>
+        <javascripts>
+            <src>/addons/ace/ace.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>
+        <layouts>All</layouts>
+        <layouts_except></layouts_except>
+        <status>Active</status>
+        <load>OnRequest</load>        
+    </addon>
+</Addons>

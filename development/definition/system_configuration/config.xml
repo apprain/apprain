@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<Configuration>
+    <base>
+        <!--
+            CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
+        -->
+        <appRainversion>3.0.3</appRainversion>
+        <appRainLicenseKey>0123456789101112</appRainLicenseKey>
+    </base>
+    <options>
+        <!--
+        /**
+         * Debug Lavel
+         * 0 : Production mode
+         * 1 : Common Error Reporting
+         * 2 : Show Common Error Reporintg and Database query
+         */
+         -->
+        <option type="Integer" name="DEBUG_MODE">
+            <title>Debug Mode</title>
+            <value><![CDATA[0]]></value>
+            <default><![CDATA[0]]></default>
+            <flag>1</flag>
+            <choice>0|1|2</choice>
+            <editable>1</editable>
+        </option>
+		<option type="String" name="INLINE_HELP">
+            <title>Inline help</title>
+            <value><![CDATA[Enabled]]></value>
+            <default><![CDATA[Enabled]]></default>
+            <flag>1</flag>
+            <choice>Enabled|Disabled</choice>
+            <editable>1</editable>
+        </option>
+		
+        <option type="String" name="ERROR_REPORT_MODE">
+            <title>Error Report Mode</title>
+            <value><![CDATA[None]]></value>
+            <default><![CDATA[None]]></default>
+            <flag>1</flag>
+            <choice>Save|Email|None</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="SHOW_HOOK_POSITIONS">
+            <title>Show Hook Positions</title>
+            <value><![CDATA[No]]></value>
+            <default><![CDATA[No]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * Enable CASHE on production mode
+         * Once you chnage database table defination :
+         * - Must delete cashe from cache/temporary/model
+         */
+        -->
+        <option type="Boolean" name="MODEL_CACHE">
+            <title>Enable Model Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="ADDON_CACHE">
+            <title>Addon Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="PROFILE_USER_CONFIG_CACHE">
+            <title>Profile User Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>0</editable>
+        </option>
+
+        <option type="Boolean" name="URI_MANAGER_CACHE">
+            <title>URI Manager Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="SITE_SETTINGS_CACHE">
+            <title>Site Settings Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="INTERFACE_BUILDER_CACHE">
+            <title>Interface Builder Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="CATEGORY_SET_CACHE">
+            <title>Category Set Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="INFORMATION_SET_CACHE">
+            <title>Information Set Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="LANGUAGE_CACHE">
+            <title>Language Cache</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="String" name="SEARCH_CACHE">
+            <title>Search Cache</title>
+            <value><![CDATA[File]]></value>
+            <default><![CDATA[File]]></default>
+            <flag>1</flag>
+            <choice>File|NoCache</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="LOAD_MODEL_OBJECT_TO_THIS">
+            <title><![CDATA[Load Model Object]]></title>
+            <value><![CDATA[No]]></value>
+            <default><![CDATA[No]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * This section will save your controller name and method name
+         * URI_MASK character will replace with underscore(_)
+         * If we can URI_MASK to '-' then wwww.example.com/my-profile/basic-view will
+         * look for the controller 'my_profile' and method 'basic_view'
+         * This will help to create user freindly URI
+         */
+        -->
+        <option type="String" name="URI_MASK">
+            <title>URI Mask</title>
+            <value><![CDATA[-]]></value>
+            <default><![CDATA[-]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <option type="String" name="ADMIN_PAGE_TITLE_SAPARATOR">
+            <title>Admin Page Saparator</title>
+            <value><![CDATA[ &laquo; ]]></value>
+            <default><![CDATA[ &laquo; ]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * The Following symbol will replace by '/'
+         * Example: www.example.com/profile/basic:12 will act like Example: www.example.com/profile/basic/12
+         * Note: URI_SEPARATOR_MASK can not be used with controller method. It applicable only with parameter.
+         * Invalid example : www.example.com:member,www.example.com/member:profile
+         * Valid example   : www.mysite.com/member/profile:50, www.mysite.com/member/profile:view:50
+         */
+        -->
+        <option type="String" name="URI_SEPARATOR_MASK">
+            <title>URI Separator Mask</title>
+            <value><![CDATA[:]]></value>
+            <default><![CDATA[:]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * Define the router mode -
+         * 1. EXTENDED
+         * 2. COMPACT
+         *
+         *	ROUTING_MODE activate if we set routing path for a page
+         *
+         *	EXTENDED :
+         *	Extented mode create some flexibility for page URI. It create some extra space to write userdefine
+         *	keyword in to the URL to make it more meaningfull.
+         *	If we set a page router like : array('actual' => array('blog','index','by-post'),'virtual' => array('official-blogs'))
+         *	Then URL structure will be   : http://www.example.com/official-blogs/[blank space-1]/[blank space-2]/[Parameter-1]/[Parameter-1] ... /[Parameter-n]
+         *	blank space-1 : A general blan space to write anything to make the webaddress more readable
+         *	blank space-2 : This blank space will use like a proxy of 'by-post' parameter send in router
+         *	Parameter	  : All parameter set one by one
+
+         *	Example
+         *	Router		: array('actual' => array('blog','index','by-post'),'virtual' => array('official-blogs'))
+         *	URL			: http://www.apprain.com/official-blog/2009/06-06/182/plug-ins-and-plug-ins
+         *	Method		: function index( $action , $id )
+         *	Value set	: 'by-post' -> $action
+         *				  '2009'	-> Skip
+         *				  '06-06'	-> Skip
+         *				  '128'		-> $id
+         *				  Other segment will set in as a function parameter accordingly
+         *
+         *	COMPACT :
+         *	Compact mode do not create empty space and assign the function parameter form the very first URI segment.
+         *
+         *	Example
+         *	Router		: array('actual' => array('member','info','basic'),'virtual' => array('user-profile'))
+         *	URL			: http://www.apprain.com/user-profile/55
+         *	Method		: function info( $action , $id )
+         *	Value set	: 'basic' -> $action
+         *				  '55'	  -> $id
+         *				  Other segment will set in as a function parameter accordingly
+         */
+        -->
+        <option type="String" name="ROUTING_MODE">
+            <title>URI Routing</title>
+            <value><![CDATA[COMPACT]]></value>
+            <default><![CDATA[COMPACT]]></default>
+            <flag>1</flag>
+            <choice>EXTENDED|COMPACT</choice>
+            <editable>0</editable>
+        </option>
+
+        <option type="String" name="ONLINE_COMPONENT_REPO_URI">
+            <title>Component Repo.</title>
+            <value><![CDATA[http://www.apprain.com/comrss]]></value>
+            <default><![CDATA[http://www.apprain.com/comrss]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+        <!--
+        /**
+         * Session time out in munites
+         */
+        -->
+        <option type="Integer" name="SESSION_TIME_OUT">
+            <title>Session Time Out</title>
+            <value><![CDATA[30]]></value>
+            <default>30</default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <option type="Integer" name="COOKIE_TIME_OUT">
+            <title>Cookie Time Out</title>
+            <value><![CDATA[30]]></value>
+            <default>30</default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         *	Category Name Contension
+         *	path_1: a
+         *			|_b
+         *			|_c
+         *
+         *	path_2:
+         *			a
+         * 			a >> b
+         *			a >> c
+         *
+         *	title:
+         *	        a
+         *		    b
+         *		    c
+         */
+         -->
+        <option type="String" name="CATEGORY_PATH_MODE">
+            <title>Category Path Mode</title>
+            <value><![CDATA[path_1]]></value>
+            <default><![CDATA[path_1]]></default>
+            <flag>1</flag>
+            <choice>path_1|path_2|path_3</choice>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * 404 Redirection URL
+         * Home Page : '/'
+         */
+        -->
+        <option type="String" name="URL_FOR_404_PAGE">
+            <title>404 Page</title>
+            <value><![CDATA[/]]></value>
+            <default><![CDATA[/]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * Validation Color setting
+         */
+         -->
+        <option type="String" name="ERROR_BACKGROUND">
+            <title>Error Color</title>
+            <value><![CDATA[#FF8080]]></value>
+            <default><![CDATA[#FF8080]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <option type="String" name="DEFAULT_BACKGROUND">
+            <title>Default Color</title>
+            <value><![CDATA[#FFFFFF]]></value>
+            <default><![CDATA[#FFFFFF]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * Paginaion link text
+         * It set as default caption
+         */
+        -->
+        <option type="String" name="PREVIOUS_PAGE">
+            <title>Previouse Page</title>
+            <value><![CDATA[Previous]]></value>
+            <default><![CDATA[Previous]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <option type="String" name="NEXT_PAGE">
+            <title>Next Page</title>
+            <value><![CDATA[Next]]></value>
+            <default><![CDATA[Next]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /**
+         * The user tables field for login
+         */
+        -->
+        <option type="String" name="LOGIN_FIELD">
+            <title>User Login Page</title>
+            <value><![CDATA[email]]></value>
+            <default><![CDATA[email]]></default>
+            <flag>1</flag>
+            <choice>email|username</choice>
+            <editable>0</editable>
+        </option>
+
+        <!--
+        /**
+         * Create profile user configuration automatically
+         */
+         -->
+        <option type="Boolean" name="CREATE_CONFIGURATION_FOR_USER">
+            <title>User Configuration</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>0</editable>
+        </option>
+
+        <option type="Boolean" name="CREATE_DUMMY_PAGE_FOR_USER">
+            <title>User Dummy Page</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>0</editable>
+        </option>
+
+        <!--
+        /*
+         * Global Redirection
+         * This setting allow us to fixed the website in to a specific URL
+         * To define method and controller see $global_router in uri_manager.php
+         */
+         -->
+        <option type="Boolean" name="GLOBAL_REDIRECTION">
+            <title>Global Router</title>
+            <value><![CDATA[No]]></value>
+            <default><![CDATA[No]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <!--
+        /*
+         * Default admin redirection
+         * system : Supper Admin]
+         * login  : User admin
+         */
+        -->
+        <option type="String" name="ADMIN_REDIRECTION">
+            <title>Admin Default Login</title>
+            <value><![CDATA[system]]></value>
+            <default><![CDATA[system]]></default>
+            <flag>1</flag>
+            <choice>system|login</choice>
+            <editable>1</editable>
+        </option>
+        <option type="String" name="DEFAULT_TIMEZONE">
+            <title>Default Timezone</title>
+            <value><![CDATA[15]]></value>
+            <default><![CDATA[15]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>0</editable>
+        </option>
+
+        <option type="Boolean" name="MODEL_VERSION_CONTROL">
+            <title>Model Version Control</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="ADMIN_REF_IN_CAT_INFO_SET">
+            <title><![CDATA[View Admin Information]]></title>
+            <value><![CDATA[No]]></value>
+            <default><![CDATA[No]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+        <option type="Boolean" name="INFORMATIONSET_JS_VALIDATION">
+            <title>Javascript Validation</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+        <option type="Boolean" name="ADMIN_REF_WITH_LINK">
+            <title>Show Admin Info</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="Boolean" name="LOG_DELETED_DATA">
+            <title>Save Deleted Data</title>
+            <value><![CDATA[Yes]]></value>
+            <default><![CDATA[Yes]]></default>
+            <flag>1</flag>
+            <choice>Yes|No</choice>
+            <editable>1</editable>
+        </option>
+
+        <option type="String" name="LOG_DELETED_DATA_THRESHOLD">
+            <title><![CDATA[Save Deleted Data<br /> (Days)]]></title>
+            <value><![CDATA[7]]></value>
+            <default><![CDATA[7]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+        <option type="String" name="FILE_MANAGER_RESTRICTED_EXT">
+            <title><![CDATA[Restricted Ext.]]></title>
+            <value><![CDATA[php,php3,php4,exe,pl,py,bat,sys,dev,sh]]></value>
+            <default><![CDATA[php,php3,php4,exe,pl,py,bat,sys,dev,sh]]></default>
+            <flag>1</flag>
+            <choice/>
+            <editable>1</editable>
+        </option>
+    </options>
+</Configuration>

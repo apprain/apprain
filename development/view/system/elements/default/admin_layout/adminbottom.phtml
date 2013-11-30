@@ -1,0 +1,44 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<div id="app-help-dialog-modal" style="display:none">
+	<div id="app-help-dialog-modal-inner"><!-- appRain Help --></div>
+</div>
+<div id="footer">
+	<a href="http://www.apprain.com" title="<?php echo $this->__('appRain Content Management Framework');?>">
+		<img src="<?php echo $this->baseUrl("/images/smalllogo.gif"); ?>" alt="<?php echo $this->__('appRain Content Management Framework');?>" />
+	</a>
+    <p>		
+        <strong><?php echo(App::Load('Helper/Config')->Load('site_info')->get('site_title')); ?></strong> |
+        <?php echo $this->__('License Key');?> <?php echo App::__Def()->sysConfig('APPRAINLICENSEKEY'); ?> |
+        <?php echo $this->__('Version');?> <?php echo App::__Def()->sysConfig('APPRAINVERSION'); ?> |
+        <?php echo app::load("Helper/Html")->linkTag($this->baseurl('/admin/logout'), $this->__('Logout')); ?>
+    </p>
+</div>
+

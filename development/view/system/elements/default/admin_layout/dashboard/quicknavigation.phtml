@@ -1,0 +1,13 @@
+<?php if (App::Config()->setting('quick_navigation_widget', 'Yes') != 'No'): ?>
+<div class="box">
+    <div class="title">
+        <h5>
+			<input type="button" title="Close" class="widget-closer" id="closer_quick_navigation_widget" align="top" />
+			<?php echo $this->__('Quick Navigation') . App::Helper('Html')->helpTag('dashboard-quick-navigation');?>
+		</h5>
+    </div>
+    <div class="inner">
+        <?php App::Module('AdminPanelUI')->renderDashboardNAVS();?>
+    </div>
+</div>
+<?php endif;?>

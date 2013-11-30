@@ -1,0 +1,190 @@
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+
+body {
+    color: #000000;
+    font-family: Trebuchet MS, verdana, arial, helvetica;
+    font-size: 12px;
+    line-height: 17px;
+    margin: 0;
+    background: url(../images/innerbody_back.gif) repeat-x;
+}
+
+h2 {
+    padding: 10px 10px 0px 10px;
+    margin: 0;
+    font-size: 17px;
+    color: #9A011F;
+    font-weight: lighter;
+}
+
+.step-selected {
+    color: #000000;
+}
+
+h2 a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-weight: normal;
+    padding: 10px 10px 0px 10px;
+    margin: 0;
+    font-size: 22px;
+    color: #000000;
+}
+
+p, .inner {
+    padding: 10px 10px 0 10px;
+    margin: 0;
+}
+
+a {
+    color: #000000;
+    outline: none;
+}
+
+a:hover, .link-selected {
+    color: #9A011F;
+}
+
+img {
+    border: 0;
+}
+
+ul, li, form {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wrapper {
+    width: 1000px;
+    margin: auto;
+}
+
+.head {
+    height: 66px;
+    margin-top: 30px;
+    padding-bottom: 4px;
+}
+
+.head .head-left {
+    float: left;
+}
+
+.top-heading {
+    height: 55px;
+}
+
+.top-heading h1 {
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.clearboth {
+    clear: both;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.left-bar {
+    background: url(../images/left-bar.gif) repeat-y;
+    border: 1px solid #FFFFFF;
+}
+
+.container .inner-left {
+    width: 270px;
+    float: left;
+}
+
+.container .inner-right {
+    width: 720px;
+    float: left;
+}
+
+.container .inner-left ul {
+    margin-left: 15px;
+}
+
+.lists, form {
+    margin-left: 20px;
+}
+
+.lists li {
+    background: url(../images/arrow_orange.gif) no-repeat center left;
+    padding-left: 15px;
+}
+
+.form li {
+    padding-left: 20px;
+}
+
+.footer {
+    margin-top: 10px;
+    padding: 10px 0 10px 0;
+    border-top: 1px solid #AD9A9E;
+}
+
+.pass {
+    color: #00CC00;
+}
+
+.fail {
+    color: #CC0000;
+}
+
+.ins-input {
+    border: 1px solid #99011E;
+    width: 200px;
+    padding: 2px;
+}
+
+.ins-button {
+    border: 1px solid #99011E;
+    background-color: #99011E;
+    color: white;
+    padding: 2px;
+    font-family: Trebuchet MS, verdana, arial, helvetica;
+    font-size: 15px;
+    margin: 10px 0 0 20px;
+    cursor: pointer;
+}
+
+.siteinformation {
+    margin-left: 20px;
+    width: 440px;
+}
+
+.siteinformation li {
+    padding: 2px;
+    display: block;
+    width: 210px;
+    float: left;
+}

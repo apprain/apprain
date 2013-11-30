@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<Addons>
+    <!--
+    * Load 3rd Parties libraries based one javascript and css
+    -->
+    <addon name="base_libs" id="base_libs" version="1.7.2">
+        <title><![CDATA[Base Libraries]]></title>
+		<description><![CDATA[jQuery base library to support JS scripting. The library runs on noConflict mode]]></description>
+        <javascripts>
+            <src>/js/lib/jquery/jquery-1.7.2.min.js</src>
+            <src>/js/lib/jquery/jquery-ui-1.8.custom.min.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>
+        <layouts>All</layouts>
+        <layouts_except></layouts_except>
+        <status>Active</status>
+        <load>Always</load>        
+    </addon>
+    <addon name="commonresource">
+        <title><![CDATA[Common Resource]]></title>
+		 <description><![CDATA[Load appRain common resources]]></description>
+        <javascripts/>
+        <style_sheets/>
+        <code>
+<![CDATA[
+<script type="text/javascript">
+$.noConflict();
+var siteInfo = {
+		'baseUrl' : '{baseurl}',
+		'skinUrl' : '{skinurl}'
+	};
+
+jQuery(document).ready(function () {
+	jQuery(".confirm-link").click(function(event) {
+		event.preventDefault();
+		if(confirm('Are you sure to complete the request?\nPress Ok to continue or Cancel to keep as it is.'))
+		{
+			window.location =jQuery(this).attr('href');
+		}
+	});
+});		
+</script>
+]]>
+        </code>
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>Always</load>
+        <description/>
+    </addon>
+    <addon name="appform">
+        <title><![CDATA[App. Forms]]></title>
+        <description><![CDATA[Manage form validation and AJAX submit.]]></description>
+        <javascripts>
+            <src>/addons/forms/appform.js</src>
+        </javascripts>
+        <style_sheets/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>		
+        <code/>
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>Always</load>
+    </addon>
+    <addon name="rich_text_editor">
+        <title><![CDATA[Rich Text Editor]]></title>
+        <description><![CDATA[Convert a Text Area to WYSIWYG Editor to manage content.]]></description>	
+        <javascripts>
+            <src>/addons/ckeditor/ckeditor.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code><![CDATA[]]></code>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>		
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>OnRequest</load>
+    </addon>
+    <addon name="row_manager">
+        <title><![CDATA[Grid Row Manager]]></title>
+        <description><![CDATA[Manage Data Grid rows to delete data and files.]]></description>	
+        <javascripts>
+            <src>/addons/row_manager/row_manager.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>OnRequest</load>
+    </addon>
+    <addon name="defaultvalues">
+        <title><![CDATA[Default Value]]></title>
+        <description><![CDATA[Set default value in Input elements and hide on foucs.]]></description>		
+        <javascripts>
+            <src>/addons/defaultvalues/defaultvalues.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>		
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Inactive</status>
+        <load>OnRequest</load>
+    </addon>
+    <addon name="datagrid">
+        <title><![CDATA[Data Grid Style]]></title>
+       <description><![CDATA[Data Grid CSS style]]></description>	
+        <javascripts/>
+        <style_sheets>
+            <link>/addons/datagrid/style.css</link>
+        </style_sheets>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>		
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>OnRequest</load>
+    </addon>
+    <addon name="tab">
+        <title><![CDATA[TAB Generator]]></title>
+        <description><![CDATA[Create TAB with Javascript and CSS]]></description>		
+        <javascripts>
+            <src>/addons/tab/script.js</src>
+        </javascripts>
+        <style_sheets>
+            <link>/addons/tab/style.css</link>
+        </style_sheets>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.com</addon_uri>		
+        <layouts>All</layouts>
+        <layouts_except/>
+        <status>Active</status>
+        <load>OnRequest</load>
+    </addon>
+</Addons>

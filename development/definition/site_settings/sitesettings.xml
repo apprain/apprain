@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<SiteSettings>
+    <sections>
+        <base name="general">
+            <title>Admin Setting</title>
+            <admin_tab>developer</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="common">
+                    <title>Common Settings</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Site Title</title>
+                        <name>site_title</name>
+                        <default>Lipsum Dolor</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Admin Title</title>
+                        <name>admin_title</name>
+                        <default>Hodecli Mokoma Mas</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Copy Right Text</title>
+                        <name>copy_right_text</name>
+                        <default><![CDATA[Copy Right [year] [website]]]></default>
+                        <type>inputTag</type>
+                    </selection>
+                </selections>
+            </group>
+            <group>
+                <base name="emails">
+                    <title>Emails</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Admin Email</title>
+                        <name>admin_email</name>
+                        <default>admin@domsin.com</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Support Email</title>
+                        <name>support_email</name>
+                        <default>support@domain.com</default>
+                        <type>inputTag</type>
+                    </selection>
+
+                </selections>
+            </group>
+        </groups>
+    </sections>
+    <sections>
+        <base name="opts">
+            <title>Site Options</title>
+            <admin_tab>developer</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="options">
+                    <title>Options</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Add new page in Site Menu</title>
+                        <name>add_new_page_in_menu_automarically</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Disable Static Meta</title>
+                        <name>disable_page_meta_options</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Disable Menu Icon</title>
+                        <name>disable_menu_icon</name>
+                        <type>radioTag</type>
+                        <default>No</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+					<selection>
+                        <title>Quick Navigation Widget</title>
+                        <name>quick_navigation_widget</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>					
+                    <selection>
+                        <title>Activity Widget</title>
+                        <name>activity_widget</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Leave a Message</title>
+                        <name>leave_amessage_widget</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Flash File Uploader</title>
+                        <name>flash_file_uploader</name>
+                        <type>radioTag</type>
+						<hints>This setting is subject to security, Please keep inactive after upload.</hints>
+                        <default>No</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Currency</title>
+                        <name>currency</name>
+                        <default>$</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Default Pagination</title>
+                        <name>default_pagination</name>
+                        <default>admin</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Site Alived</title>
+                        <name>is_site_alive</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Image Width</title>
+                        <name>large_image_width</name>
+                        <default>500</default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
+                        <title>Image Height</title>
+                        <name>large_image_height</name>
+                        <default>500</default>
+                        <type>inputTag</type>
+                    </selection>
+
+                </selections>
+            </group>
+            <group>
+                <base name="rich_text_editor">
+                    <title>WYSIWYG Editor</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Enable Editor</title>
+                        <name>rich_text_editor</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Editor Mode</title>
+                        <name>rich_text_editor_mode</name>
+                        <type>radioTag</type>
+                        <default>Simple</default>
+                        <options>
+                            <option value="Simple">Simple</option>
+                            <option value="Advanced">Advanced</option>
+                        </options>
+                    </selection>
+                </selections>
+            </group>
+			<group>
+                <base name="emails">
+                    <title>Emails</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+					<selection>
+                        <title>Enabled</title>
+                        <name>emailsetup_enabled</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Host</title>
+                        <name>emailsetup_host</name>
+                        <default>localhost</default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Port</title>
+                        <name>emailsetup_port</name>
+                        <default>25</default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Username</title>
+                        <name>emailsetup_username</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Password</title>
+                        <name>emailsetup_password</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+
+                </selections>
+            </group>			
+            <group>
+                <base name="time_zone">
+                    <title>Time Zone</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Time zone</title>
+                        <name>time_zone</name>
+                        <type>selectTag</type>
+                        <default>America/Los_Angeles</default>
+                        <options/>
+                    </selection>
+                </selections>
+            </group>
+        </groups>
+    </sections>
+</SiteSettings>

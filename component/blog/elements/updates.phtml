@@ -1,0 +1,29 @@
+<?php if(!empty($post['data'])):?> 
+<div class="clear"></div><h2 class="block-title"><?php echo App::Config()->setting('blogsettings_block_title',"Blog Updates");?></h2><div class="grid_8"><?php foreach( $post['data'] as $key => $val):?>			<h3>			<a href="<?php echo App::Config()->baseUrl("/blog-by-post/{$val['id']}/" . App::Helper('Utility')->text2Normalize($val['title'])); ?>">				<?php echo ($val['title']);?>			</a>		</h3>		<p class="post-short-info">			<?php $catname = App::CategorySet()->idToName($val['category']);?>			<a href="<?php echo App::Config()->baseUrl("/blog-by-cat/{$val['category']}/" . App::Helper('Utility')->text2Normalize($catname)); ?>"><?php echo $catname;?></a> |			<?php echo App::Helper('Date')->dateFormated($val['entrydate'],'long'); ?> |			<?php echo $this->__("Comment posted: ") . App::Component('Blog')->Helper('Data')->countCommentByPost($val['id']); ?>		</p>	
+		<small><em><?php echo App::Helper('Date')->dateFormated($val['entrydate'],'long');?></em></small>		<p><?php echo substr(strip_tags($val['description']),0,250);?></p><?php endforeach;?></div>
+<div class="grid_8">
+	<h2><?php echo $this->__("Recent Comments");?></h2>	
+	<?php if(!empty($comments['data'])):?>
+	<?php foreach($comments['data'] as $row): ?>			
+	<div class="blog-comments-block">
+		<small class="comment-info">
+			<?php echo $this->__("Submitted by");?> 
+			<em>
+				<?php if($row['website'] !=''):?>
+					<a href="<?php echo $row['website']; ?>"><?php echo $row['name']; ?></a> 
+				<?php else:?>
+					<?php echo $row['name']; ?>
+				<?php endif;?>
+			</em> | 
+			 <?php echo App::Helper('Date')->dateFormated($row['dated'],'long'); ?> | 
+			 <?php echo App::Html()->linkTag(App::Config()->baseUrl("/blog-by-post/{$row['postid']}#comment-parma-link-{$row['id']}"),'&#10144;') ?>
+		</small>
+		<?php echo substr(strip_tags($row['comment']),0,150);?><br />
+		
+	</div>
+	<?php endforeach;?>		
+	<?php else:?>
+		<p><?php echo $this->__("No recent comment found");?></p>
+	<?php endif;?>
+</div>
+<?php endif;?>

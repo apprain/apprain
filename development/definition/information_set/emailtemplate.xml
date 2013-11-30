@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/documents
+ */
+-->
+<InformationSet>
+    <!--
+    /**
+     * Base Section
+     * Contain all Global Options
+     */
+    -->
+    <base mode="db">
+        <version>0.2.1</version>
+        <lastupdate>13-04-08</lastupdate>
+        <title>Email Template</title>
+        <admin_tab>developer</admin_tab>
+        <addons/>
+        <parameters />
+        <max_entry>
+            <limit></limit>
+            <message><![CDATA[]]></message>
+        </max_entry>
+    </base>
+    <!--
+    /**
+     * Fields Section
+     * Contain all input Fields Definitions
+     */
+    -->
+    <fields>
+        <field name="templatetype">
+            <title>Name</title>
+            <type>inputTag</type>
+            <parameters>
+                <parameter name="edit">Yes</parameter>
+            </parameters>
+			<db-attribute>
+				<attribute name="type">varchar</attribute>
+                <attribute name="length">100</attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <validation>
+                <rule>
+                    <type>notEmpty</type>
+                    <err-message>Please enter tempate type</err-message>
+                </rule>
+            </validation>
+            <selected></selected>
+            <tag-attributes>
+                <attribute name="id">type</attribute>
+                <attribute name="class">app_input</attribute>
+            </tag-attributes>
+        </field>
+        <field name="subject">
+            <title>Subject</title>
+            <type>inputTag</type>
+			<db-attribute>
+				<attribute name="type">varchar</attribute>
+                <attribute name="length">150</attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <validation>
+                <rule>
+                    <type>notEmpty</type>
+                    <err-message>Please enter subject</err-message>
+                </rule>
+            </validation>
+            <parameters/>
+            <tag-attributes>
+                <attribute name="id">title</attribute>
+                <attribute name="class">app_input</attribute>
+            </tag-attributes>
+        </field>
+        <field name="message">
+            <title>Message</title>
+            <type>textareaTag</type>
+            <validation/>
+            <parameters>
+                <parameter name="richtexteditor">No</parameter>
+            </parameters>
+			<db-attribute>
+				<attribute name="type">text</attribute>
+                <attribute name="length"></attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <tag-attributes>
+                <attribute name="id">description</attribute>
+                <attribute name="class">app_input</attribute>
+                <attribute name="rows">20</attribute>
+            </tag-attributes>
+        </field>
+    </fields>
+</InformationSet>

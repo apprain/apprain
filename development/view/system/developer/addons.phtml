@@ -1,0 +1,134 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<form class="app_form" method="post" enctype="multipart/form-data" >
+<?php App::Helper('Toolbar')->setTitle("Addon List")    ->setBtnCustomHTML(
+		App::load("Helper/Html")->buttonTag("Button[InstallAddons]", "Install Addon", array("class" => "installcomponent")) . ' ' . 
+		App::load("Helper/Html")->buttonTag("Button[ViewComponent]", "Components ", array("onclick" => "window.location=siteInfo.baseUrl + '/developer/components'"))
+	)
+	->setBtnBack()->Render(array('code' => 'manage_addon_list_top')); ?>
+    <div id="hidden_content" style="margin-bottom:10px" class="displaynone">
+		<h3 class="first">    <?php echo $this->__("Upload a Addons in ZIP format form your computer.");?></h3>
+		<form method="post" action="<?php echo $this->baseUrl("/developer/manageaddons/addnew/install");?>" enctype="multipart/form-data">
+			<div class="field  field-first">
+				<div class="label">
+					<label for="input-small"><?php echo $this->__("Upload File");?>*</label>
+				</div>
+				<div class="input">
+					<input type="file" name="data[Addon][resourcefile]"/>
+				</div>
+			</div>
+			<div class="buttons">
+				<input type="submit" name="submit" value="Install" class="app_button"/> <a id="dialog-modal-open" href="#">Save FTP Information(Recommandad)</a>
+			</div>
+		</form>
+	</div>
+	<?php echo $this->callElement("default/admin_layout/ftpform"); ?>	
+<?php
+$Grid = App::Module('DataGrid')
+    ->Clear()
+	->setHeader(array('Name', 'addon Information'))
+	->setFooter($addonList['paging_str']);
+ foreach($addonList['data'] as $key=>$addon):  ?>
+	
+		<?php 
+			$line_3 = "";			
+			if($addon['version'] !=''){
+				$line_3 .= "Version : {$addon['version']}";
+			}
+			if($addon['author_name'] !=''){
+				if($addon['author_uri']!=''){
+					$line_3 .=  " | " . App::Html()->linkTag($addon['author_uri'],"{$addon['author_name']}");
+				}
+				else{
+					$line_3 .=  " | " . "{$addon['author_name']}";
+				}
+			}			
+			if($addon['addon_uri']!=''){
+				$line_3 .=  " | " . App::Html()->linkTag($addon['addon_uri'],"{$addon['addon_uri']}");
+			}
+			
+			$line_4 = '<form method="post" action="' .  App::Config()->baseUrl("/developer/addons/update/{$key}?page=" . (isset($this->get['page']) ? $this->get['page'] : '1')) . '">';				
+			if(strtolower($addon['status'])=='active'){
+				$line_4 .= ' Status : ' . App::Html()->SelectTag('data[Addon][status]',array('Active'=>'Active','Inactive'=>'Inactive'),$addon['status'],array("style"=>"background-color:#D9FAC3"),array('off_blank'=>'Yes'));	
+			}
+			else{
+				$line_4 .= ' Status : ' . App::Html()->SelectTag('data[Addon][status]',array('Active'=>'Active','Inactive'=>'Inactive'),$addon['status'],array("style"=>"background-color:red;color:white"),array('off_blank'=>'Yes'));	
+			}
+			
+			
+			$line_4 .= ' Load : ' . App::Html()->SelectTag('data[Addon][load]',array('OnRequest'=>'On Request','Always'=>'Always'),$addon['load'],null,array('off_blank'=>'Yes'));	
+			$line_4 .= ' Layout : ' . App::Html()->inputTag('data[Addon][layouts]',$addon['layouts'],array('class'=>'small',"style"=>"width:50px"));	
+			$line_4 .= ' Layout Except : ' . App::Html()->inputTag('data[Addon][layouts_except]',$addon['layouts_except'],array('class'=>'small',"style"=>"width:50px"));	
+			$line_4 .= ' ' . App::Html()->submitTag('data[Addon][update]','Save',array('class'=>'common-button'));	
+			$line_4 .= '</form>';
+
+			
+			$Grid->addRow(				
+				"<strong>{$addon['title']}</strong>",
+				 "{$addon['description']}<br /><br />
+				 {$line_3}<br />
+				<br />{$line_4}
+				"
+			);	
+		?>
+	</form>
+<?php endforeach;?>
+<?php $Grid->Render(); ?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'manage_addon_list_bottom')); ?>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var options = {'HCIdPadding':'text'};
+
+        jQuery('.c_help').live('click', function () {
+            var _Obj = '#' + jQuery(this).attr('id') + options.HCIdPadding;
+
+            (jQuery(_Obj).hasClass('displaynone')) ? jQuery(_Obj).removeClass('displaynone') : jQuery(_Obj).addClass('displaynone');
+        });
+
+        jQuery(".removecomponent").live("click", function (e) {
+            if (confirm("Are you sure to remove this component?\nNote: The action can not be undone!\n\nPress Ok to continue and Cancel to keep as it is.")) {
+                var component = eval('(' + jQuery(this).attr('id') + ')').component;
+                window.location = siteInfo.baseUrl + '/developer/components/' + component + '/remove';
+            }
+        });
+
+        jQuery(".installcomponent").live("click", function (e) {
+            if (jQuery("#hidden_content").css("display") == 'none') {
+                jQuery("#hidden_content").css("display", "block");
+            }
+            else {
+
+                jQuery("#hidden_content").css("display", "none");
+            }
+        });
+    });    
+</script>

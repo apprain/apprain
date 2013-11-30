@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/documents
+ */
+-->
+<help>
+    <base>
+        <date><![CDATA[20/05/2012]]></date>
+        <version>0.1.0</version>
+    </base>
+    <records>
+		<record>
+            <id>help_not_found</id>
+            <title>Help not found</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[A user define exception has been occurred and you can find solution from following sources. 
+<h3> Check appRain manual</h3>
+You can find solution in appRain manual. Please browse <a href="http://www.apprain.com/manual">www.apprain.com/manual</a>
+Or view videos from <a href="http://www.apprain.com/videos">www.apprain.com/videos</a>
+<h3>Create Ticket</h3>
+Create a ticket to get reply from appRain developer. Please browse <a href="http://www.apprain.com/ticket">www.apprain.com/ticket</a>
+<h3>Contact via Email</h3>
+You can communicate thought email to get help. Send email at <a href="mailto=info@apprain.com">info@apprain.com</a>
+
+				]]>
+            </description>
+        </record>			
+        <record>
+            <id>page-manager-page-name</id>
+            <title>Page Name</title>
+            <shortdesc>An unique identifier of a page.</shortdesc>
+            <description><![CDATA[<p>Page Name is an identifier of a Page that used to retrieve, update and to generate Page URL.</p>	
+<p><em>Note: Please avoid special characters in page name, Use only alpha-numeric  format. For example: HomePage, customer-profile.</em></p>
+]]></description>
+        </record>
+        <record>
+            <id>page-manager-select-page</id>
+            <title>Select Page</title>
+            <shortdesc>Select a page to edit content.</shortdesc>
+            <description><![CDATA[<p>Drop Down contains all available pages name. Please select a name and load content to view and edit.</p>
+            <p><em>Note: Save your page before navigate to other page.</em></p>]]></description>
+        </record>		
+        <record>
+            <id>page-manager-select-snip</id>
+            <title>Select Snip</title>
+            <shortdesc>Select a Snip to edit Source Code.</shortdesc>
+            <description><![CDATA[<p>Please select a Snip and load source to view and edit PHP, HTML, JavaScript and Others. </p>
+            <p><em>Note: Save your page before navigate to other page.</em></p>]]></description>
+        </record>			
+        <record>
+            <id>page-manager-snip-name</id>
+            <title>Snip Name</title>
+            <shortdesc>A unique identifier of PHP script.</shortdesc>
+            <description><![CDATA[<p>A "Snip Name" is unique identifier that use to execute it.</p>	
+<p><em>Note: Only Alpha numeric characters, dash(-) and underscore(_)  is used to generate a page name. For example: sample-php.
+</em></p>]]></description>
+        </record>		
+        <record>
+            <id>page-manager-snip-content</id>
+            <title>Snip Content</title>
+            <shortdesc>PHP source code</shortdesc>
+            <description><![CDATA[<p>Snip contents PHP source code. This PHP code execute by importing in Static Page.</p>
+<p>All PHP resource and Object can call in a snip with help of App factory, for example:</p> <pre> App::Model('Member')->findAll();</pre>]]></description>
+        </record>		
+        <record>
+            <id>page-manager-placeholder</id>
+            <title>Content Placeholder</title>
+            <shortdesc>Position Name to place content.</shortdesc>
+            <description><![CDATA[<p>You can select one or more Placeholder to render page content.</p>
+            <p>Use CTRL+Left Click  or SHIFT+Left Click to select place holder.</p>
+            
+            <p>You can see all hidden place by following setting</p> <pre>Preference > Configuration > Show Hook Positions</pre>]]></description>
+        </record>	
+        <record>
+            <id>page-manager-rendertype</id>
+            <title>Render Type</title>
+            <shortdesc>Define the format of the content in Placeholder.</shortdesc>
+            <description><![CDATA[<p>You can place a content as Link, Smart Link or Text.</p>
+            <p>Means..</p>			
+            <p><em>Link</em> creates a Hyper Link of the page. In Link mode the url format is like </p><pre>www.example.com/page/view/about-us</pre><br />
+            <p><em>Smart Link</em> similar to <em>Link</em> but link format is like</p> <pre>www.example.com/about-us</pre>
+            <p>note: If smart link format match with a URL customized by URI Manager that then page content can overwrite.</p>
+            <p><em>Text</em> mode render full page content in the Placeholder.</p>
+            ]]></description>
+        </record>
+        <record>
+            <id>page-manager-meta-title</id>
+            <title>Page Meta Title</title>
+            <shortdesc>Render in title of the page.</shortdesc>
+            <description><![CDATA[<p>This content renders in title tag of the page. We can see this text in the title bar of the browser.
+            </p>
+            ]]></description>
+        </record>		
+        <record>
+            <id>page-manager-meta-keyword</id>
+            <title>Meta Keyword</title>
+            <shortdesc>Render as Meta Keywords.</shortdesc>
+            <description><![CDATA[<p>This value render in Meta Keyword tag of the page. You can find it in HTML code or Page Properties.</p>
+            ]]></description>
+        </record>				
+        <record>
+            <id>page-manager-meta-desc</id>
+            <title>Meta Description</title>
+            <shortdesc>Render as Meta Description.</shortdesc>
+            <description><![CDATA[<p>This value render in Meta Description tag of the page. You can find it in HTML code or Page Properties.</p>
+            ]]></description>
+        </record>	
+        <record>
+            <id>page-manager-meta-richtexteditor</id>
+            <title>Rich Rext Editor mode</title>
+            <shortdesc>Enable/Disable WYSIWYG  editor.</shortdesc>
+            <description><![CDATA[<p>
+            You can enable/disable WYSIWYG editor of a page.</p>
+            ]]></description>
+        </record>	
+        <record>
+            <id>dashboard-quick-navigation</id>
+            <title>Quick Navigation</title>
+            <shortdesc>View all inner link.</shortdesc>
+            <description><![CDATA[<p>
+            Quick Navigation shows you all accessible inner links of admin panel. This page load when you login or click on Home Button on Left Top of window.<br /><br />
+            <em> The Home Button load User Account page if quick navigation page is already loaded.</em> </p>
+            ]]></description>
+        </record>			
+        <record>
+            <id>dashboard-quick-activity-widget</id>
+            <title>Activity Widget</title>
+            <shortdesc>System Quick Information and Cache status</shortdesc>
+            <description><![CDATA[<p>
+            <em>Activity Widget</em> provide a quick overview of system and Cache Status. <br /><br />
+             You can enable/disable this feature from:</p>
+            <pre>Preference > Site Options > Activity Widget</pre>
+
+            ]]></description>
+        </record>					
+        <record>
+            <id>dashboard-quick-leave-a-message</id>
+            <title>Leave a Message</title>
+            <shortdesc>Communication between Administrator</shortdesc>
+            <description><![CDATA[<p>
+            <em>Leave a Message</em> is a simple way to communicate between administrator. Start typing email address in the box to see auto hints. <br /><br />
+             You can enable/disable this feature from:</p>
+            <pre>Preference > Site Options > Leave a Message</pre>
+
+            ]]></description>
+        </record>							
+        <record>
+            <id>admin-manager-access-control-limit</id>
+            <title>ACL (Access Control Limit)</title>
+            <shortdesc>Manage user access level in diffirent section.</shortdesc>
+            <description><![CDATA[<p>
+            <em>ACL</em> helps to manage user access level in admin panel. <em>Super Admin</em> has full access in admin panel and it does not have options to customized access.<br /><br /> For <em>general Admin </em> system creates a tree of access area and check box to assign right. <em>ACL</em> section also shows
+            custom access options.</p>
+            ]]></description>
+        </record>
+        <record>
+            <id>admin-manager-personal-information</id>
+            <title>Personal Information</title>
+            <shortdesc>Administrator Personal Information.</shortdesc>
+            <description><![CDATA[<p>
+            <em>Personal Information</em> section gives you access to update Profile and Password.<br /><br />
+            <em>Profile</em> is user's general information related to address and profession.<br /><br />
+            <em>Password</em> is admin login credential, you are requested to use a complex phase which is not guessable. Default rule of password is 
+            <ul class="circle" style="list-style:inside;">
+                <li> Length at least 8 characters.</li>
+                <li> At least one Numeric character.</li>
+                <li> At least one Upper Case Character</li>
+                <li> At least one Lower Case Character</li>
+            </ul>
+            </p>			
+
+            ]]></description>
+        </record>	
+        <record>
+            <id>member-manager-personal-information</id>
+            <title>Personal Information</title>
+            <shortdesc>Members Personal Information.</shortdesc>
+            <description><![CDATA[<p>
+                <em>Personal Information</em> section gives you access to update member's Profile.
+            </p>			
+            ]]></description>
+        </record>	
+        <record>
+            <id>member-manager-other-information</id>
+            <title>Other Information</title>
+            <shortdesc>Members other information and password</shortdesc>
+            <description><![CDATA[<p>
+                <em>Other Information</em> section gives you access to update member's Password, Address and Note.<br /><br />
+                Note: In <em>update window</em>, by default password fields are locked, enable the field by check the "Checkbox" before edit password.
+            </p>			
+            ]]></description>
+        </record>			
+        <record>
+            <id>components-list</id>
+            <title>Components</title>
+            <shortdesc>Components are pluggable module to enhance your project to be Easy and Quicker.</shortdesc>
+            <description><![CDATA[<p>
+                Each row in the list show installed components with name and a brief description.</p>			
+                <p>	<strong>Install New components:</strong><br />
+                Click on "Install New Compoent" button to see the component upload area. Select source in <em>ZIP</em> and again click "Install" button to install it. After installtion you can see the new component in the list. Now activate it to use.</p>
+                <p><strong>Component Options:</strong><br /> Most of the component creates options on left side of Component Window or Main Bar. The component functions always depends to the developer.</p>				
+                <p><strong>FTP Access:</strong><br />In some server folders are restrict to write. To ensure a smooth installation,  enter FTP access to get installer permission to upload files in right place. 
+                 <br />Click on "Save FTP Information(Recommandad)" to enter ftp access.</p>				
+            ]]></description>
+        </record>
+        <record>
+            <id>components-action-bar</id>
+            <title>Component Actions Bar</title>
+            <shortdesc>Helps you to Activate, Deactivate and Remove a Component.</shortdesc>
+            <description><![CDATA[<p>Use following buttons to manage component</p>			
+                <p>	<strong>ACTIVATE:</strong><br />If you see red <em>ACTIVATE</em> link means the component is not installed. Click on that to install the component</p>
+                <p><strong>DEACTIVATE</strong><br />If you see Green <em>DEACTIVATE</em> link means the component is already installed. Click on the link to deactivate it.</p>				
+                <p><strong>HELP</strong><br />Click on <em>HELP</em> link to see a quick help.</p>				
+                <p><strong>REMOVE</strong><br /><em>REMOVE</em> option delete the component from system with Source Files.</p>				
+            ]]></description>
+        </record>
+        <record>
+            <id>sys-config-debug_mode</id>
+            <title>Debug Mode</title>
+            <shortdesc>System Debug Mode to Display Report.</shortdesc>
+            <description><![CDATA[<p><em>Debug Mode</em> helps to see system debug reports in three mode.<br /><br />
+            Value definitions<br />
+            <strong>0:</strong> Disable System warning and Message, On this mode system disable all additional SQL statements <br />
+            <strong>1:</strong> Enable System warning and Message <br />
+            <strong>2:</strong> Shows executed SQL at the bottom of the page and enable system message.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-inline_help</id>
+            <title>Inline Help</title>
+            <shortdesc>Enable/Disable inline help</shortdesc>
+            <description><![CDATA[<p>Enable/Disable appRain inline help. Manage (?) marked links in  admin panel.
+            <br />
+            <strong>Enabled:</strong> Display inline help link.<br />
+            <strong>Disabled:</strong> Remove all inline help link.
+            </p>				
+            ]]></description>
+        </record>
+        
+        <record>
+            <id>sys-config-error_report_mode</id>
+            <title>Error Report Mode</title>
+            <shortdesc>Error Preserve Options.</shortdesc>
+            <description><![CDATA[<p><em>Error Report Mode</em> define system message storing process. <br />
+<strong>Save</strong> error report in Cache folder. <br />
+<strong>Email</strong> error report to support email address.<br />
+<strong>None</strong> disable error reporting.           
+
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-show_hook_positions</id>
+            <title>Show Hook Positions</title>
+            <shortdesc>View Template Placeholder position. </shortdesc>
+            <description><![CDATA[<p>Helps to see Place Holders positions in Website template. Placeholders are use in Page Manager to place content. <br /><br />
+            <strong>How to Check Hook Position</strong><br />
+            Set "Show Hook Positions" value “Yes" then go website frontend and refresh the page. Each Placeholder will view in a red square box with keyword. Set "No" to hide all position flags.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-model_cache</id>
+            <title>Model Cache</title>
+            <shortdesc>Enable Model Cache.</shortdesc>
+            <description><![CDATA[<p>Model is a connection class for database table. If Model Cache is set to "Yes" then system creates a File Cache for each model. <br /><br />			
+             Use Model cache to make the database access faster.
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-addon_cache</id>
+            <title>Addon Cache</title>
+            <shortdesc>Enable Addon Definition cache.</shortdesc>
+            <description><![CDATA[<p>Addons are used to install JavaScript, CSS base plugin. Each addon has an XML Definition file. On each page load system parse selected Definitions. <br /></br />
+            "Yes"  =>  Enable Addon Cache<br />
+            "No"  =>  Disable Addon Cache
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-profile_user_config_cache</id>
+            <title>Profile User Cache</title>
+            <shortdesc>Cache Profile default Settings and Pages. </shortdesc>
+            <description><![CDATA[<p>This features is not available in 3.0.1 and on newer versions
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-uri_manager_cache</id>
+            <title>URI Manager Cache</title>
+            <shortdesc>Create URI Definition Cache</shortdesc>
+            <description><![CDATA[<p> URI Manager helps to create user friendly URL in website. All Rewrite rules are saved in XML definition in following location:
+            <pre>/development/definition/uri_manager</pre><br />
+            This option enables to create temporary cache of definition to make the system faster. <br /><br />Set "Yes" to enable "URI Manager Cache".
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-site_settings_cache</id>
+            <title>Site Setting Cache</title>
+            <shortdesc>Create Cache for Site Setting Definitions</shortdesc>
+            <description><![CDATA[<p>Site Setting Section maintains mapping between Database and XML definition files and manage Website Common Setting Values. <br /><br />
+            Set "Yes" to enable cache for definition files.</p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-interface_builder_cache</id>
+            <title>Interface Builder Cache</title>
+            <shortdesc>Create Cache for Admin Panel structure Definitions.</shortdesc>
+            <description><![CDATA[<p>Interface Builder Manage the Admin Panel structure and Access Control based on XML definition. <br /><br />Set "Yes" to enable Interface Builder Cache. 
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-category_set_cache</id>
+            <title>CategorySet Cache</title>
+            <shortdesc>Create Cache for CategorySet Definition.</shortdesc>
+            <description><![CDATA[<p>CategorySet is to manage Recursive Categories based on XML definition. <br /></br />
+            Set "Yes" to enable CategorySet Cache. 
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-information_set_cache</id>
+            <title>InformationSet Cache</title>
+            <shortdesc>Create Cache for InformationSet Definition.</shortdesc>
+            <description><![CDATA[<p>InformationSet is with all field definition saved in XML definition and creates data process window automatically. <br /></br />
+            Set "Yes" to enable InformationSet Cache. 
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-language_cache</id>
+            <title>Language Cache</title>
+            <shortdesc>Create Cache for Language Definition.</shortdesc>
+            <description><![CDATA[<p>All language definition saved in XML format. <br /></br />
+            Set "Yes" to enable Language Cache. 
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-search_cache</id>
+            <title>Search Cache</title>
+            <shortdesc>Create Cache for Search Module.</shortdesc>
+            <description><![CDATA[<p>Serach module can cache search result to produce faster output. <br /></br />
+            Set "Yes" to enable Search Cache. 
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-load_model_object_to_this</id>
+            <title>Load Model Access</title>
+            <shortdesc>Define model Access Process.</shortdesc>
+            <description><![CDATA[<p>Generally we use App factory to call a model like<pre>App::Model('ModelName')</pre><br />
+            This setting is set to "Yes" then Model can access like $this->ModelName<br /><br />
+            <em>This method is not recommanded</em>
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-uri_mask</id>
+            <title>URI Mask</title>
+            <shortdesc>Phase saperator in URL</shortdesc>
+            <description><![CDATA[<p><em>URI Mask</em> is used to make the website address user friendly. In MVC pattern the URL is always generate based on Action Method name of controller and can not use special character like Hypen(-), Colon(:), Dot(.) in function name. The URI Mask is used to replace special character in underscore('_'). <br /></br /> For example, If URI Mask is set to hypen(-) and an URL is generate like <em>www.example.com/home/search-result</em> then action method can write like bellow:<pre>
+public function search_result(){
+
+}</pre>
+             
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-admin_page_title_saparator</id>
+            <title>Admin Phase Saperator</title>
+            <shortdesc>Saperator used in Admin Panel Page Title.</shortdesc>
+            <description><![CDATA[<p>This saperator is used in Admin Panel Title to saperate the Section and Action Phase.
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-uri_separator_mask</id>
+            <title>URL Saperator Mask</title>
+            <shortdesc>Replace the URL Saperator to mask it.</shortdesc>
+            <description><![CDATA[<p>By default <em>/</em> as a URL separator. But  we can change mask it by other character.<br /><br />
+            
+            For example if <em>URL Saperator Mask</em> is set to '$' then bellow two link will act similer 
+            <pre>www.example.com/home/search
+www.example.com/home$search</pre>
+            </p>
+]]></description>
+        </record>	
+        <record>
+            <id>sys-config-session_time_out</id>
+            <title>Session Time Out</title>
+            <shortdesc>Set maximum session time out limit.</shortdesc>
+            <description><![CDATA[<p><em>Session Time Out</em> overwrite default session timeout time.  The value consider in Munite.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-cookie_time_out</id>
+            <title>Cookie Time Out</title>
+            <shortdesc>Set maximum cookie time out limit.</shortdesc>
+            <description><![CDATA[<p><em>Cookie Time Out</em> overwrite default duration of timeout.  The value consider in Munite.
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-category_path_mode</id>
+            <title>CategorySet Path Mode</title>
+            <shortdesc>CategorySet Tree view mode.</shortdesc>
+            <description><![CDATA[<p>CategoryPath tree view has two methods. 
+            <strong>Path 1 </strong><br />
+Display Category link with "|_" to view the relation with parents.<br /><br />
+<strong>Path 2</strong><br />
+Display full part tree in single link like "Parent A > Parent B > Child".
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-url_for_404_page</id>
+            <title>404 Page</title>
+            <shortdesc>Page to redirect on 404 request.</shortdesc>
+            <description><![CDATA[<p>Enter relative path to show when page not found. By default it set to Home Page(<em>/</em>). You can set other page like bellow 
+            <pre>/page/view/pagenotfound</pre>
+            This setting will redirect user in www.example.com//page/view/pagenotfound.
+            
+            <br /><br />
+            <em>This setting work when Debug mode is set to "0"</em>
+            </p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-error_background</id>
+            <title>Error Color Code</title>
+            <shortdesc>Hexa-Decimal color code error background.</shortdesc>
+            <description><![CDATA[<p>Set background color for error input field. It specially used in Validation Addon.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-default_background</id>
+            <title>Success Color Code</title>
+            <shortdesc>Hexa-Decimal color code success background..</shortdesc>
+            <description><![CDATA[<p>Set background color for success input field. It specially used in Validation Addon.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-previous_page</id>
+            <title>Text for previous button</title>
+            <shortdesc>Preview pagination button text.</shortdesc>
+            <description><![CDATA[<p>This text is used for previous button.  It is considered for Model, CategorySet and InformationSet
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-next_page</id>
+            <title>Text for next button</title>
+            <shortdesc>Next pagination button text.</shortdesc>
+            <description><![CDATA[<p>This text is used for next button.  It is considered for Model, CategorySet and InformationSet
+            </p>]]></description>
+        </record>       
+        <record>
+            <id>sys-config-global_redirection</id>
+            <title>Global Router</title>
+            <shortdesc>Fix the webiste in a page.</shortdesc>
+            <description><![CDATA[<p>Global router fix user in a particuler page of the webiste. The location is set in Global Router setting in following location<br />
+            <pre>/development/definition/uri_manager/global_router.xml</pre></p>]]></description>
+        </record>	        
+        <record>
+            <id>sys-config-admin_ref_in_cat_info_set</id>
+            <title>View Admin Info</title>
+            <shortdesc>Show admin name and Information</shortdesc>
+            <description><![CDATA[<p>Show admin name and date of Administrator who has update data of InformationSet and Category data view window.</p>]]></description>
+        </record>
+        <record>
+            <id>sys-config-informationset_js_validation</id>
+            <title>JavaScript Validation</title>
+            <shortdesc>Enable JavaScript Validation</shortdesc>
+            <description><![CDATA[<p>Enable JavaScript validation in all InformationSet data process interface.</p>]]></description>
+        </record>		
+        <record>
+            <id>sys-config-admin_ref_with_link</id>
+            <title>Admin Information</title>
+            <shortdesc>Show Admin Information</shortdesc>
+            <description><![CDATA[<p>Show admin information who recently updated InformationSet and CategorySet data.</p>]]></description>
+        </record>				
+        <record>
+            <id>sys-config-log_deleted_data</id>
+            <title>Deleted Data</title>
+            <shortdesc>Store deleted data</shortdesc>
+            <description><![CDATA[<p>Store deleted data in system in serialized format. Deleted data can view from: <br />
+            <pre>Preference > Cache and Log > Log In Batabase</pre></p>]]></description>
+        </record>						
+        <record>
+            <id>sys-config-log_deleted_data_threshold</id>
+            <title>Data Store duration</title>
+            <shortdesc>Duration of stored deleted data.</shortdesc>
+            <description><![CDATA[<p>System clear deleted data after this period. Enter value in Days. </p>]]></description>
+        </record>	
+        <record>
+            <id>sys-config-file_manager_restricted_ext</id>
+            <title>File Extension</title>
+            <shortdesc>Restrict file extension.</shortdesc>
+            <description><![CDATA[<p>Enter file extension to restrict  during upload in File Manager. </p>]]></description>
+        </record>	
+        <record>
+            <id>site-settings</id>
+            <title>Site Setting</title>
+            <shortdesc>Common Website settings.</shortdesc>
+            <description><![CDATA[<p>
+            Site Settings are common setting that help to configure sites. Site Setting can "Admin Setting", "Site Options", "Theme" or any other setting 
+            create by developer.<br /><br />
+            This is a convient way to create option for User to give option to webiste customization.<br />
+            
+            <h3> Developer Access</h3>
+            Site Setting are available around the website in variable. All fields are saved in XML.  Generally all XML definition files are stored in 
+            following location: 
+            <br /><em>development/definition/site_settings</em>.<br />
+            It also may found with Themes and Components. <br /><br />
+            
+            
+            You can retrive value by useing follwoing APIs<br /> App::Config()->siteInfo([fieldname]) <br /> App::Config()->setting([fieldname]). <br />
+            For example: App::Config()->setting('site_title');
+            
+            </p>]]></description>
+        </record>
+        <record>
+            <id>theme</id>
+            <title>Website Theme</title>
+            <shortdesc>Manage webiste theme.</shortdesc>
+            <description><![CDATA[<p>
+            "Current Theme" shows the theme information is currenty installed.<br /><br />
+            
+            "Theme Collection" is theme gallery to install, Click "Install" to activate it and "Remove" to delete the theme from system.
+            </p>]]></description>
+        </record>
+        <record>
+            <id>export-database</id>
+            <title>Export Database</title>
+            <shortdesc>Export website database.</shortdesc>
+            <description><![CDATA[<p>Export the full database in *.SQL format. Data can restore by using the exported file. 
+            </p>]]></description>
+        </record>	
+        <record>
+            <id>imort-database</id>
+            <title>Importt Database</title>
+            <shortdesc>Import website database.</shortdesc>
+            <description><![CDATA[<p>Database can restore by using it. This field support *.SQL
+            </p>]]></description>
+        </record>			
+        <record>
+            <id>mvc_manager</id>
+            <title>MVC Manager</title>
+            <shortdesc>Status of MVC components</shortdesc>
+            <description>
+                <![CDATA[<p>This section shows status of Model, View, Controllers, Installers etc.</p>]]>
+            </description>
+        </record>				
+        <record>
+            <id>language_manager</id>
+            <title>Language Manager</title>
+            <shortdesc>Manage Language Translation</shortdesc>
+            <description>
+                <![CDATA[<p>Language manager helps to get multiple language support.<br /><br /> Each entry has a Language Code and Value. Language code is use
+                in language function to show  Language value. Use follwing function to use the code<br />
+                <em>$this->__('[LANGUAGE_CODE]');</em><br />
+                For example: echo $this->__('[HOME]');
+                </p>]]>
+            </description>
+        </record>		
+        <record>
+            <id>clear_temporary_cache</id>
+            <title>Temporary Cache Manager</title>
+            <shortdesc>Manage System Temporary Cache</shortdesc>
+            <description>
+                <![CDATA[<p>
+                System creates several caches to ensure faster process.  We use Cache Manager to clear all temporary cache if need.<br /><br />
+Select all or a particular type of cache and click "Flush Cache" button to clear it. <br /><br />
+
+<em>NB. After updating any configuration xml you may refresh the cache to make it active also you can disable cache from configuration section.</em>
+<pre>Preference > System > Configuration</pre>
+
+                
+                </p>]]>
+            </description>
+        </record>		
+		<record>
+            <id>invalid_action_method</id>
+            <title>Page Not found</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[The requested page not found becuase action method has not created. You can solve the issue by applying any of follwing methods:
+	
+	<h3>1. Create an Action Method</h3>
+	Action Method is a function inside the action controler class. Find the Action Controller in following location or inside in related component. This name of the file is same 
+	as you used in the URL like {arg0}.php.
+	<pre>/development/controllers/{arg0}.php</pre>
+	
+	An Action method looks like bellow example. The method name must have a post fix "Action" for example <strong><em>{arg1}Action </em></strong>
+	<pre>public function {arg1}Action(){
+	
+}</pre>
+<h3>2. Rout Page path</h3>
+Your can edit router setting to load other page in this URL. Router configuration is available in following location.
+<pre> /development/definition/uri_manager/page_router.xml</pre>
+Create a new role and set Actual and Virtual path. Like follwing example
+<pre>{lt}role{gt}
+  {lt}ractual{gt}{arg0}/{arg1}{lt}actual{gt}
+  {lt}rvirtual{gt}my_new_page_path{lt}/virtual{gt}
+{lt}/role{gt}</pre>
+
+<h3>2. Enable 404 setting</h3>
+You can enable 404 page setting and set the new location of this page. It will help you to handle all broken page. <br /><br />
+
+First login to admin panel and set the 404 page path in follwing location
+<pre>Preference/Configuration/404 Page</pre>
+Enter "/" to redirect in home page.<br /><br />
+
+In same configuration page set the "Debug mode" 0(Zero) in following location
+<pre>Preference/Configuration/Debug Mode</pre>]]>
+            </description>
+        </record>			
+		<record>
+            <id>invalid_controller</id>
+            <title>Page Not found</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[The requested page not found becuase Action Controller is has not created. You can solve the issue by applying any of follwing methods:
+	
+	<h3>1. Create an Action Controller</h3>
+	Action Controller is a PHP class generally we create it in following location or inside in related component. This name of the file is same 
+	as you used in the URL like {arg0}.php.
+	<pre>/development/controllers/{arg0}.php</pre>
+	
+	An Action controller looks like bellow example. The class name must have a post fix "Controller" and extend to appRain_Base_Core for example <strong><em>{arg0}Controller </em></strong>
+	<pre>class {arg0}Controller extends appRain_Base_Core
+{
+    public $name = "{arg0}";
+    public $dispatch = Array(
+        'preDispatchExclude' => array(),
+        'postDispatchExclude' => array()
+    );
+
+    /**
+     * Function Call before Page action method each time
+     */
+    public function __preDispatch()
+    {
+    }
+
+    /**
+     * Function Call before Page action method each time
+     */
+    public function __postDispatch()
+    {
+    }
+}</pre>
+<h3>2. Rout Page path</h3>
+Your can edit router setting to load other page in this URL. Router configuration is available in following location.
+<pre> /development/definition/uri_manager/page_router.xml</pre>
+Create a new role and set Actual and Virtual path. Like follwing example
+<pre>{lt}role{gt}
+  {lt}ractual{gt}{arg0}/{arg1}{lt}actual{gt}
+  {lt}rvirtual{gt}my_new_page_path{lt}/virtual{gt}
+{lt}/role{gt}</pre>
+
+<h3>2. Enable 404 setting</h3>
+You can enable 404 page setting and set the new location of this page. It will help you to handle all broken page. <br /><br />
+
+First login to admin panel and set the 404 page path in follwing location
+<pre>Preference/Configuration/404 Page</pre>
+Enter "/" to redirect in home page.<br /><br />
+
+In same configuration page set the "Debug mode" 0(Zero) in following location
+<pre>Preference/Configuration/Debug Mode</pre>]]>
+            </description>
+        </record>		
+		<record>
+            <id>invalid_model</id>
+            <title>Model Not found</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[The requested Model is not found. A model is a PHP class that connect to database and perform all data related activity. Follow bellow steps to create a model.
+	
+	<h3>Step 1. Create Database Table</h3>
+	First create database table "{arg2}{arg1}". Always use table prefix in table name. Generally plural from of word is used in table name, for example "members" not "member". <br /><br />
+	The database table must have a filed called "id" as a primary key with auto increment. 
+	
+	<h3>Step 2. Create Model file</h3>
+	Create model file in follwing location 
+	<pre>/development/models/{arg1}.php</pre>
+	
+	<em>Note: If you are creating the model for a component then create the file inside component directory and register the model accordingly. </em>
+	
+	<h3>Step 3. Create Model Class</h3>
+	The class name must have a post fix "Model" and extend to appRain_Base_Model for example <strong><em>{arg0}Model </em></strong>
+	<pre>class {arg1}Model extends appRain_Base_Model
+{
+    /**
+     * Version mantain a track for Installer
+     * Increase value when new SQL node added
+     */
+    public $version = "0.1.0";
+	
+    /**
+     *
+     * Use same as file name.
+     */
+    public $name = "{arg0}";
+	
+    /** 
+     * Do not use prefix.
+     *
+     * User lower case
+     *
+     * Use plural form of the word 
+     * For example: if model is Member then table name "members"
+     */
+	
+    public $db_table = "{arg1}"; 
+	
+    /* Validation Map - Optional */	
+    protected $model_validation = Array();
+	
+    /* Call Back Function - Optional */
+    protected function _beforeSave($send = NULL)
+    {
+    }
+
+    /* Call Back Function - Optional */
+    protected function _afterSave($send = NULL)
+    {
+    }
+
+    /* Call Back Function - Optional */
+    protected function _beforeDelete($send = NULL)
+    {
+    }
+
+    /* Call Back Function - Optional */
+    protected function _afterDelete($send = NULL)
+    {
+    }
+
+    /* Call Back Function - Optional */
+    protected function _onValidationSuccess($send = NULL)
+    {
+    }
+
+    /* Call Back Function - Optional */
+    protected function _onValidationFailed($send = NULL)
+    {
+    }
+	
+}</pre>
+]]>
+            </description>
+        </record>		
+		<record>
+            <id>class_not_defined</id>
+            <title>Class not found</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[The requested class <strong>{arg0}</strong> not found in the system. You can apply follwing method to solve the issue
+	
+	<h3>Create New a Class</h3>
+	You can load a class automatically if you follow the naming conversion. Create the class name by joinging the folder path of a class. Consider the path from 
+	root directory of your project. For example, If the class name "{arg0}" and path is 
+	<pre>/development/myclasses/{arg1}</pre>
+	
+	This class name should be
+	<pre>class Development_Myclasses_{arg0}{
+	
+}</pre>
+<h3>Load a Class</h3>
+It is always recommand, not to load a class by useing new key if it's not badly neaded. Use follwing way to load the class
+<pre>${arg0}Obj = App::__obj('Development_Myclasses_{arg0}');</pre>
+This method will save memory by applying Singleton Design Pattern.
+
+<h3> Recommand Class Location</h3>
+There are several standard place for a class in the system.
+<h6>Create a Helper</h6>
+Helper is a best place if you are creating a new class from basic. You can access it easily even if you create it inside your component. Helper path is 
+<pre>/development/helper</pre>
+
+If your helper name is {arg0} the create a file like bellow 
+<pre>/development/helper/{arg1}.php</pre>
+Now, Load a helper like bellow 
+<pre>// Example 1
+App::Helper({arg0})
+
+// Example 2
+App::Helper({arg0})->calculateGrossSalary();
+</pre>
+
+<h6>Create a Plugin</h6>
+Plugin is generally used for 3rd party class. Plugin is almost like <em>Helper</em> but it has an extra facilty, you can load a class that you dont like to rename. Plugin path 
+<pre>/development/plugin</pre>
+You can load a plugin like bellow 
+<pre>// Example 1
+App::Plugin({arg0})
+
+// Example 2
+App::Plugin({arg0})->calculateGrossSalary();
+</pre>
+
+<h3>Enable Magic Method Access in the Class</h3>
+Always extend you class or end chain of the class to <em>appRain_Base_Objects</em><br /><br />
+This class attach Matic method and database Abstraction. You can Set and  Get a value and jump diffirent thread. For example 
+<pre> /* ----------- Set Value --------------- */
+// Set multipe value
+${arg0}Obj->setFirstName('Jhon')
+  ->setLastName('Regan');
+  
+// Set single value   
+${arg0}Obj->setEmail('jhon@example.com');
+	  
+/* ----------- Read Value --------------- */
+$fname =  ${arg0}Obj->getFirstName();
+$fname =  ${arg0}Obj->getLastName();
+$fname =  ${arg0}Obj->getEmail();</pre>
+	
+	
+]]>
+            </description>
+        </record>						
+		<record>
+            <id>syntexerro</id>
+            <title>PHP Error</title>
+            <shortdesc></shortdesc>
+            <description>
+                <![CDATA[
+				Following PHP Error occured: 
+				<pre>{arg0}</pre>
+<h3>Execution History</h3>
+Check step by step execution history. The execution loop has started from bottom to up
+<pre>{Exception2Display}</pre>
+<h3>Disable Error Reporting</h3>
+Set <em>Debug Mode</em> to "0" (Zero) to disable the error reporting from follwing location:
+<pre>Login Admin Panel 
+|_ Preference 
+  |_ Configuration
+    |_ Debug Mode
+       => Set 0	</pre>	
+
+]]>
+            </description>
+        </record>		
+		<record>
+            <id>page-manager-snip-content-example</id>
+            <title>Snip Example Code</title>
+            <shortdesc>PHP code can be execute by using snip. A snip can run only inside a static page and we encourage to perform read operation only.</shortdesc>
+            <description>
+                <![CDATA[<pre>{php}$Config = App::Config()->siteInfo();{/php}
+{php}foreach($Config as $key=>$val):{/php}
+    &lt;div class="grid_5"&gt;{php}echo ($key);{/php}&lt;/div&gt;
+    &lt;div class="grid_5"&gt;{php}echo($val);{/php}&lt;/div&gt;
+{php}endforeach;{/php}</pre>
+]]>
+            </description>
+        </record>								
+    </records>
+</help>

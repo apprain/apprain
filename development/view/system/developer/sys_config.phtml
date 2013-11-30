@@ -1,0 +1,79 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+ ?>
+
+<form method="post" class="app_form"  action="<?php echo $this->baseurl("/developer/sys-config");?>">
+<?php App::Helper('Toolbar')->setTitle("System Configuration")->setBtnSave()->setBtnBack()->Render(array('code'=>'system_configuration_top'));?>
+	<div id="sysform">
+    <?php
+    $options = $sysconf->getElementsByTagName('option');
+    $dataGrid = App::Module('DataGrid')->setDisplay('FormListing');
+    foreach( $options as $key=>$option )
+    {
+       	$editable = $option->getElementsByTagName('editable')->item(0)->nodeValue;
+		if($editable == 1){
+			$choice = $option->getElementsByTagName('choice')->item(0)->nodeValue;
+			$flag = $option->getElementsByTagName('flag')->item(0)->nodeValue;
+			$options = ( $flag == 1 ) ? array('disabled'=>'disabled') : array();
+			$options['class'] = 'sys-conf-input';
+
+			if( $choice != "" )
+			{
+				$choice = explode("|",$choice);
+				$choice_arr = array();
+				foreach($choice as $val)$choice_arr[$val] = $val;
+				$options['style'] = 'width:300px;';
+				$input_box = App::load("Helper/Html")->selectTag("data[sconfig][{$option->getAttribute('name')}]",$choice_arr,$option->getElementsByTagName('value')->item(0)->nodeValue,$options);
+			}
+			else
+			{
+				$options['style'] = 'width:288px;padding:5px;border:1px solid #CECECE';
+				$input_box = App::load("Helper/Html")->inputTag("data[sconfig][{$option->getAttribute('name')}]",$option->getElementsByTagName('value')->item(0)->nodeValue,$options);
+			}
+
+			if( $flag == 1 ) $input_box .= ' <input type="checkbox"  checked="checked" id="field-'.$key.'" class="sys-conf-chk" /> <label for="field-'.$key.'" class="label-checkbox">System Defalut value</label>';
+			else $input_box .= ' <input type="checkbox" id="field-'.$key.'" class="sys-conf-chk" /> <label for="field-'.$key.'" class="label-checkbox">System Defalut value</label>';
+
+			$dataGrid->addRow($option->getElementsByTagName('title')->item(0)->nodeValue,$input_box . App::Helper('Html')->helpTag('sys-config-' . strtolower($option->getAttribute('name'))));
+		}
+    }
+    $dataGrid->Render();
+    ?>
+	</div>
+<?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->Render(array('code'=>'system_configuration_bottom'));?>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ()
+    {
+        jQuery('.sys-conf-chk').click(function(){			
+			jQuery(this).parent().find('.sys-conf-input').attr('disabled',jQuery(this).is(':checked'));
+		});
+    });
+</script>

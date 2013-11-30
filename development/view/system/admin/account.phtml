@@ -1,0 +1,184 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php if ($action == 'edit'): ?>
+<form action="<?php echo $this->baseurl("/admin/account/{$action}") ?>" method="post">
+    <!-- -- TOP TOOL BAR--  -->
+    <input type="hidden" name="data[Admin][id]" value="<?php echo $user_data['id'];?>"/>
+    <!-- -- LEFT COLUMN --  -->
+    <div class="box box-left box-padding box-left-tabs">
+        <div class="title">
+            <h5>
+            <label for="updateprofile" class="pointer"><?php echo $this->__("Update Personal Information");?></label></h5>
+        </div>
+        <!-- -- PERSONAL INFO FORM --  -->
+        <div id="box-left-forms">
+            <div class="form">
+                <div class="fields">
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("First Name:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->inputTag("data[Admin][f_name]", $user_data['f_name'], Array("class" => "app_input prof_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Last Name:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->inputTag("data[Admin][l_name]", $user_data['l_name'], Array("class" => "app_input prof_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Email:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->inputTag("data[Admin][email]", $user_data['email'], Array("class" => "app_input prof_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label label-textarea">
+                            <label for="textarea"><?php echo $this->__("Description:");?></label>
+                        </div>
+                        <div class="textarea">
+                            <?php echo App::Helper("Html")->textareaTag("data[Admin][description]", $user_data['description'], Array("class" => "app_input prof_input"));?>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" title="Save Entry" value="Save" name="Button[button_save]"/>
+                        <input type="button" value="View Account"
+                               onclick="document.location= siteInfo.baseUrl + '/admin/account/view';" name="View"/>
+                        <input type="button" value="&lt;&lt; Back" onclick="javascript:history.go(-1)"
+                               name="Button[Back]"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- -- RIGHT COLUMN --  -->
+    <div class="box box-right">
+        <div class="title">
+            <h5><input type="checkbox" name="AdminPassword[Update]"
+                       id="updatepassword" <?php if (isset($this->post['AdminPassword']['Update'])): ?>
+                       checked="checked" <?php endif;?> /> <label for="updatepassword"
+                                                                  class="pointer"><?php echo $this->__("Change Password");?></label>
+            </h5>
+        </div>
+
+        <div id="box-left-forms">
+            <?php $this->post['AdminPassword'] = isset($this->post['AdminPassword']) ? $this->post['AdminPassword'] : Array();?>
+            <div class="form">
+                <div class="fields">
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Old Password:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->passwordTag("AdminPassword[old]", App::Helper('Html')->selectDefaultValue($this->post['AdminPassword'], 'old', ""), Array("class" => "app_input pass_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("New Password:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->passwordTag("AdminPassword[new]", App::Helper('Html')->selectDefaultValue($this->post['AdminPassword'], 'new', ""), Array("class" => "app_input pass_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Confirm Password:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::Helper("Html")->passwordTag("AdminPassword[confirm]", App::Helper('Html')->selectDefaultValue($this->post['AdminPassword'], 'confirm', ""), Array("class" => "app_input pass_input"));?>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label label-textarea">
+                            <label for="textarea"><?php echo $this->__("Purpose:");?></label>
+                        </div>
+                        <div class="textarea">
+                            <?php echo App::Helper("Html")->textareaTag("AdminPassword[porpose]", App::Helper('Html')->selectDefaultValue($this->post['AdminPassword'], 'porpose', ""), Array("class" => "app_input pass_input"));?>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <?php echo $this->__('Note:<br /><strong>Check the tickbox in title to enable change password fields</strong>'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<!-- -- PASSWORD PAN CONTROLLER--  -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        <?php if (isset($this->post['AdminPassword']['Update'])): ?>
+            jQuery('.pass_input').attr('disabled', false);
+            <?php else: ?>
+            jQuery('.pass_input').attr('disabled', true);
+			jQuery('.pass_input').css('background-color', '#EEEEEE');
+            <?php endif;?>
+
+        jQuery('#updatepassword').live('click', function () {
+			jQuery('.pass_input').css('background-color', ((this.checked) ? '#FFFFFF' : '#EEEEEE'));
+            jQuery('.pass_input').attr('disabled', (!this.checked));
+        });
+
+        jQuery('#updateprofile').live('click', function () {
+			jQuery('.pass_input').css('background-color', ((this.checked) ? '#FFFFFF' : '#EEEEEE'));
+            jQuery('.prof_input').attr('disabled', (!this.checked));
+        });
+    });
+</script>
+<?php else: ?>
+<!-- -- TOP TOOL BAR-- -->
+<?php App::Helper('Toolbar')->setTitle("{$user_data['f_name']} {$user_data['l_name']}")->setBtnCustomHtml(App::Helper("Html")->ButtonTag("Edit", "Edit Account", array("onclick" => "document.location='" . $this->baseurl("/admin/account/edit") . "';")))->setBtnBack()->Render(array('code' => 'admininfo_view_update_top', 'uid' => $user_data['id'])); ?>
+<!-- -- DISPLAY ADMIN ACCOUNT INFORMATION --  -->
+<?php
+    App::Module('DataGrid')
+        ->clear()
+        ->setDisplay('FormListing')
+        ->addRow($this->__("First Name"), $user_data['f_name'])
+        ->addRow($this->__("Last Name"), $user_data['l_name'])
+        ->addRow($this->__("Email"), $user_data['email'])
+        ->addRow($this->__("User Name"), $user_data['username'])
+        ->addRow($this->__("Created On"), App::Helper('Date')->DateFormated($user_data['createdate'], 'long'))
+        ->addRow($this->__("Last Login"), App::Helper('Date')->DateFormated($user_data['lastlogin'], 'long'))
+        ->addRow($this->__("Type"), $user_data['type'])
+        ->addRow($this->__("Description"), $user_data['description'])
+        ->Render();
+    ?>
+<?php App::Helper('Toolbar')->setBtnCustomHtml(App::Helper("Html")->ButtonTag("Edit", "Edit Account", array("onclick" => "document.location='" . $this->baseurl("/admin/account/edit") . "';")))->setBtnBack()->Render(array('code' => 'admininfo_view_update_bottom', 'uid' => $user_data['id'])); ?>
+<?php endif; ?>

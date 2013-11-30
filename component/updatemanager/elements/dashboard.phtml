@@ -1,0 +1,21 @@
+<div class="box">
+    <div class="title">
+        <h5>
+		<input type="button" title="Close" class="widget-closer" id="closer_update_manager_history_widget" />
+		<?php echo $this->__('System Update Notification')?></h5>
+    </div>
+    <div class="form">		
+			<div class="box-left">
+				<strong>Last update checked </strong><br /> On
+				<em><?php echo App::Helper('Date')->dateFormated(App::Config()->setting('last_check_date'),'long') ?></em>
+			</div>
+			 <div class="box-right">		 
+			<?php if(App::Component('Updatemanager')->Helper('Data')->checkNewUpdate()):?>
+				 <h3 class="first" style="background-color:green;"><a style="color:#FFF" href="<?php echo App::Config()->baseUrl("/updatemanager"); ?>">New update found(<?php echo App::Config()->setting('last_ready_patch'); ?>)</a></h3>
+			<?php else:?>
+				 <h3 class="first" style="background-color:green;"><a style="color:#FFF" href="<?php echo App::Config()->baseUrl("/updatemanager/history/clearlastcheck"); ?>">Click here to check update</a></h3>
+			<?php endif;?>		
+		</div>		
+		<br class="clearboth" />
+    </div>
+</div>

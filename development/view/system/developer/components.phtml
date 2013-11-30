@@ -1,0 +1,142 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php
+App::Helper('Toolbar')
+    ->setTitle('Components' . App::Helper('Html')->helpTag('components-list'))
+    ->setBtnCustomHTML(
+		App::load("Helper/Html")->buttonTag("Button[InstallComponent]", "Install New Component", array("class" => "installcomponent")) . ' ' . 
+		App::load("Helper/Html")->buttonTag("Button[GetComponent]", "Get Component ", array("onclick" => "window.location=siteInfo.baseUrl + '/developer/componentsonline'"))  . ' ' . 
+		App::load("Helper/Html")->buttonTag("Button[ViewAddons]", "Addons ", array("onclick" => "window.location=siteInfo.baseUrl + '/developer/addons'"))
+	)
+    ->setBtnBack()
+    ->Render(array('code' => 'install_component_top'));
+?>
+
+<?php if (!empty(app::$__appData['componenterr'])): ?>
+	<?php foreach (app::$__appData['componenterr'] as $val): ?>
+		<?php if (count($val) > 1): ?>
+			<?php echo App::Module('Notification')->toHtml($val[1], "warning"); ?>
+			<?php endif; ?>
+		<?php endforeach; ?>
+	<?php endif; ?>
+    <div id="hidden_content" style="margin-bottom:10px" <?php if ($action != 'install'): ?>class="displaynone"<?php endif; ?>>
+		<h3 class="first">    <?php echo $this->__("Upload a component in ZIP format form your computer.");?></h3>
+		<form method="post" action="<?php echo $this->baseUrl("/developer/components/addnew/install");?>" enctype="multipart/form-data">
+			<div class="field  field-first">
+				<div class="label">
+					<label for="input-small"><?php echo $this->__("Upload File");?>*</label>
+				</div>
+				<div class="input">
+					<input type="file" name="data[Component][resourcefile]"/>
+				</div>
+			</div>
+			<div class="buttons">
+				<input type="submit" name="submit" value="Install" class="app_button"/> <a id="dialog-modal-open" href="#">Save FTP Information(Recommandad)</a>
+			</div>
+		</form>
+	</div>
+	<?php echo $this->callElement("default/admin_layout/ftpform"); ?>
+	
+	<?php
+		if(!empty($componentlist['data'])){
+			$DataGrid = App::Module('DataGrid');
+			$DataGrid->clear()->setHeader(array('Name', 'Component Information'));
+			foreach ($componentlist['data'] as $component){
+				if (empty($component['error'])) {
+					$color = (strtolower($component['status']) == 'active') ? '#40BF00' : '#FF0000';
+					$statustext = (strtolower($component['status']) == 'active') ? 'Deactivate' : 'Activate';
+
+					$DataGrid->addRow("<strong>{$component['name']}</strong>", 	App::Helper('Utility')->codeFormated($component['description']) . "<br /><br />
+												<br />Version: {$component['version']}  |	<a href=\"{$component['author_uri']}\">{$component['author']}</a> | <a href=\"{$component['author_uri']}\">{$component['uri']}</a><br /><br />
+
+													<strong>" . App::Helper('Html')->linkTag($this->baseUrl("/developer/components/{$component['namespace']}/changestatus{$paginglink}"), $this->__(strtoupper($statustext)), array('style' => "color:{$color}")) . "</strong> |
+													<strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("HELP"), array("class" => "c_help", "id" => "{$component['namespace']}help")) . "</strong> |
+													<strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("REMOVE"), array("class" => "removecomponent", "id" => "{'component':'{$component['namespace']}'}")) . "</strong>
+													" . App::Helper('Html')->helpTag('components-action-bar') . "
+													<div id=\"{$component['namespace']}helptext\" class=\"displaynone\"><br />{$component['help']}</div>
+												</div>
+											  ");
+				}
+				else {
+					$DataGrid->addRow(
+						"<p><strong><a name=\"{$component['namespace']}\">{$component['name']}</a></strong></p>", $component['description'] . "<br /><br /> {$this->__('Version')}:{$component['version']}  | <a href=\"{$component['author_uri']}\">{$component['author']}</a> | <a href=\"{$component['author_uri']}\">{$component['uri']}</a><p style=\"color:red\"><strong >Component Errors:</strong><br />" . implode("<br />", $component['error']) . "</p>");
+				}
+			};
+			if ($componentlist['paging'] != "") {
+				$DataGrid->setFooter($componentlist['paging_str']);
+			}
+			$DataGrid->Render();
+		}
+		else{
+			echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'message', 'message' => 'No component found.'));
+		}
+	?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'component_list_bottom')); ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var options = {'HCIdPadding':'text'};
+
+        jQuery('.c_help').live('click', function () {
+            var _Obj = '#' + jQuery(this).attr('id') + options.HCIdPadding;
+
+            (jQuery(_Obj).hasClass('displaynone')) ? jQuery(_Obj).removeClass('displaynone') : jQuery(_Obj).addClass('displaynone');
+        });
+
+        jQuery(".removecomponent").live("click", function (e) {
+            if (confirm("Are you sure to remove this component?\nNote: The action can not be undone!\n\nPress Ok to continue and Cancel to keep as it is.")) {
+                var component = eval('(' + jQuery(this).attr('id') + ')').component;
+                window.location = siteInfo.baseUrl + '/developer/components/' + component + '/remove';
+            }
+        });
+
+        jQuery(".installcomponent").live("click", function (e) {
+            if (jQuery("#hidden_content").css("display") == 'none') {
+                jQuery("#hidden_content").css("display", "block");
+            }
+            else {
+
+                jQuery("#hidden_content").css("display", "none");
+            }
+        });
+    });
+
+    jQuery(document).ready(function () {
+        jQuery(".installtheme").live("click", function (e) {
+            if (jQuery("#hidden_content").css("display") == 'none') {
+                jQuery("#hidden_content").css("display", "block");
+            }
+            else {
+                jQuery("#hidden_content").css("display", "none");
+            }
+        });
+    });
+</script>

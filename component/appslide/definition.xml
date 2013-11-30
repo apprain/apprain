@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+	<version>0.1.0</version>
+    <name>App Slide</name>
+	<uri>http://www.apprain.com</uri>
+	<description><![CDATA[
+		Add an interactive slide show in your home page. Fetch data by AJAX and cache the content for faster presentation.
+		]]>
+	</description>
+	<author>Reazaul Karim</author>
+	<author_uri>http://reazulk.wordpress.com</author_uri>
+	<namespace>auto</namespace>
+	<help>
+		<![CDATA[
+			<strong>Guide line</strong>  <br />
+			- Click "ACTIVATE" link to install it.<br />
+			- Requred hook name : home_page_banner.<br />
+			- Edit Slides from : Tools >> App Slide.
+		]]>
+	</help>
+	<checkfiles>
+		<filepath>register.php</filepath>
+	</checkfiles>
+</database>

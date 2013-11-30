@@ -1,0 +1,13 @@
+<?php App::Hook('UI')->Render('template_left_column_A'); #User Interface Hook ?>
+<div class="top-col-space"></div>
+<ul class="list">
+    <?php App::Hook('UI')->Render('template_left_column_B'); #User Interface Hook ?>
+    <?php $qlinks = App::PageManager()->getQuickLinks(); ?>
+    <?php foreach ($qlinks as $links): ?>
+		<li>
+			<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
+		</li>
+    <?php endforeach;?>
+    <?php App::Hook('UI')->Render('template_left_column_C'); #User Interface Hook ?>
+</ul>
+<?php App::Hook('UI')->Render('template_left_column_D'); #User Interface Hook ?>

@@ -1,0 +1,22 @@
+<?php if (App::Module('Notification')->Count('admin-notice') || App::Module('Notification')->Count('admin-message')): ?>
+<div class="box box-tabs">
+    <!-- box / title -->
+    <div class="title">
+        <h5>Notification</h5>
+        <ul class="links">
+            <li><a href="#box-notifications"><?php echo $this->__('Notice');?>
+                <?php if (App::Module('Notification')->Count('admin-notice')): ?>
+                    (<?php echo App::Module('Notification')->Count('admin-notice'); ?>)
+                    <?php endif;?>
+            </a></li>
+            <li><a href="#box-messages"><?php echo $this->__('Messages');?>
+                <?php if (App::Module('Notification')->Count('admin-message')): ?>
+                    (<?php echo App::Module('Notification')->Count('admin-message'); ?>)
+                    <?php endif;?>
+            </a></li>
+        </ul>
+    </div>
+    <div id="box-notifications"><?php App::Module('Notification')->Display('admin-notice');?></div>
+    <div id="box-messages"><?php App::Module('Notification')->Display('admin-message');?></div>
+</div>
+<?php endif; ?>

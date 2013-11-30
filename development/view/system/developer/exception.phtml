@@ -1,0 +1,63 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+ 
+?>
+<?php $help = App::Module('Developer')->renderExceptionString($id); ?>	
+<?php App::Helper('Toolbar')->setTitle($this->__("appRain Help >> {$help['title']}"))->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Go to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.com/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_top')); ?>
+<?php echo $help['description'];?>
+<?php App::Helper('Toolbar')->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Got to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.com/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_bottom')); ?>

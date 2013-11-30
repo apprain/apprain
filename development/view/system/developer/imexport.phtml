@@ -1,0 +1,143 @@
+<!-- Export Database -->
+<div class="box box-left">
+    <div class="title">
+		<h5>
+			<?php echo $this->__("Export Database");?> 
+			<?php echo App::Helper('Html')->helpTag('export_database');?>
+		</h5>
+	</div>
+    <h6><?php echo $this->__("Export databse to file");?></h6>
+
+    <div id="box-left-forms">
+        <div class="form">
+            <div class="fields">
+                <div class="field">
+                    <div class="label">
+                        <?php echo $this->__("Database file(.sql) with SCHEMA and DATA"); ?>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <form method="post" action="<?php echo $this->baseurl("/developer/imexport");?>">
+                        <input type="submit" class="app_button" value="Export" name="data[ImExport][export]"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-right">
+    <div class="title"><h5><?php echo $this->__("Import Database");?><?php echo App::Helper('Html')->helpTag('export-database');?></h5></div>
+    <h6><?php echo $this->__("Select database fle");?></h6>
+
+    <div id="box-left-forms">
+        <div class="form">
+            <form enctype="multipart/form-data" action="<?php echo $this->baseurl("/developer/imexport");?>"
+                  method="POST">
+                <div class="fields">
+                    <div class="field field-first">
+                        <div class="input">
+                            <input type="file" value="" name="data[ImExport][filename]"/>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" class="app_button" value="Import" name="data[ImExport][import]"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="clear:both"></div>
+<!-- Export Database -->
+<div class="box box-left box-padding">
+    <div class="title"><h5><?php echo $this->__("Backup/Restore Databse");?></h5></div>
+    <h6><?php echo $this->__("Create Backup");?></h6>
+
+    <div id="box-left-forms">
+        <div class="form">
+            <form enctype="multipart/form-data" action="<?php echo $this->baseUrl("/developer/imexport");?>"
+                  method="POST" id="createbackup">
+                <div class="fields">
+                    <div class="field field-first">
+                        <div class="input">
+                            <input type="text" size="30"
+                                   value="<?php echo App::Helper('Date')->getDate('Y-m-d_H-i-s'); ?>"
+                                   name="data[ImExport][filename]" class="check_notempty small"
+                                   longdesc="Please enter a file name">
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" class="app_button" value="Create Backup" name="data[ImExport][backup]">
+                    </div>
+                </div>
+            </form>
+            <?php  App::Helper('JavaScript')->appForm('#createbackup'); ?>
+        </div>
+    </div>
+
+    <h6><?php echo $this->__("Restore Databse");?></h6>
+
+    <div id="box-left-forms">
+        <div class="form">
+            <form method="post" action="<?php echo $this->baseurl("/developer/imexport");?>"
+                  enctype="multipart/form-data" class="restore">
+                <div class="fields">
+                    <?php if (isset($database_files['file'])): ?>
+                    <div class="field field-first">
+                        <div class="input">
+                            <select name="data[ImExport][file_name]" class="check_notdefault"
+                                    longdesc="please select a backup file">
+                                <option value=""><?php echo $this->__("Select a version to rollback");?></option>
+                                <?php foreach ($database_files['file'] as $key => $val): ?>
+                                <option value="<?php echo $val['name'];?>"><?php echo $val['name'];?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <div class="buttons">
+                        <input type="submit" class="app_button" value="Restore" name="data[ImExport][restore]">
+                    </div>
+                </div>
+            </form>
+            <?php  App::Helper('JavaScript')->appForm('.restore'); ?>
+        </div>
+    </div>
+</div>
+<div class="box box-right box-padding">
+    <div class="title"><h5><?php echo $this->__("Backup List");?></h5></div>
+    <h6><?php echo $this->__("Database List");?></h6>
+
+    <div id="box-right-forms">
+        <div class="form">
+            <div class="fields">
+                <div class="field field-last field-last">
+                    <?php if (isset($database_files_paging['data']) && !empty($database_files_paging['data'])): ?>
+                    <?php
+						$Grid = App::Module('DataGrid')
+							->setHeader(
+								array(
+									$this->__('Name'), 
+									$this->__('Created'), 
+									$this->__('Download'), $this->__(' ')
+								)
+							)
+						->setFooter(
+							$database_files_paging['paging_str']
+						);
+                    foreach ($database_files_paging['data'] as $val):
+                        $Grid->addRow($val['name'],
+                            App::Helper('Date')->dateFormated($val['filemtime'], 'long'),
+                            App::Helper('Html')->linkTag($this->baseurl("/common/download/" . base64_encode(DATA . DS . "database/{$val['name']}")), 'Download'),
+                            App::Helper('Html')->linkTag($this->baseurl("/developer/imexport/delete/" . base64_encode($val['name'])), App::Helper('Html')->imgTag($this->baseUrl('/images/admin/remove.gif')), array('class' => 'confirm-link')));
+                    endforeach;
+                    $Grid->Render();?>
+                    <?php else: ?>
+                    <?php echo $this->__("No Backp found"); ?>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

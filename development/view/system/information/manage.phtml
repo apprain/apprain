@@ -1,0 +1,428 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php
+    $definition['base']['generic_field']['max_entry']['limit']	= isset($definition['base']['generic_field']['max_entry']['limit'])	? $definition['base']['generic_field']['max_entry']['limit']:"";
+    $definition['base']['generic_field']['max_entry']['limit'] = ($definition['base']['generic_field']['max_entry']['limit'] != "") ? $definition['base']['generic_field']['max_entry']['limit'] : "-1";
+    $definition['base']['generic_field']['enabled']	= isset($definition['base']['generic_field']['enabled'])	? $definition['base']['generic_field']['enabled'] : 'No';
+    $definition['base']["parameters"]["edit"] = isset($definition['base']["parameters"]["edit"])	? $definition['base']["parameters"]["edit"] : 'Yes';
+    $definition['base']["parameters"]["delete"]	= isset($definition['base']["parameters"]["delete"]) ? $definition['base']["parameters"]["delete"] : 'Yes';
+    $definition['base']["parameters"]["view"] = isset($definition['base']["parameters"]["view"])	? $definition['base']["parameters"]["view"] : 'Yes';
+    $definition['base']['title'] = isset($definition['base']['title'])? $definition['base']['title'] : str_replace("_"," ",$type);
+    $btn_str = "";
+?>
+
+<?php
+    if( $action == 'update' ||  $action == 'add' )
+    {
+        if( !empty( $definition['fields'] ) )
+        {
+            foreach( $definition['fields'] as $key => $val)
+            {
+                $$key = isset( $data_list[$key] ) ? $data_list[$key] : '';;
+            }
+        }
+
+        $id 		= isset( $data_list['id'] ) ? $data_list['id'] : '';
+        $link_to 	= isset( $data_list['link_to'] ) ? $data_list['link_to'] : '';
+        $category 	= isset( $data_list['category'] ) ? $data_list['category'] : '';
+        $generic 	= isset( $data_list['generic'] ) ? $data_list['generic'] : '';
+
+
+         echo $this->get_tag("form",array("action"=>$this->baseurl("/information/manage/$type/$action"),'method'=>'post','enctype'=>'multipart/form-data','id'=>'auto_chk_submit','class'=>'app_form app_validation'));
+
+        // Call the tools bar -->
+        App::Helper('Toolbar')->setTitle($definition['base']['title'])->setBtnSave()->setBtnSaveAndUpdate()->setBtnFileManager()->setBtnBack()->Render(array('code'=>'informationset_update_top','type'=>$type,'id'=>$id));
+
+            echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'error', 'message' => $errors));
+
+            if( ($entry_total >= $definition['base']['generic_field']['max_entry']['limit']) && $definition['base']['generic_field']['max_entry']['limit'] != -1 && $action == 'add')
+            {
+                echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'error', 'message' => $definition['base']['generic_field']['max_entry']['message']));
+            }
+            else
+            {
+                    $Grid = App::Module('DataGrid') ->setDisplay('FormListing');
+                    if( !empty( $definition['fields'] ))
+                        foreach( $definition['fields'] as $key => $val)
+                        {
+                            $validation_text = empty($val['validation']) ? "" : "*";
+                            $vclass = "";
+
+                            if(!empty($val['validation']) && App::__def()->sysConfig('INFORMATIONSET_JS_VALIDATION'))
+                            {
+                $msg = '';
+                                foreach($val['validation'] as $vval)
+                                {
+                                    $vclass .= " check_" . strtolower($vval["type"]);
+
+                    $msg .= ($msg == '') ? $vval['message'] : ",{$vval['message']}";
+                                }
+                $val['tag-attributes']["longdesc"] = htmlspecialchars($msg);
+                                $val['tag-attributes']["class"] = isset($val['tag-attributes']["class"]) ? $val['tag-attributes']["class"] . $vclass : $vclass;
+                            }
+
+                            $rowHtmlOpts = array();
+                            $val["parameters"]["editable"] = isset($val["parameters"]["edit"]) ? $val["parameters"]["edit"] : "Yes";
+
+                            $selected = isset( $val['selected'] ) ? $val['selected'] : '';
+                            $$key = isset($this->data["Option"][$key])? $this->data["Option"][$key] : $$key;
+                            $$key = ($$key != '') ? $$key : $selected;
+
+                            $field_type = $val['type'];
+                            $hints = isset( $val['hints'] )  ? $val['hints'] : NULL;
+
+                            if( strtolower($val["parameters"]["editable"]) == 'no')
+                            {
+                                $rowHtmlOpts = array("style"=>"display:none");
+                            }
+
+                            switch( $field_type )
+                            {
+                                case "dateTimeTag"		:
+                                                            $Grid->addRow("{$val['title']}",App::load("Helper/Html")->$field_type("data[Option][$key]", $val['tag-attributes'],$$key),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "selectTag"		:
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key,$val['tag-attributes'],$val['parameters']),$hints,$rowHtmlOpts, $validation_text);
+
+                                                            break;
+                                case "radioTag"			:
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key),$hints,$rowHtmlOpts, $validation_text);
+
+                                                            break;
+                                case "checkboxTag"		:
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key][checkbox][]",$val['opton_arr'],$$key),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "categoryTag"		:
+                                                            $Grid->addRow("{$val['title']} ",App::CategorySet($val['category_type'])->Tag("data[Option][$key]",$$key, $val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "informationTag"	:
+                                                            $Grid->addRow("{$val['title']} ",App::InformationSet($val['parameters']['information_type'])->Tag("data[Option][$key]",$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "modelTag"	:
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['parameters']['model_name'],$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "textareaTag"	:
+                                                            $val['parameters']['richtexteditor']= isset($val['parameters']['richtexteditor']) ? $val['parameters']['richtexteditor'] : 'Yes';
+                                                            if($val['parameters']['richtexteditor'] == 'Yes')
+                                                            {
+                                                                $val['tag-attributes']['class'] = isset($val['tag-attributes']['class']) ? $val['tag-attributes']['class'] . " richtexteditor" : "richtexteditor";
+                                                            }
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                                case "fileTag"			:	
+                                                            $app_file_name = "";
+                                                            if( $$key != "" )
+                                                            {
+                                                                $path = App::Config()->filemanagerUrl(DS) . $$key;
+                                                                $str = App::load("Helper/Utility")->is_image($$key) ? App::load("Helper/Html")->imgTag($path,null,array("width"=>"80")) :  $$key;
+                                                                $app_file_name = ( isset($val["download"]) ? $val["download"] : true) ? App::load("Helper/Html")->linkTag($this->baseurl("/common/download/" . base64_encode($path)),$str) : $str;
+                                                                $app_file_name .= ' ' . App::load("Helper/Html")->linkTag("javascript:void(0)",App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/remove.gif'),NULL,array('id'=>"{$key}|{$id}|{$type}",'class'=>'delete_informationset_file')));
+                                                                
+                                                                if(isset($val['tag-attributes']['class'])){
+                                                                    $val['tag-attributes']['class'] .= ' skipcheckvalidation'; 
+                                                                }
+                                                            }
+
+                                                            $Grid->addRow("{$val['title']} ","<span>$app_file_name</span><div class=\"hints\">{$hints}</div>". App::load("Helper/Html")->$field_type("data[Option][$key]",NULL, $val['tag-attributes']),NULL,$rowHtmlOpts, $validation_text);
+
+
+                                                            break;
+                                default					:
+                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            break;
+                            }
+                        }
+
+        $Grid->render();
+        App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnBack()->setFormJustified(true)->Render(array('code'=>'informationset_update_bottom','type'=>$type,'id'=>$id));
+
+                $this->get_tag('div');
+                    echo App::load("Helper/Html")->hiddenTag("data[Information][id]",$id);
+                    echo App::load("Helper/Html")->hiddenTag("data[Information][type]",$type);
+                    echo App::load("Helper/Html")->hiddenTag("data[Information][page]",$page);
+                $this->get_tag('/div');
+            }
+        $this->get_tag('/form');
+
+        App::Helper('JavaScript')->appForm('form');
+
+    }
+    else if( $action == 'view')
+    {
+
+        echo $this->get_tag('div',array('class'=>'app_form'));
+            App::Helper('Toolbar')
+				->setTitle($definition['base']['title'])
+				->setBtnBack()
+				->Render(
+					array(
+						'code'=>'informationset_list_single_view_top',
+						'data'=>$data_list
+					)
+				);
+				
+				
+            $Grid = App::Module('DataGrid')
+				->setDisplay('FormListing');
+				
+            foreach(  $definition['fields'] as $key => $val ) {
+
+                $view_type = isset($val["parameters"]["view"]) ? $val["parameters"]["view"] :'Yes';
+
+                if($view_type == 'Yes')
+                {
+                    $val['type'] = isset( $val['type'] ) ? $val['type'] : '';
+                    $data_list[$key] = isset($data_list[$key]) ? $data_list[$key] : "";
+					
+                    switch( $val['type'] )
+                    {
+                        case "dateTag"		:
+                                                $Grid->addRow($val['title'], App::Load("Helper/Date")->dateFormated($data_list[$key]));
+                                                break;
+                        case "fileTag":
+                                                $path = App::Config()->filemanagerUrl(DS) . $data_list[$key];
+                                                $str = App::load("Helper/Utility")->is_image($data_list[$key]) ? App::load("Helper/Html")->imgTag($path,null,array("width"=>"80")) :  $data_list[$key];
+                                                $Grid->addRow($val['title'], ( isset($val["download"]) ? $val["download"] : true) ? App::load("Helper/Html")->linkTag($this->baseurl("/common/download/" . base64_encode($path)),$str) : $str);
+                                                break;
+                        case "imageTag"		:
+                                                $str = "";
+                                                if( isset( $data_list[$key] ))
+                                                {
+                                                    $tmp_arr = explode("\n",$data_list[$key]);
+                                                    foreach( $tmp_arr as $pkey => $pval )
+                                                    {
+                                                        $pval = preg_replace("/([\r\n ])/", "", $pval);
+                                                        $str .= App::load("Helper/Html")->imgTag(App::Config()->filemanagerUrl(DS). $pval);
+                                                    }
+                                                }
+
+                                                $Grid->addRow($val['title'],$str);
+                                                break;
+                        case 'categoryTag':
+                                                $auto_link = isset($val['parameters']['auto_link']) ? $val['parameters']['auto_link'] : "yes";
+                                                $Grid->addRow($val['title'],App::categorySet()->IdToName($data_list[$key],"long",$auto_link));
+                                                break;
+                        case "informationTag":
+                                                $auto_link = isset($val['parameters']['auto_link']) ? $val['parameters']['auto_link'] : "yes";
+                                                $Grid->addRow($val['title'],App::informationSet($val['parameters']['information_type'])->IdToName($data_list[$key],$val['parameters']['val'],$auto_link));
+                                                break;
+                        case "modelTag":
+                                                $auto_link = isset($val['parameters']['auto_link']) ? $val['parameters']['auto_link'] : "yes";
+                                                $Grid->addRow($val['title'],App::Model($val['parameters']['model_name'])->fieldToField($val['parameters']['key'],$data_list[$key],$val['parameters']['val']));
+                                                break;
+                        case "textareaTag":
+                                                $rich_text_editor = isset($this->config['site_info']['rich_text_editor']) ? $this->config['site_info']['rich_text_editor'] : "Yes";
+                                                $val['parameters']['richtexteditor']= isset($val['parameters']['richtexteditor']) ? $val['parameters']['richtexteditor'] : true;
+                                                $Grid->addRow($val['title'],($val['parameters']['richtexteditor'] && $rich_text_editor == 'Yes') ? $data_list[$key] : App::Load("Helper/Utility")->codeFormated($data_list[$key]));
+
+                                                break;
+                        default				 :
+                                                $Grid->addRow($val['title'],App::Load("Helper/Utility")->codeFormated($data_list[$key]));
+                                                break;
+                    }
+                }
+            }
+
+           
+
+            /*
+             * Display the information in tabuler format
+             */
+            $Grid->Render();
+
+            // Bottom Tool bar
+            App::Helper('Toolbar')->setBtnBack()->setFormJustified(true)->setFormView(true)->Render(array('code'=>'informationset_list_single_view_bottom','data'=>$data_list));
+        echo $this->get_tag('/div');
+}
+else
+{
+?>
+	<?php
+		/* TOOL BAR */
+		App::Helper('Toolbar')
+			->setTitle($definition['base']['title'])
+			->setBtnInformationSetViewSrcBox(
+				array(
+					'type'=>$type,
+					'src_field'=>$src_field,
+					'src_cat'=>$src_cat,
+					'src_key'=>$src_key,
+					'config'=>App::Helper('Config')))
+				->setBtnBack()
+				->Render(
+					array(
+						'code'=>'informationset_list_view_top',
+						'type'=>$type
+					)
+				);
+	?>
+
+	<?php
+		/* Header */
+		$t_head = Array(
+			$this->get_tag('input',array('type'=>'checkbox','id'=>'checkall','class'=>"checkall")),
+			($ordfield == 'id') 
+				? App::Helper("Html")->linkTag("{$searchparams}&amp;order={$newordtype}&amp;field=id",'ID')
+				: App::Helper("Html")->linkTag("{$searchparams}&amp;order=asc&amp;field=id",'ID')
+		);
+		
+		$i = 0;
+		foreach( $definition['fields'] as $key => $val){
+			$val["parameters"]["view"] = isset( $val["parameters"]["view"]) ? $val["parameters"]["view"] :'Yes';
+			if($val["parameters"]["view"]=='Yes'){
+				if($ordfield == $key){
+					$t_head[] = App::Helper("Html")->linkTag("{$searchparams}&amp;order={$newordtype}&amp;field={$key}",$val['title']);
+				}
+				else {
+					$t_head[] = App::Helper("Html")->linkTag("{$searchparams}&amp;order=asc&amp;field={$key}",$val['title']);
+				}
+				if( $i++ == 2 ){
+					break;
+				}
+			}
+		}
+	?>
+
+	<?php
+	
+		// Fields
+		$data = Array();
+		foreach( $data_list['data'] as $key => $val ){
+			$tmp = array();
+			$tmp[] = $this->get_tag('input',array('type'=>'checkbox','value'=>"{$val['id']}","class"=>"checkrow"));
+			$tmp[] = $val['id'];//$this->get_tag('span',array('title'=>"Id:{$val['id']}"),(($data_list["page"] - 1) * $this->get_config('default_pagination') + $key + 1));
+			$i = 0;
+
+			foreach( $definition['fields'] as $ikey => $ival){
+				$view_type = isset($ival["parameters"]["view"]) ? $ival["parameters"]["view"] :'Yes';
+				
+				if($view_type == 'Yes'){
+					
+					$val[$ikey] = isset( $val[$ikey] ) ? $val[$ikey] :'';
+					
+					$val[$ikey] = ($ival['type'] == 'dateTag') ? App::Load("Helper/Date")->dateFormated($val[$ikey]) : $val[$ikey];
+					
+					switch( $ival['type'] ){
+					
+						case "dateTag":						
+							$val[$ikey] =  App::Load("Helper/Date")->dateFormated($val[$ikey]);
+							break;
+						
+						case "fileTag":						
+							$path = App::Config()->filemanagerUrl(DS)  . $val[$ikey];
+							$str = App::load("Helper/Utility")->is_image( $val[$ikey]) ? App::load("Helper/Html")->imgTag($path,null,array("width"=>"80")) : $val[$ikey];
+							$val[$ikey] = ( isset($ival["download"]) ? $ival["download"] : true) ? App::load("Helper/Html")->linkTag($this->baseurl("/common/download/" . base64_encode($path)),$str) : $str;
+							break;
+						
+						case "imageTag":						
+							$str = "";
+							$val[$ikey] = isset($val[$ikey]) ? $val[$ikey] : '';
+							if( $val[$ikey] != ''){
+								$tmp_arr = explode("\n",$val[$ikey]);
+								foreach( $tmp_arr as $pkey => $pval ){
+									$pval = preg_replace("/([\r\n ])/", "", $pval);
+									$str .= App::load("Helper/Html")->imgTag(App::Config()->filemanagerUrl(DS) . $pval,null,array("width"=>"80"));
+								}
+							}
+							$val[$ikey] = ($str);
+							break;
+						
+						case 'categoryTag':
+							$auto_link = isset($ival['parameterss']['auto_link']) ? $ival['parameters']['auto_link'] : "yes";
+							$val[$ikey] = App::CategorySet()->IdToName($val[$ikey],"long",$auto_link);
+							break;
+						
+						case "informationTag":
+							$auto_link = isset($ival['parameters']['auto_link']) ? $ival['parameters']['auto_link'] : "yes";
+							$val[$ikey] = App::informationSet($ival['parameters']['information_type'])->IdToName($val[$ikey],$ival['parameters']['val'],$auto_link);
+							break;
+						
+						case "modelTag":
+							$auto_link = isset($ival['parameters']['auto_link']) ? $ival['parameters']['auto_link'] : "yes";
+							$val[$ikey] = App::Model($ival['parameters']['model_name'])->fieldToField($ival['parameters']['key'],$val[$ikey],$ival['parameters']['val']);
+							break;
+							
+						default:
+							$val[$ikey] = (strlen(strip_tags($val[$ikey]))>50 ) ? substr(strip_tags($val[$ikey]),0,50) . '...' : $val[$ikey];
+							break;
+												
+					}
+					$tmp[] = $val[$ikey] ;
+					if( $i++ == 2 ) break;
+				}
+			}
+
+			if( app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']){
+				$tmp[] = App::AdminManager()->getAdminReferance($val);
+			}
+
+			$btn_str = "";
+			if( $definition['base']["parameters"]["view"] == 'Yes' ){
+				$btn_str .=' <a href="' .  $this->baseurl('/')  . 'information/manage/' . $type . '/view/' . $val['id'] . '"><img src="' . $this->baseurl('/images/admin/view.gif') . '" title="View" alt="View" /></a> ';
+			}
+
+			if( $definition['base']["parameters"]["edit"] == 'Yes'){
+				$btn_str .=' <a href="' .  $this->baseurl('/')  . 'information/manage/' . $type . '/update/' . $val['id'] . '/' . $data_list['page'] .  '"><img src="' . $this->baseurl('/images/admin/edit.gif') . '" title="Edit" alt="Edit" /></a> ';
+			}
+
+			if( $definition['base']["parameters"]["delete"] == 'Yes'){
+				$btn_str .= '<a href="javascript:void(0)" class="deleteinformatonset" title="'. $type . ',' . $val['id'] . '" ><img src="' . $this->baseurl('/images/admin/remove.gif') . '" title="Delete" alt="Delete" /></a> ';
+			}
+
+			if(  $btn_str!= "" )$tmp[] = $btn_str;
+
+			App::call(App::Module('DataGrid'), "addRow",$tmp);
+		}
+
+		$val['adminref'] = isset($val['adminref']) ? $val['adminref'] : false;
+		if( app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']){
+			$t_head[] = $this->__("Admin Refernace");
+		}
+
+		if( $btn_str != "" ){
+			$t_head[] = $this->__("Options");
+		}
+		
+		if( !empty($data_list['data']) ){
+			if( ($entry_total >= $definition['base']['generic_field']['max_entry']['limit']) && $definition['base']['generic_field']['max_entry']['limit'] > 0 ){
+				echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'error', 'message' => $definition['base']['generic_field']['max_entry']['message']));
+			}
+			App::Module('DataGrid')->setHeader($t_head)->setFooter($data_list['paging_str'])->Render();
+			App::Helper('Toolbar')->setBtnDelete(array("id"=>"{'mode':'informationset,{$type}'}"))->setBtnInformationSetExportBox(array('type'=>$type,'config'=>App::Helper('Config')))->setBtnBack()->Render(array('code'=>'informationset_list_view_bottom','type'=>$type));
+		}
+		else  {
+			echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'message', 'message' => $this->__('No Data found.')));
+			App::Helper('Toolbar')->Render(array('code'=>'informationset_list_view_bottom','type'=>$type));
+		}
+	?>
+
+<?php
+}

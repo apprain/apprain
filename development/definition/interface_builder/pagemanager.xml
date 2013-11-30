@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/documents
+ */
+-->
+<InterfaceBuilder>
+    <navigation name="page_manager">
+        <parent>
+            <title>Page Manager</title>
+            <action>/page/manage</action>
+            <acl>
+                <group>superadmin</group>
+                <group>useradmin</group>
+            </acl>
+            <submenu>
+                <item>
+                    <title>Manage Static Pages</title>
+                    <link>/page/manage</link>
+                </item>			
+                <item>
+                    <title>Manage Code Snips</title>
+                    <link>/page/manage-snip</link>
+                </item>				
+            </submenu>
+            <sort_order>3</sort_order>
+            <icon>/themeroot/admin/images/icons/page_manager.png</icon>
+        </parent>
+        <child>
+            <menu>
+                <title>Page Manager</title>
+                <items>
+                    <item>
+                        <title>Create Page</title>
+                        <link>/page/manage/create</link>
+                    </item>
+                    <item>
+                        <title>Create Snip</title>
+                        <link>/page/manage/createsnip</link>
+                    </item>
+                    <item>
+                        <title>Manage Pages/Snips</title>
+                        <link>/page/manage</link>
+                    </item>
+                </items>
+            </menu>
+        </child>
+    </navigation>
+</InterfaceBuilder>

@@ -1,0 +1,62 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<link rel="shortcut icon" href="<?php echo $this->baseurl("/images/favicon.ico"); ?>" type="image/x-icon"  />
+<link rel="icon" href="<?php echo $this->baseurl("/images/favicon.ico"); ?>" type="image/x-icon"  />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title >
+	<?php if(App::Module('AdminpanelUI')->adminName()):?>
+		[<?php echo App::Module('AdminpanelUI')->adminName();?>]
+	<?php endif;?>
+	<?php if(!empty($this->page_title)):?>
+		<?php echo $this->page_title;?>
+	<?php else:?>
+		<?php echo 
+			ucfirst(
+				App::Load("Helper/Config")
+				->Load('params')
+				->get('action')				
+			);
+		?>
+	<?php endif;?>
+	<?php 
+		echo app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . 
+			App::Load("Helper/Config")
+				->setUserStatusId(0)
+				->Load('site_info')
+				->get('site_title');
+	?>
+</title >
+
+<?php
+$page_title = (($this->page_title != '') ? $this->page_title : ucfirst(App::Load("Helper/Config")->Load('params')->get('action'))) . (app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . App::Load("Helper/Config")->setUserStatusId(0)->Load('site_info')->get('site_title'));
+//echo "\n" . $this->get_tag("title", $page_title);
+echo "\n" . $this->get_tag('meta', array('name' => 'Keywords', 'content' => $this->page_meta_keyowrds), '/');
+echo "\n" . $this->get_tag('meta', array('name' => 'Description', 'content' => $this->page_meta_desc), '/');
+?>

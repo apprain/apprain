@@ -1,0 +1,230 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php
+/*
+* Assign varibles
+*/
+$id = isset($update_data_list['id']) ? $update_data_list['id'] : '';
+$title = isset($update_data_list['title']) ? $update_data_list['title'] : '';
+$image = isset($update_data_list['image']) ? $update_data_list['image'] : '';
+
+$description = isset($update_data_list['description']) ? $update_data_list['description'] : '';
+$parent = isset($update_data_list['parentid']) ? $update_data_list['parentid'] : 0;
+$generic = isset($update_data_list['generic']) ? $update_data_list['generic'] : "";
+$is_parent = ($parent == 0) ? "Yes" : '';
+
+/*
+* Update/Add data
+*/
+if ($action == 'update' || $action == 'add') {
+    /*
+    * HTML submit form start
+    */
+    echo $this->get_tag("form", array("action" => $this->baseurl("/category/manage/{$type}/{$action}/{$id}"), "method" => "post", "enctype" => 'multipart/form-data', "class" => "app_form app_validation", "id" => "auto_chk_submit"));
+
+    /*
+    * Call the tools bar
+    */
+    App::Helper('Toolbar')->setTitle($definition['title'])->setBtnSave()->setBtnSaveAndUpdate()->setBtnFileManager()->setBtnBack()->Render(array('code' => 'category_update_top', 'id' => $id));
+
+    /*
+    * Populate the hrml form fields
+    */
+    $Grid = App::Module('DataGrid')->setDisplay('FormListing')
+        ->addRow($definition['title'], App::load("Helper/Html")->inputTag("data[Category][title]", $title, array("id" => "title", "class" => "app_input check_notempty")));
+    if ($definition['haschild'] == 'Yes') {
+        /*
+        * Grab The category tree informatin in to array
+        */
+        $cat_tree = array();
+        $cat_tree2 = array();
+        $categorylist = App::CategorySet($type)->setPagination(false)->getRecursive();
+        foreach ($categorylist['data'] as $key => $val) {
+            if ($id != $val['id']) {
+                $cat_tree[$val['id']] = $val['path_1'];
+                $cat_tree2[$val['id']] = $val['path_2'];
+            }
+        }
+        $Grid->addRow("", App::load("Helper/Html")->checkboxTag("data[Category][is_parent]", array("Yes" => $this->__("Parent")), $is_parent, array("id" => "is_parent")) . " " . App::load("Helper/Html")->selectTag("data[Category][parentid]", $cat_tree2, $parent, array('id' => "parentid")));
+    }
+
+    if ($definition['description'] == 'Yes') {
+        $Grid->addRow("Description", App::load("Helper/Html")->textareaTag("data[Category][description]", stripslashes($description), array("class" => "app_input richtexteditor", 'id' => 'note', 'rows' => "20")));
+    }
+
+    if ($definition['image']['status'] == 'Yes') {
+        if ($definition['image']['type'] == 'Multiple') {
+            $Grid->addRow("Image", App::load("Helper/Html")->imageTag("data[Category][image]", $image, array("id" => "image", "class" => "app_input")), "Copy Image name from file manager");
+        }
+        else {
+            $imgdta = "";
+            if ($image != "") {
+                $filemanager_path = App::Helper('Config')->get('filemanager_base_dir') . "/{$image}";
+                $imgdta = (App::Helper('Validation')->isImage($image)) ? App::Helper('Html')->imgDTag($filemanager_path, '/120/fix') : "";
+                $imgdta .= App::load("Helper/Html")->linkTag("javascript:void(0)", " " . App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/remove.gif'), NULL, array('id' => "{$id}", 'class' => 'delete_categoryset_file')));
+            }
+            $Grid->addRow("Image", "<span style=\"display:block\">$imgdta</span>" . App::load("Helper/Html")->fileTag("data[Category][image]", "", array("id" => "image", "class" => "app_input")));
+        }
+    }
+
+    if ($definition['generic']['status'] == 'Yes') {
+        $Grid->addRow($definition['generic']['title'], App::load("Helper/Html")->inputTag("data[Category][generic]", $generic, array("class" => "app_input", 'id' => 'generic', 'rows' => "20")));
+    }
+
+    echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'error', 'message' => $errors));
+    $Grid->render();
+
+    /*
+    * Call the tools bar
+    */
+    App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnBack()->setFormJustified(true)->Render(array('code' => 'category_update_bottom', 'id' => $id));
+
+    /*
+    * HTML hidden fields
+    */
+    echo $this->get_tag("div", array("id" => "hidden_fields"),
+        App::load("Helper/Html")->hiddenTag("data[Category][type]", $type) .
+            App::load("Helper/Html")->hiddenTag("data[Category][id]", $id) .
+            $this->get_tag('br', array("class" => "clearboth"))
+    );
+    echo $this->get_tag("/form");
+
+    App::Helper('JavaScript')->appForm('form');
+
+    echo $this->get_tag("script", array("type" => "text/javascript"), "
+            var apprain_category_manager ={
+
+            parent_e			:	'#parentid',
+            parents_toggoler	:	null,
+            parient_selector	:	'#is_parent',
+            toggoler_fx			:	function()
+                                    {
+                                        if( jQuery(apprain_category_manager.parent_e).css('visibility') == 'visible' )
+                                        {
+                                            jQuery(apprain_category_manager.parent_e).css('visibility','hidden');
+                                        }
+                                        else
+                                        {
+                                            jQuery(apprain_category_manager.parent_e).css('visibility','visible');
+                                        }
+                                    },
+            delete_catset_file  :   function()
+                                    {
+                                        if(confirm(\"Are you sure to delete the image that can not be undone.\\n\\nPlease press 'Ok' to delete and 'Cancele' to remain as it is. \"))
+                                        {
+                                            var obj = jQuery(this).closest('span');
+                                            jQuery(this).attr('src',siteInfo.baseUrl + '/images/loading.gif');
+
+                                            jQuery(this).css('margin-left','5px');
+
+                                            jQuery.ajax({
+                                                url: siteInfo.baseUrl + '/common/delete_row/delete_categoryset_file/' + jQuery(this).attr('id'),
+                                                context: document.body,
+                                                success: function(data){
+                                                  obj.css('display','none');
+                                                }
+                                              });
+                                        }
+                                    },
+            init				:	function()
+                                    {
+                                         try
+                                         {
+                                            if(jQuery(apprain_category_manager.parient_selector).attr('checked') == 'checked')
+                                            {
+                                                jQuery(apprain_category_manager.parent_e).css('visibility','hidden');
+                                            }
+                                            jQuery(apprain_category_manager.parient_selector).live('click', apprain_category_manager.toggoler_fx);
+                                         }
+                                         catch(e){}
+
+                                         try
+                                         {
+                                            jQuery('.delete_categoryset_file').live('click', apprain_category_manager.delete_catset_file);
+                                         }
+                                         catch(e){}
+                                    }
+        }
+
+        jQuery(document).ready(apprain_category_manager.init)");
+
+}
+else {
+    /*
+     * Top Tool bar
+     */
+    App::Helper('Toolbar')->setTitle($definition['title'])->setBtnBack()->Render(array('code' => 'category_view_top'));
+
+    if (!empty($data_list['data'])) {
+        /*
+         * Display category area
+         */
+        foreach ($data_list['data'] as $key => $val) {
+            $tmp = Array();
+            $tmp[] = $this->get_tag('input', array('type' => 'checkbox', 'value' => "{$val['id']}", "class" => "checkrow"));
+            $tmp[] = $this->get_tag('span', array('title' => "Id:{$val['id']}"), (($data_list["page"] - 1) * $this->get_config('default_pagination') + $key + 1));
+
+            if ($definition['image'] == 'Yes') {
+                $tmp[] = ($val['image'] != '') ? App::load("Helper/Html")->imgDTag($this->get_img_dir($val['image'])) : '';
+            }
+
+            $tmp[] = $val['title'];
+            $tmp[] = $val[CATEGORY_PATH_MODE];
+
+            if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
+                $tmp[] = App::AdminManager()->getAdminReferance($val);
+            }
+
+            $tmp[] = '<a href="' . $this->baseurl('/') . 'category/manage/' . $type . '/update/' . $val['id'] . '"><img src="' . $this->baseurl('/') . '/images/admin/edit.gif" title="Edit ' . $val['title'] . '" alt="Edit" /></a>' .
+                '<a href="javascript:void(0)"  class="link_delete" title="Category_' . $val['id'] . '" >' . '<img src="' . $this->baseurl('/') . '/images/admin/remove.gif" title="Delete ' . $val['title'] . '" alt="Delete" /></a>';
+
+            App::Call(App::Module('DataGrid'), 'addRow', $tmp);
+        }
+
+        $t_head = Array($this->get_tag('input', array('type' => 'checkbox', 'id' => 'checkall', 'class' => "checkall")), $this->__("ID")); //{'mode':'categoryset'}
+        if ($definition['image'] == 'Yes') $t_head[] = $this->__("Image");
+        $t_head[] = $definition['title'];
+        $t_head[] = $this->__("Tree");
+        $val['adminref'] = isset($val['adminref']) ? $val['adminref'] : false;
+        if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
+            $t_head[] = $this->__("Admin Refernace");
+        }
+        $t_head[] = $this->__("Options");
+
+        App::Module('DataGrid')->setHeader($t_head);
+        App::Module('DataGrid')->setFooter($data_list['paging_str']);
+        App::Module('DataGrid')->Render();
+    }
+    else {
+        echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'message', 'message' => 'No Data found.'));
+    }
+
+    App::Helper('Toolbar')->setBtnDelete(array("id" => "{'mode':'categoryset'}"))->setBtnBack()->Render(array('code' => 'category_view_bottom'));
+}

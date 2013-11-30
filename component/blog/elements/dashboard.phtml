@@ -1,0 +1,44 @@
+<!-- box / left -->
+<div class="box box-left box-padding box-left-tabs">
+    <?php if (App::Config()->siteInfo('dashboard-blog-activity-widget', 0) == 'Yes'): ?>
+    <!-- box / title -->
+    <div class="title">
+        <h5>
+		<input type="button" title="Close" class="widget-closer" id="closer_activity_widget" />
+		<?php echo $this->__('Activity') . App::Helper('Html')->helpTag('dashboard-appblog-activity-widget');?></h5>
+        <ul class="links">
+            <li><a href="#box-left-forms"><?php echo $this->__('Common');?></a></li>
+            <li><a href="#box-left-other"><?php echo $this->__("Cache");?></a></li>
+        </ul>
+    </div>
+    <!-- end box / title -->
+    <div id="box-left-forms">
+        -------
+    </div>
+    <div id="box-left-other">
+       ----
+    </div>
+    <?php endif;?>
+</div>
+<!-- end box / left -->
+<!-- box / right -->
+<div class="box box-right">
+    <?php if (App::Config()->siteInfo('leave_amessage_widget', 0) == 'Yes'): ?>
+    <!-- box / title -->
+    <div class="title">
+        <h5>
+			<input type="button" title="Close" class="widget-closer" id="closer_leave_amessage_widget" />
+			<?php echo $this->__("Leave a message") . App::Helper('Html')->helpTag('dashboard-appblog-quick-post');?></h5>
+    </div>
+    <!-- end box / title -->
+    <div class="form">
+
+        -------
+        <div class="error-leave-a-msg"></div>
+
+        <?php App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => true, 'messagEelement' => '.error-leave-a-msg', 'loaderElement' => '.error-leave-a-msg'))->appForm('form'); ?>
+    </div>
+
+    <?php endif;?>
+</div>
+<br class="clearboth" />

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<URIManager>
+    <bootrouters>
+        <bootrouter>
+            <type>Fixed</type>
+            <domain>Auto</domain>
+            <theme>Auto</theme>
+            <controller>home</controller>
+            <action>index</action>
+        </bootrouter>
+        <bootrouter>
+            <type>Auto</type>
+            <!-- Without http://wwww. or https://wwww.  and trailing slash -->
+            <domain><![CDATA[example1.com]]></domain>
+            <theme>blackrain</theme>
+            <controller>home</controller>
+            <action>index</action>
+        </bootrouter>
+        <bootrouter>
+            <type>Auto</type>
+            <!-- Without http://wwww. or https://wwww.  and trailing slash -->
+            <domain><![CDATA[example2.com]]></domain>
+            <theme>whitecloud</theme>
+            <controller>member</controller>
+            <action>login</action>
+        </bootrouter>
+    </bootrouters>
+</URIManager>

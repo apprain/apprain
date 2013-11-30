@@ -1,0 +1,49 @@
+/* -----------------------------------------------------------
+	content -> right -> box / tables
+----------------------------------------------------------- */
+.is-mendatory{
+	color:#FF0000;
+	width:15px;
+}
+
+.form-grid th,.form-grid td{
+	padding: 10px 0 10px 0;
+	border-bottom: 1px solid #DDDDDD;
+	text-align: left;
+}
+
+.form-grid td,.data-grid td{
+	vertical-align:middle;
+
+}
+
+.form-grid th{
+	vertical-align:left;
+	font-weight:normal;
+	width:20%;
+}
+
+.data-grid th{
+	padding: 10px;
+	background: #eeeeee;
+	border-right: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+}
+
+.data-grid td{		
+	padding: 10px;
+	border-right: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+}
+
+.data-grid td.first, .data-grid th.first{
+	border-left: 1px solid #EEEEEE;
+}
+
+
+.form-grid td input{
+	width:99%;
+	border: 1px solid #cdcdcd;
+	padding:2px 0px 2px 2px;
+	font-size:90%;
+}

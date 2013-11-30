@@ -1,0 +1,80 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+
+<?php
+	$__AdminNavDef = $this->get_admin_nav();
+	$childname = $this->admin_tab;
+	$__LeftLinks = isset($__AdminNavDef[$this->admin_tab]['child']) ? $__AdminNavDef[$childname]['child'] : array();
+	$LeftAccess = App::Module('ACL')->readNAVAccess('left');
+	$currentLeftAccess = isset($LeftAccess[$this->admin_tab]) ? $LeftAccess[$this->admin_tab] : array();
+	$accessLinks = App::Module('ACL')->accessLinksOnly($currentLeftAccess);
+?>
+
+<div id="menu">
+	<?php App::Hook('UI')->Render('admin_left_A'); #User Interface Hook ?>
+	<?php if ($this->admin_tab == 'page_manager'): ?>
+		<?php echo App::Module('AdminPanelUI')->staticPageLeftLinks($action, $page_type,$id); ?>
+	<?php else: ?>
+	<?php foreach ($__LeftLinks as $tkey => $tval): ?>
+		<?php
+		$lis = "";
+		$f = false;
+		$f2 = false;
+		foreach ($tval['items'] as $key => $val) {
+			if (in_array($val['link'], $accessLinks)) {
+				$val['link'] = App::Module('AdminPanelUi')->senitizeLink($val['link']);
+				$f2 = true;
+				if (strstr($val['link'], DS . $this->get['basicrout'])) {
+					$f = true;
+				}
+				$lis .= "<li><a href=\"" . $this->baseUrl($val['link']) . "\" class=\"collapsible plus\">{$val['title']}</a></li>";
+			}
+		}
+		?>
+		<?php if ($f2): ?>
+			<?php if ($f): ?>
+				<h6 id="h-menu-<?php echo "{$childname}-{$tkey}";?>" class="selected"><a
+					href="#<?php echo "{$childname}-{$tkey}"; ?>"><span><?php echo $this->__($tval['title']); ?></span></a>
+				</h6>
+					<ul id="menu-<?php echo "{$childname}-{$tkey}";?>" class="open">
+				<?php else: ?>
+				<h6 id="h-menu-<?php echo "{$childname}-{$tkey}";?>"><a
+					href="#<?php echo "{$childname}-{$tkey}"; ?>"><span><?php echo $this->__($tval['title']); ?></span></a>
+				</h6>
+					<ul id="menu-<?php echo "{$childname}-{$tkey}";?>" class="closed">
+				<?php endif; ?>
+			<?php echo $lis; ?>
+				</ul>
+			<?php endif; ?>
+		<?php endforeach; ?>
+	<?php endif;?>
+	<?php App::Hook('UI')->Render('admin_left_B'); #User Interface Hook ?>
+</div>
+<div id="date-picker"></div>

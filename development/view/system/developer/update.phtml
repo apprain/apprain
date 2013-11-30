@@ -1,0 +1,77 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php App::Helper('Toolbar')->setTitle("appRain Update Manager")->setBtnBack()->Render(__FILE__, array('code' => 'update_manager_top')); ?>
+<?php if ($state == "start"): ?>
+<div id="log_update">
+    <div class="loading" id="log_signal">&nbsp;</div>
+    <ol class="display_log"></ol>
+</div>
+<div id="form_check_update" method="post" action="<?php echo $this->baseurl("/developer/update");?>">
+    <ul>
+        <li style="text-align:center">
+            <?php if ($newversion != 'NoUpdateAvailable'): ?>
+            The followng command will add/replace/delete some core file of appRain.<br/>
+            You may loose codeing if you have done that in core apprain filese. <br/><br/>
+            <strong>Are you sure to continue update ?</strong> <br/><br/>
+            <input type="submit" id="continue_update" class="app_button" value="Yes! Contiune update"/> <input
+                type="submit" id="cancel_update" class="app_button" value="No! Get Me out from here"/>
+            <?php else: ?>
+            <strong>No New Update Available for this version ?</strong> <br/><br/>
+            <?php endif;?>
+        </li>
+    </ul>
+</div>
+<?php else: ?>
+<?php echo App::Load("Helper/Javascript")->validation_map(array('_errBg' => ERROR_BACKGROUND, '_dflBg' => DEFAULT_BACKGROUND, '_autoSubmit' => 'false', '_errToolTips' => 'false')); ?>
+<?php echo App::Load("Helper/Javascript")->ajax_submit(array("form_name" => "#form_check_update", "debug" => "true", "auto_hide" => "true", "message_element" => ".message_update")); ?>
+
+<form id="form_check_update" style="background-color:#FFF" class="app_validation" method="post"
+      action="<?php echo $this->baseurl("/developer/update");?>">
+    <ul>
+        <li style="text-align:center">
+            <div class="message_update" style="padding:4px;">&nbsp;</div>
+            <?php if ($newversion != 'NoUpdateAvailable'): ?>
+            New update available in appRain release on your present
+            version <?php echo app::__def()->sysConfig('APPRAINVERSION'); ?>.
+            <?php else: ?>
+            <strong>No New Update Available for this version</strong>
+            <?php endif;?>
+            <br/><br/>
+            You Apprain License Key: <input id="licensekey" class="sys-conf-input check_notempty" type="text"
+                                            name="data[Update][licensekey]"
+                                            value="<?php echo app::__def()->sysConfig('APPRAINLICENSEKEY');?>"
+                                            class="app_input" size="35"/><br/>
+            <br/>
+            <input type="submit" class="app_button" value="Check Update"/>
+        </li>
+    </ul>
+</form>
+<?php endif; ?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(__FILE__, array('code' => 'update_manager_bottom')); ?>

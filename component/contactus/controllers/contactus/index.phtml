@@ -1,0 +1,22 @@
+<div class="grid_7">
+    <?php if (isset($staticpage['content']) && $staticpage['content'] != ""): ?><?php echo $staticpage['content']; ?><?php endif;?>
+</div>
+<div class="grid_9">
+
+    <p><span class="message"></span></p>
+
+    <form method="post" class="app_contact form" action="<?php echo $this->baseUrl("/contactus"); ?>">
+        <ul>
+            <?php
+            echo App::Helper("Html")->get_from_row($this->__("First Name"), App::Helper("Html")->inputTag("data[Contact][f_name]", "", array("class" => "input check_notdefault", 'id' => 'f_name', 'longdesc' => $this->__('Please enter your first name'))));
+            echo App::Helper("Html")->get_from_row($this->__("Last Name"), App::Helper("Html")->inputTag("data[Contact][l_name]", "", array("class" => "input check_notdefault", 'id' => 'l_name', 'longdesc' => $this->__('Please enter your last name'))));
+            echo App::Helper("Html")->get_from_row($this->__("Subject"), App::Helper("Html")->inputTag("data[Contact][subject]", "", array("class" => "input check_notdefault", 'id' => 'l_name', 'longdesc' => $this->__('Please enter subject'))));
+            echo App::Helper("Html")->get_from_row($this->__("Email "), App::Helper("Html")->inputTag("data[Contact][email]", "", array("class" => "input check_email", 'id' => 'email')));
+            echo App::Helper("Html")->get_from_row($this->__("Message"), App::Helper("Html")->textareaTag("data[Contact][message]", "", array("rows" => "6", "class" => "input check_notdefault", 'id' => 'note', 'longdesc' => $this->__('Please enter your message.'))));
+            echo App::Helper("Html")->get_from_row(App::Helper('Html')->capachaTag("contactus", Array("bk_color" => "#111111", "font_color" => "#FFFFFF")), App::Helper("Html")->inputTag("data[Contact][capacha]", "", array("class" => "input check_notdefault", 'id' => 'capacha', 'longdesc' => $this->__('Please fillin the text display in the image.'))));
+            echo App::Helper("Html")->get_from_row("&nbsp;", App::Helper("Html")->submitTag("data[Contact][submit]", "Send", array("class" => "button white")));
+            ?>
+        </ul>
+    </form>
+    <?php  App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => true))->appForm('.app_contact');?>
+</div>
