@@ -36,15 +36,12 @@
      */
     -->
     <base mode="db">
-        <version>0.1.0</version>
-        <lastupdate>2009-12-01</lastupdate>
+        <version>3.1.0</version>
+        <lastupdate>2013-12-23</lastupdate>
         <title>Blog Post</title>
         <admin_tab>blog</admin_tab>
 		<addons />
-       <parameters>
-            <parameter name="delete">No</parameter>
-            <parameter name="view">No</parameter>
-        </parameters>
+		<parameters />
         <generic-field>
             <enabled>No</enabled>
             <title>Sort Order</title>
