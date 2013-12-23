@@ -36,8 +36,8 @@
      */
     -->
     <base mode="db">
-        <version>0.2.1</version>
-        <lastupdate>13-04-08</lastupdate>
+        <version>3.0.1</version>
+        <lastupdate>2013-04-08</lastupdate>
         <title>Email Template</title>
         <admin_tab>developer</admin_tab>
         <addons/>
