@@ -1,0 +1,126 @@
+<section class="top-title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="col-md-6">
+				<h1>Profile</h1>
+			</div>
+			<div class="col-md-6">
+				<ul class="breadcrumb pull-right">
+					<li><a href="<?php echo App::Config()->baseUrl();?>">Home</a></li>
+					<li class="active">Profile</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="container">
+    
+    <div class="col-md-3">
+        <ul class="list-group">
+                <li class="list-group-item <?php if(empty($action)):?>active<?php endif;?>"><a href="<?php echo $this->baseurl("/profile");?>"><?php echo $this->__('View Profile');?></a></li>
+                <li class="list-group-item <?php if($action == 'edit'):?>active<?php endif;?>"><a href="<?php echo $this->baseurl("/profile/edit");?>"><?php echo $this->__('Edit Profile');?></a></li>
+                <li class="list-group-item <?php if($action == 'change-picture'):?>active<?php endif;?>"><a href="<?php echo $this->baseurl("/profile/change-picture");?>"><?php echo $this->__('Change Picture');?></a></li>					
+                <li class="list-group-item"><a href="<?php echo $this->baseurl("/member/logout");?>"><?php echo $this->__('Logout');?></a></li>
+        </ul>
+    </div>
+    <?php if($action == 'change-picture'):?>       
+            <form method="post" id="uploadform" action="<?php echo App::Config()->baseUrl("/profile/change-picture");?>" enctype="multipart/form-data">            
+                <div class="col-md-5">
+                   <div class="thumbnail">
+                        <?php if(!empty($memberData['photo'])):?>
+                            <img src="<?php echo App::Config()->fileManagerUrl(DS .$memberData['photo']);?>" class="img-thumbnail" width="450" />
+                         <?php endif;?>
+                        <div class="caption">
+                            <h3>Change Image</h3>
+                            <p>
+                                <?php echo App::Html()->buttonTag("data[Member][uploadimagebutton]",'Browse',array('id'=>'uploadimagebutton','class'=>'btn btn-primary'));?>
+                                <?php echo App::Html()->buttonTag("data[Member][removeimagebutton]",'Remove',array('id'=>'removeimagebutton','class'=>'btn btn-default'));?>
+                             </p>
+                        </div>
+                    </div>
+                </div>           
+            <?php echo App::Html()->fileTag("data[Member][photo]",'',array('style'=>'display:none','id'=>'photo'));?>
+            </form>		
+        
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery("#uploadimagebutton").click(function(event) {
+                    jQuery('#photo').click();
+                });
+                jQuery("#photo").change(function(event) {
+                    jQuery("#uploadimagebutton").val("Uploading " + jQuery('#photo').val());
+                    jQuery('#uploadform').submit();
+                });
+                
+                jQuery("#removeimagebutton").click(function(event) {
+                    if(confirm('Are you sure to remove?')){
+                        window.location = siteInfo.baseUrl + '/profile/remove-picture';
+                    }
+                });
+            });
+        </script>        
+    <?php elseif($action == 'edit'):?>
+        <div class="col-md-9">
+            <form method="post" action="<?php echo App::Config()->baseUrl("/profile/edit");?>">
+            <div class="form-group">
+                <label><?php echo $this->__("First Name")?></label>
+                <span> <?php echo App::Html()->inputTag("data[Member][f_name]",$memberData['f_name'],array('class'=>'form-control'));?></span>
+            </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Last Name")?></label>
+                        <span> <?php echo App::Html()->inputTag("data[Member][l_name]",$memberData['l_name'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Address")?></label>
+                        <span> <?php echo App::Html()->textareaTag("data[Member][address]",$memberData['address'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Email")?></label>
+                        <span> <?php echo App::Html()->inputTag("data[Member][email]",$memberData['email'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Phone No")?></label>
+                        <span> <?php echo App::Html()->inputTag("data[Member][phone_no]",$memberData['phone_no'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("State")?></label>
+                        <span> <?php echo App::Html()->inputTag("data[Member][state]",$memberData['state'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Zip Code")?></label>
+                        <span> <?php echo App::Html()->inputTag("data[Member][zipcode]",$memberData['zipcode'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("Country")?></label>
+                        <span> <?php echo App::Html()->countryTag("data[Member][country]",$memberData['country'],array('class'=>'form-control'));?></span>
+             </div>
+            <div class="form-group">
+                        <label><?php echo $this->__("About Me")?></label>
+                        <span> <?php echo App::Html()->textareaTag("data[Member][note]",$memberData['note'],array('class'=>'form-control','rows'=>'5'));?></span>
+             </div>
+            <div class="form-group">
+                        <label>&nbsp;</label>
+                        <span> <?php echo App::Html()->submitTag("data[Member][submit]","Save",array('class'=>'button white'));?></span>	
+            </div>
+            </form>
+        </div>			
+    <?php else:?>
+        <div class="col-md-9">
+            <?php if(!empty($memberData['photo'])):?>
+                <?php echo App::Html()->imgDTag(App::Config()->fileManagerDir(DS .$memberData['photo']),'/160/fix');?>
+            <?php endif;?>	
+            <h3><?php echo $memberData['f_name'];?> <?php echo $memberData['l_name'];?></h3>
+            <p><?php echo nl2br($memberData['address']);?></p>
+            <p><?php echo nl2br($memberData['email']);?></p>
+            <p><?php echo nl2br($memberData['phone_no']);?></p>
+            <p><?php echo nl2br($memberData['state']);?></p>
+            <p><?php echo nl2br($memberData['zipcode']);?></p>
+            <p><?php echo App::Helper('Utility')->countryCodetoname($memberData['country']);?></p>
+            <p><?php echo App::Helper('Utility')->countryCodetoname($memberData['country']);?></p>
+            <p>Member Since <?php echo App::Load("Helper/Date")->dateFormated($memberData['signup_date']);?></p>                
+            <?php if($memberData['note'] !=''):?>
+            <p class="gap"><?php echo nl2br($memberData['note']);?></p>
+            <?php endif;?>
+        </div>		
+    <?php endif;?>
+</div>

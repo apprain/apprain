@@ -1,61 +1,30 @@
 <?php if(!empty($pressdata['data'])):?>
-<?php if(App::Config()->setting('appslidesettings_displaymode')=='ajaxbased'):?>
-		<div class="app-press-content">
-			<div class="grid_8">
-				<div class="app-press-text">
-					<?php echo App::Helper('Utility')->codeFormated($pressdata['data'][0]["description"]) ?>
-				</div>            
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">	   
+	<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	<?php for($i=1;$i<count($pressdata['data']);$i++):?>
+	<li data-target="#myCarousel" data-slide-to="<?php echo $i;?>"></li>
+	<?php endfor;?>        
+  </ol>
+  <div class="carousel-inner">	  
+	<?php foreach($pressdata['data'] as $key=>$row):?>
+	<div class="item <?php if(!$key){ echo "active";} ?>">	  
+	  <img src="<?php echo App::Config()->baseUrl("/componentroot/appslide/bg-slide.jpg") ?>" alt="">
+	  <div class="container">
+		<div class="carousel-caption">
+			<div class="col-lg-6">
+				<img src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$row['image']}");?>" alt="" />
 			</div>
-			<div class="grid_8 align-right">
-				<div class="press-img-pan">
-					<?php if(isset($pressdata['data']['0']['image'])):?>
-						<img src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$pressdata['data']['0']['image']}");?>" alt="" />
-					<?php endif;?>
-				</div>
+			<div class="col-lg-6">
+				<?php echo ($row['description']);?>
 			</div>
-			<div class="clear"></div>
-			<div class="app-press-menu">
-				<?php foreach($pressdata['data'] as $press_key => $press):?>
-					<?php if( $press_key == 0):?>
-						<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>" class="selected" id="appslidefirst"><?php echo($press['title']);?></a> 
-					<?php else:?>
-						<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>"><?php echo($press['title']);?></a> 
-					<?php endif;?>
-				<?php endforeach;?>
-				<span class="apploader">&nbsp;</span>
-			</div>	
 		</div>
-	<?php else:?>
-		<div id="slideshow">
-			<ul>
-			<?php foreach($pressdata['data'] as $row): //pr($row); ?>
-				<li>
-					<div class="slide-left">
-						<?php echo $row['description'];?>
-						   </div>
-					<div class="slide-right">
-						<?php if(isset($row['image'])):?>
-						<img src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$row['image']}");?>" alt="" />
-					<?php endif;?>
-					</div>
-				</li>    
-			<?php endforeach;?>        
-			</ul>            	            
-		</div>
-		<div class="clear"></div>
-		<div id="pager">&nbsp;</div>
-		<script type="text/javascript">
-		   jQuery(function(){     
-
-				 jQuery('#slideshow ul').cycle({
-					timeout: 50000,  // milliseconds between slide transitions (0 to disable auto advance)
-					fx:      'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...            
-					pager:   '#pager',  // selector for element to use as pager container
-					cleartypeNoBg: false, // set to true to disable extra cleartype fixing (leave false to force background color setting on slides)
-					pauseOnPagerHover: 0 // true to pause when hovering over pager link
-				});
-			 });
-		</script>
-	<?php endif;?>
-	
-<?php endif;?>
+	  </div>
+	  
+	</div>
+	<?php endforeach;?> 		
+  </div>
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+<?php endif; ?>

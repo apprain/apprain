@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+    <version>2.1.0</version>
+    <name>Members</name>
+    <uri>http://www.apprain.com</uri>
+    <description>
+        <![CDATA[
+			Manage website register members with registration and backend management
+		]]>
+    </description>
+    <author>Reazaul Karim</author>
+    <author_uri>http://www.apprain.com</author_uri>
+    <namespace>auto</namespace>
+    <help>
+        <![CDATA[
+			An appRain plugin. Read more in www.apprain.com
+		]]>
+    </help>
+    <checkfiles>
+        <filepath>register.php</filepath>
+    </checkfiles>
+</database>

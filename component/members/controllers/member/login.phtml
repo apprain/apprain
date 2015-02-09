@@ -1,0 +1,79 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<section class="top-title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="col-md-6">
+				<h1>Member</h1>
+			</div>
+			<div class="col-md-6">
+				<ul class="breadcrumb pull-right">
+					<li><a href="<?php echo App::Config()->baseUrl();?>">Home</a></li>
+					<li class="active">Members</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<?php $username = isset($this->data["Member"]["login_id"]) ? $this->data["Member"]["login_id"] : "";?>
+<div class="container">
+    <div class="col-md-5">
+        <h2><?php echo $this->__("Login"); ?></h2>
+        
+        <form method="post" class="login_form classtmp" action="<?php echo $this->baseurl("/member/login"); ?>">
+            <div class="message"></div>
+            <div class="form-group"><input type="text" name="data[Member][login_id]" class="form-control check_notempty" placeholder="Username" value="" /></div>					
+            <div class="form-group"><input type="password" name="data[Member][password]" class="form-control check_notempty" placeholder="Password" value="" /></div>					
+            <div class="form-group"><input type="submit" name="data[Member][submit]" class="btn btn-default" value="Sing in" /></div>					
+            <a href="<?php echo App::Config()->baseUrl("/signup"); ?>">Not a member? Please click here.</a>
+        </form>
+        <?php App::Helper('JavaScript')->appForm('.login_form'); ?>
+    </div>
+    <div class="col-md-5 pull-right">
+        <h2><?php echo $this->__("Forgot Login"); ?></h2>
+        <form method="post" id="flogin_form" class="app_validation" action="<?php echo $this->baseurl("/member/forgotlogin"); ?>">
+            <div id="fl_message"></div>
+            <div class="form-group"><input type="text" name="data[Member][login_name]" class="form-control check_notempty" placeholder="Email Address" value="" /></div>					
+            <div class="form-group"><input type="submit" name="data[Member][submit]" class="btn btn-default" value="Retrieve Password" /></div>
+        </form>
+        <?php 
+        App::Helper('JavaScript')
+            ->setAjax(
+                array(
+                    "debug" => true, 
+                    "autoHide" => false,
+                    "loaderElement"=>"#fl_message",
+                    "messageElement"=>"#fl_message"
+                )
+            )
+            ->appForm('#flogin_form'); 
+        ?>
+    </div>
+</div>    

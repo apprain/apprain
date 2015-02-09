@@ -33,7 +33,7 @@ class Component_Homepress_Register extends appRain_Base_Component
     {
         App::Module('Hook')
             ->setHookName('UI')
-            ->setAction("home_content_area_D")
+            ->setAction("home_content_area_B")
             ->Register(get_class($this),"add_html");
 
         App::Module('Hook')

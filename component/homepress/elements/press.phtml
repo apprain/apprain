@@ -1,4 +1,28 @@
-<?php if(!empty($home_synopsis['data'])):?> 
+ <div class="press-update">	  
+	<div class="container">	  
+		<div class="row">
+		<?php if(!empty($home_synopsis['data'])):?> 
+			<?php foreach( $home_synopsis['data'] as $key => $val):?>	
+				<div class="col-lg-3" style="text-align:center">	
+		<?php if( App::Config()->setting('homepresssettings_displaymode','TextWithImage') == 'TextWithImage'):?>
+		<a href="<?php echo App::PageManager()->LinkById($val['linkedto']); ?>">
+			<img class="img-circle"  src="<?php echo App::Config()->baseUrl("/uploads/filemanager/{$val['image']}");?>" />
+		</a>
+		<?php endif;?>				
+				  <h4><?php echo($val['title']); ?></h4>
+				  <p><?php echo(nl2br($val['shortdesc']));?></p>
+				  <p><a class="btn btn-default" href="<?php echo App::PageManager()->LinkById($val['linkedto']); ?>" role="button">View details &raquo;</a></p>			
+				</div>
+			<?php endforeach;?>	
+		<?php endif; ?>		
+		</div>
+	</div>	
+</div>
+      <!-- START THE FEATURETTES -->
+
+      
+
+<?php /*if(!empty($home_synopsis['data'])):?> 
 <div class="clear"></div>
 <h2 class="block-title"><?php echo App::Config()->setting('homepresssettings_title','Press');?></h2>
 <?php foreach( $home_synopsis['data'] as $key => $val):?>	
@@ -23,4 +47,4 @@
 	<?php endif;?>
 	</div>
 <?php endforeach;?>
-<?php endif;?>
+<?php endif; */ ?>

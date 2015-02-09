@@ -52,13 +52,11 @@ class blogController extends appRain_Base_Core
         $homepage = $this->staticPageNameToMetaInfo('Blog');
 
         if($action == 'bypost'){
-            // Attache few Addons
-            $this->addons = Array();
-
             // Fetch a Single Post from Information Set
             // by Post Id
             $post = App::InformationSet('blogpost')->findById($id);
             $this->set('post',$post);
+			$this->set("catid",$post['category']);
 
             // Overwrite the page title
             $this->page_title = $post['title'];
@@ -77,7 +75,7 @@ class blogController extends appRain_Base_Core
 
             // Overwrite the page title
             $this->page_title = App::CategorySet()->idToName($id);
-
+           $this->set("catid",$id);
         }
         else{
             /**
@@ -86,19 +84,14 @@ class blogController extends appRain_Base_Core
              */
             $page = is_numeric($action) ? $action : 1;
             $blogpost = App::InformationSet('blogpost')
-                ->paging(1,15);
-
-			$this->set('blogpost',$blogpost);
+                ->paging("1 ORDER BY id DESC",15);
+			$this->set('blogpost',$blogpost);			
         }
-
-        // Add another add-on with
-        // previouse collection
-        $this->addons[] = 'dropdownmenu';
 
         // Assign Common values
         // in template
         $this->set("action",$action);
-        $this->set("catid",(($action == 'bycat') ? $id : "" ));
+        
     }
 
     /**

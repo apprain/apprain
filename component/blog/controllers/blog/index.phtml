@@ -1,95 +1,155 @@
-<div class="grid_5">
-    <div class="list">
-        <?php App::Hook('UI')->Render('template_left_column_A'); #User Interface Hook ?>
-        <?php App::Hook('UI')->Render('template_left_column_B'); #User Interface Hook ?>
-        <?php $Categories = App::Component('Blog')->Helper('Data')->caregoryList();?>
-		<ul class="list">
+<section class="top-title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="col-md-6">
+				<h1>Blog</h1>
+			</div>
+			<div class="col-md-6">
+				<ul class="breadcrumb pull-right">
+					<li><a href="<?php echo App::Config()->baseUrl();?>">Home</a></li>
+					<li class="active">Blog</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="container blog-post">
+	<div class="col-md-8">
+		<?php if($action == 'bypost'):?>
+			<div class="well">	
+				<h2><a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>"><?php echo($post['title']);?></a></h2>
+				<div class="clearfix">
+					<p class="pull-left">
+						<?php $catname = App::CategorySet()->idToName($post['category']);?>
+						  <i class="fa fa-user"></i> <?php echo $this->__('by');?> <?php echo App::Module('adminPanelUi')->adminName($post['adminref']);?> | 
+						  <i class="fa fa-folder"></i> <?php echo $this->__('Category');?> <a href="<?php echo $this->baseurl("/blog-by-cat/{$post['category']}/" . App::Helper('Utility')->text2Normalize($catname)); ?>"><?php echo $catname;?></a>  | 
+						  <i class="fa fa-calendar"></i> <?php echo App::Helper('Date')->dateFormated($post['entrydate'],'long'); ?>
+					 </p>
+					  <p class="pull-right">
+						<i class="fa fa-comment"></i> 
+						<a href="#comments-list"><?php echo App::Component('Blog')->Helper('Data')->countCommentByPost($post['id']) . ' ' . $this->__("Comments "); ?></a>
+					</p>
+				</div>
+				<hr />
+				<?php App::Hook('UI')->Render('blog_before_post'); #User Interface Hook ?>
+				<?php echo($post['description']);?>
+				<?php App::Hook('UI')->Render('blog_after_post'); #User Interface Hook ?>
+			</div>
+			<div class="gap"></div>
+			<div id="comments-list">
+				<h4><?php echo App::Component('Blog')->Helper('Data')->countCommentByPost($post['id'])?> <?php echo $this->__("Comments "); ?></h4>
+				<?php if(!empty($comments['data'])):?>					
+					<?php foreach($comments['data'] as $key=>$comment):?>						
+							<p class="post-short-info" id="comment-parma-link<?php echo ($key+1); ?>">
+								<strong><?php echo App::Helper('Html')->linkTag($comment['website'],$comment['name'],Array("rel"=>"nofollow")); ?></strong><br />
+								<?php echo $this->__("Says On");?> <?php echo App::Helper('Date')->dateFormated($comment['dated'],'long'); ?>
+								<?php echo App::Helper('Html')->linkTag("#comment-parma-link" . ($key+1),'&#10144;'); ?>
+								</p>
+							<p>
+							<?php echo($comment['comment']);?></p>
+						
+					<?php endforeach;?>
+					
+				<?php else:?>
+					<p><?php echo $this->__("No comment posted yet"); ?></p>
+				<?php endif;?>
+			</div>
+			<div class="gap"></div>
+			<h4>Leave a Comment</h4>			
+			<div class="comment-form">		
+				<div class="message blog-comment-message"></div>
+				<form method="post" role="form" id="post-comment" action="<?php echo $this->baseurl("/blog-comment-submission/{$post['id']}") ?>" class="form _hide">
+				  <div class="form-group">
+					<label for="name"><?php echo $this->__('Name');?></label>
+					<input type="text" name="data[BlogComment][name]" id="name" class="form-control check_notdefault" longdesc="Please enter your name." value="" />
+				  </div>
+				  <div class="form-group">
+					<label for="emailaddress"><?php echo $this->__('Email Address');?></label>
+					<input type="text" name="data[BlogComment][email]" id="emailaddress" class="form-control check_email" longdesc="Please enter your valid email address." value="" />
+				  </div>
+				  <div class="form-group">
+					<label for="website"><?php echo $this->__('Website');?></label>
+					<input type="text" name="data[BlogComment][website]" id="website" class="form-control" value="" />
+				  </div>	
+				  <div class="form-group">
+					<label for="comment"><?php echo $this->__('Comments');?></label>
+					<textarea name="data[BlogComment][comment]" id="comment" class="form-control check_notdefault" longdesc="Please type your comment here." rows="5"></textarea>
+				  </div>	
+				  <div class="form-group">
+					<label for="comment"><?php echo $this->__('Verification');?></label>
+						<div>
+							<div class="pull-left">
+							<?php echo App::Helper('Html')->capachaTag("blogcommet",Array("bk_color"=>"#000000","font_color"=>"#FFFFFF"));?>  
+							</div>
+							<div class="pull-left" style="margin-left:20px">
+							  <input type="text" name="data[BlogComment][capacha]" class="form-control check_notempty" longdesc="Please fillin the text display on left side image." value="" />
+							</div>
+						</div>
+				  </div>					  
+                  <div class="clearfix gap"></div>
+				  <div class="form-group">
+					<button type="submit" class="btn btn-success btn-large"><?php echo $this->__('Submit Comments'); ?></button>
+				   </div>
+				</form>
+				
+				<!-- ul>
+					<li><label><?php echo $this->__('Comments');?></label><span><textarea name="data[BlogComment][comment]" class="input check_notdefault" longdesc="Please type your comment here." rows="5"></textarea></span></li>
+					<li><label><?php echo App::Helper('Html')->capachaTag("blogcommet",Array("bk_color"=>"#000000","font_color"=>"#FFFFFF"));?></label><span><input type="text" name="data[BlogComment][capacha]" class="input check_notempty" longdesc="Please fillin the text display on left side image." value="" /></span></li>
+					<li><label>&nbsp;</label><span><input type
+					="submit" value="Submit" class="button white" /></span></li>
+				</ul>
+				</form -->
+				 <?php  App::Helper('JavaScript')->setAjax(array("debug"=>false,"autoHide"=>true))->appForm('#post-comment');?>
+			</div>
+		<?php else:?>
+			<?php if(!empty($blogpost['data'])):?>				
+				<?php foreach($blogpost['data'] as $post): ?>	
+				<div class="well">				
+					<h2><a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>"><?php echo($post['title']);?></a></h2>
+					<div class="clearfix">
+						<p class="pull-left">
+							<?php $catname = App::CategorySet()->idToName($post['category']);?>
+                              <i class="fa fa-user"></i> <?php echo $this->__('by');?> <?php echo App::Module('adminPanelUi')->adminName($post['adminref']);?> | 
+							  <i class="fa fa-folder"></i> <?php echo $this->__('Category');?> <a href="<?php echo $this->baseurl("/blog-by-cat/{$post['category']}/" . App::Helper('Utility')->text2Normalize($catname)); ?>"><?php echo $catname;?></a>  | 
+							  <i class="fa fa-calendar"></i> <?php echo App::Helper('Date')->dateFormated($post['entrydate'],'long'); ?>
+                         </p>
+                          <p class="pull-right">
+							<i class="fa fa-comment"></i> 
+							<a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>?#comments-list"><?php echo App::Component('Blog')->Helper('Data')->countCommentByPost($post['id']) . ' ' . $this->__("Comments"); ?></a>
+						</p>
+                    </div>
+					<hr />
+					<?php App::Hook('UI')->Render('blog_before_comment'); #User Interface Hook ?>
+						<?php echo App::Component('Blog')->Helper("Data")->getFirstPera($post['description'],2);?>
+					<?php App::Hook('UI')->Render('blog_after_comment'); #User Interface Hook ?>
+					<hr />
+					<p><a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>">Read More <i class="fa fa-angle-right"></i></a></p>
+				</div>
+				<?php endforeach;?>
+				
+				<?php 					
+				if($blogpost['paging']!=''):?>
+					<p><?php echo $blogpost['link'] . ' ' .  $blogpost['paging']; ?></p>
+				<?php endif;?>
+			<?php else:?>
+				<h2><?php echo $this->__("Sorry! No post submitted yet"); ?></h2>
+				<?php App::Hook('UI')->Render('blog_no_comment'); #User Interface Hook ?>
+			<?php endif;?>
+		<?php endif ?>
+	</div>
+	<div class="col-md-4">		
+		<?php App::Hook('UI')->Render('template_left_column_A'); #User Interface Hook ?>
+		<?php App::Hook('UI')->Render('template_left_column_B'); #User Interface Hook ?>
+		<?php $Categories = App::Component('Blog')->Helper('Data')->caregoryList();?>
+		<h3>Blog Categories</h3>
+		
+		<ul class="list-group">
+			<li class="list-group-item <?php echo (empty($catid)) ? 'active' : '';?>"><a href="<?php echo App::Config()->baseUrl("/blog");?>">All</a></li>
 		<?php foreach($Categories as $Category):?>
-			<li><a href="<?php echo App::Config()->baseUrl("/blog-by-cat/{$Category['id']}/" . App::Helper('Utility')->text2Normalize($Category['title'])) ?>"><?php echo($Category['title']);?></a></li>
+			<li class="list-group-item <?php echo ($Category['id'] == $catid) ? 'active' : '';?>"><a href="<?php echo App::Config()->baseUrl("/blog-by-cat/{$Category['id']}/" . App::Helper('Utility')->text2Normalize($Category['title'])) ?>"><?php echo($Category['title']);?></a></li>
 		<?php endforeach;?>
 		</ul>
-        <?php App::Hook('UI')->Render('template_left_column_C'); #User Interface Hook ?>
-        <?php App::Hook('UI')->Render('template_left_column_D'); #User Interface Hook ?>
-    </div>
+		<?php App::Hook('UI')->Render('template_left_column_C'); #User Interface Hook ?>
+		<?php App::Hook('UI')->Render('template_left_column_D'); #User Interface Hook ?>		
+	</div>	
 </div>
-<div class="grid_11">
-    <?php if($action == 'bypost'):?>
-        <div class="post-list">
-            <h2><a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>"><?php echo($post['title']);?></a></h2>
-            <p class="post-short-info">
-                <?php $catname = App::CategorySet()->idToName($post['category']);?>
-                <a href="<?php echo $this->baseurl("/blog-by-cat/{$post['category']}/" . App::Helper('Utility')->text2Normalize($catname)); ?>"><?php echo $catname;?></a> |
-                <?php echo App::Module('adminPanelUi')->adminName($post['adminref']);?> | 
-                <?php echo App::Helper('Date')->dateFormated($post['entrydate'],'long'); ?> |
-                <?php echo $this->__("Comment posted: ") . App::Component('Blog')->Helper('Data')->countCommentByPost($post['id']); ?>
-            </p>
-            <?php App::Hook('UI')->Render('blog_before_post'); #User Interface Hook ?>
-            <?php echo($post['description']);?>
-            <?php App::Hook('UI')->Render('blog_after_post'); #User Interface Hook ?>
-        </div>
-        <div class="comments-list">
-            <h2><?php echo $this->__("Comments");?></h2>
-            <?php if(!empty($comments['data'])):?>
-                <ul>
-                <?php foreach($comments['data'] as $key=>$comment):?>
-                    <li>
-                        <p class="post-short-info" id="comment-parma-link<?php echo ($key+1); ?>">
-                            <?php echo App::Helper('Html')->linkTag($comment['website'],$comment['name'],Array("rel"=>"nofollow")); ?>
-                            <?php echo $this->__("Says On");?> <?php echo App::Helper('Date')->dateFormated($comment['dated'],'long'); ?>
-							<?php echo App::Helper('Html')->linkTag("#comment-parma-link" . ($key+1),'&#10144;'); ?>
-							</p>
-                        <p><?php echo($comment['comment']);?></p>
-                    </li>
-                <?php endforeach;?>
-                </ul>
-            <?php else:?>
-                <p><?php echo $this->__("No comment posted yet"); ?></p>
-            <?php endif;?>
-        </div>
-        <div class="comment-form">
-            <h3 class="button white" onclick="jQuery('#post-comment').show();jQuery(this).hide();"><?php echo $this->__('Submit Comment');?></h3>
-            
-            <div class="message blog-comment-message"></div>
-            <form method="post" id="post-comment" action="<?php echo $this->baseurl("/blog-comment-submission/{$post['id']}") ?>" class="form hide">
-            <ul>
-                <li><label><?php echo $this->__('Name');?></label><span><input type="text" name="data[BlogComment][name]" class="input check_notdefault" longdesc="Please enter your name." value="" /></span></li>
-                <li><label><?php echo $this->__('Email Address');?></label><span><input type="text" name="data[BlogComment][email]" class="input check_email" longdesc="Please enter your valid email address." value="" /></span></li>
-                <li><label><?php echo $this->__('Website');?></label><span><input type="text" name="data[BlogComment][website]" class="input" value="" /></span></li>
-                <li><label><?php echo $this->__('Comments');?></label><span><textarea name="data[BlogComment][comment]" class="input check_notdefault" longdesc="Please type your comment here." rows="5"></textarea></span></li>
-                <li><label><?php echo App::Helper('Html')->capachaTag("blogcommet",Array("bk_color"=>"#000000","font_color"=>"#FFFFFF"));?></label><span><input type="text" name="data[BlogComment][capacha]" class="input check_notempty" longdesc="Please fillin the text display on left side image." value="" /></span></li>
-                <li><label>&nbsp;</label><span><input type
-				="submit" value="Submit" class="button white" /></span></li>
-            </ul>
-            </form>
-             <?php  App::Helper('JavaScript')->setAjax(array("debug"=>false,"autoHide"=>true))->appForm('#post-comment');?>
-        </div>
-    <?php else:?>
-        <?php if(!empty($blogpost['data'])):?>
-            <ul class="post-list">
-            <?php foreach($blogpost['data'] as $post): ?>
-                <li> 
-                    <h2><a href="<?php echo $this->baseurl("/blog-by-post/{$post['id']}/" . App::Helper('Utility')->text2Normalize($post['title'])); ?>"><?php echo($post['title']);?></a></h2>
-                    <p class="post-short-info">
-                        <?php $catname = App::CategorySet()->idToName($post['category']);?>
-                        <a href="<?php echo $this->baseurl("/blog-by-cat/{$post['category']}/" . App::Helper('Utility')->text2Normalize($catname)); ?>"><?php echo $catname;?></a> |
-                        <?php echo App::Module('adminPanelUi')->adminName($post['adminref']);?> | 
-                        <?php echo App::Helper('Date')->dateFormated($post['entrydate'],'long'); ?> |
-                        <?php echo $this->__("Comment posted: ") . App::Component('Blog')->Helper('Data')->countCommentByPost($post['id']); ?>
-                    </p>
-                    <?php App::Hook('UI')->Render('blog_before_comment'); #User Interface Hook ?>
-						<?php echo App::Component('Blog')->Helper("Data")->getFirstPera($post['description'],2);?>
-                    <?php App::Hook('UI')->Render('blog_after_comment'); #User Interface Hook ?>
-                </li>
-            <?php endforeach;?>
-            </ul>
-            <?php 					
-			if($blogpost['paging']!=''):?>
-                <p><?php echo $blogpost['link'] . ' ' .  $blogpost['paging']; ?></p>
-            <?php endif;?>
-        <?php else:?>
-            <h2><?php echo $this->__("Sorry! No post submitted yet"); ?></h2>
-            <?php App::Hook('UI')->Render('blog_no_comment'); #User Interface Hook ?>
-        <?php endif;?>
-    <?php endif ?>
-</div>
-<div class="clearboth"></div>

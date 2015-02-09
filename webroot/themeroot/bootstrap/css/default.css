@@ -1,0 +1,272 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+@import url(http://fonts.googleapis.com/css?family=Fjalla+One);
+
+body {
+  margin-top:50px;
+  padding-bottom: 40px;
+  color: #5a5a5a;
+  font-family: sans-serif;
+  font-size:12px;
+  background: none repeat scroll 0 0 #F5F5F5;  
+}
+
+.navbar a {
+    color: #333333;
+    font-family: "Fjalla One",Arial;
+    text-transform: uppercase;
+   /* padding-bottom: 10px;
+    padding-top: 10px;
+    text-shadow: none;
+    */
+}
+
+body h1, body h2, body h3, body h4, body .created,.carousel-caption , thead th, tfoot th{
+    font-family: "Fjalla One",Arial;
+    font-weight: normal;
+	
+}
+a{
+	color:#2DCC70;
+}
+
+section {
+    padding: 50px 0;
+}
+
+.top-title{
+    background: none repeat scroll 0 0 #2DCC70;
+    color: #FFFFFF;
+    padding: 20px 0;
+	margin-bottom:50px;
+}
+
+ul.breadcrumb {
+    background: none repeat scroll 0 0 transparent;
+    margin: 12px 0 0;
+	text-shadow: none;
+	color:#FFF;
+	 font-family: sans-serif;
+}
+ul.breadcrumb > li > a, ul.breadcrumb > li .divider {
+    color: #FFFFFF;
+}  
+ul.breadcrumb > li.active {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.gap{
+	margin:50px 0 0 0;
+}
+.list-group-item a{
+	color: #777777;
+	font-family: "Fjalla One",Arial;
+}
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus ,.list-group-item.active a{
+    background-repeat: repeat-x;
+    border-color: #2DCC70;
+	color:#FFF;
+    text-shadow: 0 -1px 0 #2DCC70;
+	 background-color: #2DCC70;
+     background-image: linear-gradient(to bottom, #45DD85 0px, #2DCC70 100%) 
+}
+
+.block-title{
+    background-color: #2DCC70;
+    color: #fff;
+    padding: 15px;
+}
+
+.clear{
+	clear:both;
+}
+
+.navbar-default .navbar-brand{
+    color:#000;
+    text-transform:inherit;
+}
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+.press-update{
+	background-color: #252525;
+	padding:50px 0;
+	margin:50px 0 0 0;
+	color:#FFF
+}
+
+.press-update h4{
+	color:#2DCC70;
+}
+
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+#myCarousel {
+  height: 520px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+#myCarousel .carousel-inner .item {
+  height: 520px;
+  background-color: #777;
+}
+#myCarousel .carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 520px;
+}
+
+.center{
+	text-align:center;
+}
+
+.inlineerror{
+	color:red;
+	padding:10px 0 0 0;
+	display:block;
+}
+
+/************* Shop ****/
+.shop-updates{
+    background: none repeat scroll 0 0 #2DCC70;
+    color: #FFFFFF;
+    padding: 30px 0 50px 0;
+	margin-bottom:50px;
+	
+}
+
+.shop-updates a{
+	color: #FFFFFF;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+hr{
+    border-color:#CCC;
+}
+
+/* Featurettes
+------------------------- */
+/*
+.featurette-divider {
+  margin: 80px 0; 
+}
+
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+*/
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+  /* Bump up size of carousel content */
+  .carousel-caption{
+	left:5%;
+	right:12%;
+	bottom: 50px;
+  }
+  
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+/*
+  .featurette-heading {
+    font-size: 50px;
+  }
+ */
+ 
+ .blog-update .lead{
+	font-size:16px;
+ }
+ 
+ .blog-post #comments-list{
+	margin-top:30px
+ }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 0px;
+  }
+}
+
+#footer {
+    background: none repeat scroll 0 0 #333333;
+    color: #666666;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}

@@ -1,0 +1,228 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<section class="top-title">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="col-md-6">
+				<h1>Member Signup</h1>
+			</div>
+			<div class="col-md-6">
+				<ul class="breadcrumb pull-right">
+					<li><a href="<?php echo App::Config()->baseUrl();?>">Home</a></li>
+					<li class="active">Members Signup</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="container">
+    <div class="col-md-6">    
+        <?php if(!empty($staticpage['title'])): ?>
+        <h2>	<?php echo $staticpage['title']; ?></h2>
+        <?php endif;?>
+        <?php if (isset($staticpage['content']) && $staticpage['content'] != ""): ?>
+            <?php echo $staticpage['content']; ?>
+        <?php endif;?>
+    </div>
+    <div class="col-md-6">
+        <form method="post" class="form" id="signup_form" action="<?php echo $this->baseurl("/member/signup"); ?>">
+            <div class="message"></div>
+            <div class="form-group"><input type="text" name="data[Member][f_name]" class="form-control check_notempty" placeholder="First Name" value="" /></div>					
+            <div class="form-group"><input type="text" name="data[Member][l_name]" class="form-control check_notempty" placeholder="Last Name" value="" /></div>								
+            <div class="form-group"><?php echo App::Helper('Html')->countryTag("data[Member][country]","",array("title" => "Country","id" => "country","class" => "form-control check_notempty"),array('title' => 'Your Country'));?></div>
+            <div class="form-group"><textarea name="data[Member][address]" class="form-control check_notempty" placeholder="Address"></textarea></div>		     
+            <div class="form-group"><input type="text" name="data[Member][email]" class="form-control check_email" placeholder="Email Address" value="" /></div>								
+            <div class="form-group"><input type="password" name="data[Member][password]" class="form-control check_password" placeholder="Type Password" value="" /></div>								
+            <div class="form-group"><input type="password" name="data[Member][clogin_password]" class="form-control check_password" longdesc="Type same as 'Password' field" placeholder="Confirm Password" value="" /></div>								
+            <div class="form-group">
+            <?php
+               echo App::Helper('Html')
+                    ->capachaTag(
+                        "memberregi",
+                        Array(
+                            "bk_color" => "#000000",
+                            "font_color" => "#FFFFFF"
+                        )
+                    );
+             ?>       
+            </div>								
+            <div class="form-group"><input type="text" name="data[Member][capacha]" class="form-control check_notempty" longdesc="Please type text correctly, display on left side image" placeholder="Please type text correctly, display on left side image" value="" /></div>								
+            <div class="form-group"><input type="submit" name="data[Member][submit]" class="btn btn-default" value="Signup" /></div>								
+            <a href="<?php echo App::Config()->baseUrl("/login");?>">Already I have an account.</a>
+    </div>					
+
+            
+            <?php
+            /*
+                    echo App::Html()
+                        ->get_from_row(
+                            "First Name",
+                            App::Helper('Html')
+                                ->inputTag(
+                                    "data[Member][f_name]",
+                                    "", 
+                                    array(
+                                        "class" => "input check_notempty", 
+                                        'id' => 'f_name'
+                                    )
+                                )
+                            );
+                            
+                    echo App::Html()
+                        ->get_from_row(
+                            "Last Name",
+                            App::Helper('Html')
+                                ->inputTag(
+                                    "data[Member][l_name]",
+                                    "",
+                                    array(
+                                        "class" => "input check_notempty", 
+                                        'id' => 'l_name'
+                                    )
+                                )
+                            );
+                            
+                    echo App::Html()
+                        ->get_from_row(
+                            "Country",
+                            App::Helper('Html')->countryTag("data[Member][country]","",array("title" => "Country","id" => "country","class" => "select check_notempty"),array('title' => 'Your Country'))
+                        );
+                        
+                    echo App::Html()
+                        ->get_from_row(
+                            "Address",
+                            App::Helper('Html')
+                            ->textareaTag(
+                                "data[Member][address]",
+                                "",
+                                array(
+                                    "rows" => "5",
+                                    "class" => "input",
+                                    'id' => 'website'
+                                )
+                            )
+                        );
+                        
+                    echo App::Html()
+                        ->get_from_row(
+                            "Email ",
+                            App::Helper('Html')
+                                ->inputTag(
+                                    "data[Member][email]",
+                                    "",
+                                    array(
+                                        "class" => "input check_email",
+                                        'id' => 'email'
+                                    )
+                                )
+                            );
+                            
+                    echo App::Html()
+                        ->get_from_row(
+                            "Password", 
+                            App::Helper('Html')
+                                ->passwordTag(
+                                    "data[Member][password]",
+                                    "",
+                                    array(
+                                        "class" => "input check_password",
+                                        'id' => 'login_password')
+                                    )
+                                );
+                                
+                    echo App::Html()
+                        ->get_from_row(
+                            "Confirm Password",
+                            App::Helper('Html')
+                                ->passwordTag(
+                                    "data[Member][clogin_password]",
+                                    "",
+                                    array(
+                                        "longdesc" => "Type same as 'Password' field", 
+                                        "title" => "Confirmed Password", 
+                                        "class" => "input check_notempty", 
+                                        'id' => 'clogin_password'
+                                    )
+                                )
+                            );
+                            
+                    echo App::Html()
+                        ->get_from_row(
+                            App::Helper('Html')
+                                ->capachaTag(
+                                    "memberregi",
+                                    Array(
+                                        "bk_color" => "#000000",
+                                        "font_color" => "#FFFFFF"
+                                    )
+                                ),
+                                App::Load("Helper/Html")
+                                    ->inputTag(
+                                        "data[Member][capacha]",
+                                        "", 
+                                        array(
+                                            "title" => "Capacha Password",
+                                            "class" => "input check_notdefault", 
+                                            'id' => 'capachs', 
+                                            'longdesc' => 'Please type text correctly, display on left side image')
+                                        )
+                                    );
+                                    
+                    echo App::Html()
+                        ->get_from_row(
+                            '&nbsp;',
+                            App::Helper('Html')
+                            ->submitTag(
+                                "data[Member][submit]",
+                                "Signup", 
+                                array("class" => "button white medium")
+                                ) . ' ' .
+                                App::Html()
+                                    ->linkTag(
+                                        App::Config()->baseUrl("/login"),
+                                        "Already I have an account."
+                                    )
+                                );
+                */
+            ?>
+            
+        </form>	
+        <?php 
+            App::Helper('JavaScript')
+                ->setAjax(
+                    array(
+                        "debug" => false, 
+                        "autoHide" => true
+                    )
+                )
+                ->appForm('#signup_form');
+        ?>
+    </div>
+</div>   
