@@ -31,7 +31,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
 {
     public function loadAdminLogin()
     {
-        $lastLoginData = App::Model('Admin')->findAll('5 Order By lastlogin DESC');
+        $lastLoginData = App::Model('Admin')->findAll('1=1 Order By lastlogin DESC');
 
         $html = "";
         foreach ($lastLoginData['data'] as $key => $data) {
@@ -72,10 +72,14 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
     }
 
     public function adminName($id = null)
-    {
-        if (isset($id)) $Info = App::Model('Admin')->findById($id);
-        $Info = App::AdminManager()->thisAdminInfo();
-
+    {	
+        if (isset($id)){
+			$Info = App::Model('Admin')->findById($id);
+		}
+		else {
+			$Info = App::AdminManager()->thisAdminInfo();
+		}
+		
         $name = "";
         $name .= isset($Info['f_name']) ? "{$Info['f_name']}" : "";
         $name .= isset($Info['l_name']) ? " {$Info['l_name']}" : "";
@@ -113,51 +117,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         return App::Helper('JavaScript')->autoComplete($JSReferance, $data);
     }
 
-    public function getPagemanagerHookList($theme, $id)
-    {
-		$page_current = App::PageManager()->getDataById($id);
-        $themeInfo = app::__def()->getThemeInfo($theme);
-        $hookDD = "<div style=\"float:left\" ><select name=\"data[Page][hook][]\" multiple=\"multiple\" size=\"14\" >";
-
-        if (in_array('sitemenu', explode(',', $page_current['hook']))) {
-            $hookDD .= "<option selected=\"selected\" value=\"sitemenu\">Site Menu</option>";
-        }
-        else {
-            $hookDD .= "<option value=\"sitemenu\">Site Menu</option>";
-        }
-
-        if (in_array('quicklinks', explode(',', $page_current['hook']))) {
-            $hookDD .= "<option selected=\"selected\" value=\"quicklinks\">Quick Links</option>";
-        }
-        else {
-            $hookDD .= "<option value=\"quicklinks\">Quick Links</option>";
-        }
-
-        foreach ($themeInfo['hooks'] as $hook) {
-            $hookDD .= "<optgroup label=\"{$hook['title']}\">";
-            foreach ($hook['list'] as $value => $title) {
-                if (in_array($value, explode(',', $page_current['hook']))) $hookDD .= "<option selected=\"selected\" value=\"{$value}\">{$title}</option>";
-                else $hookDD .= "<option value=\"{$value}\">{$title}</option>";
-            }
-            $hookDD .= "</optgroup>";
-        }
-        $hookDD .= "</select><br /><br />
-        </div>";
-
-        $hookDD .= '<div style="width:500px;padding-left:0px;float:left"><h6>Select Place holder:</h6>'
-            . '<p style="margin-left:20px">Press CTRL and Click on a placeholder name to check/uncheck selection.</p>'
-            . '<h6 style="margin-right:0">Content Type</h6>'
-            . '<p style="margin-left:20px">"Smart link" : Optimized link of a page, "Link" : Full link, "Text": Text Content</p>'
-
-            . '<h6 style="margin-right:0">Insert Page or PHP code in other Page</h6>'
-            . '<p style="margin-left:20px">Copy Page or Snip code inside content to render Static or Dynamic data'
-            . "<br /><a href=\"#\" id=\"dialog-modal-open\"><strong>Snip and Page Code list</strong></a><p></div>
-            <br class=\"clearboth\" />
-            <div>
-            <p style=\"margin-left:2px\">Enter comma separated user defined hook name(s) in the input box below<input type=\"text\" name=\"data[Page][userdefinehook]\" class=\"app_input\" value=\"{$page_current['userdefinehook']}\" /></p> </div>";
-
-        return $hookDD;
-    }
+    
 
     public function staticPageLeftLinks($action, $type='staticpage', $id = null)
     {
@@ -194,7 +154,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
                         </li>
                     </ul>';
 
-        $page_arr = App::Pagemanager()->getData(null, null, 'contenttype="Snip"');
+        $page_arr = App::Pagemanager()->getData(null, null, "contenttype='Snip'");
         $html .= '<h6 id="h-menu-snips" class="' . $snipSelect . '"><a href="#snips"><span>Snips (' . count($page_arr['data']) . ')</span></a></h6>
                     <ul id="menu-snips" class="' . $snipClass . '">
                         <li class="' . (($action == 'createsnip') ? 'selected' : '') . '"><a href="' . App::Config()->baseUrl('/page/manage-snip/create') . '">New Snip</a></li>
@@ -219,6 +179,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
     public function pageCodesList()
     {
         $page_arr = App::Pagemanager()->getData();
+		
         $snipCodeList = "";
         $pageCodeList = "";
 

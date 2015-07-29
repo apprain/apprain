@@ -72,9 +72,8 @@ class appRain_Base_Modules_log extends appRain_Base_Objects
     public function save()
     {
 
-        $this->clear('Db');
-
         if (strtolower($this->save_mode) == 'db') {
+			
             App::Model("Log")
                 ->setFkey($this->fkey)
                 ->setType($this->type)
@@ -104,22 +103,6 @@ class appRain_Base_Modules_log extends appRain_Base_Objects
         $this->save();
     }
 
-    public function clear($flag)
-    {
-        if (strtolower($flag) == 'db') {
-            $threshold = App::__def()->sysConfig('LOG_DELETED_DATA_THRESHOLD');
-
-            $time = App::Helper('Date')->getTime('');
-            $thresholdDt = $time - ($threshold * 24 * 60 * 60);
-            $thresholdDtFormated = date('Y-m-d', $thresholdDt);
-
-            App::Model('Log')->setDoNotLog(true)->Delete("DATE_FORMAT(dated, '%Y-%m-%d') < '{$thresholdDtFormated}'");
-
-        }
-        else {
-            App::Helper('Utility')->deleteFile(REPORT_CACHE_PATH . DS . $this->log_file_name);
-        }
-    }
 
     public function readFullLog($model = 'file')
     {

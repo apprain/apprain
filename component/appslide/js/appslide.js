@@ -28,7 +28,7 @@
 var appslide =
 {   
     _obj       :null,
-    _ttime     :3000, 
+    _ttime     :2000, 
     _data      :Array(),
     _l_img     :base + '/images/', 
     _l_obj     :'.apploader',
@@ -54,7 +54,7 @@ var appslide =
                 },
     clrsec     :function()
                 {
-                    jQuery('.app-press-menu').children('a').each(function(index, item){
+                    jQuery('.app-slide-menu').children('a').each(function(index, item){
                         jQuery(item).removeClass('selected');  
                     })
                 },
@@ -80,7 +80,7 @@ var appslide =
                                 appslide.chimg(appslide._obj);
                                 appslide.clrsec();
 								jQuery(appslide._obj).addClass('selected');
-                                jQuery('.app-press-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
+                                jQuery('.app-slide-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
                                 appslide.loading(false);
 							}
 						});
@@ -90,7 +90,7 @@ var appslide =
                         appslide.chimg(appslide._obj);
                         appslide.clrsec();
                         jQuery(appslide._obj).addClass('selected');
-                        jQuery('.app-press-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
+                        jQuery('.app-slide-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
                     }
 					
                 },
@@ -107,13 +107,13 @@ var appslide =
 	            },
     init       :function()
                 {
-					jQuery('.app-press-menu').children('a').each(function(index,item){
+					jQuery('.app-slide-menu').children('a').each(function(index,item){
 						appslide.loadimage(jQuery(item).attr('rel'));
 						appslide._hkeys[index] = item;
 						jQuery(appslide._hkeys[index]).click(appslide.view);
 					}); 
 					
-					jQuery('.app-press-content').mouseover(function() {
+					jQuery('.app-slide-content').mouseover(function() {
 						appslide._auto = false;
 					}).mouseout(function(){
 						appslide._auto = true;

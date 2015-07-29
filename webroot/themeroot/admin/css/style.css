@@ -1918,7 +1918,7 @@ div.form div.fields div.field div.highlight .ui-state-hover
 
 div.form div.fields div.buttons
 {
-	margin: 10px 0 0 15px;
+	margin: 10px 0 0 0px;
 	padding: 0;
 }
 
@@ -2025,6 +2025,7 @@ div.form div.fields div.buttons div.highlight .ui-state-hover
 	background: #eeeeee;
 	border-right: 1px solid #cdcdcd;
 	border-bottom: 1px solid #cdcdcd;
+	text-transform:uppercase;
 }
 
 .data-grid td{		

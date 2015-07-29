@@ -35,7 +35,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
    
     public function registerCallBacks()
     {
-        $pages = App::Load("Model/Page")->findAll("(hook<>'' OR hook<>'userdefinehook' OR rendertype<>'')");
+        $pages = App::Load("Model/Page")->findAll("(hook<>'' OR hook<>'userdefinehook' OR rendertype<>'') ORDER BY sort_order ASC");
 
         foreach ($pages['data'] as $page) {
             $combined_hook = $page['hook'] . (($page['userdefinehook'] != '') ? ",{$page['userdefinehook']}" : "");
@@ -129,6 +129,64 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
         return $def;
     }
 
+	public function getPagemanagerHookList($theme, $id)
+    {
+		$page_current = App::PageManager()->getDataById($id);
+		$page_current['hook'] = isset($page_current['hook']) ? $page_current['hook'] : '';
+		$page_current['userdefinehook'] = isset($page_current['userdefinehook']) ? $page_current['userdefinehook'] : '';
+        $themeInfo = app::__def()->getThemeInfo($theme);
+        $hookDD = "<div style=\"float:left\" ><select name=\"data[Page][hook][]\" multiple=\"multiple\" size=\"14\" >";
+
+        if (in_array('sitemenu', explode(',', $page_current['hook']))) {
+            $hookDD .= "<option selected=\"selected\" value=\"sitemenu\">Site Menu</option>";
+        }
+        else {
+            $hookDD .= "<option value=\"sitemenu\">Site Menu</option>";
+        }
+
+        if (in_array('quicklinks', explode(',', $page_current['hook']))) {
+            $hookDD .= "<option selected=\"selected\" value=\"quicklinks\">Quick Links</option>";
+        }
+        else {
+            $hookDD .= "<option value=\"quicklinks\">Quick Links</option>";
+        }
+
+        foreach ($themeInfo['hooks'] as $hook) {
+            $hookDD .= "<optgroup label=\"{$hook['title']}\">";
+            foreach ($hook['list'] as $value => $title) {
+                if (in_array($value, explode(',', $page_current['hook']))) $hookDD .= "<option selected=\"selected\" value=\"{$value}\">{$title}</option>";
+                else $hookDD .= "<option value=\"{$value}\">{$title}</option>";
+            }
+            $hookDD .= "</optgroup>";
+        }
+        $hookDD .= "</select><br /><br />"
+			
+			. App::Helper('Html')->selectTag(
+					'data[Page][rendertype]',
+					array(
+						''=>'Select Render Type',
+						'h_link'=>'Link',
+						'smart_h_link'=>'Smart Link',
+						'text'=>'Text'
+					),
+					App::PageManager()->FieldValueById($id,'rendertype')
+				) . App::Helper('Html')->helpTag('page-manager-rendertype') . "<br /><br />
+        </div>";
+
+        $hookDD .= '<div style="width:500px;padding-left:0px;float:left"><h6>Select Place holder:</h6>'
+            . '<p style="margin-left:20px">Press CTRL and Click on a placeholder name to check/uncheck selection.</p>'
+            . '<h6 style="margin-right:0">Content Type</h6>'
+            . '<p style="margin-left:20px">"Smart link" : Optimized link of a page, "Link" : Full link, "Text": Text Content</p>'
+
+           // . '<h6 style="margin-right:0">Insert Page or PHP code in other Page</h6>'
+           // . '<p style="margin-left:20px">Copy Page or Snip code inside content to render Static or Dynamic data'
+            . "</div>
+            <br class=\"clearboth\" />
+            <div>
+            <p style=\"margin-left:2px\">Enter comma separated user defined hook name(s) in the input box below <input type=\"text\" name=\"data[Page][userdefinehook]\" class=\"app_input\" value=\"{$page_current['userdefinehook']}\" /></p> </div>";
+
+        return $hookDD;
+    }
 	
     public function getDataById($id = NULL)
     {
@@ -142,7 +200,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
     {
 
         if ($cnd != "") {
-			$cnd = "AND ($cnd)";
+			$cnd = "AND ({$cnd})";
 		}
 
         if (isset($pageName)) {
@@ -150,7 +208,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
             return isset($data[$fieldName]) ? $data[$fieldName] : $data;
         }
         else {
-            return App::Load("Model/Page")->findAll("1 {$cnd}");
+            return App::Load("Model/Page")->findAll("1=1 {$cnd}");
         }
     }
 
@@ -183,7 +241,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
                 return App::Load("Model/Page")->findAll("name='$flag2'");
                 break;
             case "all":
-                return App::Load("Model/Page")->findAll("1 ORDER BY title ASC");
+                return App::Load("Model/Page")->findAll("1=1 ORDER BY title ASC");
                 break;
             default:
                 return App::Load("Model/Page")->findById($flag);
@@ -217,12 +275,13 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
 
     public function getQuickLinks()
     {
-        $data = App::Model('Page')->findAll("hook LIKE '%quicklinks%'");
+        $data = App::Model('Page')->findAll("hook LIKE '%quicklinks%' ORDER BY sort_order ASC");
         $links = array();
         foreach ($data['data'] as $row) {
             $links[] = array(
                 'link' => $this->linkById($row['id']),
                 'id' => $row['id'],
+				'name' => $row['name'],
                 'title' => $row['title']
             );
         }

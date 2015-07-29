@@ -32,7 +32,7 @@ abstract class appRain_Base_Abstract
 
     private static $__connection = NULL;
     const PRIMARY = 'primary';
-    const _APP = '_app';
+    const _APP = 'app_';
     public $_cname = null;
 
     /**
@@ -42,20 +42,11 @@ abstract class appRain_Base_Abstract
      */
     protected function get_conn($cname = null)
     {
-
         $this->defineCName($cname);
-
         if (!isset(App::$__appData["db_connection"][$this->_cname])) {
-            try {
-                $db_config = $this->readdbconfig();
-
-                App::$__appData["db_connection"][$this->_cname] = new PDO(
-                    strtolower($db_config['type']) . ":host={$db_config['host']};dbname={$db_config['dbname']}",
-                    $db_config['username'],
-                    $db_config['password'],
-                    $this->getDBOptions()
-                );
-                App::$__appData["db_prefix"][$this->_cname] = $db_config["prefix"];
+            try {	
+				$db_config = $this->readdbconfig();
+				App::$__appData["db_connection"][$this->_cname] = App::Module("Database_{$db_config['driver']}_{$db_config['type']}")->Connect($db_config); 
             }
             catch (Exception $e) {
                 echo "<pre>";
@@ -80,14 +71,6 @@ abstract class appRain_Base_Abstract
         else {
             $this->_cname = self::PRIMARY;
         }
-    }
-
-    private function getDBOptions()
-    {
-        return
-            array(
-                1002 => "SET NAMES {$this->readdbconfig('charset')}"
-            );
     }
 
     /**

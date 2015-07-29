@@ -29,7 +29,7 @@
 body {
     color: #000000;
     font-family: Trebuchet MS, verdana, arial, helvetica;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 17px;
     margin: 0;
     background: url(../images/innerbody_back.gif) repeat-x;
@@ -133,7 +133,7 @@ ul, li, form {
     margin-left: 15px;
 }
 
-.lists, form {
+.lists {
     margin-left: 20px;
 }
 
@@ -163,7 +163,12 @@ ul, li, form {
 .ins-input {
     border: 1px solid #99011E;
     width: 200px;
-    padding: 2px;
+    padding: 5px;
+}
+.ins-select {
+    border: 1px solid #99011E;
+    width: 210px;
+    padding: 5px;
 }
 
 .ins-button {

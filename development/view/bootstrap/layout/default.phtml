@@ -41,16 +41,13 @@ echo App::Config()->isSiteLive(); ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
     <!-- Static -->
 	<link href="<?php echo $this->skinurl("/css/reset.css");?>" rel="stylesheet" type="text/css" media="all"/>
     <link href="<?php echo $this->skinurl("/css/default.css");?>" rel="stylesheet" type="text/css" media="all"/>
-    
-	<!-- link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css' -->
-		
+    	
     <!-- Dynamic -->
     <link href="<?php echo $this->baseurl("/common/default-css");?>" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="<?php echo $this->baseurl("/common/default-js");?>"></script>
     <?php App::Hook('UI')->Render('template_head_tag_end'); #User Interface Hook ?>
 </head>
  <body role="document">
-
 	<?php  echo $this->callElement("header"); ?>
 	<?php echo $content_rendered;?>	
 	<?php echo $this->callElement("footer"); ?>			

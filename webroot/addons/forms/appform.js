@@ -87,8 +87,8 @@ var appForm = {
     },
     password:function (_obj) {
         var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
-
-        if (!re.test(jQuery(_obj).val())) {
+        
+        if (!re.test(jQuery(_obj).val()) || jQuery(_obj).val().length < 8) {
             appForm.addToErrLog(_obj, 'Enter a valid Password (Length 8 and conbination A-Za-z0-9)');
         }
     },

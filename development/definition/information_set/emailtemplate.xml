@@ -54,6 +54,25 @@
      */
     -->
     <fields>
+	    <field name="message">
+            <title>Message</title>
+            <type>textareaTag</type>
+            <validation/>
+            <parameters>
+                <parameter name="richtexteditor">No</parameter>
+            </parameters>
+			<db-attribute>
+				<attribute name="type">text</attribute>
+                <attribute name="length"></attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <tag-attributes>
+                <attribute name="id">description</attribute>
+                <attribute name="class">app_input</attribute>
+                <attribute name="rows">20</attribute>
+            </tag-attributes>
+        </field>
         <field name="templatetype">
             <title>Name</title>
             <type>inputTag</type>
@@ -83,8 +102,8 @@
             <type>inputTag</type>
 			<db-attribute>
 				<attribute name="type">varchar</attribute>
-                <attribute name="length">150</attribute>
-				<attribute name="null"></attribute>
+                <attribute name="length">200</attribute>
+				<attribute name="not null"></attribute>
 				<attribute name="default"></attribute>
 			</db-attribute>				
             <validation>
@@ -97,25 +116,6 @@
             <tag-attributes>
                 <attribute name="id">title</attribute>
                 <attribute name="class">app_input</attribute>
-            </tag-attributes>
-        </field>
-        <field name="message">
-            <title>Message</title>
-            <type>textareaTag</type>
-            <validation/>
-            <parameters>
-                <parameter name="richtexteditor">No</parameter>
-            </parameters>
-			<db-attribute>
-				<attribute name="type">text</attribute>
-                <attribute name="length"></attribute>
-				<attribute name="null"></attribute>
-				<attribute name="default"></attribute>
-			</db-attribute>				
-            <tag-attributes>
-                <attribute name="id">description</attribute>
-                <attribute name="class">app_input</attribute>
-                <attribute name="rows">20</attribute>
             </tag-attributes>
         </field>
     </fields>

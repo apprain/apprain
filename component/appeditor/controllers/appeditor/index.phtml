@@ -38,7 +38,7 @@
 		<?php if(!empty($fileeditorqueue)):?>
 			<ul class="links">			
 			<?php foreach($fileeditorqueue as $row):?>
-				<? $farr = explode('/',$row);?>			    
+				<?php $farr = explode('/',$row);?>			    
 				<?php if( $row == $loc):?>
 					<li class="ui-tabs-selected">
 						<a href="?loc=<?php echo $row ;?>" title="<?php echo $row ;?>"><?php echo(end($farr)); ?></a>						

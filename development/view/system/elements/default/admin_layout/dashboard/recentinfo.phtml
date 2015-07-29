@@ -30,16 +30,6 @@
 			<p>Active : <?php echo App::Module('Component')->Count('Active');?>,
 				Inactive: <?php echo App::Module('Component')->Count('Inactive');?></p>
 			<br/>
-			<h6><?php echo $this->__("Last Backup Date");?></h6>
-
-			<p>
-				<?php if (App::Module('Dbimexport')->lastDBDate() != ""): ?>
-				<?php echo App::Helper('Date')->dateFormated(App::Module('Dbimexport')->lastDBDate(), 'long'); ?>
-				<?php else: ?>
-				<?php echo $this->__("No Backup found"); ?>
-				<?php endif;?>
-			</p>
-			<br/>
 			<h6><?php echo $this->__("Theme");?></h6>
 
 			<p><?php echo App::Module('adminPanelUI')->themeInfo($this->theme);?></p>
@@ -90,7 +80,7 @@
                         <label for="textarea"><?php echo $this->__('Message:');?></label>
                     </div>
                     <div class="input">
-                        <textarea id="textarea1" name="data[Message][message]" cols="50" class="textarea large check_notempty"  rows="9"></textarea>
+                        <textarea id="textarea1" name="data[Message][message]" cols="50" class="textarea large check_notempty"  rows="2"></textarea>
                     </div>
                 </div>
                 <div class="buttons">

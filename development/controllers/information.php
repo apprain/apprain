@@ -116,7 +116,17 @@ class informationController extends appRain_Base_Core
             }
         }
         
-        if (isset($id)) {
+		if($action == 'copy'){
+			$data = App::InformationSet($type)->findById($id);
+			$data['id'] = null;
+			$Data['Information'] = $data;
+
+			$InfoSetObj = App::InformationSet($type)->Save($Data);
+			App::Module('Notification')->Push("Copied Successfully");
+			$this->redirect('/information/manage/' . $type . '/update/' . $InfoSetObj->getId()); 
+			exit;
+		}
+        else if (isset($id)) {
             $this->_on_information_set_view(
                 array(
                     "type"  => "{$type}",
@@ -125,7 +135,7 @@ class informationController extends appRain_Base_Core
              );             
             $data = App::InformationSet($type)->findById($id);
         }
-        else  { 
+        else  {
 			$data = App::informationSet($type)
 				->paging(
 					$this->conditions()->getSearchCondition()
@@ -166,7 +176,7 @@ class informationController extends appRain_Base_Core
         $src_cat = isset($this->get['src_cat']) ? $this->get['src_cat'] : '';
 		$this->set('src_cat', $src_cat);
 		
-		$str = '1';
+		$str = '1=1';
 		$params = "";
 		if(!empty($src_key) && !empty($src_field)){ 
 			$str .= " AND {$src_field} LIKE '%{$src_key}%' ";			

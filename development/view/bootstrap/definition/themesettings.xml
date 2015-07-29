@@ -81,27 +81,6 @@
                         </options>
                     </selection>					
                 </selections>
-            </group>
-			<group>
-                <base name="background">
-                    <title>Background Options</title>
-                    <acl>
-                        <ugroup>superadmin</ugroup>
-                    </acl>
-                </base>
-                <selections>			
-                    <selection>
-                        <title>Background Image Position</title>
-                        <name>whitecloud_background_position</name>
-                        <type>radioTag</type>
-                        <default>bgdefault</default>
-                        <options>
-                            <option value="bgdefault">Default</option>
-                            <option value="bgstartfromtop">Start From Top</option>
-							<option value="disable">Disable</option>
-                        </options>
-                    </selection>                    
-                </selections>
             </group>			
         </groups>
     </sections>

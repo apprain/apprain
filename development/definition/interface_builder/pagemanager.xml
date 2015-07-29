@@ -32,42 +32,50 @@
     <navigation name="page_manager">
         <parent>
             <title>Page Manager</title>
-            <action>/page/manage</action>
+            <action>/page/manage-static-pages</action>
             <acl>
                 <group>superadmin</group>
-                <group>useradmin</group>
             </acl>
             <submenu>
                 <item>
                     <title>Manage Static Pages</title>
-                    <link>/page/manage</link>
+                    <link>/page/manage-static-pages</link>
                 </item>			
                 <item>
-                    <title>Manage Code Snips</title>
-                    <link>/page/manage-snip</link>
+                    <title>Manage Dynamic Pages</title>
+                    <link>/page/manage-dynamic-pages</link>
                 </item>				
             </submenu>
-            <sort_order>3</sort_order>
+            <sort_order>1</sort_order>
             <icon>/themeroot/admin/images/icons/page_manager.png</icon>
         </parent>
         <child>
             <menu>
-                <title>Page Manager</title>
+                <title>Static Pages</title>
                 <items>
                     <item>
-                        <title>Create Page</title>
-                        <link>/page/manage/create</link>
+                        <title>Create New</title>
+                        <link>/page/manage-static-pages/create</link>
                     </item>
                     <item>
-                        <title>Create Snip</title>
-                        <link>/page/manage/createsnip</link>
-                    </item>
-                    <item>
-                        <title>Manage Pages/Snips</title>
-                        <link>/page/manage</link>
-                    </item>
+                        <title>Manage Pages</title>
+                        <link>/page/manage-static-pages</link>
+                    </item>				
                 </items>
             </menu>
+            <menu>
+                <title>Dynamic Pages</title>
+                <items>
+                    <item>
+                        <title>Create New</title>
+                        <link>/page/manage-dynamic-pages/create</link>
+                    </item>
+                    <item>
+                        <title>Manage Pages</title>
+                        <link>/page/manage-dynamic-pages</link>
+                    </item>				
+                </items>
+            </menu>					
         </child>
     </navigation>
 </InterfaceBuilder>

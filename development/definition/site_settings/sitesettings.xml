@@ -228,7 +228,7 @@
                             <option value="No">No</option>
                         </options>
                     </selection>
-                    <selection>
+                    <!-- selection>
                         <title>Editor Mode</title>
                         <name>rich_text_editor_mode</name>
                         <type>radioTag</type>
@@ -237,7 +237,7 @@
                             <option value="Simple">Simple</option>
                             <option value="Advanced">Advanced</option>
                         </options>
-                    </selection>
+                    </selection -->
                 </selections>
             </group>
 			<group>

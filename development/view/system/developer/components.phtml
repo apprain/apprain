@@ -70,16 +70,23 @@ App::Helper('Toolbar')
 			$DataGrid = App::Module('DataGrid');
 			$DataGrid->clear()->setHeader(array('Name', 'Component Information'));
 			foreach ($componentlist['data'] as $component){
+				if(strtolower($component['removeable']) == 'system') {
+					continue;
+				}
 				if (empty($component['error'])) {
 					$color = (strtolower($component['status']) == 'active') ? '#40BF00' : '#FF0000';
 					$statustext = (strtolower($component['status']) == 'active') ? 'Deactivate' : 'Activate';
-
+					
+					$link2remove = '';
+					if($component['removeable'] == 'Yes'){
+						$link2remove = " | <strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("REMOVE"), array("class" => "removecomponent", "id" => "{'component':'{$component['namespace']}'}")) . "</strong>";
+					}
 					$DataGrid->addRow("<strong>{$component['name']}</strong>", 	App::Helper('Utility')->codeFormated($component['description']) . "<br /><br />
 												<br />Version: {$component['version']}  |	<a href=\"{$component['author_uri']}\">{$component['author']}</a> | <a href=\"{$component['author_uri']}\">{$component['uri']}</a><br /><br />
 
 													<strong>" . App::Helper('Html')->linkTag($this->baseUrl("/developer/components/{$component['namespace']}/changestatus{$paginglink}"), $this->__(strtoupper($statustext)), array('style' => "color:{$color}")) . "</strong> |
-													<strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("HELP"), array("class" => "c_help", "id" => "{$component['namespace']}help")) . "</strong> |
-													<strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("REMOVE"), array("class" => "removecomponent", "id" => "{'component':'{$component['namespace']}'}")) . "</strong>
+													<strong>" . App::Helper('Html')->linkTag("javascript:void(0)", $this->__("HELP"), array("class" => "c_help", "id" => "{$component['namespace']}help")) . "</strong>
+													{$link2remove}
 													" . App::Helper('Html')->helpTag('components-action-bar') . "
 													<div id=\"{$component['namespace']}helptext\" class=\"displaynone\"><br />{$component['help']}</div>
 												</div>

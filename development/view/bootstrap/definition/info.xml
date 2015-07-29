@@ -3,12 +3,19 @@
     <name>Bootstrap</name>
     <author>Reazaul Karim</author>
     <author_uri>http://reazulk.wordpress.com</author_uri>
-    <description>The theme created based on 960 CSS Framework. Easy and simple to customize.</description>
+    <description><a target="_blank" href="http://getbootstrap.com/">Bootstrap</a> is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web</description>
     <image>logo.jpg</image>
     <pagemanager_hooks>
         <hook_group name="header" title="Header">
             <hook name="template_header_A">Header A</hook>
             <hook name="template_header_B">Header B</hook>
+        </hook_group>
+		<hook_group name="homepage" title="Home Page">
+            <hook name="home_page_banner_top">Home Page Banner Top</hook>
+            <hook name="home_page_banner">Home Page Banner</hook>
+            <hook name="home_page_banner_bottom">Home Page Banner Bottom</hook>
+            <hook name="home_content_area_A">Home Content Area A</hook>
+            <hook name="home_content_area_B">Home Content Area B</hook>
         </hook_group>
         <hook_group name="footer" title="Footer">
 			<hook name="template_footer_menu">Footer Menu</hook>
@@ -20,22 +27,16 @@
             <hook name="template_left_column_B">Left Column Section B</hook>
             <hook name="template_left_column_C">Left Column Section C</hook>
             <hook name="template_left_column_D">Left Column Section D</hook>
-        </hook_group>
-        <hook_group name="homepage" title="Home Page">
-            <hook name="home_page_banner_top">Home Page Banner Top</hook>
-            <hook name="home_page_banner_bottom">Home Page Banner Bottom</hook>
-            <hook name="home_content_area_A">Home Content Area A</hook>
-            <hook name="home_content_area_B">Home Content Area B</hook>
-        </hook_group>
+        </hook_group>        
     </pagemanager_hooks>
     <settings>themesettings.xml</settings>
 	<components>
-		<auto>
+		<!--auto>
 			<install>
 				<component>appslide</component>
 			</install>
 			<uninstall />
-		</auto>
+		</auto -->
 	</components>
 	<callback>Development_View_Whitecloud_Definition_Register</callback>
 </theme>

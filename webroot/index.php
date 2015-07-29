@@ -1,5 +1,6 @@
 <?php
 /**
+ * ---
  * appRain CMF
  *
  * LICENSE

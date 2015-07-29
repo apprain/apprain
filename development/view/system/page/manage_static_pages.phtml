@@ -1,0 +1,260 @@
+<?
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php $Data = App::PageManager();?>
+<?php if(in_array($action,array('create','update'))):?>
+<form method="post" action="<?php echo $this->baseUrl("/page/manage-static-pages/{$action}/{$id}");?>" id="submit-page-data" >
+<div class="box  box-left-tabs">
+    <div class="title">
+        <h5><?php echo $this->__("Manage Static Page");?><?php if(isset($id)):?> (<?php echo $Data->FieldValueById($id,'name');?>)<?php endif;?></h5>
+
+        <ul class="links">
+            <li><a href="#box-left-other" id="page_content"><?php echo $this->__("Page Content");?></a></li>		
+            <li><a href="#box-left-hooks" id="ui_hooks"><?php echo $this->__('Link Page');?></a></li>
+            <li><a href="#box-left-meta-data" id="meta_data"><?php echo $this->__('Common Fields');?></a></li>
+        </ul>
+    </div>
+    <div id="box-left-other">
+		<div class="form">
+			<div class="fields">
+				
+				<div class="field">
+					<textarea name="data[Page][content]" class="richtexteditor"><?php echo $Data->FieldValueById($id,'content');?></textarea>	   
+				</div>
+				<?php if(!isset($id)):?>
+				<div class="field">
+                    <div class="label">
+                        <label for="page-name"><?php echo $this->__('Page Name (*)');?></label>
+                    </div>
+                    <div class="input">
+                        <input type="text" id="page-name" class="app_input" name="data[Page][name]" value="<?php echo $Data->FieldValueById($id,'name');?>" />
+                    </div>
+                </div>	
+				<?php else: ?>
+					<input type="hidden" name="data[Page][name]" value="<?php echo $Data->FieldValueById($id,'name');?>" />
+				<?php endif;?>
+				<div class="field">
+					<div class="message"></div>
+				</div>	
+			   <div class="buttons">
+                    <input type="submit" name="submit" value="Save Page"/>
+					<input type="button" id="dialog-modal-open" value="Page Code List"/>
+					<input type="button" class="button_grp" target="ui_hooks" value="Link Page >>"/>					
+					<input type="button" class="button_grp" target="meta_data" value="Common Fields >>"/>
+					<input type="button" class="back" target="meta_data" value="<< Back" onclick="javascript:history.go(-1)" />
+					<input type="button" value="View Page" onclick="window.open('<?php echo App::COnfig()->baseUrl("/page/view/" . $Data->FieldValueById($id,'name')); ?>', '_blank', 'toolbar=no, scrollbars=no, resizable=no, top=500, left=500');" />
+					<?php echo App::Helper('Html')->helpTag('page-manager-select-page','<input type="button" name="help" value="Help"/>');?>
+                </div>
+            </div>
+		</div>
+    </div>	
+    <div id="box-left-hooks">
+		<div class="form">			
+			<?php echo $Data->getPagemanagerHookList($this->theme,$id);?>						
+			<div class="fields">	
+				<div class="field">
+					<div class="message"></div>	
+				</div>				
+				<div class="buttons">					
+					<input type="submit" name="submit" value="Save Page"/>
+					<input type="button" class="button_grp" target="page_content" value="<< Page Content"/>
+					<input type="button" class="button_grp" target="meta_data" value="Common Fields >>"/>
+					<input type="button" class="back" target="meta_data" value="<< Back" onclick="javascript:history.go(-1)" />
+					<input type="button" value="View Page" onclick="window.open('<?php echo App::COnfig()->baseUrl("/page/view/" . $Data->FieldValueById($id,'name')); ?>', '_blank', 'toolbar=no, scrollbars=no, resizable=no, top=500, left=500');" />
+					<?php echo App::Helper('Html')->helpTag('page-manager-placeholder','<input type="button" name="help" value="Help"/>');?>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div id="box-left-meta-data">
+		<div class="form">
+			<div class="fields">
+				<div class="field">
+					<div class="label">
+                        <label for="title"><?php echo $this->__('Title');?> <?php echo App::Helper('Html')->helpTag('title')?></label>
+                    </div>
+					<div class="input">
+						<?php
+							echo App::Helper("Html")->inputTag(
+								'data[Page][title]',
+								$Data->FieldValueById(
+									$id,
+									'title'
+								),
+								array(
+									"class" => "app_input",
+									"id" => "title"
+								)
+							);
+						?>
+					</div>
+				</div>			
+				<div class="field">
+					<div class="label">
+                        <label for="page_title"><?php echo $this->__('Page Meta Title');?> <?php echo App::Helper('Html')->helpTag('page-manager-meta-title')?></label>
+                    </div>
+					<div class="input">
+						<?php
+							echo App::Helper("Html")->inputTag(
+								'data[Page][page_title]',
+								$Data->FieldValueById(
+									$id,
+									'page_title'
+								),
+								array(
+									"class" => "app_input",
+									"id" => "page_title"
+								)
+							);
+						?>
+					</div>
+				</div>
+				<div class="field">
+					<div class="label">
+                        <label for="meta_keywords"><?php echo $this->__('Meta Keywords');?> <?php echo App::Helper('Html')->helpTag('page-manager-meta-keyword')?></label>
+                    </div>
+					<div class="input">
+						<?php
+							echo App::Helper("Html")->inputTag(
+								'data[Page][meta_keywords]',
+								$Data->FieldValueById(
+									$id,
+									'meta_keywords'
+								),
+								array(
+									"class" => "app_input",
+									"id" => "meta_keywords"
+								)
+							);
+						?>
+					</div>
+				</div>
+				<div class="field">
+					<div class="label">
+                        <label for="meta_description"><br /><?php echo $this->__('Meta Descriptions');?> <?php echo App::Helper('Html')->helpTag('page-manager-meta-desc')?></label>
+                    </div>
+					<div class="input">
+						<?php
+							echo App::Helper("Html")->inputTag(
+								'data[Page][meta_description]',
+								$Data->FieldValueById(
+									$id,
+									'meta_description'
+								),
+								array(
+									"class" => "app_input",
+									"id" => "meta_description"
+								)
+							);
+						?>
+					</div>
+				</div>	
+				<div class="field">
+					<div class="label">
+                        <label for="sort_order"><?php echo $this->__('Sort Order');?><?php echo App::Helper('Html')->helpTag('page-manager-sort_order')?></label>
+                    </div>
+					<div class="input">
+						<?php
+							$sort_order = $Data->FieldValueById($id,'sort_order');
+							$sort_order = ($sort_order > 0) ? $sort_order : '';
+							echo App::Helper("Html")->inputTag(
+								'data[Page][sort_order]',
+								$sort_order,
+								array(
+									"class" => "app_input",
+									"id" => "sort_order"
+								)
+							);
+						?>
+					</div>
+				</div>				
+				<div class="field">
+					<div class="message"></div>	
+				</div>					
+				<div class="buttons">	
+					<input type="submit" name="submit" value="Save Page"/>				
+					<input type="button" class="button_grp" target="page_content" value="<< Page Content"/>
+					<input type="button" class="button_grp" target="ui_hooks" value="<< Link Page"/>		
+					<input type="button" value="View Page" onclick="window.open('<?php echo App::COnfig()->baseUrl("/page/view/" . $Data->FieldValueById($id,'name')); ?>', '_blank', 'toolbar=no, scrollbars=no, resizable=no, top=500, left=500');" />
+					<input type="button" class="back" target="meta_data" value="<< Back" onclick="javascript:history.go(-1)" />
+				</div>				
+			</div>
+		</div>
+    </div>	
+</div>	
+</form>
+<?php  App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => false))->appForm('#submit-page-data');?>
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery(".button_grp").click(function(event) {
+			var id = jQuery(this).attr('target');
+			jQuery('#'+id).click();
+		});
+	});	
+</script>	
+<?php else:?>
+	<?php App::Helper('Toolbar')->setTitle("Manage Static Page")->setBtnBack()->Render(array('code'=>'toolbar_top'));?>
+	<?php
+		if(!empty($List['data'])){
+			$Grid = App::Module('DataGrid');
+			$Grid->setHeader(array('Name', 'Title', 'Options'));
+			$Grid->setFooter($List['paging_str']);
+			
+			foreach($List['data'] as $row){
+				$Grid->addRow(
+					$row['name'],
+					$row['title'],
+					App::Html()->linkTag(
+						App::Config()->baseUrl('/page/manage-static-pages/update/' . $row['id']),
+						App::Html()->imgTag($this->baseUrl('/images/admin/edit.gif')))
+						. 
+					App::load("Helper/Html")->linkTag(
+						"javascript:void(0)",
+						App::Html()->imgTag(
+							App::Config()->baseUrl('/images/admin/remove.gif')
+						),array('class'=>'link_delete', 'title'=>'Page_' . $row['id']))
+				);
+			}	
+			
+			$Grid->Render();
+		}
+		else {
+			echo $this->callElement(
+				'default/tools/message', 
+				array(
+					'caption' =>'Message',
+					'type' => 'message', 
+					'message' => $this->__('No Page found!')
+				)
+			);
+		}
+	?>
+	<?php App::Helper('Toolbar')->setBtnBack()->setFormJustified(true)->Render(array('code'=>'toolbar_bottom'));?>
+<?php endif;?>
+ <?php    echo App::Module('AdminPanelUi')->pageCodesList('Html'); ?>

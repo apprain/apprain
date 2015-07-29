@@ -45,7 +45,7 @@
 		<author_uri>http://reazulk.wordpress.com</author_uri>
 		<addon_uri>http://www.apprain.com</addon_uri>
         <layouts>All</layouts>
-        <layouts_except></layouts_except>
+        <layouts_except/>
         <status>Active</status>
         <load>Always</load>        
     </addon>
@@ -99,12 +99,14 @@ jQuery(document).ready(function () {
     </addon>
     <addon name="rich_text_editor">
         <title><![CDATA[Rich Text Editor]]></title>
-        <description><![CDATA[Convert a Text Area to WYSIWYG Editor to manage content.]]></description>	
+        <description><![CDATA[Convert a Text Area to WYSIWYG Editor to manage content]]></description>	
         <javascripts>
             <src>/addons/ckeditor/ckeditor.js</src>
         </javascripts>
         <style_sheets/>
-        <code><![CDATA[]]></code>
+        <code>
+			<![CDATA[]]>
+		</code>
 		<author_name>Reazaul Karim</author_name>
 		<author_uri>http://reazulk.wordpress.com</author_uri>
 		<addon_uri>http://www.apprain.com</addon_uri>		
@@ -124,56 +126,6 @@ jQuery(document).ready(function () {
 		<author_name>Reazaul Karim</author_name>
 		<author_uri>http://reazulk.wordpress.com</author_uri>
 		<addon_uri>http://www.apprain.com</addon_uri>
-        <layouts>All</layouts>
-        <layouts_except/>
-        <status>Active</status>
-        <load>OnRequest</load>
-    </addon>
-    <addon name="defaultvalues">
-        <title><![CDATA[Default Value]]></title>
-        <description><![CDATA[Set default value in Input elements and hide on foucs.]]></description>		
-        <javascripts>
-            <src>/addons/defaultvalues/defaultvalues.js</src>
-        </javascripts>
-        <style_sheets/>
-        <code/>
-		<author_name>Reazaul Karim</author_name>
-		<author_uri>http://reazulk.wordpress.com</author_uri>
-		<addon_uri>http://www.apprain.com</addon_uri>		
-        <layouts>All</layouts>
-        <layouts_except/>
-        <status>Inactive</status>
-        <load>OnRequest</load>
-    </addon>
-    <addon name="datagrid">
-        <title><![CDATA[Data Grid Style]]></title>
-       <description><![CDATA[Data Grid CSS style]]></description>	
-        <javascripts/>
-        <style_sheets>
-            <link>/addons/datagrid/style.css</link>
-        </style_sheets>
-        <code/>
-		<author_name>Reazaul Karim</author_name>
-		<author_uri>http://reazulk.wordpress.com</author_uri>
-		<addon_uri>http://www.apprain.com</addon_uri>		
-        <layouts>All</layouts>
-        <layouts_except/>
-        <status>Active</status>
-        <load>OnRequest</load>
-    </addon>
-    <addon name="tab">
-        <title><![CDATA[TAB Generator]]></title>
-        <description><![CDATA[Create TAB with Javascript and CSS]]></description>		
-        <javascripts>
-            <src>/addons/tab/script.js</src>
-        </javascripts>
-        <style_sheets>
-            <link>/addons/tab/style.css</link>
-        </style_sheets>
-        <code/>
-		<author_name>Reazaul Karim</author_name>
-		<author_uri>http://reazulk.wordpress.com</author_uri>
-		<addon_uri>http://www.apprain.com</addon_uri>		
         <layouts>All</layouts>
         <layouts_except/>
         <status>Active</status>

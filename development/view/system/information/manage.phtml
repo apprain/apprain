@@ -33,6 +33,7 @@
     $definition['base']['generic_field']['max_entry']['limit'] = ($definition['base']['generic_field']['max_entry']['limit'] != "") ? $definition['base']['generic_field']['max_entry']['limit'] : "-1";
     $definition['base']['generic_field']['enabled']	= isset($definition['base']['generic_field']['enabled'])	? $definition['base']['generic_field']['enabled'] : 'No';
     $definition['base']["parameters"]["edit"] = isset($definition['base']["parameters"]["edit"])	? $definition['base']["parameters"]["edit"] : 'Yes';
+    $definition['base']["parameters"]["copy"]	= isset($definition['base']["parameters"]["copy"]) ? $definition['base']["parameters"]["copy"] : 'Yes';
     $definition['base']["parameters"]["delete"]	= isset($definition['base']["parameters"]["delete"]) ? $definition['base']["parameters"]["delete"] : 'Yes';
     $definition['base']["parameters"]["view"] = isset($definition['base']["parameters"]["view"])	? $definition['base']["parameters"]["view"] : 'Yes';
     $definition['base']['title'] = isset($definition['base']['title'])? $definition['base']['title'] : str_replace("_"," ",$type);
@@ -391,6 +392,9 @@ else
 
 			if( $definition['base']["parameters"]["edit"] == 'Yes'){
 				$btn_str .=' <a href="' .  $this->baseurl('/')  . 'information/manage/' . $type . '/update/' . $val['id'] . '/' . $data_list['page'] .  '"><img src="' . $this->baseurl('/images/admin/edit.gif') . '" title="Edit" alt="Edit" /></a> ';
+			}
+			if( $definition['base']["parameters"]["edit"] == 'Yes'){
+				$btn_str .=' <a href="' .  $this->baseurl('/')  . 'information/manage/' . $type . '/copy/' . $val['id'] . '/' . $data_list['page'] .  '"><img src="' . $this->baseurl('/images/admin/copy.gif') . '" title="Copy" alt="Copy" /></a> ';
 			}
 
 			if( $definition['base']["parameters"]["delete"] == 'Yes'){

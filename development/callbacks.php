@@ -82,44 +82,22 @@ class Development_Callbacks extends appRain_Base_Modules_Callbacks
      * After an addon load
      */
     public function after_addon_load($name = NULL, $options = NULL)
-    {
+    {	
         switch ($name) {
-            case "rich_text_editor" :
-                if ($this->get_config('rich_text_editor') != 'No') {
-                    $rich_text_editor_mode = $this->get_config('rich_text_editor_mode');
-                    $rich_text_editor_mode = isset($rich_text_editor_mode) ? $rich_text_editor_mode : "Simple";
-                    $tool_bar_btns = "";
-
-                    if ($rich_text_editor_mode == 'Simple') {
-                        $tool_bar_btns = ", toolbar :
-                                            [
-                                                ['Source'],['Maximize'],['Styles','Format','Font','FontSize'],['TextColor','BGColor'],
-                                                '/',
-                                                ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-                                                ['NumberedList','BulletedList'],['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-                                                ['Link','Unlink','Anchor'],['Image','Table','Smiley','SpecialChar','SpellChecker']
-                                            ]";
-                    }
-
+			case "rich_text_editor" :
+                if (App::Config()->Setting('rich_text_editor') != 'No') {                   
                     echo "<script type=\"text/javascript\">
-                        //<![CDATA[
-                            window.onload = function(){
-                                var arr = document.getElementsByTagName('textarea');
-                                for(var i = 0; i < arr.length; i++ ){
-                                   if( arr[i].className.match('richtexteditor')){
-                                        CKEDITOR.replace(arr[i], {
-                                            extraPlugins : 'uicolor',
-                                            uiColor: '#D9E5EE'
-                                            {$tool_bar_btns}
-                                        });
-                                    }
-                                }
-                            }
-                         //]]>
-                        </script>";
+							window.onload = function(){
+								var arr = document.getElementsByTagName('textarea');
+								for(var i = 0; i < arr.length; i++ ){
+								   if(arr[i].className.match('richtexteditor')){
+										CKEDITOR.replace(arr[i]);
+									}
+								}
+							}
+						</script>";
                 }
-                break;
-        }
+                break;}
     }
 
     /**

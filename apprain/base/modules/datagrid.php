@@ -66,7 +66,7 @@ class appRain_Base_Modules_DataGrid extends appRain_Base_Objects
             $html .= '<tr>';
 				foreach( $header as $tkey => $tval){
 					if( $tval == 'Options'){
-						 $html .=  $HH->getTag('th',Array('align'=>'left', 'width' => '100'),$this->__($tval));
+						 $html .=  $HH->getTag('th',Array('align'=>'left', 'width' => '150'),$this->__($tval)); //
 					}
 					else{
 						if(!$tkey){

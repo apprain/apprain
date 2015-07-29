@@ -1,0 +1,135 @@
+<?
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+?>
+<?php $Data = App::PageManager();?>
+<?php if(in_array($action,array('create'))):?>
+	<form method="post" action="<?php echo App::Config()->baseUrl("/page/manage-dynamic-pages/{$action}");?>" id="snip-manager">
+	<?php App::Helper('Toolbar')->setTitle("Dynamic Pages")->setBtnfileManager()->setBtnBack()->Render(array('code'=>'page_manager_top'));?>
+	<?php
+		$Grid = App::Module('DataGrid')->setDisplay('FormListing')
+			->addRow(
+				$this->__("Name ") . App::Helper('Html')->helpTag('page-manager-snip-name'),
+				App::Module('AdminPanelUi')->pageNameInputBox($action,'Snip',$id)
+			)
+			->Render();
+	?>	
+	<?php 
+		App::Helper('JavaScript')
+			->setAjax(
+				array(
+					"debug" => false
+				)
+			)
+			->appForm('#snip-manager');
+	?>
+	<?php App::Helper('Toolbar')->setFormJustified(true)->setBtnSave()->setBtnBack()->setBtnCustomHtml('<div class="message" style="color:red;display:inline-block;width:200px"></div>')->Render(array('code'=>'snip_bottom'));?>
+	</form>
+<?php elseif(in_array($action,array('update'))):?>
+	<?php App::Helper('Toolbar')->setTitle("Dynamic Pages")->setBtnfileManager()->setBtnCustomHtml('<input type="button" onclick="window.location = siteInfo.baseUrl + \'/page/manage-snip/delete/' . $id . '\'" value="Delete" /> ' )->setBtnBack()->Render(array('code'=>'page_manager_top'));	?>
+	<div id="code-editor" name="code"><?php echo htmlspecialchars(App::PageManager()->FieldValueById($id,'content'));?></div>
+	<script type="text/javascript">	
+		var editor = ace.edit("code-editor");
+		editor.getSession().setMode("ace/mode/php");		
+		function resizeAce() {			
+		  return jQuery('#code-editor').height(jQuery(window).height()-150);
+		};
+		jQuery(window).resize(resizeAce);
+		resizeAce();	
+		
+		jQuery(document).ready(function () {
+			jQuery("input[name='Button[button_save]']").click(function(event) {
+			     jQuery('#loading').remove();
+				jQuery('.buttons').css('background','url("' + siteInfo.baseUrl + '/images/loading.gif") no-repeat 150px center');
+				jQuery.ajax({
+					url: siteInfo.baseUrl + "/page/manage-dynamic-pages/update/<?php echo $id;?>",
+					context: document.body,
+					type: "POST",
+					data:'html=' + encodeURIComponent(editor.getSession().getValue()) + '&id=<?php echo $id;?>'
+				})
+				.done(function(responseTxt) {
+					jQuery('.buttons').css('background','none');
+					jQuery('.buttons').append(' <span id="loading" style="color:green">Saved successfully..</span>');
+					if(responseTxt != ''){
+						alert(responseTxt);		
+					}				
+				});
+			});
+		});	
+	</script> 
+	<style type="text/css"> 
+		#code-editor{
+			font-size:14px;
+			border:1px solid #EEE;
+		}
+		div.form{
+			padding:0 0 20px 0;
+		}
+	</style>
+	<div style="margin-left:40px">
+		<?php App::Helper('Toolbar')->setFormJustified(true)->setBtnSave()->setBtnBack()->Render(array('code'=>'snip_bottom'));?>
+	</div>
+<?php else: ?>
+	<?php App::Helper('Toolbar')->setTitle("Manage Static Page")->setBtnBack()->Render(array('code'=>'toolbar_top'));?>
+	<?php
+		if(!empty($List['data'])){
+			$Grid = App::Module('DataGrid');
+			$Grid->setHeader(array('Name', 'Options'));
+			$Grid->setFooter($List['paging_str']);
+			
+			foreach($List['data'] as $row){
+				$Grid->addRow(
+					$row['name'],
+					App::Html()->linkTag(
+						App::Config()->baseUrl('/page/manage-dynamic-pages/update/' . $row['id']),
+						App::Html()->imgTag($this->baseUrl('/images/admin/edit.gif')))
+						. 
+					App::load("Helper/Html")->linkTag(
+						"javascript:void(0)",
+						App::Html()->imgTag(
+							App::Config()->baseUrl('/images/admin/remove.gif')
+						),array('class'=>'link_delete', 'title'=>'Page_' . $row['id']))
+				);
+			}	
+			
+			$Grid->Render();
+		}
+		else {
+			echo $this->callElement(
+				'default/tools/message', 
+				array(
+					'caption' =>'Message',
+					'type' => 'message', 
+					'message' => $this->__('No Page found!')
+				)
+			);
+		}
+	?>
+	<?php App::Helper('Toolbar')->setBtnBack()->setFormJustified(true)->Render(array('code'=>'toolbar_bottom'));?>
+<?php endif;?>
+

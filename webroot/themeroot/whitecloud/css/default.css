@@ -1,3 +1,6 @@
+
+@import url(http://fonts.googleapis.com/css?family=Fjalla+One);
+
 * {
     padding: 0;
 	margin:0;
@@ -10,6 +13,39 @@ body {
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	line-height:25px;
 }
+
+h1,h2,h3, h4,thead th, tfoot th{
+    font-family: "Fjalla One",Arial;
+    font-weight: normal;
+	
+}
+
+.top-title{
+    background-image: linear-gradient(to bottom, #428bca 0px, #3278b3 100%);
+    color: #555;
+    padding: 20px 0;
+	margin-bottom:50px;
+	border-bottom: 2px solid #DDD;
+}
+
+.align-right{
+	text-align:right;
+}
+
+.huge{
+	font-size:80px
+}
+
+
+hr{
+    border-color:#CCC;
+}
+
+
+.gap{
+	margin-top:50px;
+}
+
 
 
 .post-list{
@@ -95,12 +131,12 @@ em{
 }
 
 #menu li a:hover {
-    color: #000;
+    color: #FF0000;
 }
 
 
 #menu li a.selected {
-    color: #000;
+    color: #FF0000;
 }
 
 
@@ -112,6 +148,7 @@ a {
 
 a:hover {
    text-decoration: underline;
+   color:#FF0000;
 }
 
 #footer {

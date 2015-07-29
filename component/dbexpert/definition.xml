@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+	<version>0.1.2</version>
+    <name>Database Expert</name>
+	<uri>http://www.apprain.com</uri>
+	<description><![CDATA[
+		Help to manage MySQL Database
+		]]>
+	</description>
+	<author>Reazaul Karim</author>
+	<author_uri>http://reazulk.wordpress.com</author_uri>
+	<namespace>auto</namespace>
+	<removeable>No</removeable>
+	<help>
+		<![CDATA[
+			-- Plug and Play --
+		]]>
+	</help>
+	<checkfiles>
+		<filepath>register.php</filepath>
+	</checkfiles>
+</database>

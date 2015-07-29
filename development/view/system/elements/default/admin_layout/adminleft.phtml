@@ -39,9 +39,6 @@
 
 <div id="menu">
 	<?php App::Hook('UI')->Render('admin_left_A'); #User Interface Hook ?>
-	<?php if ($this->admin_tab == 'page_manager'): ?>
-		<?php echo App::Module('AdminPanelUI')->staticPageLeftLinks($action, $page_type,$id); ?>
-	<?php else: ?>
 	<?php foreach ($__LeftLinks as $tkey => $tval): ?>
 		<?php
 		$lis = "";
@@ -74,7 +71,6 @@
 				</ul>
 			<?php endif; ?>
 		<?php endforeach; ?>
-	<?php endif;?>
 	<?php App::Hook('UI')->Render('admin_left_B'); #User Interface Hook ?>
 </div>
 <div id="date-picker"></div>

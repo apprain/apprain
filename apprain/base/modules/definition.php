@@ -188,6 +188,12 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
                 $definition['error'] = array();
                 $definition['name'] = UCFirst($dom->getElementsByTagName('name')->item(0)->nodeValue);
                 $definition['namespace'] = $dom->getElementsByTagName('namespace')->item(0)->nodeValue;
+				
+				$definition['removeable'] = 'Yes';
+				if($dom->getElementsByTagName('removeable')->item(0)){
+					$definition['removeable'] = $dom->getElementsByTagName('removeable')->item(0)->nodeValue;
+				}
+				
                 $definition['namespace'] = ($definition['namespace'] == 'auto') ? $component['name'] : $definition['namespace'];
                 $definition['help'] = $dom->getElementsByTagName('help')->item(0)->nodeValue;
 
@@ -463,6 +469,8 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
                 ) {
                     $dataConf = array(
                         'cname' => $conn->getElementsByTagName('cname')->item(0)->nodeValue,
+                        'driver' => $conn->getElementsByTagName('driver')->item(0)->nodeValue,
+                        'port' => $conn->getElementsByTagName('port')->item(0)->nodeValue,
                         'type' => $conn->getElementsByTagName('type')->item(0)->nodeValue,
                         'charset' => $conn->getElementsByTagName('charset')->item(0)->nodeValue,
                         'prefix' => $conn->getElementsByTagName('prefix')->item(0)->nodeValue,
@@ -1062,14 +1070,12 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
             foreach ($hookResource as $node) {
                 if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
                     $_rtn_resources = App::__obj($class)->$method($interfacebuilder_def, null);
-
                     if (isset($_rtn_resources) && is_array($_rtn_resources) && !empty($_rtn_resources)) {
                         $interfacebuilder_def = $_rtn_resources;
                     }
                 }
             }
         }
-
         return $this->sort_menu($interfacebuilder_def);
     }
 

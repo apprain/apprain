@@ -146,8 +146,8 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                     ->installdbUI();
                 break;
             case 4 :
-			    if(file_exists(self::DB_RESOURCE)){
-					@unlink(self::DB_RESOURCE);
+			    if(file_exists($this->DB_RESOURCE())){
+					@unlink($this->DB_RESOURCE());
 				}
                 $html = $this->checksecurity()
                     ->securityUI();
@@ -157,6 +157,9 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                 break;
             case 6 :
                 $html = $this->completeUI();
+                break;
+			case 7 :
+                App::Config()->Redirect('../','javascript');
                 break;
         }
 
@@ -259,6 +262,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                     ->setCreatedate(date('Y-m-d H:i:s'))
                     ->setLastresettime(time())
                     ->setType('Super')
+                    ->setStatus('Active')
                     ->Save()
                     ->getErrorinfo();
 
@@ -322,8 +326,8 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function securityUI()
     {
-        if (file_exists(self::DB_RESOURCE)) {
-            $error = "Please delete '" . self::DB_RESOURCE . "' (webroot/install/" . self::DB_RESOURCE . ") file from installation directory. <br />This file is riskfull to hamper your database";
+        if (file_exists($this->DB_RESOURCE())) {
+            $error = "Please delete '" . $this->DB_RESOURCE() . "' (webroot/install/" . $this->DB_RESOURCE() . ") file from installation directory. <br />This file is riskfull to hamper your database";
         }
         else {
             $this->redirect("5");
@@ -371,18 +375,12 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function installDB()
     {
-        if (
-            $mysql_connect = @mysql_connect(
-                $_SESSION['dbconfig']['dbhost'],
-                $_SESSION['dbconfig']['dbusername'],
-                $_SESSION['dbconfig']['dbpassword'])
-        ) {
-            $mysql_select = @mysql_select_db($_SESSION['dbconfig']["dbname"]);
+        if ($this->get_conn()) {
             $queris = $this->getQueris($this->readDBSource());
-
             foreach ($queris as $query) {
                 if ($query != '') {
-                    @mysql_query($query);
+                   $this->get_conn()->custom_execute($query);
+
                 }
             }
             return true;
@@ -401,9 +399,19 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
         return str_replace(self::PREFIX_REPLACE, $_SESSION['dbconfig']['prefix'], $dbSource);
     }
 
+	private function DB_RESOURCE()
+    {
+        return $_SESSION['dbconfig']['type'] . '_' . self::DB_RESOURCE;
+    }
+	
+	private function DB_FILE_PATH()
+    {
+        return $_SESSION['dbconfig']['type'] . '_' . self::DB_FILE_PATH;
+    }
+
     private function readDBSource()
     {
-        $handle = fopen(self::DB_FILE_PATH, "r");
+        $handle = fopen($this->DB_FILE_PATH(), "r");
         $contents = '';
         while (!feof($handle)) {
             $contents .= fread($handle, 8192);
@@ -417,33 +425,19 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
         $error = "";
         if (isset($_POST["data"])) {
             if (
-                $_POST["data"]["Db"]["dbhost"] == "" ||
+                $_POST["data"]["Db"]["host"] == "" ||
                 $_POST["data"]["Db"]["dbname"] == "" ||
-                $_POST["data"]["Db"]["dbusername"] == ""
+                $_POST["data"]["Db"]["username"] == ""
             ) {
-                $error = "Please fillup all information below then press 'Test Dabase Connection'";
+                $error = "Please fill up all information below then press 'Test Database Connection'";
             }
             else {
-                if (
-                    $mysql_connect = @mysql_connect(
-                        $_POST["data"]["Db"]["dbhost"],
-                        $_POST["data"]["Db"]["dbusername"],
-                        $_POST["data"]["Db"]["dbpassword"]
-                    )
-                ) {
-                    $mysql_select = @mysql_select_db($_POST["data"]["Db"]["dbname"])
-                        or $error = mysql_error();
-                    $mysql_version = mysql_get_server_info();
-                }
-                else {
-                    $error = mysql_error();
-                }
+				$_POST["data"]["Db"]["charset"] = 'utf8';
+				$DBObject = App::Module("Database_{$_POST["data"]["Db"]['driver']}_{$_POST["data"]["Db"]['type']}");
+				$Connection = $DBObject->Connect($_POST["data"]["Db"]);
 
-                if (!$mysql_connect) {
+                if (!is_object($Connection)) {
                     $error = "Failed to Connect to Database Server Please check your login information and try again. <br /> (Error From DB Provider: $error)";
-                }
-                elseif (!$mysql_select) {
-                    $error = "Failed to Select Database Database Please check your login information and try again.<br />(Error From DB Provider: $error)";
                 }
                 else {
                     $result = $this->writeDBFile($_POST["data"]["Db"]);
@@ -460,7 +454,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
         return
             '<div class="inner-right">
                 <h2>Database Configuration</h2>
-                <p>Please provide your Database login information in the fields below. If you do not yet have an available MySQL database, you can most likely create one by accessing your website control panel (i.e. cPanel or Plesk) or by simply contacting your hosting provider.</p>
+                <p>Please provide your Database login information in the fields below. If you do not yet have an available database, you can most likely create one by accessing your website control panel (i.e. cPanel or Plesk) or by simply contacting your hosting provider.</p>
                 <p><span class="fail">' . $error . '</span></p>
                 <p>
                     <form action="install.php?step=2" method="post">
@@ -468,13 +462,19 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                         <li>Database Table Prefix</li>
                         <li><input type="text" name="data[Db][prefix]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["prefix"]) ? $_POST["data"]["Db"]["prefix"] : "app_") . '" /> </li>
                         <li>Database Host Name</li>
-                        <li><input type="text" name="data[Db][dbhost]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["dbhost"]) ? $_POST["data"]["Db"]["dbhost"] : "localhost") . '" /> </li>
-                        <li>Database Name</li>
-                        <li><input type="text" name="data[Db][dbname]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["dbname"]) ? $_POST["data"]["Db"]["dbname"] : "") . '" /> </li>
+                        <li><input type="text" name="data[Db][host]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["host"]) ? $_POST["data"]["Db"]["host"] : "localhost") . '" /> </li> 
+						<li>Database Type</li>
+						<li>' . App::Html()->selectTag('data[Db][type]',array('mysql'=>'MySQL','oracle'=>'Oracle'),(isset($_POST["data"]["Db"]["type"]) ? $_POST["data"]["Db"]["type"] : "mysql"),array('class'=>'ins-select')) . '</li>		
+						<li>Driver</li>
+						<li>' . App::Html()->selectTag('data[Db][driver]',array('pdo'=>'PDO','oci8'=>'OCI8'),(isset($_POST["data"]["Db"]["driver"]) ? $_POST["data"]["Db"]["driver"] : "pdo"),array('class'=>'ins-select')) . '</li>		
+						<li>Port</li>
+                        <li><input type="text" name="data[Db][port]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["port"]) ? $_POST["data"]["Db"]["port"] : "3306") . '" /> </li>
+						<li>Database Name</li>
+                        <li><input type="text" name="data[Db][dbname]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["dbname"]) ? $_POST["data"]["Db"]["dbname"] : "") . '" /> </li>						
                         <li>User Name</li>
-                        <li><input type="text" name="data[Db][dbusername]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["dbname"]) ? $_POST["data"]["Db"]["dbusername"] : "") . '" /> </li>
+                        <li><input type="text" name="data[Db][username]" class="ins-input" value="' . (isset($_POST["data"]["Db"]["dbname"]) ? $_POST["data"]["Db"]["username"] : "") . '" /> </li>
                         <li>Password</li>
-                        <li><input type="password" name="data[Db][dbpassword]" class="ins-input" value="" /> </li>
+                        <li><input type="password" name="data[Db][password]" class="ins-input" value="" /> </li>
                     </ul>
                     <input type="submit" class="ins-button" name="step" value="Test Database Connection >>" />
                     </form>
@@ -523,17 +523,21 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
     <connections>
         <connection>
             <cname>primary</cname>
-            <type><![CDATA[MYSQL]]></type>
+			<driver><![CDATA[{$dbconfig['driver']}]]></driver>
+			<port><![CDATA[{$dbconfig['port']}]]></port>
+            <type><![CDATA[{$dbconfig['type']}]]></type>
             <charset><![CDATA[" . self::charset . "]]></charset>
             <prefix><![CDATA[{$dbconfig['prefix']}]]></prefix>
-            <host><![CDATA[{$dbconfig['dbhost']}]]></host>
+            <host><![CDATA[{$dbconfig['host']}]]></host>
             <dbname><![CDATA[{$dbconfig['dbname']}]]></dbname>
-            <username><![CDATA[{$dbconfig['dbusername']}]]></username>
-            <password><![CDATA[{$dbconfig['dbpassword']}]]></password>
+            <username><![CDATA[{$dbconfig['username']}]]></username>
+            <password><![CDATA[{$dbconfig['password']}]]></password>
             <active>1</active>
         </connection>
         <connection>
             <cname>conn2</cname>
+			<driver><![CDATA[]]></driver>
+			<port><![CDATA[]]></port>		
             <type><![CDATA[]]></type>
             <charset><![CDATA[]]></charset>
             <prefix><![CDATA[]]></prefix>
@@ -590,13 +594,14 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
     private function requirmentUI()
     {
         return '<div class="inner-right">
-                    <h2>Basic Requirments</h2>
+                    <h2>Recommendations</h2>
                     <p>
                         <form action="install.php?step=1" method="post">
                         <ul class="lists">
-                            <li>Apache webserver with mod_rewrite (ability to use .htaccess files)</li>
+                            <li>Apache web server with mod_rewrite (ability to use .htaccess files)</li>
                             <li>PHP Version 5.1.0 or newer</li>
-                            <li>MySQL 4 or newer (Other Populer database is configurable too)</li>
+                            <li>Latest MySQL/Oracle Database</li>
+							<li>Database except listed on next page can be install manually.</li>
                         </ul>
                         <input type="submit" class="ins-button" name="step" value="Next >>" />
                         </form>
@@ -609,11 +614,15 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
         echo '<script type="text/javascript"> window.location="install.php?step=' . $step . '";</script>';
         exit;
     }
+	
+	private function dbDefinitionFileExists(){
+		return file_exists(APPRAIN_ROOT . 'development/definition/database.xml');
+	}
 
     private function checksecurity()
     {
-        if (!file_exists(self::DB_RESOURCE) && $this->hasAdmin()) {
-            //$this->redirect("6");
+        if ($this->dbDefinitionFileExists() && $this->hasAdmin()) {
+            $this->redirect("7");
         }
         return $this;
     }

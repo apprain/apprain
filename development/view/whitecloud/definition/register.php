@@ -32,12 +32,12 @@ class Development_View_Whitecloud_Definition_Register extends appRain_Base_Objec
 	public function before_theme_install($send=null){}
 	
 	public function after_theme_installed($send=null){	
-		if(App::Module('Component')->exists(self::SLIDESHOWNAME)){
+		/*if(App::Module('Component')->exists(self::SLIDESHOWNAME)){
 			if(App::Component(self::SLIDESHOWNAME)->status() == appRain_Base_Modules_component::INACTIVE){
 				App::Component(self::SLIDESHOWNAME)->chnageStatus();
 			}
 			App::Config()->setSiteInfo('appslidesettings_displaymode','ajaxbased');
-		}
+		}*/
 	}
 
 	public function on_theme_removed($send=null){}

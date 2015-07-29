@@ -29,27 +29,27 @@
 
 class Apprain_Base_Model extends Apprain_Base_appModel
 {
-    protected function _beforeSave($send = NULL)
+    public function _beforeSave($send = NULL)
     {
     }
 
-    protected function _afterSave($send = NULL)
+    public function _afterSave($send = NULL)
     {
     }
 
-    protected function _beforeDelete($send = NULL)
+    public function _beforeDelete($send = NULL)
     {
     }
 
-    protected function _afterDelete($send = NULL)
+    public function _afterDelete($send = NULL)
     {
     }
 
-    protected function _onValidationSuccess($send = NULL)
+    public function _onValidationSuccess($send = NULL)
     {
     }
 
-    protected function _onValidationFailed($send = NULL)
+    public function _onValidationFailed($send = NULL)
     {
     }
 

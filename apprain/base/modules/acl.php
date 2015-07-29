@@ -123,6 +123,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
     {
 
         $adminDefinition = $this->getInterfaceBuilderDefinition();
+
         if (isset($id)) {
             $adminInfo = App::AdminManager()->Listing($id);
             $adminInfoACL = ($adminInfo['acl'] != '') ? unserialize($adminInfo['acl']) : array();

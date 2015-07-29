@@ -96,106 +96,27 @@ class appRain_Base_Modules_InformationSet extends appRain_Base_Objects
 		return $data;
     }
 	
-	
 	public function RefreshDb($name=null){
 	
 		if(!isset($name)){
 			return null;
 		}
-		
-		$this->SuperviseFirstInstance($name);
+
+		App::InformationSet($name)->SuperviseInformationSetFirstInstance();
 		$this->DevelopOtherFields($name);
+		
 	}
 	
-	public function DevelopOtherFields($name=null){
-		
+	public function DevelopOtherFields($name=null){	
 		// Read InformationSet Definition
 		$definition = App::__def()->getInformationSetDefinition($name);
-	
-		// Create list of old fields
-		$desc = App::Model()->table_description("{$this->idbprifix}{$name}");
-		$fields = array();
-		$allFields = array();
-		foreach($desc as $row){
-			$allFields[$row['Field']] = $row;
-			$fields[] = $row['Field'];
-		}	
-//pre($allFields);
+		
 		// Update fields 
-		foreach($definition['fields'] as $fname => $fdef){
-			
-			// Create New fields
-			if(!in_array($fname,$fields)){
-				$sql = $this->setAction('Add')->fieldSQLGenerator($fname,$fdef,$name);	
-				$obj = App::Model()->custom_query($sql);
-			}
-			else {
-				if($this->doINeedToUpdate($fdef['db-attributes'],$allFields[$fname])){
-					$sql = $this->setAction('Chnage')->fieldSQLGenerator($fname,$fdef,$name);	
-					$obj = App::Model()->custom_query($sql);
-				}
-			}
-			
+		foreach($definition['fields'] as $fname => $fdef){					
+			$db_attributes = isset($fdef['db-attributes']) ? $fdef['db-attributes'] : array();				
+			App::InformationSet($name)->createModifyInformationSetFields($fname,$db_attributes);
 		}
 	}
-	
-	private function doINeedToUpdate($fAttr=null, $dbAttr=null){
-		return true;
-	}
-	
-	
-	// Generate SQL command for add and chnage
-	public function fieldSQLGenerator($fname=null,$def=null,$name=null){
-		$action = $this->getAction();
-		$defaultstr = '';
-		if($def['db-attributes']['default']!= ''){
-			$defaultstr = " DEFAULT '{$def['db-attributes']['default']}'";
-		}
-		switch(strtolower($def['db-attributes']['type'])){
-			case 'enum' : case 'char' : case 'varchar' : case 'int' :
-				if(strtolower($action) == 'add'){
-					$sql = "ALTER TABLE `{$this->idbprifix}{$name}` ADD `{$fname}` " . strtoupper($def['db-attributes']['type']) . "({$def['db-attributes']['length']}) {$def['db-attributes']['null']} {$defaultstr}";
-				}
-				else {
-					$sql = "ALTER TABLE `{$this->idbprifix}{$name}` CHANGE `{$fname}` `{$fname}` " . strtoupper($def['db-attributes']['type']) . "({$def['db-attributes']['length']}) {$def['db-attributes']['null']} {$defaultstr}";
-				}
-				break;						
-			default :
-				if(strtolower($action) == 'add'){
-					$sql = "ALTER TABLE `{$this->idbprifix}{$name}` ADD `{$fname}` " . strtoupper($def['db-attributes']['type']) . "  {$def['db-attributes']['null']} {$defaultstr}";
-				}
-				else {
-					$sql = "ALTER TABLE `{$this->idbprifix}{$name}` CHANGE `{$fname}` `{$fname}` " . strtoupper($def['db-attributes']['type']) . "  {$def['db-attributes']['null']} {$defaultstr}";
-				}
-				break;												
-		}
-		return $sql;
-	}
-	
-	public function SuperviseFirstInstance($name=null){
-	
-		// Check the table already exists in database
-		$check = App::Model()->custom_query("SHOW TABLES LIKE '{$this->idbprifix}{$name}'");
-		
-		if(empty($check)){
-		
-			// Create first table instance of the table 
-			// in database.
-			$sql = "CREATE TABLE `{$this->idbprifix}{$name}` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `adminref` int(11) NOT NULL,
-			  `entrydate` DATETIME NOT NULL DEFAULT '" . date('Y-m-d H:i:s') . "', 
-			  `lastmodified` DATETIME NOT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-			
-			// Execute DDL operation 
-			App::Model()->custom_query($sql);
-		}		
-		
-		return $this;
-	}
-	
 	
 	public function Tag( $name = NULL, $value = NULL,$paramater = NULL, $options = NULL)
     {

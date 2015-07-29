@@ -40,99 +40,89 @@ class pageController extends appRain_Base_Core
     {
     }
 
+
     /**
-     * Mange static page
+     * Manage Static Pages
      *
-     * @parameter id integer
-     * @return null
-     */
-    public function manageAction($action = null, $id = NULL)
-    {
-        $errors = Array();
-        $this->setAdminTab('page_manager');
-        $this->addons = array('rich_text_editor');
-
-		$this->loadFirstUri($action);
+     */	 
+	public function manage_static_pagesAction($action = null, $id = NULL)
+	{
+		// Set admin tab
+		$this->setAdminTab('page_manager');
+		$this->addons = array('rich_text_editor','row_manager');
 		
-        if (!empty($this->data)) {
-
-            if (isset($this->post['Button']['button_delete'])) {
-                App::Load("Model/Page")->DeleteById($id);
-                App::Module('Notification')->Push("Deleted successfully.");
+		if(!empty($this->data)){
+			$this->layout = 'empty';
+            try {
 				
-				$this->loadFirstUri();
-            }
-            else {
-                if (isset($this->data['Page']['hook']) and !empty($this->data['Page']['hook'])) {
-                    $this->data['Page']['hook'] = implode(',', $this->data['Page']['hook']);
-                }
-                else {
-                    $this->data['Page']['hook'] = '';
-                }
-
-                if ($action == 'create') {
+				if(empty($this->data['Page']['name'])){
+					throw new AppException('Enter a page name');
+				}
+				if ($action == 'create') {
+					$Page = App::Model('Page')->findByName($this->data['Page']['name']);
+					if(!empty($Page)){
+						throw new AppException('Page name already used');
+					}
                     $anpima = App::Config()->siteInfo('add_new_page_in_menu_automarically', 1);
                     if ($anpima != 'No') {
-                        $this->data['Page']['hook'] = 'sitemenu';
+                        $this->data['Page']['hook'][] = 'sitemenu';
                         $this->data['Page']['rendertype'] = 'smart_h_link';
                     }
                 }
-
-                if (isset($this->data['Page']['name'])) {
-                    $this->data['Page']['name'] = App::Helper('Utility')->text2NOrmalize($this->data['Page']['name']);
-                }
-                $result = App::Load("Model/Page")->Save($this->data);
-                $errors = $result->getErrorInfo();
-
-                if (empty($errors)) {
-                    App::Module('Notification')->Push("Updated successfully.");
-                    $this->redirect("/page/manage/update/" . $result->getId());
-                    exit;
-                }
-                else {
-                    App::Module('Notification')->Push(implode("<br />", $errors), Array('level' => 'Error'));
-                }
-
+				$this->data['Page']['hook'] = isset($this->data['Page']['hook']) ? $this->data['Page']['hook'] : '';
+				if(!empty($this->data['Page']['hook'])){
+					$this->data['Page']['hook'] = implode(',', $this->data['Page']['hook']);
+				}
+				$this->data['Page']['id'] = $id;
+				
+				$obj = App::Model("Page")->Save($this->data);
+				
+				if(empty($id)){
+					echo App::Load("Module/Cryptography")
+						->jsonEncode(array(
+							"_status" => 'redirect',
+							"_location" => App::Config()->baseUrl('/page/manage-static-pages/update/' . $obj->getId())
+						)
+					);
+				}
+				else{
+					echo App::Load("Module/Cryptography")
+						->jsonEncode(array(
+							"_status" => 'Success',
+							"_message" => App::Html()->getTag('strong',array('style'=>'color:green'),$this->__("Page Saved successfully"))
+						)
+					);
+				}					
             }
-        }
-
-       if ($action == 'ues') {
-            $page = App::PageManager()->Pages($id);
-            $newstatus = ($page['richtexteditor'] == 'Yes') ? 'No' : 'Yes';
-            $obj = App::Model('Page')->setId($id)
-                ->setRichtexteditor($newstatus)
-                ->Save();
-            $this->redirect("/page/manage/update/{$id}");
-            exit;
-        }
-			
-        $name = App::PageManager()->FieldValueById($id,'name');
-        $this->set("action", $action);
-        $this->page_title = ucfirst($action) . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "{$name}" . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "Page Manager";
-		
-		$this->set("page_type", 'staticpage');
-        $this->set("id", $id);
-	
-    }
-
-	public function manage_snipAction($action = "", $id = NULL){
-		$this->setAdminTab('page_manager');
-		$this->addons = array('ace');
-		$this->loadFirstUri($action,'Snip');	
-			
-		if ($action=='delete') {
-			App::Load("Model/Page")->DeleteById($id);
-			App::Module('Notification')->Push("Deleted successfully.");
-			
-			$Page = App::Model("Page")->find("contenttype='Snip'");
-			if(!empty($Page)){
-				$this->redirect("/page/manage-snip/update/{$Page['id']}");
-			}
-			else {
-				$this->redirect("/page/manage-snip/create");
-			}
+            catch (AppException $e) {
+                echo App::Load("Module/Cryptography")
+                    ->jsonEncode(
+                    array(
+                        "_status" => 'Error',
+                        "_message" => App::Html()->getTag('strong',array('style'=>'color:red'),$e->getMessage())
+                    )
+                );
+            }
 			exit;
 		}
+		
+		if(isset($id)){
+			$page = App::Model('Page')->findById($id);
+			$this->set("Page", $page);
+			$this->set('admin_content_full_length',true);
+		}
+		else{
+			$list = App::Model('Page')->Paging("contenttype='Content' ORDER BY name ASC");
+			$this->set("List", $list);
+		}
+		
+		$this->set("action", $action);
+		$this->set("id", $id);
+	}
+	
+	public function manage_dynamic_pagesAction($action = null, $id = NULL){
+		$this->setAdminTab('page_manager');
+		$this->addons = array('ace','row_manager');
 		
 		if (!empty($this->post)) {		
 			if($action == 'create'){
@@ -155,7 +145,7 @@ class pageController extends appRain_Base_Core
 					   ->jsonEncode(
 						  array(
 							  "_status" => 'Redirect',
-							  "_location" => App::Config()->baseUrl("/page/manage-snip/update/" . $obj->getId())
+							  "_location" => App::Config()->baseUrl("/page/manage-dynamic-pages/update/" . $obj->getId())
 						   )
 					   );;
 				}
@@ -172,29 +162,22 @@ class pageController extends appRain_Base_Core
 			exit;
         }	
 		
-		$name = App::PageManager()->FieldValueById($id,'name');
+		if(isset($id)){
+			$page = App::Model('Page')->findById($id);
+			$this->set("Page", $page);
+			$this->set('admin_content_full_length',true);			
+		}
+		else{
+			$list = App::Model('Page')->Paging("contenttype='Snip'");
+			$this->set("List", $list);
+		}
+		//$name = App::PageManager()->FieldValueById($id,'name');
         $this->set("action", $action);
-        $this->page_title = ucfirst($action) . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "{$name}" . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "Page Manager";
+       // $this->page_title = ucfirst($action) . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "{$name}" . app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR') . "Page Manager";
 		$this->set("page_type", 'snip');
 		$this->set("id", $id);
 	}
 
-	private function loadFirstUri($action='',$type='Content'){
-		
-		if($action==''){
-			$Page = App::Model("Page")->find("contenttype='{$type}'");
-			$UriPart = ($type == 'Content') ? 'manage' : 'manage-snip';
-			if(!empty($Page)){
-				$this->redirect("/page/{$UriPart}/update/{$Page['id']}");
-			}
-			else {
-				$this->redirect("/page/{$UriPart}/create");
-			}
-			exit;
-		}
-		
-	}
-	
 	
     /**
      * View page content by default it set to about us

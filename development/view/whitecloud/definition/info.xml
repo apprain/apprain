@@ -30,12 +30,12 @@
     </pagemanager_hooks>
     <settings>themesettings.xml</settings>
 	<components>
-		<auto>
+		<!--auto>
 			<install>
 				<component>appslide</component>
 			</install>
 			<uninstall />
-		</auto>
+		</auto -->
 	</components>
 	<callback>Development_View_Whitecloud_Definition_Register</callback>
 </theme>

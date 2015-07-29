@@ -33,7 +33,7 @@
         <!--
             CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
         -->
-        <appRainversion>3.0.4</appRainversion>
+        <appRainversion>4.0.1</appRainversion>
         <appRainLicenseKey>0123456789101112</appRainLicenseKey>
     </base>
     <options>
@@ -134,9 +134,9 @@
 
         <option type="Boolean" name="INTERFACE_BUILDER_CACHE">
             <title>Interface Builder Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
@@ -174,7 +174,7 @@
             <default><![CDATA[File]]></default>
             <flag>1</flag>
             <choice>File|NoCache</choice>
-            <editable>1</editable>
+            <editable>0</editable>
         </option>
 
         <option type="Boolean" name="LOAD_MODEL_OBJECT_TO_THIS">
@@ -285,7 +285,7 @@
             <default><![CDATA[http://www.apprain.com/comrss]]></default>
             <flag>1</flag>
             <choice/>
-            <editable>1</editable>
+            <editable>0</editable>
         </option>
         <!--
         /**
@@ -451,7 +451,15 @@
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
-
+		<!-- CODE EDITOR Theme selection -->
+        <option type="String" name="CODE_EDITOR_THEME">
+            <title>Code Editor Theme</title>
+            <value><![CDATA[default]]></value>
+            <default><![CDATA[default]]></default>
+            <flag>1</flag>
+            <choice>default|monokai|clouds|eclipse</choice>
+            <editable>1</editable>
+        </option>	
         <!--
         /*
          * Default admin redirection
@@ -519,14 +527,14 @@
             <editable>1</editable>
         </option>
 
-        <option type="String" name="LOG_DELETED_DATA_THRESHOLD">
+        <!-- option type="String" name="LOG_DELETED_DATA_THRESHOLD">
             <title><![CDATA[Save Deleted Data<br /> (Days)]]></title>
             <value><![CDATA[7]]></value>
             <default><![CDATA[7]]></default>
             <flag>1</flag>
             <choice/>
             <editable>1</editable>
-        </option>
+        </option -->
         <option type="String" name="FILE_MANAGER_RESTRICTED_EXT">
             <title><![CDATA[Restricted Ext.]]></title>
             <value><![CDATA[php,php3,php4,exe,pl,py,bat,sys,dev,sh]]></value>

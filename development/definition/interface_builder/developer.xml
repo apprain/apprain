@@ -44,7 +44,7 @@
                     <title>Site Options</title>
                     <link>/admin/config/opts</link>
                 </item>
-                <item>
+				<item>
                     <title>Email Template</title>
                     <link>/information/manage/emailtemplate</link>
                 </item>
@@ -76,10 +76,6 @@
                     <title>Cache Management</title>
                     <link>/developer/clearcache</link>
                 </item>
-                <item>
-                    <title>Backup</title>
-                    <link>/developer/imexport</link>
-                </item>
             </submenu>
             <sort_order>10</sort_order>
             <icon>/themeroot/admin/images/icons/developer.png</icon>
@@ -95,19 +91,6 @@
                     <item>
                         <title>Site Options</title>
                         <link>/admin/config/opts</link>
-                    </item>
-                </items>
-            </menu>
-            <menu>
-                <title>Email Templates</title>
-                <items>
-                    <item>
-                        <title>Create Template</title>
-                        <link>/information/manage/emailtemplate/add</link>
-                    </item>
-                    <item>
-                        <title>Manage Templates</title>
-                        <link>/information/manage/emailtemplate</link>
                     </item>
                 </items>
             </menu>
@@ -167,6 +150,19 @@
                     </item>
                 </items>
             </menu>
+			            <menu>
+                <title>Email Templates</title>
+                <items>
+                    <item>
+                        <title>Create Template</title>
+                        <link>/information/manage/emailtemplate/add</link>
+                    </item>
+                    <item>
+                        <title>Manage Templates</title>
+                        <link>/information/manage/emailtemplate</link>
+                    </item>
+                </items>
+            </menu>
             <menu>
                 <title>Cache and LOG</title>
                 <items>
@@ -181,15 +177,6 @@
                     <item>
                         <title>Log In Database</title>
                         <link>/developer/debug-log/db</link>
-                    </item>
-                </items>
-            </menu>
-            <menu>
-                <title>Backup</title>
-                <items>
-                    <item>
-                        <title>Manage Database</title>
-                        <link>/developer/imexport</link>
                     </item>
                 </items>
             </menu>

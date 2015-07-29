@@ -438,7 +438,7 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         $str .= $this->selectTag($name . "[month]", $month, $arr1[1], $options);
         $str .= "";
         $options['id'] = $tmp . '_year';
-        $str .= $this->selectTag($name . "[year]", $years, $arr1[0], $options);
+        $str .= ' ' . $this->selectTag($name . "[year]", $years, $arr1[0], $options);
 
         return $str;
     }
