@@ -39,7 +39,7 @@ INSERT INTO {_prefix_}appslide VALUES ('3', '1', '2015-06-18 12:25:11', '2015-07
 
 <p>&nbsp;</p>
 
-<h1>appRain Version 3.0.4</h1>
+<h1>appRain Version 4.0.1</h1>
 
 <h2>For Endless Rapid Development!</h2>
 ', 'Active');
