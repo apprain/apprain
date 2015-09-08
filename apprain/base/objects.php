@@ -57,13 +57,11 @@ abstract class appRain_Base_Objects extends appRain_Base_Abstract
 
             return $this;
         }
-        else /*if (
-            (substr(strtolower($method), 0, 9) == 'findallby') ||
-            (substr(strtolower($method), 0, 6) == 'findby') ||
-            (substr(strtolower($method), 0, 8) ==  'findall') ||
-            (substr(strtolower($method), 0, 10) == 'find') ||
-            (substr(strtolower($method), 0, 8) == 'deleteby')
-        )*/{
+	else if (
+            strtolower(substr(get_class($this),-5)) == 'model'  or 
+            strtolower(substr(get_class($this),-14)) == 'informationset' or
+            strtolower(substr(get_class($this),-11)) == 'categoryset'
+        ){
             if( $this->getFetchtype() == 'informationset' ){
                 $this->unsetFetchtype();
                 return $this->callInformationSetByFiled( $method, $params );
@@ -80,16 +78,16 @@ abstract class appRain_Base_Objects extends appRain_Base_Abstract
             }
 
         }
-       /* else{
+        else{
             if( app::__def()->sysConfig('DEBUG_MODE') > 0){
                 try{
                     throw new AppException('Trace:');
                 }
                 catch (AppException $e){
-                    echo( "Call Unknown Method ('{$method}')\n{$e->__toString()}\n");
-                }
+                    pr( "Call Unknown Method ('{$method}')\n{$e->__toString()}\n");
+                } 
             }
-        }*/
+        }
     }
 
     private function method2_var_name( $method = "")
