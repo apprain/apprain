@@ -42,9 +42,9 @@ class appRain_Base_Modules_Database_Pdo_Oracle extends appRain_Base_Modules_Data
 		$this->options[PDO::ATTR_PERSISTENT] = $persistent;
 		$this->options['1002'] = "SET NAMES {$db_config['charset']}";
 		
-		if(isset($this->dbconn)){
-			return $this;
-		}		
+		#if(isset($this->dbconn)){
+		#	return $this;
+		#}		
 		try	{
 			$tns = " 
 			(DESCRIPTION =
