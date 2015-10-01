@@ -43,9 +43,9 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 		//$db_config['charset'] = isset($db_config['charset']) ? $db_config['charset'] : 'utf8';
 		$this->options['1002'] = "SET NAMES {$db_config['charset']}";
 		
-		if(isset($this->dbconn)){
-			return $this;
-		}
+		#if(isset($this->dbconn)){
+		#	return $this;
+		#}
 		
 		try	{
 			//pre($db_config);
