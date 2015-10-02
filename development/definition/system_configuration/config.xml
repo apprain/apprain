@@ -33,7 +33,7 @@
         <!--
             CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
         -->
-        <appRainversion>4.0.2</appRainversion>
+        <appRainversion>4.0.3</appRainversion>
         <appRainLicenseKey>0123456789101112</appRainLicenseKey>
     </base>
     <options>

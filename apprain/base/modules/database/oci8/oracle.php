@@ -38,11 +38,7 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 	// Create Connection
 	*/
 	public function Connect($db_config,$persistent = FALSE)
-	{		
-		#if(isset($this->dbconn)){
-		#	return $this;
-		#}
-		
+	{				
 		try	{
 			$tns = " 
 			(DESCRIPTION =

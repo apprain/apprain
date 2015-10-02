@@ -40,15 +40,9 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	public function Connect($db_config,$persistent = FALSE)
 	{
 		$this->options[PDO::ATTR_PERSISTENT] = $persistent;
-		//$db_config['charset'] = isset($db_config['charset']) ? $db_config['charset'] : 'utf8';
 		$this->options['1002'] = "SET NAMES {$db_config['charset']}";
 		
-		#if(isset($this->dbconn)){
-		#	return $this;
-		#}
-		
 		try	{
-			//pre($db_config);
 			$this->dbconn = new PDO("mysql:host={$db_config['host']};dbname={$db_config['dbname']};port={$db_config['port']}",$db_config['username'],$db_config['password'],$this->options);
 			$this->dbconn->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 

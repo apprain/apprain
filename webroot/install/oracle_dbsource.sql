@@ -683,7 +683,7 @@ Insert into {_prefix_}APPSLIDE
 
 <p>&nbsp;</p>
 
-<h1>appRain Version 4.0.1</h1>
+<h1>appRain Version CMF</h1>
 
 <h2>For Endless Rapid Development!</h2>
 ', 'Active')

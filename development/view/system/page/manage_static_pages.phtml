@@ -68,7 +68,8 @@
 					<input type="button" class="button_grp" target="ui_hooks" value="Link Page >>"/>					
 					<input type="button" class="button_grp" target="meta_data" value="Common Fields >>"/>
 					<input type="button" class="back" target="meta_data" value="<< Back" onclick="javascript:history.go(-1)" />
-					<input type="button" value="View Page" onclick="window.open('<?php echo App::COnfig()->baseUrl("/page/view/" . $Data->FieldValueById($id,'name')); ?>', '_blank', 'toolbar=no, scrollbars=no, resizable=no, top=500, left=500');" />
+					<input type="button" value="File Manager" onclick="window.open(siteInfo.baseUrl + '/admin/filemanager','Window1','menubar=no,toolbar=no,scrollbars=yes');" title="File Manager" name="Button[filemanager]" />
+                    <input type="button" value="View Page" onclick="window.open('<?php echo App::COnfig()->baseUrl("/page/view/" . $Data->FieldValueById($id,'name')); ?>', '_blank', 'toolbar=no, scrollbars=no, resizable=no, top=500, left=500');" />
 					<?php echo App::Helper('Html')->helpTag('page-manager-select-page','<input type="button" name="help" value="Help"/>');?>
                 </div>
             </div>
