@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
@@ -314,7 +314,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
 	public function pageNameInputBox($action=null,$type='Content',$id=null){
 	
 		if(strtolower($action) == 'create'){
-			return App::Helper("Html")->inputTag("data[Page][name]","",array("class" => "app_input check_notempty","longdesc"=>"Please a name","id" => "page_name"));
+			return App::Helper("Html")->inputTag("data[Page][name]","",array("class" => "app_input check_notempty","longdesc"=>"A page name is required, Please use alpha numeric value without special character","id" => "page_name"));
 		}
 		else {
 			$page_arr = App::Load("Model/Page")->findAll("contenttype='{$type}'");

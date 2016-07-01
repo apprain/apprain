@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 
@@ -257,16 +257,32 @@ abstract class appRain_Base_Modules_Config extends appRain_Base_Objects
         return $this->get('http');
     }
 	
-	public function isHomePage(){
-		$params = $this->get('params');
+	public function isPageView(){
+		$params = $this->getBootInfo(true);
+
 		$current_controller = isset($params['controller']) ? $params['controller'] : '';
 		$current_action = isset($params['action']) ? $params['action'] : '';
 		
-		$RouterInfo = App::__Def()->getURIManagerDefinition();
+		if($current_controller == 'page' and $current_action == 'view'){
+			return true;
+		}
+		else{
+			return false;
+		}
 		
-		$boot_controller = isset($RouterInfo['bootrouter']['controller']) ? $RouterInfo['bootrouter']['controller'] : '';
-		$boot_action = isset($RouterInfo['bootrouter']['action']) ? $RouterInfo['bootrouter']['action'] : '';
-		
+	}
+	
+	public function isHomePage(){
+	
+		$BootRouting = $this->getBootInfo();
+		$CurrentRouting = $this->getBootInfo(true);
+
+		$current_controller = isset($CurrentRouting['controller']) ? $CurrentRouting['controller'] : '';
+		$current_action = isset($CurrentRouting['action']) ? $CurrentRouting['action'] : '';
+			
+		$boot_controller = isset($BootRouting['controller']) ? $BootRouting['controller'] : '';
+		$boot_action = isset($BootRouting['action']) ? $BootRouting['action'] : '';
+
 		if(
 			($current_controller == $boot_controller)
 			&&
@@ -278,4 +294,23 @@ abstract class appRain_Base_Modules_Config extends appRain_Base_Objects
 			return false;
 		}
 	}
+	
+	public function getBootInfo($isCurrent=false){
+		$params = $this->get('params');
+		$current_controller = isset($params['controller']) ? $params['controller'] : '';
+		$current_action = isset($params['action']) ? $params['action'] : '';
+		
+		if($isCurrent){
+			return array('controller'=>$current_controller,'action'=>$current_action);
+		}
+		else{		
+			$RouterInfo = App::__Def()->getURIManagerDefinition();
+			
+			$boot_controller = isset($RouterInfo['bootrouter']['controller']) ? $RouterInfo['bootrouter']['controller'] : '';
+			$boot_action = isset($RouterInfo['bootrouter']['action']) ? $RouterInfo['bootrouter']['action'] : '';
+			
+			return array('controller'=>$boot_controller,'action'=>$boot_action);
+		}
+	}
+	
 }

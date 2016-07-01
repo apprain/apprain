@@ -1,4 +1,3 @@
-
 @import url(http://fonts.googleapis.com/css?family=Fjalla+One);
 
 * {
@@ -8,10 +7,10 @@
 
 body {
     font: 14px Arial,Helvetica,sans-serif;
-    background: #fff;
+    background-color: #EEE;
     color: #444;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	line-height:25px;
+	line-height:20px;
 }
 
 h1,h2,h3, h4,thead th, tfoot th{
@@ -21,7 +20,6 @@ h1,h2,h3, h4,thead th, tfoot th{
 }
 
 .top-title{
-    background-image: linear-gradient(to bottom, #428bca 0px, #3278b3 100%);
     color: #555;
     padding: 20px 0;
 	margin-bottom:50px;
@@ -67,15 +65,15 @@ hr{
 }
 
 h1{
-  font-size: 26px;
+  font-size: 30px;
   font-weight: normal;
-  margin-bottom:10px;
+  margin:20px 0;
 }
 
 h2{
     margin:15px 0 5px 0;
 	font-weight: normal;
-	font-size: 24px;
+	font-size: 30px;
 }
 
 h3{
@@ -151,7 +149,7 @@ a:hover {
    color:#FF0000;
 }
 
-#footer {
+footer {
     border-top: 1px solid #ddd;
     padding: 30px 0 30px;
     font-size: .9em;
@@ -160,52 +158,22 @@ a:hover {
 	color:#000;
 }
 
-#footer a{
+footer a{
 	text-decoration:underline;
 }
-
-.form {
-    margin-left: 5px;
+header{
+	margin-bottom:150px;
 }
 
-.form li {
-    display: block;
-    clear: both;
-    padding: 5px;
+.press-update .well{
+	text-align:center;
 }
 
-.form li label {
-    display: block;
-    float: left;
-    width: 120px;
-	padding-bottom:7px
+
+.press-update .well img{
+	width:100%;
 }
 
-.form li span {
-    display: block;
-    float: left;
-    width: 350px;
-}
-
-/* Input Fields */
-.input {
-    width: 350px;
-    font-size: 12px;
-    padding: 10px;
-    border: 1px solid #AEAEAE;
-    color: #000;
-    font-family: arial;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.inlineerror{
-	color:#FF0000;
-	font-size:12px;
-}
-
-.top-col-space{
-	margin-top:20px;
-}
 
 .list{
 	margin-top:10px;

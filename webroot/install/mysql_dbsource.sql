@@ -33,15 +33,20 @@ CREATE TABLE `{_prefix_}appslide` (
   `description` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 -- query
-INSERT INTO {_prefix_}appslide VALUES ('3', '1', '2015-06-18 12:25:11', '2015-07-06 13:30:54', 'VERSION', 'pagemanager.png', '<p>&nbsp;</p>
+INSERT INTO {_prefix_}appslide VALUES ('1', '1', '2015-06-18 12:25:11', '2016-06-15 17:08:08', 'appRain CMS', 'CMS.png', '<h1>appRain CMS</h1>
 
-<p>&nbsp;</p>
+<p>appRain helps you to develop web based software with effortless try. Install it by simple wizard and add necessary plug-in to meet up self or client demand. Use this part of appRain to start your development without high level technical knowledge.</p>
 
-<h1>appRain Version CMF</h1>
+<h3>Make development 100% faster</h3>
+', 'Active');
+-- query
+INSERT INTO {_prefix_}appslide VALUES ('2', '1', '2015-06-18 12:25:11', '2016-06-15 17:07:59', 'appRain Framework', 'Framework.png', '<h1>appRain Framework</h1>
 
-<h2>For Endless Rapid Development!</h2>
+<p>appRain Framework is open for you, this is simply a large platform to make your work robust. Environment is organized with latest programming patterns and easy to extend in any edge of reusable development to make you well-built.</p>
+
+<h3>For robast development</h3>
 ', 'Active');
 -- query
 DROP TABLE IF EXISTS {_prefix_}categories;
@@ -59,7 +64,7 @@ CREATE TABLE `{_prefix_}categories` (
   `entrydate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `lastmodified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- query
 DROP TABLE IF EXISTS {_prefix_}coreresources;
 -- query
@@ -71,7 +76,7 @@ CREATE TABLE `{_prefix_}coreresources` (
   `status` enum('Active','Inactive') NOT NULL,
   `info` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('1', 'Admin', 'Model', '0.1.0', 'Active', '');
 -- query
@@ -93,9 +98,11 @@ INSERT INTO {_prefix_}coreresources VALUES ('9', 'Page', 'Model', '0.1.0', 'Acti
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('10', 'appeditor', 'Component', '0.1.7', 'Active', 'a:1:{s:11:"installdate";s:19:"2015-07-14 15:02:02";}');
 -- query
-INSERT INTO {_prefix_}coreresources VALUES ('11', 'appslide', 'Component', '0.1.0', 'Active', 'a:1:{s:11:"installdate";s:19:"2015-07-14 15:02:04";}');
+INSERT INTO {_prefix_}coreresources VALUES ('11', 'appslide', 'Component', '0.1.0', 'Active', 'a:1:{s:11:"installdate";s:19:"2016-06-22 15:24:06";}');
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('12', 'dbexpert', 'Component', '0.1.2', 'Active', 'a:1:{s:11:"installdate";s:19:"2015-07-14 15:02:07";}');
+-- query
+INSERT INTO {_prefix_}coreresources VALUES ('13', 'homepress', 'Component', '0.1.0', 'Active', 'a:1:{s:11:"installdate";s:19:"2016-05-04 19:12:36";}');
 -- query
 DROP TABLE IF EXISTS {_prefix_}emailtemplate;
 -- query
@@ -105,10 +112,41 @@ CREATE TABLE `{_prefix_}emailtemplate` (
   `entrydate` datetime NOT NULL DEFAULT '2012-08-22 15:59:32',
   `lastmodified` datetime NOT NULL,
   `templatetype` varchar(100) NOT NULL,
-  `subject` varchar(100) NOT NULL,
+  `subject` varchar(200) NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- query
+DROP TABLE IF EXISTS {_prefix_}homepress;
+-- query
+CREATE TABLE `{_prefix_}homepress` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adminref` int(11) NOT NULL,
+  `entrydate` datetime NOT NULL DEFAULT '2016-05-04 19:12:42',
+  `lastmodified` datetime NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `shortdesc` text NOT NULL,
+  `linkedto` varchar(255) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `position` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('1', '1', '2016-05-04 19:12:42', '2016-06-15 17:07:29', 'Page Manager', 'InkPot.jpg', '', '2', 'Active', 'template_left_column_A');
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('2', '1', '2016-05-04 19:12:42', '2016-06-28 16:14:31', 'appRain Background', 'About.jpg', '<p>appRain aims to make creating web technology simplified and easily optimized.It makes live easily dynamic.</p>
+', '9', 'Active', 'home_content_area_D');
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('3', '1', '2016-05-04 19:12:42', '2016-06-28 16:16:08', 'Concept of Development', 'Concept.jpg', '<p>appRain has both ready-made and un-stitched tool, we just have to use it as per need following the conversions</p>
+', '4', 'Active', 'home_content_area_D');
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('4', '1', '2016-05-04 19:12:42', '2016-06-28 16:17:34', 'General Help Center', 'Help.jpg', '<p>Manuals are ready online for User, Developer and learners. Also, you can download or print as you need</p>
+', '8', 'Active', 'home_content_area_D');
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('5', '1', '2016-05-04 19:12:42', '2016-06-15 17:06:57', 'Every chance', 'Theme.jpg', '', '6', 'Active', 'template_left_column_A');
+-- query
+INSERT INTO {_prefix_}homepress VALUES ('6', '1', '2016-05-04 19:12:42', '2016-06-15 17:06:49', 'Offer', 'Engin.jpg', '', '9', 'Active', 'template_left_column_A');
 -- query
 DROP TABLE IF EXISTS {_prefix_}log;
 -- query
@@ -140,9 +178,9 @@ CREATE TABLE `{_prefix_}pages` (
   `sort_order` int(5) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `fkey` (`fkey`,`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 -- query
-INSERT INTO {_prefix_}pages VALUES ('9', '0', 'About appRain Content Management Framework', '', '', 'aboutus', 'About Us', '<p>appRain is one of the first, officially-released, open source Content Management Frameworks (CMF). CMF is a new, web engineering concept where a Content Management System (CMS) and a rapid development framework perform side-by-side to produce endless varieties of output in a very limited time.</p>
+INSERT INTO {_prefix_}pages VALUES ('1', '0', 'About appRain Content Management Framework', '', '', 'aboutus', 'About Us', '<p>appRain is one of the first, officially-released, open source Content Management Frameworks (CMF). CMF is a new, web engineering concept where a Content Management System (CMS) and a rapid development framework perform side-by-side to produce endless varieties of output in a very limited time.</p>
 
 <p>appRain is developed on a daily basis, drawing on extensive project experience. A common problem that we all face in a framework is that we need to re-develop some common modules in each project. With Content Management Systems, we sometimes get stuck driving our development based on strict development conventions the system enforces. Why is there no CMS integrated with a framework? This is the question that gave birth to appRain.</p>
 
@@ -151,9 +189,9 @@ INSERT INTO {_prefix_}pages VALUES ('9', '0', 'About appRain Content Management 
 <p>The tools in the CMS component of appRain are all configurable, making development faster. It helps to avoid repeating tasks. The framework component is used when it becomes too difficult to complete your requirements using the CMS tools. The framework contains all of the core programming tools.</p>
 
 <p>appRain aims to make creating web technology simplified and easlily optimized.</p>
-', 'sitemenu,quicklinks', '', 'Yes', 'text', 'Content', '9');
+', 'sitemenu', '', 'Yes', 'text', 'Content', '9');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('5', '0', 'InformationSet and CategorySet', 'InformationSet and CategorySet', 'InformationSet and CategorySet', 'informationset-categoryset', 'InformationSet and CategorySet', '<p>InformationSet and CategorySet are prominent methods work with database. This to special tool keep you hassle free to manage database table. It create interface automatically for data import, control by auto validation also interact with database to fetch data without writing. &nbsp;These two methods time of development significantly.</p>
+INSERT INTO {_prefix_}pages VALUES ('2', '0', 'InformationSet and CategorySet', 'InformationSet and CategorySet', 'InformationSet and CategorySet', 'informationset-categoryset', 'InformationSet and CategorySet', '<p>InformationSet and CategorySet are prominent methods work with database. This to special tool keep you hassle free to manage database table. It create interface automatically for data import, control by auto validation also interact with database to fetch data without writing. &nbsp;These two methods time of development significantly.</p>
 
 <p>An InformationSet manage a single database table. All database fields defined separately with addition parameter like</p>
 
@@ -173,7 +211,7 @@ CategorySet works similar to InformationSet but it specially works to manage rec
 <p>A rich library of functions has been developed to interact with database to server necessary purpose.</p>
 ', 'quicklinks', '', 'Yes', 'smart_h_link', 'Content', '5');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('6', '0', 'Theme Development', 'Theme Development', 'Theme Development', 'theme-development', 'Theme Development', '<p>Theme development is one of the common requirements during a new website development. appRain has a theme gallery to select theme. Gallery is available in below location:</p>
+INSERT INTO {_prefix_}pages VALUES ('3', '0', 'Theme Development', 'Theme Development', 'Theme Development', 'theme-development', 'Theme Development', '<p>Theme development is one of the common requirements during a new website development. appRain has a theme gallery to select theme. Gallery is available in below location:</p>
 
 <p>Login Admin Panel &gt; Preferences &gt; Theme</p>
 
@@ -204,7 +242,7 @@ A theme as some basic requirements to adjust with appRain environment</p>
 <p>A vast area of work remains for admin interface development.&nbsp; Admin design generally depends on the controller action to set the design.&nbsp; Most of the time you have to work with Toolbar, Data Grid and Row Manage to display and manage data.</p>
 ', 'quicklinks', '', 'Yes', 'smart_h_link', 'Content', '6');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('8', '0', 'General Help Center', 'General Help Center', 'General Help Center', 'general-help-center', 'General Help Center', '<p>Read appRain manual online, this is a HTML based manual for User, Developer and learners. We always encourage sending your valuable feedback.</p>
+INSERT INTO {_prefix_}pages VALUES ('4', '0', 'General Help Center', 'General Help Center', 'General Help Center', 'general-help-center', 'General Help Center', '<p>Read appRain manual online, this is a HTML based manual for User, Developer and learners. We always encourage sending your valuable feedback.</p>
 
 <p><a href="http://docs.apprain.com">Online Manual</a></p>
 
@@ -229,7 +267,7 @@ INSERT INTO {_prefix_}pages VALUES ('8', '0', 'General Help Center', 'General He
 <p><a href="http://www.apprain.com/help/ebook">Download</a></p>
 ', 'quicklinks', '', 'Yes', 'smart_h_link', 'Content', '8');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('11', '0', '', '', '', 'home-page-summary', '', '<?php 
+INSERT INTO {_prefix_}pages VALUES ('5', '0', '', '', '', 'home-page-summary', '', '<?php 
     // Enter List of page name
     $pages= array(
         ''quick-start'',
@@ -256,16 +294,16 @@ INSERT INTO {_prefix_}pages VALUES ('11', '0', '', '', '', 'home-page-summary', 
     // End of Loop
     endforeach; ?>    ', '', '', 'Yes', 'h_link', 'Snip', '0');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('7', '0', 'Terms of Use: appRain Content Management Framework', 'Terms, Condition, Copy Right', '', 'terms-of-use', 'Terms of Use', '<p>Copyright (c) appRain CMF (http://www.apprain.com)<br />
+INSERT INTO {_prefix_}pages VALUES ('6', '0', 'Terms of Use: appRain Content Management Framework', 'Terms, Condition, Copy Right', '', 'terms-of-use', 'Terms of Use', '<p>Copyright (c) appRain CMF (http://www.apprain.com)<br />
 <br />
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br />
 <br />
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br />
 <br />
 THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-', 'sitemenu,quicklinks,template_footer_B', '', 'Yes', 'h_link', 'Content', '7');
+', 'sitemenu,template_footer_menu', '', 'Yes', 'h_link', 'Content', '7');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('12', '0', '', '', '', 'samplephp', '', '<?php
+INSERT INTO {_prefix_}pages VALUES ('7', '0', '', '', '', 'samplephp', '', '<?php
     $pages= array(''quick-start'',''page-manager'');
     
     foreach($pageList as $name){
@@ -273,17 +311,15 @@ INSERT INTO {_prefix_}pages VALUES ('12', '0', '', '', '', 'samplephp', '', '<?p
     }
 ?>', '', '', 'Yes', 'h_link', 'Snip', '0');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('10', '0', 'appRain:  Content  Management Framework is a combination of Content Management System and Rapid Development Framework', 'Content Management System, PHP Framework, PHP Content Management System, PHP CMS, Web Development Tool, Project Development Tool', 'A PHP Content Management Framework combining  CMS(Content Management System) and Framework (Rapid Development Framework) to enable fast Web Developmen', 'home-page', 'What is appRain  Content Management Framework?', '<h1>What is appRain&nbsp; Content Management Framework?</h1>
+INSERT INTO {_prefix_}pages VALUES ('8', '0', 'appRain:  Content  Management Framework is a combination of Content Management System and Rapid Development Framework', 'Content Management System, PHP Framework, PHP Content Management System, PHP CMS, Web Development Tool, Project Development Tool', 'A PHP Content Management Framework combining  CMS(Content Management System) and Framework (Rapid Development Framework) to enable fast Web Developmen', 'home-page', 'What is appRain  Content Management Framework?', '<hr />
+<h2>What is appRain&nbsp; Content Management Framework?</h2>
 
 <p>appRain is one of the first officially released Opensource Content Management Framework (CMF). CMF is a new web engineering concept where &quot;CMS (Content Management System)&quot; and &quot;Framework&quot; perform together to produce endless varieties of output in a very limited time.</p>
 
 <p>appRain, published with lots of extensive features to reduce our development work time. It satisfies both Client and Developers with a safe and quality output.</p>
-
-<hr />
-<h3><a href="{baseurl}/quick-start">Quick Start</a></h3>
 ', 'home_content_area_A', '', 'Yes', 'text', 'Content', '0');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('2', '0', 'Page Manager', '', '', 'page-manager', 'Page Manager', '<p><strong>Page Manger</strong> is a frequently used module to create new pages in the website. You will get it in first Tab after login Admin Panel.</p>
+INSERT INTO {_prefix_}pages VALUES ('9', '0', 'Page Manager', '', '', 'page-manager', 'Page Manager', '<p><strong>Page Manger</strong> is a frequently used module to create new pages in the website. You will get it in first Tab after login Admin Panel.</p>
 
 <p>Use link page section to assign your page in different place in the website. You will get different selected section to assign the page in Menu, Quick Links. You can select multiple hooks by holding CTRL key and Mouse left Click.</p>
 
@@ -300,7 +336,7 @@ INSERT INTO {_prefix_}pages VALUES ('2', '0', 'Page Manager', '', '', 'page-mana
 <p>For developers, there is a detailed module to execute all operations. This module helps to work with Pages in MVC model. Moreover, it has different hooks to register Page Manager in Component in different events.</p>
 ', 'quicklinks', '', 'Yes', 'smart_h_link', 'Content', '2');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('1', '0', 'Quick Start', 'Quick Start', 'Quick Start', 'quick-start', 'Quick Start', '<p>appRain has multidimensional approach to serve a purpose in web based software development. Specifically, Use as Content Management System or utilized the framework layer only.</p>
+INSERT INTO {_prefix_}pages VALUES ('10', '0', 'Quick Start', 'Quick Start', 'Quick Start', 'quick-start', 'Quick Start', '<p>appRain has multidimensional approach to serve a purpose in web based software development. Specifically, Use as Content Management System or utilized the framework layer only.</p>
 
 <p>For a quick start, CMS would be a great area to choose.</p>
 
@@ -316,9 +352,9 @@ If you love to write some PHP, you can create dynamic pages. A dynamic page can 
 <p>Database! Never be tired by redundant work. Use InformationSet and CategorySet. appRain takes care of interface development, validation also auto made your query.</p>
 
 <p>Further more, you are open for extensive development with different type of databases and Web Service layer.</p>
-', 'sitemenu,quicklinks', '', 'Yes', 'smart_h_link', 'Content', '1');
+', 'sitemenu', '', 'Yes', 'smart_h_link', 'Content', '1');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('4', '0', 'Concept of Development', 'Concept of Development', 'Concept of Development', 'concept-of-development', 'Concept of Development', '<p>appRain is a robust platform for development which optimized the effort and time.</p>
+INSERT INTO {_prefix_}pages VALUES ('11', '0', 'Concept of Development', 'Concept of Development', 'Concept of Development', 'concept-of-development', 'Concept of Development', '<p>appRain is a robust platform for development which optimized the effort and time.</p>
 
 <p>First setup appRain, then start development with all interface based tool like Page Manager, Theme etc.&nbsp; This is a very preliminary stage of you start up.</p>
 
@@ -344,7 +380,7 @@ This is highly recommended, develop new components for a specify requirements. E
 <p>However, appRain has both ready-made and un-stitched tool, we just have to use it as per need.</p>
 ', 'quicklinks', '', 'Yes', 'smart_h_link', 'Content', '4');
 -- query
-INSERT INTO {_prefix_}pages VALUES ('3', '0', 'Component Installation', 'Component Installation', 'Component Installation', 'component-installation', 'Component Installation', '<p>Component is a pluggable module, the main logic of it to connect to core system with different hook and add new features. Let&rsquo;s say you want a blog in your website. Just download the component from the archive and install.</p>
+INSERT INTO {_prefix_}pages VALUES ('12', '0', 'Component Installation', 'Component Installation', 'Component Installation', 'component-installation', 'Component Installation', '<p>Component is a pluggable module, the main logic of it to connect to core system with different hook and add new features. Let&rsquo;s say you want a blog in your website. Just download the component from the archive and install.</p>
 
 <p>Your entire component list can be seen in &quot;Applications&quot; tab after login Admin Panel.</p>
 
@@ -378,8 +414,8 @@ CREATE TABLE `{_prefix_}sconfigs` (
   `sort_order` varchar(5) NOT NULL,
   `section` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
--- query 
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+-- query
 INSERT INTO {_prefix_}sconfigs VALUES ('1', '0', 'theme', 'bootstrap', '0', 'hidden');
 -- query
 INSERT INTO {_prefix_}sconfigs VALUES ('2', '0', 'site_logo', 'logo.jpg', '', 'themesettings');
@@ -388,4 +424,36 @@ INSERT INTO {_prefix_}sconfigs VALUES ('3', '0', 'default_pagination', '15', '19
 -- query
 INSERT INTO {_prefix_}sconfigs VALUES ('4', '0', 'time_zone', 'Asia/Dhaka', '23', 'general');
 -- query
-INSERT INTO {_prefix_}sconfigs VALUES ('20', '0', 'copy_right_text', 'Copy Right [year] [website]', '', 'general');
+INSERT INTO {_prefix_}sconfigs VALUES ('5', '0', 'copy_right_text', 'Copy Right [year] [website]', '', 'general');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('6', '0', 'site_title', 'Start with appRain', '', '');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('7', '0', 'admin_title', 'Start with appRain Admin', '', '');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('8', '0', 'admin_email', 'info@site.com', '', '');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('9', '0', 'activity_widget', 'No', '', '');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('10', '0', 'leave_amessage_widget', 'No', '', '');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('11', '0', 'disable_quick_links', 'No', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('12', '0', 'whitecloud_disable_footer', 'No', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('13', '0', 'whitecloud_background_position', 'bgstartfromtop', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('15', '0', 'appslidesettings_displaymode', 'ajaxbased', '', 'appslidesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('30', '0', 'homepresssettings_title', 'Quick Links', '', 'homepresssettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('16', '0', 'homepresssettings_displaymode', 'TextWithImage', '', 'homepresssettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('17', '0', 'homepresssettings_box_per_row', '3', '', 'homepresssettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('18', '0', 'site_homepage_layout', 'left_column', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('19', '0', 'site_pageview_layout', 'right_column', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('20', '0', 'site_defaultview_layout', 'default', '', 'themesettings');
+-- query
+INSERT INTO {_prefix_}sconfigs VALUES ('21', '0', 'flash_file_uploader', 'Yes', '', '');

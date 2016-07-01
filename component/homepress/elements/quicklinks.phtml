@@ -1,0 +1,11 @@
+<?php if (App::Config()->setting('disable_quick_links') != 'Yes'): ?>
+<ul class="list-group">    
+    <?php $qlinks = App::PageManager()->getQuickLinks(); ?>
+	<?php $selected = isset($selected) ? $selected : '';?>
+    <?php foreach ($qlinks as $links): ?>		
+		<li class="list-group-item <?php echo ($selected == $links['name'])?'active':'';?>">
+			<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
+		</li>
+    <?php endforeach;?>    
+</ul>
+<?php endif; ?>

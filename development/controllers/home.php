@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 
@@ -61,7 +61,7 @@ class homeController extends appRain_Base_Core
      * to be Render as a starting page of the project
      */
     public function indexAction($id = null)
-    {
+    { 
         /**
          * Fetch data from static page manager and
          * set Page Meta Information.
@@ -77,22 +77,23 @@ class homeController extends appRain_Base_Core
      * Create search result based on Definitions
      * and call back functions.
      */
-    public function searchAction($srcstr = null, $page = 1)
+    public function searchAction()
     {
         /* Attach Addons and Set meta information */
-        $this->addons = Array('defaultvalues');
         $staticpage = $this->staticPageNameToMetaInfo('search');
 
         /**
          * Fetch all search data definition in defintion
          * for Information Set and Category set
          */
-        $srcstr = isset($this->post['ss']) ? $this->post['ss'] : $srcstr;
+        $srcstr = isset($this->get['ss']) ? $this->get['ss'] : '';
+        $page = isset($this->get['page']) ? $this->get['page'] : '';
+		
         $srcData = App::Helper("Search")
-            ->setSmartPaging(true)
+            //->setSmartPaging(true)
             ->setPage($page)
-            ->setLimit(5)
-            ->setHLink($this->baseurl("/search/{$srcstr}"))
+            ->setLimit(App::Config()->Setting('default_pagination',50))
+            ->setHLink(App::Config()->baseUrl("/search?ss={$srcstr}"))
             ->Search($srcstr);
 
         /* Overwrite page title */

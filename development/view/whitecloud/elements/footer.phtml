@@ -12,33 +12,30 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 ?>
-<?php if (App::Helper('Config')->setting('whitecloud_disable_footer') != 'Yes'): ?>
-<div id="footer">
-	<div class="container_16">
-		<div class="grid_8">
+<?php if( App::Config()->Setting('whitecloud_disable_footer','No') == 'No'):?>
+	<div class="clearfix"></div>
+	<footer class="col-md-12">
+		<p class="pull-right"><a href="#">Back to top</a></p>
+		<p>
 			<?php App::Hook('UI')->Render('template_footer_A'); #User Interface Hook ?>
-			<?php echo App::Helper('Config')->setting('copy_right_text');?>	
-		</div>
-		<div class="grid_8 align-right">
+			<?php echo App::Helper('Config')->setting('copy_right_text');?>	 
 			<?php App::Hook('UI')->Render('template_footer_menu'); #User Interface Hook ?>
 			<?php App::Hook('UI')->Render('template_footer_B'); #User Interface Hook ?>
-		</div>
-		<div class="clear"></div>
-	</div>
-</div>
+		</p>
+	</footer>
 <?php endif;?>

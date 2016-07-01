@@ -1,66 +1,63 @@
 <?php if(!empty($pressdata['data'])):?>
 <?php if(App::Config()->setting('appslidesettings_displaymode')=='ajaxbased'):?>
-	<div class="app-slide-content">
-		<div class="app-slide-left">
-			<div class="app-slide-text">
-				<?php echo App::Helper('Utility')->codeFormated($pressdata['data'][0]["description"]) ?>
-			</div>            
-		</div>
-		<div class="app-slide-right">
-			<div class="press-img-pan">
-				<?php if(isset($pressdata['data']['0']['image'])):?>
-					<img src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$pressdata['data']['0']['image']}");?>" alt="" />
-				<?php endif;?>
+		<div class="app-press-content">
+			<div class="col-md-6">
+				<div class="press-img-pan">
+					<?php if(isset($pressdata['data']['0']['image'])):?>
+						<img class="img-thumbnail" src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$pressdata['data']['0']['image']}");?>" alt="" />
+					<?php endif;?>
+				</div>
 			</div>
+            <div class="col-md-6">
+				<div class="app-press-text">
+					<?php echo App::Helper('Utility')->codeFormated($pressdata['data'][0]["description"]) ?>
+				</div>            
+			</div>
+			<div class="clearfix"></div>
+			<div class="app-press-menu">
+				<?php foreach($pressdata['data'] as $press_key => $press):?>
+					<?php if( $press_key == 0):?>
+						<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>" class="selected" id="appslidefirst"><?php echo($press['title']);?></a> 
+					<?php else:?>
+						<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>"><?php echo($press['title']);?></a> 
+					<?php endif;?>
+				<?php endforeach;?>
+				<span class="apploader">&nbsp;</span>
+			</div>	
 		</div>
-		<?php if(count($pressdata['data']) > 1):?>
-		<div class="clear"></div>
-		<div class="app-slide-menu">
-			<?php foreach($pressdata['data'] as $press_key => $press):?>
-				<?php if( $press_key == 0):?>
-					<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>" class="selected" id="appslidefirst"><?php echo($press['title']);?></a> 
-				<?php else:?>
-					<a href="javascript:void(0)" longdesc="<?php echo $press["id"];?>" rel="<?php echo($press['image']);?>"><?php echo($press['title']);?></a> 
-				<?php endif;?>
-			<?php endforeach;?>
-			<span class="apploader">&nbsp;</span>
-		</div>	
-		<?php endif;?>
-	</div>	
 	<?php else:?>
-	<div class="app-slide-content">
-		<div class="app-slide-content-cycle">
+		<div id="slideshow">
 			<ul>
-			<?php foreach($pressdata['data'] as $row): ?>
+			<?php foreach($pressdata['data'] as $row): //pr($row); ?>
 				<li>
-					<div class="app-slide-left">
-						<div class="app-slide-text">
+					<div id="app-slide-left">
+						<div style="padding:0px 30px">
 							<?php echo $row['description'];?>
 						</div>
 					 </div>
-					<div class="app-slide-right">
+					<div id="app-slide-right">
 						<?php if(isset($row['image'])):?>
-						<img src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$row['image']}");?>" alt="" />
+						<img height="245" src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$row['image']}");?>" alt="" />
 					<?php endif;?>
 					</div>
 				</li>    
 			<?php endforeach;?>        
 			</ul>            	            
 		</div>
-		<div class="clear"></div>
+		<div class="clearfix"></div>
 		<div id="pager">&nbsp;</div>
-	</div>	
 		<script type="text/javascript">
-		   jQuery(function(){    
-				 jQuery('.app-slide-content-cycle ul').cycle({
-					timeout: 50000, 
-					fx:      'fade',   
+		   jQuery(function(){     
+
+				 jQuery('#slideshow ul').cycle({
+					timeout: 1000,  
+					fx:      'fade', 
 					pager:   '#pager',
-					cleartypeNoBg: true,
-					pauseOnPagerHover: 0
+					cleartypeNoBg: false,
+					pauseOnPagerHover: 0 
 				});
 			 });
 		</script>
-	<?php endif;?>
-	
+	<?php endif;?>	
 <?php endif;?>
+<div class="clearfix"></div>

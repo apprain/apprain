@@ -2,7 +2,7 @@
 <database>
 	<version>0.1.7</version>
     <name>App Editor</name>
-	<uri>http://www.apprain.com</uri>
+	<uri>http://www.apprain.org</uri>
 	<description><![CDATA[
 		This editor helps to edit code. 
 		]]>

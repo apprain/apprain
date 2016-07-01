@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 /**
  * appRain Installer class
@@ -315,7 +315,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                     <ul class="lists">
                         <li><strong class="fail">Important:</strong> We have locked installation process. For further security you can delete "install" directory from your server.</li>
                         <li>After log to your control panel you should visit the "Tools" section to update your site information.</li>
-                        <li>Read documentation and Plugin from <a href="http://www.apprain.com" target="_blank">www.apprain.com</a>.</li>
+                        <li>Read documentation and Plugin from <a href="http://www.apprain.org" target="_blank">www.apprain.org</a>.</li>
                         <li><strong>Installation Information</strong></li>
                         <li><a href="../" target="_blank">View Website</a><li>
                         <li><a href="../admin/system" target="_blank">Login - to admin Panel</a></li>
@@ -434,13 +434,10 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
             else {
 				$_POST["data"]["Db"]["charset"] = 'utf8';
 				$DBObject = App::Module("Database_{$_POST["data"]["Db"]['driver']}_{$_POST["data"]["Db"]['type']}");
-				$Connection = $DBObject->Connect($_POST["data"]["Db"]);
-
-                if (!is_object($Connection)) {
-                    $error = "Failed to Connect to Database Server Please check your login information and try again. <br /> (Error From DB Provider: $error)";
-                }
-                else {
-                    $result = $this->writeDBFile($_POST["data"]["Db"]);
+				try {
+					$Connection = $DBObject->Connect($_POST["data"]["Db"]);
+					
+					$result = $this->writeDBFile($_POST["data"]["Db"]);
 
                     if ($result) {
                         $this->redirect("3");
@@ -448,7 +445,10 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                     else {
                         $error = "Failed to write Database definition file. Please check the file permission of the path: development/definition/";
                     }
-                }
+				}
+				catch(Exception $err){
+					$error = 	$err->getMessage();
+				}
             }
         }
         return
@@ -501,19 +501,19 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/documents
+ * http ://www.apprain.org/documents
  */
 -->
 <database>

@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 $NAVAccess = App::Module('ACL')->readNAVAccess('top');
@@ -37,8 +37,10 @@ $__AdminNavDefs = $this->get_admin_nav();
     <!-- user -->
     <ul id="user">
         <li class="first"><?php echo App::Module('AdminpanelUI')->currentDate(); ?></li>
-        <li class="first"><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>
+        <li ><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>
+        
         <li><a href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("Account"); ?></a></li>
+		<li><a onclick="window.open(siteInfo.baseUrl + '/admin/filemanager','Window1','menubar=no,toolbar=no,scrollbars=yes');" href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("File Manager"); ?></a></li>
         <li><a href="<?php echo $this->baseUrl('/admin/logout');?>"><?php echo $this->__("Logout"); ?></a></li>
         <li class="highlight last"><a href="<?php echo $this->baseUrl();?>" target="_blank"><?php echo $this->__("View Site"); ?></a></li>
 		

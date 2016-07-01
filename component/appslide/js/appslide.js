@@ -28,9 +28,9 @@
 var appslide =
 {   
     _obj       :null,
-    _ttime     :2000, 
+    _ttime     :3000, 
     _data      :Array(),
-    _l_img     :base + '/images/', 
+    _l_img     :siteInfo.baseUrl + '/images/', 
     _l_obj     :'.apploader',
 	_hkeys     :[],
 	_currpos   :0,
@@ -54,7 +54,7 @@ var appslide =
                 },
     clrsec     :function()
                 {
-                    jQuery('.app-slide-menu').children('a').each(function(index, item){
+                    jQuery('.app-press-menu').children('a').each(function(index, item){
                         jQuery(item).removeClass('selected');  
                     })
                 },
@@ -67,20 +67,26 @@ var appslide =
                 },
     view       :function()
                 {
-                    appslide._obj = this;
+                    appslide.movenext(this);
+                    
+					
+                },
+    movenext   :function(obj)
+                {
+                    appslide._obj = obj;
                     appslide._currpos = jQuery(appslide._obj).attr('longdesc')-1;
                     if( typeof appslide._data[jQuery(appslide._obj).attr('longdesc')] == 'undefined')
                     {
                         appslide.loading(true);
 						jQuery.ajax({
-							url: siteInfo.baseUrl + "/appslide/index/" + jQuery(this).attr('longdesc'),
+							url: siteInfo.baseUrl + "/appslide/index/" + jQuery(obj).attr('longdesc'),
 							context: document.body,
 							success: function(responseTxt){
 								appslide._data[jQuery(appslide._obj).attr('longdesc')] =responseTxt ;
                                 appslide.chimg(appslide._obj);
                                 appslide.clrsec();
 								jQuery(appslide._obj).addClass('selected');
-                                jQuery('.app-slide-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
+                                jQuery('.app-press-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
                                 appslide.loading(false);
 							}
 						});
@@ -90,30 +96,29 @@ var appslide =
                         appslide.chimg(appslide._obj);
                         appslide.clrsec();
                         jQuery(appslide._obj).addClass('selected');
-                        jQuery('.app-slide-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
-                    }
-					
+                        jQuery('.app-press-text').html(appslide._data[jQuery(appslide._obj).attr('longdesc')]);
+                    }                    
                 },
     loadimage  :function(image)
                 {
-  			       jQuery('.press-img-pan').append('<img src="' + siteInfo.baseUrl + '/uploads/filemanager/' + image + '" style="display:none" />');
+  			       jQuery('.press-img-pan').append('<img src="' + siteInfo.baseUrl + '/uploads/filemanager/' + image + '" class="img-thumbnail" style="display:none" />');
                 },
     loop       :function(){
 	                if(appslide._auto){
-						jQuery(appslide._hkeys[appslide._currpos]).click();
+                        appslide.movenext(appslide._hkeys[appslide._currpos]);
 						appslide._currpos = (appslide._currpos < appslide._hkeys.length) ? (appslide._currpos+1) : 0;
 					}
 					setTimeout('appslide.loop()', appslide._ttime);
 	            },
     init       :function()
                 {
-					jQuery('.app-slide-menu').children('a').each(function(index,item){
+					jQuery('.app-press-menu').children('a').each(function(index,item){
 						appslide.loadimage(jQuery(item).attr('rel'));
-						appslide._hkeys[index] = item;
+						appslide._hkeys[index] = item;                        
 						jQuery(appslide._hkeys[index]).click(appslide.view);
 					}); 
 					
-					jQuery('.app-slide-content').mouseover(function() {
+					jQuery('.app-press-content').mouseover(function() {
 						appslide._auto = false;
 					}).mouseout(function(){
 						appslide._auto = true;

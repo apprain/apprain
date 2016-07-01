@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 
@@ -258,6 +258,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
         $themleInfo = App::__Def()->getThemeInfo(App::Helper('Config')->siteInfo('theme'));
 
         if (isset($themleInfo['settings']) && $themleInfo['settings'] != "") {
+		
             App::Module('Hook')->setHookName('InterfaceBuilder')
                 ->setAction("update_definition")
                 ->Register(get_class($this), "interfacebuilder_update_for_theme", $themleInfo);
@@ -277,7 +278,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
         if ($themeName) {
             $themleInfo = App::__Def()->getThemeInfo($themeName);
             if ($themleInfo['settings'] != "") {
-                $send['developer']['child'][3]['items'][] = array(
+                $send['developer']['child'][2]['items'][] = array(
                     "title" => "Settings",
                     "link" => "/admin/config/" . App::Helper('Utility')->getName($themleInfo['settings'])
                 );
@@ -1480,7 +1481,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects
         $definition['base']['generic_field']['max_entry']['limit']= $max_entry->item(0)->getElementsByTagName("limit")->item(0)->nodeValue;
         $definition['base']['generic_field']['max_entry']['message']= $max_entry->item(0)->getElementsByTagName("message")->item(0)->nodeValue;
 
-        // Search informaton
+        // Search information
         $search = $base->item(0)->getElementsByTagName("sreach")->item(0);
         $definition['base']['search'] = Array();
         if($search){

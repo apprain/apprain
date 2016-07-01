@@ -12,43 +12,47 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 ?>
-<div class="grid_7">&nbsp;<?php App::Hook('UI')->Render('template_header_A'); #User Interface Hook ?></div>
-<div class="grid_9 align-right"><?php App::Hook('UI')->Render('template_header_B'); #User Interface Hook ?></div>
-<div class="clear"></div>
-<div class="grid_7 logo">	
-	<?php if(App::Config()->Setting('site_logo')):?>
-		<?php 
-			echo App::Helper("Html")
-				->linkTag(
-					$this->baseurl("/"), 
-					App::Helper("Html")->imgTag($this->baseUrl("/uploads/filemanager/" . App::Config()->Setting('site_logo')))
-				);
+<header>
+	<div class="col-md-6">&nbsp;<?php App::Hook('UI')->Render('template_header_A'); #User Interface Hook ?></div>
+	<div class="col-md-6 align-right"><?php App::Hook('UI')->Render('template_header_B'); #User Interface Hook ?></div>
+	<div class="clearfix"></div>
+	<div class="col-md-6">	
+		<?php if(App::Config()->Setting('site_logo')):?>
+			<?php 
+				echo App::Helper("Html")
+					->linkTag(
+						$this->baseurl("/"), 
+						App::Helper("Html")->imgTag($this->baseUrl("/uploads/filemanager/" . App::Config()->Setting('site_logo')),null,array("class"=>"thumbnail"))
+					);
+			?>
+		<?php else:?>
+			<h2><?php echo app::load("Helper/Html")->linkTag($this->baseurl("/"), App::Config()->setting("site_title"));?></h2>
+		<?php endif;?>	
+	</div>
+	<div class="col-md-6">
+		<?php
+			echo $this->siteMenuClear()
+				->siteMenu($this->baseurl("/"), 'Home', 'home')
+				->setRootHtmlOpts(array('id' => 'menu'))
+				->siteMenuRender('HTML', (isset($selected) ? $selected : ""), 'selected');
 		?>
-	<?php else:?>
-		<h2><?php echo app::load("Helper/Html")->linkTag($this->baseurl("/"), App::Config()->setting("site_title"));?></h2>
-	<?php endif;?>	
-</div>
-<div class="grid_9 header">
-	<?php
-		echo $this->siteMenuClear()
-			->siteMenu($this->baseurl("/"), 'Home', 'home')
-			->setRootHtmlOpts(array('id' => 'menu'))
-			->siteMenuRender('HTML', (isset($selected) ? $selected : ""), 'selected');
-	?>
-</div>
-<div class="clear"></div>
+	</div>
+</header>	
+<div class="clearfix"></div>
+<?php  echo $this->callElement("breadcrumb"); ?>
+<div class="clearfix"></div>

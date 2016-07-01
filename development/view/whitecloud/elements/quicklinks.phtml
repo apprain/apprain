@@ -1,12 +1,10 @@
-<?php App::Hook('UI')->Render('template_left_column_A'); #User Interface Hook ?>
-<ul class="list">
-    <?php App::Hook('UI')->Render('template_left_column_B'); #User Interface Hook ?>
+<?php if (App::Config()->setting('disable_quick_links') != 'Yes'): ?>
+<ul class="list-group">    
     <?php $qlinks = App::PageManager()->getQuickLinks(); ?>
-    <?php foreach ($qlinks as $links): ?>
-		<li>
+    <?php foreach ($qlinks as $links): ?>		
+		<li class="list-group-item <?php echo ($selected == $links['name'])?'active':'';?>">
 			<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
 		</li>
-    <?php endforeach;?>
-    <?php App::Hook('UI')->Render('template_left_column_C'); #User Interface Hook ?>
+    <?php endforeach;?>    
 </ul>
-<?php App::Hook('UI')->Render('template_left_column_D'); #User Interface Hook ?>
+<?php endif; ?>

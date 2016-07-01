@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 /**
@@ -455,6 +455,8 @@ class appRain_Base_Core extends appRain_Collection
             }
         }
 
+		App::Module('Callbacks')->_before_theme_load($this);	
+
         if (
             !(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME
                 && file_exists($view_render_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . $render_path . TPL_EXT))
@@ -506,6 +508,9 @@ class appRain_Base_Core extends appRain_Collection
 
         // Display Content
         echo $contents;
+		
+		// After theme loaded 
+		App::Module('Callbacks')->_after_theme_load($this);
     }
 
 
@@ -527,7 +532,19 @@ class appRain_Base_Core extends appRain_Collection
             include $filename;
             $contents = ob_get_contents();
             ob_end_clean();
-            return $contents;
+			
+			/*if($this->layout != 'admin'){
+				$str = '<div style="border:1px solid red">';
+				$str .= '<a target="_blank" href="' . App::Config()->baseUrl('?loc=' . str_replace(App::Config()->rootDir(),'', $filename)) . '">EDIT</a>';
+				$str .= $contents;
+				$str .= '</div>';			
+				return $str;
+			}
+			else{
+					return $contents;
+			}*/
+			
+			return $contents;
         }
         return false;
     }

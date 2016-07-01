@@ -67,7 +67,7 @@ jQuery(document).ready(function () {
             },
             'No! I need more help':function () {
                 jQuery(this).dialog('close');
-				window.location = 'http://www.apprain.com/ticket';
+				window.location = 'http://www.apprain.org/ticket';
             }
 
         },
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
             },
             'No! I need more help':function () {
                 jQuery(this).dialog('close');
-				window.location = 'http://www.apprain.com/ticket';
+				window.location = 'http://www.apprain.org/ticket';
             }
 
         },

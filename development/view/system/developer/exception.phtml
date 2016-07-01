@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 ?>
 <?php
@@ -41,23 +41,23 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
  
 ?>
 <?php $help = App::Module('Developer')->renderExceptionString($id); ?>	
-<?php App::Helper('Toolbar')->setTitle($this->__("appRain Help >> {$help['title']}"))->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Go to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.com/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_top')); ?>
+<?php App::Helper('Toolbar')->setTitle($this->__("appRain Help >> {$help['title']}"))->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Go to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.org/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_top')); ?>
 <?php echo $help['description'];?>
-<?php App::Helper('Toolbar')->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Got to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.com/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_bottom')); ?>
+<?php App::Helper('Toolbar')->setBtnCustomHTML('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/' . $this->get['redirecturi'] . '\'" value="<< Try Again" /> <input type="button" onclick="window.location=siteInfo.baseUrl" value="Got to Home Page" /> <input type="button" onclick="window.location=\'http://www.apprain.org/manual\'" value="Need More Help" />')->setBtnBack()->Render(array('code' => 'show_exception_help_bottom')); ?>

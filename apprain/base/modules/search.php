@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 
 abstract class appRain_Base_Modules_search extends appRain_Base_Objects
@@ -42,6 +42,7 @@ abstract class appRain_Base_Modules_search extends appRain_Base_Objects
         }
         $this->setSearchString($srt);
 
+
         if (!$this->hasCache()) {
             $this->searchPool = Array();
 
@@ -55,6 +56,7 @@ abstract class appRain_Base_Modules_search extends appRain_Base_Objects
             }
 
             foreach (App::__def()->getInformationSetList() as $type) {
+
                 $srcStr = $this->getSearchableFields($type);
 				
                 if (!empty($srcStr)) { 
@@ -153,7 +155,7 @@ abstract class appRain_Base_Modules_search extends appRain_Base_Objects
     {
         $definition = App::__def()->getInformationSetDefinition($type);
 
-        $result = App::InformationSet($type)->FindAll($srcStr);
+        $result = App::InformationSet($type)->findAll($srcStr);
 
         $data = Array();
         foreach ($result['data'] as $val) {
@@ -178,6 +180,7 @@ abstract class appRain_Base_Modules_search extends appRain_Base_Objects
 
             $data[] = $val;
         }
+		
         return $data;
     }
 
@@ -187,12 +190,12 @@ abstract class appRain_Base_Modules_search extends appRain_Base_Objects
 
         $srcStr = '';
         $definition['base']['search']['status'] = isset($definition['base']['search']['status']) ? $definition['base']['search']['status'] : "No";
+
         if (strtolower($definition['base']['search']['status']) == 'yes') {
-            $i = 0;
             foreach ($definition['fields'] as $name => $field) {
                 if (strtolower($field['searchable']) == 'yes') {
 					$srcStr = ($srcStr=='') ? $srcStr : " {$srcStr} OR "; 
-					$srcStr .= " {$name} LIKE ".  '%' . $this->getSearchString() . '%';
+					$srcStr .= " {$name} LIKE '".  '%' . $this->getSearchString() . "%'";
                 }
             }
         }

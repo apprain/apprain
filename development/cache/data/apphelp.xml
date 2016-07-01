@@ -13,19 +13,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/documents
+ * http ://www.apprain.org/documents
  */
 -->
 <help>
@@ -41,10 +41,10 @@
             <description>
                 <![CDATA[A user define exception has been occurred and you can find solution from following sources. 
 <h3> Check appRain manual</h3>
-You can find solution in appRain manual. Please browse <a href="http://www.apprain.com/manual">www.apprain.com/manual</a>
-Or view videos from <a href="http://www.apprain.com/videos">www.apprain.com/videos</a>
+You can find solution in appRain manual. Please browse <a href="http://www.apprain.org/manual">www.apprain.org/manual</a>
+Or view videos from <a href="http://www.apprain.org/videos">www.apprain.org/videos</a>
 <h3>Create Ticket</h3>
-Create a ticket to get reply from appRain developer. Please browse <a href="http://www.apprain.com/ticket">www.apprain.com/ticket</a>
+Create a ticket to get reply from appRain developer. Please browse <a href="http://www.apprain.org/ticket">www.apprain.org/ticket</a>
 <h3>Contact via Email</h3>
 You can communicate thought email to get help. Send email at <a href="mailto=info@apprain.com">info@apprain.com</a>
 

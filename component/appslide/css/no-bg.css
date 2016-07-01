@@ -1,62 +1,44 @@
-.app-slide-left{
-	width:50%;
-	float:left;		
-}
-
-.app-slide-right{
-	width:49%;
-	float:left;		
-}
-
-.app-slide-content{
-	/*background-color:#428BCA;*/
-}
-
-.app-slide-text{
-	margin:20px;
-	text-align:center;
-}
-
-.app-slide-text h1{
-	font-size:50px;
-}
-
-.press-img-pan{
-	margin-top:25px;
-}
-
-
-.app-slide-menu
+.app-press-menu
 {
-	text-align:center;
     font-size:12px;
+    background:url(../componentroot/appslide/tabbg-bottom-light.png) repeat-x;
     padding:0;
-    margin:20px 0 0 10%;
+    margin:20px 0 0 10px;
 	height:32px;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
 }
 
-.app-slide-menu a
-{  
+#app-slide-left{
+	width:50%;
+	float:left
+}
+
+#app-slide-right{
+	width:50%;
+	background-color:#FFF;
+	float:left
+}
+.app-press-menu a
+{
     color: #000000;
     display: block;
     float: left;
-    padding: 2px 10px;
-	margin-right:10px;
-
+    padding: 7px 10px;
     text-decoration: none;
-    border: 1px solid #FFF;
+    font-family:"Fjalla One",Arial
 }
-.app-slide-menu a.selected
+.app-press-menu a.selected
 {
-	color:#FFFFFF;
-	border: 1px solid #FFF;
+	color:red;
 }
 
-.app-slide-menu a:hover
+.app-press-menu a:hover
 {
-    color:#FFFFFF;
-	border: 1px solid #FFF;
+    color:red;
 }
+
 
 .apploader{
 	display:block;
@@ -66,34 +48,49 @@
     width: 16px;	
 }
 
+.app-press-text{
+	padding-top:30px;
+    height:230px;
 
-.app-slide-content-cycle ul,.app-slide-content-cycle ul li{
-	list-style:none;
+}
+
+.app-press-text h1{
+    color:#428bca;
+	margin-top:0;
+}
+
+/* --------------- Sliding ---------- */
+#slideshow  ul li{ 
 	width:100%;
+	background-image:url(../componentroot/appslide/bg-slide.jpg);
+	background-repeat:no-repeat;
+	float:left;
+	list-style:none;
+	color:white;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 #pager{
-	height:40px;	
-	text-align:center;
+	text-align:right;
 }
 
 #pager a{
-	display:inline-block;
-	font-size:0px;
-	width:11px;
-	height:11px;
+	width:15px;
+	height:5px;
 	margin:18px 4px 0px 4px;
+	padding:0 5px;	
 	outline-style:none;
 	outline-width:medium;
-	text-indent:-9999px;
-	background-color:#000;	
-	-moz-border-radius: 5px; 
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	
-	
+	color:#0A92D0;
+	background-color:#0A92D0;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 
 #pager .activeSlide{
-	background-color:#FFF;
+	background-color:#0834A5;
+	color:#0834A5;
+	
 }
+

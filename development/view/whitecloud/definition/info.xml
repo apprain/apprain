@@ -3,7 +3,7 @@
     <name>White Cloud</name>
     <author>Reazaul Karim</author>
     <author_uri>http://reazulk.wordpress.com</author_uri>
-    <description>The theme created based on 960 CSS Framework. Easy and simple to customize.</description>
+    <description>The theme created based on Gird Framework. Easy and simple to customize.</description>
     <image>logo.jpg</image>
     <pagemanager_hooks>
         <hook_group name="header" title="Header">

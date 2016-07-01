@@ -12,19 +12,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 ?>
 <div id="login">
@@ -37,7 +37,7 @@
         <div class="corner tr"></div>
     </div>
 
-    <?php if ($message != ""): ?>
+    <?php if (!empty($message)): ?>
     <div class="messages">
         <div id="message-warning" class="message message-warning">
             <div class="image">
@@ -66,8 +66,7 @@
                             <label for="password"><?php echo $this->__('New Password:');?></label>
                         </div>
                         <div class="input">
-                            <input type="text" id="password" name="data[Admin][password]" size="40" value=""
-                                   class="focus"/>
+                            <input type="text" id="password" name="data[Admin][password]" size="40" value="" />
                         </div>
                     </div>
                     <div class="field">
@@ -75,8 +74,7 @@
                             <label for="cpassword"><?php echo $this->__('Confirm Password:');?></label>
                         </div>
                         <div class="input">
-                            <input type="password" id="cpassword" name="data[Admin][cpassword]" size="40" value=""
-                                   class="focus"/>
+                            <input type="password" id="cpassword" name="data[Admin][cpassword]" size="40" value="" />
                         </div>
                     </div>
                     <!-- Spacer -->
@@ -123,7 +121,7 @@
                             <a href="<?php echo $this->baseurl('/'); ?>"><?php echo $this->__('View Website?');?></a> 
 							<a href="<?php echo $this->baseurl('/admin'); ?>"><?php echo $this->__('Login Admin Panel.');?></a>
                         </div>
-                        <input type="submit" value="Send Password"/>
+                        <input type="submit" value="Send Request"/>
                     </div>
                     <?php endif;?>
                 </div>
@@ -136,11 +134,11 @@
 
 
 <div class="auth-copy-right">
-	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.com">
+	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.org">
 		<img src="<?php echo $this->baseUrl('/images/smalllogo.gif');?>" alt="<?php echo $this->__('appRain Content Management Framework');?>">
 	</a>
 	<div class="copy-right-text">
 		<?php echo $this->__('Content Management Framework.');?>
-		<?php echo $this->__('Copyright &copy;' . date('Y'));?>, <a title="appRain Content Management Framework" target="_blank" href="http://www.apprain.com/license"><?php echo $this->__('License');?></a>.		
+		<?php echo $this->__('Copyright &copy;' . date('Y'));?>, <a title="appRain Content Management Framework" target="_blank" href="http://www.apprain.org/license"><?php echo $this->__('License');?></a>.		
 	</div>
 </div>

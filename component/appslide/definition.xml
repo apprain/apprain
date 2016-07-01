@@ -2,7 +2,7 @@
 <database>
 	<version>0.1.0</version>
     <name>App Slide</name>
-	<uri>http://www.apprain.com</uri>
+	<uri>http://www.apprain.org</uri>
 	<description><![CDATA[
 		Add an interactive slide show in your home page. Fetch data by AJAX and cache the content for faster presentation.
 		]]>

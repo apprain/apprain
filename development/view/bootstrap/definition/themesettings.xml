@@ -13,19 +13,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 -->
 <SiteSettings>
@@ -50,6 +50,40 @@
 						<default></default>
 						<type>fileTag</type>
 					</selection>                
+				</selections>
+			</group>
+			<group>
+				<base name="themelayout">
+					<title>Theme Layout Setup</title>
+					<acl>
+						<ugroup>superadmin</ugroup>
+					</acl>
+				</base>
+				<selections>
+					<selection>
+                        <title>Home Page</title>
+                        <name>site_homepage_layout</name>
+                        <type>radioTag</type>
+                        <default>left_column</default>
+                        <options>
+                            <option value="right_column">Right Column</option>
+                            <option value="left_column">Left Column</option>
+                            <option value="three_column">Three Column</option>
+                            <option value="default">Single Column</option>
+                        </options>
+                    </selection>             
+					<selection>
+                        <title>Page View</title>
+                        <name>site_pageview_layout</name>
+                        <type>radioTag</type>
+                        <default>right_column</default>
+                        <options>
+                            <option value="right_column">Right Column</option>
+                            <option value="left_column">Left Column</option>
+                            <option value="three_column">Three Column</option>
+                            <option value="default">Single Column</option>
+                        </options>
+                    </selection>            
 				</selections>
 			</group>		
             <group>

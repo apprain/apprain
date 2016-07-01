@@ -1,4 +1,3 @@
-@charset "utf-8";
 <?php
 /**
  * appRain CMF
@@ -13,28 +12,30 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
+
 ?>
-
-/*
-*  File Defination
-*  - Website CSS Section
-*
-*  Template Name : <?php echo "{$this->theme}\n"; ?>
-*  Project Name    : <?php echo "{$this->get_config('site_title')}\n"; ?>
-**/
-
-<?php App::Module('Hook')->getHandler('CSS', 'register_css_code', __FILE__, 'display'); ?>
+<?php if(!empty($srcarr['data'])):?>
+<?php foreach($srcarr['data'] as $row): ?>
+	<div class="well">
+		<p><strong><?php echo($row['_parmalink']);?></strong></p>
+		<p><?php echo($row['_parmadesc']);?></p>
+	</div>
+<?php endforeach;?>
+<?php echo $srcarr['link'] . ' - '  . $srcarr['paging']; ?>
+<?php else:?>
+	<h2><?php echo $this->__("No Search result found");?></h2>
+<?php endif;?>

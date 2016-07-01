@@ -2,7 +2,7 @@
 <database>
 	<version>0.1.2</version>
     <name>Database Expert</name>
-	<uri>http://www.apprain.com</uri>
+	<uri>http://www.apprain.org</uri>
 	<description><![CDATA[
 		Help to manage MySQL Database
 		]]>

@@ -1,0 +1,78 @@
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<SiteSettings>
+    <sections>
+        <base name="homepresssettings">
+            <title>Home Press</title>
+            <admin_tab>component</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="opts">
+                    <title>Settings</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Display Title</title>
+                        <name>homepresssettings_title</name>
+                        <default>Quick Links</default>
+                        <type>inputTag</type>
+                    </selection>                    
+                    <selection>
+                        <title>Display Mode</title>
+                        <name>homepresssettings_displaymode</name>
+                        <type>selectTag</type>
+                        <default>ImageBased</default>
+                        <options>
+                            <option value="ImageBased">Image Based</option>
+                            <option value="TextBased">Text Based</option>
+							<option value="TextWithImage">Text With Image</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Box Per Row</title>
+                        <name>homepresssettings_box_per_row</name>
+                        <default>3</default>
+                        <type>selectTag</type>
+                        <options>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+							<option value="3">Three</option>
+							<option value="4">Four</option>
+                        </options>
+                    </selection>
+                </selections>
+            </group>
+        </groups>
+    </sections>
+</SiteSettings>

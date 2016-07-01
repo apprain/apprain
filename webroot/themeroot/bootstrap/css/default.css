@@ -1,17 +1,21 @@
 @import url(http://fonts.googleapis.com/css?family=Fjalla+One);
 
 body {
-  margin-top:50px;
+  margin-top:0px;
   padding-bottom: 40px;
   color: #000;
-  font-family: Arial;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:12px;
   background: none repeat scroll 0 0 #F5F5F5;  
 }
 
-.navbar-default .navbar-nav > li > a,.navbar-default .navbar-brand,.list-group-item a {
-	font-family: "Fjalla One",Arial;
-	 color: #000;
+.navbar-default .navbar-nav > li > a,.navbar-default .navbar-brand{
+	color: #000;
+	font-family:"Fjalla One","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.list-group-item a {
+	color: #000;
 }
 
 .breadcrumb {
@@ -30,14 +34,16 @@ body {
 	 color: #FFF;
 }
 
-h1,h2,h3, h4,thead th, tfoot th{
-    font-family: "Fjalla One",Arial;
-    font-weight: normal;
-	
+h1,h2,h3{
+    margin-top:30px;
 }
 
-.huge{
-	font-size:80px
+h1,h2,h3, h4,thead th, tfoot th{
+    font-weight: normal;
+	font-family:"Fjalla One","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.navbar {
+    margin-bottom: 0px;
 }
 
 .top-title{
@@ -47,3 +53,20 @@ h1,h2,h3, h4,thead th, tfoot th{
 	margin-bottom:50px;
 	background-color:#428BCA
 }
+
+.header-gap{
+	margin-bottom:20px;
+}
+
+#column-left img,#column-right img,.press-update img{
+	width:100%;
+}
+
+#column-left .thumbnail,#column-right .thumbnail{
+	margin-bottom:0;
+}
+
+.search-box{
+	padding:5px;
+}
+

@@ -1,0 +1,15 @@
+<?php if(!empty($home_synopsis['data'])):?> 
+	<?php foreach( $home_synopsis['data'] as $key => $val):?>
+	<div class="well">
+		<?php if(!empty($val['image'])):?>
+			<a href="<?php echo App::PageManager()->LinkById($val['linkedto']); ?>">
+				<img class="thumbnail"  src="<?php echo App::Config()->baseUrl("/uploads/filemanager/{$val['image']}");?>" />
+			</a>
+		<?php endif;?>				
+		<?php echo($val['shortdesc']);?>
+	</div>	
+	<?php endforeach;?>	
+<?php endif; ?>		
+	
+
+     

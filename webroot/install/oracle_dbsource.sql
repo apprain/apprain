@@ -373,23 +373,23 @@ Insert into {_prefix_}PAGES
 
 <p>CHM is the standard help format for a windows desktop application. The output is a single file with extension *.chm.</p>
 
-<p><a href="http://www.apprain.com/help/chm">Download</a></p>
+<p><a href="http://www.apprain.org/help/chm">Download</a></p>
 
 <p>Adobe Portable Document Format (PDF) is a platform independent file format. This is ideal for Device and Print.</p>
 
-<p><a href="http://www.apprain.com/help/pdf">Download</a></p>
+<p><a href="http://www.apprain.org/help/pdf">Download</a></p>
 
 <p>This type is a cross-platform e-book standard created by the <a href="www.openebook.org">IDPF</a>, which is supported by Apple iBooks, Andriod Tablets/smartphones and many other e-readers on windows, Mac OSX, iOS and Linux.</p>
 
-<p><a href="http://www.apprain.com/help/epub">Download</a></p>
+<p><a href="http://www.apprain.org/help/epub">Download</a></p>
 
 <p>This format is an ideal to illustrate web-based application, to publish documentation to the internet, intranet or CD-ROM</p>
 
-<p><a href="http://www.apprain.com/help/html">Download</a></p>
+<p><a href="http://www.apprain.org/help/html">Download</a></p>
 
 <p>Windows e-books are stand-alone Windows executable with HTML formatted texts and images. This output format is great for CD-ROM presentations.</p>
 
-<p><a href="http://www.apprain.com/help/ebook">Download</a></p>
+<p><a href="http://www.apprain.org/help/ebook">Download</a></p>
 ', 'quicklinks', NULL, 
     'Yes', 'smart_h_link', 'Content', 8)
 -- query
@@ -433,7 +433,7 @@ Insert into {_prefix_}PAGES
     RICHTEXTEDITOR, RENDERTYPE, CONTENTTYPE, SORT_ORDER)
  Values
    (7, 0, 'Terms of Use: appRain Content Management Framework', 'Terms, Condition, Copy Right', NULL, 
-    'terms-of-use', 'Terms of Use', '<p>Copyright (c) appRain CMF (http://www.apprain.com)<br />
+    'terms-of-use', 'Terms of Use', '<p>Copyright (c) appRain CMF (http://www.apprain.org)<br />
 <br />
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ;Software;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br />
 <br />

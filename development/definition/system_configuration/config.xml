@@ -13,19 +13,19 @@
  * obtain it through the world-wide-web, please send an email
  * to license@apprain.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
  *
  * HELP
  *
  * Official Website
- * http://www.apprain.com/
+ * http://www.apprain.org/
  *
  * Download Link
- * http://www.apprain.com/download
+ * http://www.apprain.org/download
  *
  * Documents Link
- * http ://www.apprain.com/docs
+ * http ://www.apprain.org/general-help-center
  */
 -->
 <Configuration>
@@ -33,7 +33,7 @@
         <!--
             CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
         -->
-        <appRainversion>4.0.3</appRainversion>
+        <appRainversion>4.0.4</appRainversion>
         <appRainLicenseKey>0123456789101112</appRainLicenseKey>
     </base>
     <options>
@@ -250,7 +250,7 @@
 
          *	Example
          *	Router		: array('actual' => array('blog','index','by-post'),'virtual' => array('official-blogs'))
-         *	URL			: http://www.apprain.com/official-blog/2009/06-06/182/plug-ins-and-plug-ins
+         *	URL			: http://www.apprain.org/official-blog/2009/06-06/182/plug-ins-and-plug-ins
          *	Method		: function index( $action , $id )
          *	Value set	: 'by-post' -> $action
          *				  '2009'	-> Skip
@@ -263,7 +263,7 @@
          *
          *	Example
          *	Router		: array('actual' => array('member','info','basic'),'virtual' => array('user-profile'))
-         *	URL			: http://www.apprain.com/user-profile/55
+         *	URL			: http://www.apprain.org/user-profile/55
          *	Method		: function info( $action , $id )
          *	Value set	: 'basic' -> $action
          *				  '55'	  -> $id
@@ -281,8 +281,8 @@
 
         <option type="String" name="ONLINE_COMPONENT_REPO_URI">
             <title>Component Repo.</title>
-            <value><![CDATA[http://www.apprain.com/comrss]]></value>
-            <default><![CDATA[http://www.apprain.com/comrss]]></default>
+            <value><![CDATA[http://www.apprain.org/comrss]]></value>
+            <default><![CDATA[http://www.apprain.org/comrss]]></default>
             <flag>1</flag>
             <choice/>
             <editable>0</editable>
