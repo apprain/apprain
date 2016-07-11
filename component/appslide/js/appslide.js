@@ -67,7 +67,6 @@ var appslide =
                 },
     view       :function()
                 {
-<<<<<<< HEAD
                     appslide.movenext(this);
                     
 					
@@ -76,9 +75,6 @@ var appslide =
                 {
                     appslide._obj = obj;
                     appslide._currpos = jQuery(appslide._obj).attr('longdesc')-1;
-=======
-                    appslide._obj = this;
->>>>>>> origin/master
                     if( typeof appslide._data[jQuery(appslide._obj).attr('longdesc')] == 'undefined')
                     {
                         appslide.loading(true);
@@ -109,14 +105,8 @@ var appslide =
                 },
     loop       :function(){
 	                if(appslide._auto){
-<<<<<<< HEAD
                         appslide.movenext(appslide._hkeys[appslide._currpos]);
 						appslide._currpos = (appslide._currpos < appslide._hkeys.length) ? (appslide._currpos+1) : 0;
-=======
-						
-						appslide._currpos = (appslide._currpos <= appslide._hkeys.length) ? (appslide._currpos+1) : 0;
-						jQuery(appslide._hkeys[appslide._currpos]).click();
->>>>>>> origin/master
 					}
 					setTimeout('appslide.loop()', appslide._ttime);
 	            },
