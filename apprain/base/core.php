@@ -230,7 +230,10 @@ class appRain_Base_Core extends appRain_Collection
         ini_set('session.cookie_domain', $config['cookie_domaint']);
 
         # Disabled Magic Quotes
-        @set_magic_quotes_runtime(0);
+        if(get_magic_quotes_runtime())
+        {
+            set_magic_quotes_runtime(false);
+        }
 
         $config["session_id"] = App::Load("Module/Cookie")->read("PHPSESSID");
 
