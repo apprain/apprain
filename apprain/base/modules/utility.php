@@ -253,13 +253,22 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
     }
 
     /*
-     * Retrive a 1D array from a Muli Dymantial array
+     * Retrieve a 1D array from a Muli Dymantial array
      */
     public function get_1d_arr($data = NULL, $key = NULL, $val = NULL)
     {
         $rt_data = array();
-        foreach ($data as $key2 => $val2) {
-            $rt_data[$val2[$key]] = $val2[$val];
+		
+	$arr = explode(',',$val);
+		
+        foreach ($data as $key2 => $val2) {			
+		for($i=0;$i<count($arr);$i++){			
+			
+			if($i) $rt_data[$val2[$key]] .= ' ';
+			else $rt_data[$val2[$key]] = '';
+
+			$rt_data[$val2[$key]] .= isset($val2[$arr[$i]]) ? $val2[$arr[$i]] : '';				
+		}
         }
         return $rt_data;
     }
