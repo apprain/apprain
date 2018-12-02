@@ -89,6 +89,14 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
     {
 		$str_from = isset($str_from) ? $str_from : '*';
         $query = $this->query_builder($condition, $from_clause, $str_from);
+		
+		$limit = $this->getLimit();
+		if(!empty($limit) and count($limit) == 2){
+			$query['SQL'] = "SELECT * FROM 
+				(SELECT ROWNUM rnum, a.* FROM 
+					({$query['SQL']}) a WHERE ROWNUM <=  {$limit[1]}) WHERE rnum > {$limit[0]}";
+		}
+		
         $this->varifysql($query['SQL']);
 		$stid = oci_parse($this->dbconn,$query['SQL']);
 		oci_execute($stid);	
@@ -104,7 +112,15 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
     {	
 		$str_from = isset($str_from) ? $str_from : '*';
         $query = $this->query_builder($condition, $from_clause, $str_from);
-        $query = $this->varifysql($query['SQL']);
+		
+		$limit = $this->getLimit();
+		if(!empty($limit) and count($limit) == 2){
+			$query['SQL'] = "SELECT * FROM 
+				(SELECT ROWNUM rnum, a.* FROM 
+					({$query['SQL']}) a WHERE ROWNUM <=  {$limit[1]}) WHERE rnum > {$limit[0]}";
+		}
+
+        $query = $this->varifysql($query['SQL']); 
 		$stid = oci_parse($this->dbconn, $query);
 		oci_execute($stid);
 		$nrow = oci_fetch_all($stid, $rows, null, null, OCI_FETCHSTATEMENT_BY_ROW+OCI_RETURN_NULLS);
@@ -314,23 +330,94 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 		}
 		
 	}
-	/*
+	
+	/* *******************************************************************************************
 	// Save data in a table
-	*/	
-	public function save($_dbTable=null,$data = null, $_condition = null)
-    {		
+	*/
+	
+	public function _fieldDef($tablename=null){
+	
+		$tableInfo =  $this->describe($tablename,'COLUMN_NAME as fields,data_type as types','COLUMN_WISE');	
+		
+		$types = $tableInfo['types'];
+		$fieldDef = array();
+		foreach($tableInfo['fields'] as $key=>$name){
+			$fieldDef[$name] = $types[$key];
+		}
+		return $fieldDef;		
+	}
+	
+	public function doUpdate($_dbTable=null,$data = null, $_condition = null){
+			
+		$_sthSQLBody = NULL;
+        $_sthBindValues = NULL;
+		
+		$fieldDef= $this->_fieldDef($_dbTable);
+		
+		foreach ($data as $field => $val) {
+			if(in_array(strtoupper($field),array_keys($fieldDef))){				
+				$_sthSQLBody[] = $field;				
+				$type = $fieldDef[strtoupper($field)];				
+				if($type == 'DATE'){							
+					$val = date('Y-m-d H:i:s',strtotime($val));
+				}
+				$_sthBindValues[] = $val;	
+			}
+		}
+
+		$_condition = isset($_condition) ? $_condition : "";		
+
+		$sql = "UPDATE {$_dbTable}  SET ";
+		foreach($_sthSQLBody as $key=>$fieldname){
+			if($key){
+				$sql .= ',';
+			}
+			$type = $fieldDef[strtoupper($fieldname)];
+			if($type == 'DATE'){
+				$sql .= "{$fieldname}=" . $this->DoDefaultDateFormat($_sthBindValues[$key],$fieldname); //to_date(:{$fieldname},'yyyy-mm-dd HH24:MI:SS')";
+			}
+			else{
+				$sql .= "{$fieldname}=:{$fieldname}";
+			}
+		}
+			
+		$id = isset($data["id"]) ? $data["id"] : "";
+		
+		if(!empty($id)){
+			$sql .= " WHERE id = :id";
+			if(!empty($_condition)){
+				$sql .= " WHERE id = :id and {$_condition}";
+			}
+			$_sthBindValues[] = $id;
+		}
+		elseif(!empty($_condition)){
+			$sql .= " WHERE {$_condition}";
+		}	
+		$_OciObj = oci_parse($this->dbconn,$sql);
+		foreach($_sthSQLBody as $key=>$val){			
+			oci_bind_by_name($_OciObj, ":{$val}", $_sthBindValues[$key]);
+		}
+
+		$result = oci_execute($_OciObj);
+		if(!$result){
+			pr(oci_error($_OciObj));
+		}
+
+		return $id;
+	}
+	
+	public function doInsert($_dbTable=null,$data = null, $_condition = null){
+		
 		$_sthSQLBody = NULL;
 		$_sthSQLBodyVal = NULL;
         $_sthBindValues = NULL;
-		$id = null;
-		$this->sql = '';
-		$tableInfo = $this->describe($_dbTable,'COLUMN_NAME as fields','COLUMN_WISE');
-		$data['errorInfo'] = 'Invalid SQL';
 
-		$fields = $tableInfo['fields'];
+		$fieldDef= $this->_fieldDef($_dbTable);
+				
 		foreach ($data as $field => $val) {
-			if(in_array(strtoupper($field),$fields)){
-				if($field =='id' && empty($val)){					
+			if(in_array(strtoupper($field),array_keys($fieldDef))){	
+				
+				if($field =='id' && empty($val)){
 					$stid = oci_parse($this->dbconn,"select {$_dbTable}_SEQ.NEXTVAL from dual");				
 					oci_execute($stid);
 					$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
@@ -338,58 +425,71 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 					$val = $id;
 				}
 				$_sthSQLBody[] = $field;
-				$_sthSQLBodyVal[] = ":$field";
+				
+				$type = $fieldDef[strtoupper($field)];
+				
+				if($type == 'DATE'){
+					
+					$val = App::Helper('Date')->toDate($val,null,$val);
+					$_sthSQLBodyVal[] =  $this->DoDefaultDateFormat($val,$field);//    "to_date(:{$field},'yyyy-mm-dd HH24:MI:SS')";										
+					
+				}
+				else{
+					$_sthSQLBodyVal[] = ":{$field}";
+				}
+				
 				$_sthBindValues[] = $val;	
 			}
 		}
 
-		$_condition = isset($_condition) ? $_condition : "";		
+		$sql  = "INSERT INTO {$_dbTable} (";
+		$sql  .= implode(',',$_sthSQLBody);
+		$sql  .= ') VALUES (';
+		$sql  .= implode(',',$_sthSQLBodyVal);
+		$sql  .= ')';
 
-		 if (( isset($data["id"]) && !empty($data["id"])) or ($_condition != "")) {
-			$this->sql = "UPDATE {$_dbTable}  SET ";
-			foreach($_sthSQLBody as $key=>$fieldname){
-				if($key){
-					$this->sql .= ',';
-				}
-				$this->sql .= "{$fieldname}=:{$fieldname}";
-			}
-			
-			$id = isset($data["id"]) ? $data["id"] : "";
-			
-			if(!empty($id)){
-				$this->sql .= " WHERE id = :id {$_condition}";
-				$_sthBindValues[] = $id;
-			}
-			elseif(!empty($_condition)){
-				$this->sql .= " WHERE {$_condition}";
-			}		
-			$this->sql = "{$this->sql}";
-		}
-		else {
-			$this->sql  = "INSERT INTO {$_dbTable} (";
-			$this->sql  .= implode(',',$_sthSQLBody);
-			$this->sql  .= ') VALUES (';
-			$this->sql  .= implode(',',$_sthSQLBodyVal);
-			$this->sql  .= ')';
-		}
+		$_OciObj = oci_parse($this->dbconn,$sql);
 		
-		$_OciObj = oci_parse($this->dbconn,$this->sql);
-		
-		foreach($_sthSQLBody as $key=>$val){
+		foreach($_sthSQLBody as $key=>$val){			
 			oci_bind_by_name($_OciObj, ":{$val}", $_sthBindValues[$key]);
 		}
-		oci_execute($_OciObj);
+
+		$result = oci_execute($_OciObj);
+		if(!$result){
+			pr(oci_error($_OciObj));
+		}
+		
 		return $id;
+		
 	}
+	
+	
+	public function save($_dbTable=null,$data = null, $_condition = null)
+    {	
+		if ((isset($data["id"]) && !empty($data["id"])) or ($_condition != "")) {
+			return $this->doUpdate($_dbTable,$data, $_condition);
+		}
+		else{
+			return $this->doInsert($_dbTable,$data, $_condition);
+		}
+	}	
+	// SAVE END *********************************************************************************************
+	
+	
+	
+	
 	/**
     // Fetch rows
 	*/
     function fetch_rows($query)
     {	
         $query = $this->varifysql($query);
+		
 		$stid = oci_parse($this->dbconn, $query);
 		oci_execute($stid);
+		
 		$nrow = oci_fetch_all($stid, $rows, null, null, OCI_FETCHSTATEMENT_BY_ROW+OCI_RETURN_NULLS);
+		
 		return $this->makemelower($rows);		
     }
 
@@ -478,9 +578,9 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 				adminref NUMBER(11) NOT NULL,
 				entrydate     VARCHAR2(50 byte),
 				lastmodified  VARCHAR2(50 byte),
-				CONSTRAINT customers_pk PRIMARY KEY (id)
+				CONSTRAINT " . $_dbTable . "_id_pk PRIMARY KEY (id)
 			)";
-			
+
 			$stid = oci_parse($this->dbconn, $sql);
 			$return = oci_execute($stid);	
 		}
@@ -531,7 +631,12 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 	 // Check the requirement of update
 	 */
 	private function shouldIUpdate($db_attributes=array(),$db_attributes_old=array()){
-		$ora_field = $this->typestandardised($db_attributes['type']);
+	
+		return false;
+		
+		// Featrued disabled for oracle
+		
+		/*$ora_field = $this->typestandardised($db_attributes['type']);
 		
 		if($db_attributes['type'] == 'text'){
 			$db_attributes['length'] = self::_MAX_TEXT_LENGTH;
@@ -551,7 +656,7 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 			return true;
 		}
 		
-		return false;
+		return false;*/
 	}	
     /*
 	 // Add new field
@@ -616,5 +721,68 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 		
 		$stid = oci_parse($this->dbconn, $sql);
 		oci_execute($stid);	
+	}
+
+	public function dateReFormate($formate=null){
+
+		$patterns[0] = '/%Y/'; $replacements[10] = 'YYYY';
+		$patterns[1] = '/%y/'; $replacements[9] = 'YY'; 	   
+		$patterns[2] = '/%b/'; $replacements[8] = 'MON';
+		$patterns[3] = '/%M/'; $replacements[7] = 'MONTH'; 	
+		$patterns[4] = '/%m/'; $replacements[6] = 'MM'; 	   
+		$patterns[5] = '/%a/'; $replacements[5] = 'DY'; 	   
+		$patterns[6] = '/%d/'; $replacements[4] = 'DD'; 	   
+		$patterns[7] = '/%H/'; $replacements[3] = 'HH24';	
+		$patterns[8] = '/%h/'; $replacements[2] = 'HH';     
+		$patterns[9] = '/%i/'; $replacements[1] = 'MI'; 	   
+		$patterns[10] = '/%s/';$replacements[0] = 'SS'; 	   
+
+		return preg_replace($patterns, $replacements, $formate);
+	
+	}
+
+    public function toDate($date=null,$formate='YYYY-MM-DD',$value=null,$other=false){	
+	
+		if(!empty($value)){			
+			return $this->DoDefaultDateFormat($date,$value);		
+		}
+		$formate = $this->dateReFormate($formate);
+		
+		$isField = isset($other['isfield']) ? $other['isfield'] : false;
+		$fx = isset($other['fx']) ? $other['fx'] : 'TO_DATE';
+		
+		if($isField)
+			return "{$fx}({$date},'{$formate}')";	
+		else
+			return "{$fx}('{$date}','{$formate}')";	
 	}	
+	
+	
+	public function DoDefaultDateFormat($date=null,$field=null){
+	
+		if(strlen($date) == 10){
+			return $this->DefaultDateFormat($field);
+		}
+		else{
+			return $this->DefaultDateFormat($field,'long');
+		}
+		
+	}
+	
+	public function DefaultDateFormat($field=null,$select='short'){
+	
+		if($select == 'short'){
+			return "TO_DATE(:{$field},'YYYY-MM-DD')";
+		}
+		else{
+			return "TO_DATE(:{$field},'yyyy-mm-dd HH24:MI:SS')";
+		}
+		
+	}
+		
+	
+	public function Concat($values=array()){
+		return implode(' || ',$values);
+	}
+
 }

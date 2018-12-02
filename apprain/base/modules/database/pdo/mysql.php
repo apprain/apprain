@@ -60,6 +60,12 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
     {		
 		$str_from = isset($str_from) ? $str_from : '*';
         $query = $this->query_builder($condition, $from_clause, $str_from);
+		
+		$limit = $this->getLimit();
+		if(!empty($limit) and count($limit) == 2){
+			$query['SQL'] = $query['SQL'] . " LIMIT {$limit[0]},{$limit[1]}";
+		}
+		
         $query = $this->varifysql($query['SQL']);
 		
 		$sth = $this->dbconn->prepare($query);
@@ -69,10 +75,16 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	/*
 	// Fx to find all row
 	*/	
-	public function findAll($condition = null, $from_clause = null, $str_from = null)
+	public function findAll($condition = null, $from_clause = null, $str_from = null,$limit=null)
     {	
 		$str_from = isset($str_from) ? $str_from : '*';
         $query = $this->query_builder($condition, $from_clause, $str_from);
+		
+		$limit = $this->getLimit();
+		if(!empty($limit) and count($limit) == 2){
+			$query['SQL'] = $query['SQL'] . " LIMIT {$limit[0]},{$limit[1]}";
+		}
+		
         $query = $this->varifysql($query['SQL']);
 		
 		$sth = $this->dbconn->prepare($query);
@@ -159,7 +171,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
         /**
          * Bulid  link
          */
-        $link = ($page_no != "") ? "Showing Results " . ($startfrom + 1) . "-$endto of $total" : "";
+        $link = ($page_no != "") ? $this->__("Showing Results") . ' ' . ($startfrom + 1) . "-$endto " . $this->__('of') .  " $total" : "";
 
         /**
          * Build Pagination string
@@ -395,7 +407,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 			$sql = "CREATE TABLE `{$_dbTable}` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `adminref` int(11) NOT NULL,
-			  `entrydate` DATETIME NOT NULL DEFAULT '" . date('Y-m-d H:i:s') . "', 
+			  `entrydate` DATETIME NOT NULL DEFAULT '" . App::Helper('Date')->getdate('Y-m-d H:i:s') . "', 
 			  `lastmodified` DATETIME NOT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
@@ -493,4 +505,68 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 		$sth = $this->dbconn->prepare($sql);		
 		return $sth->execute();	
 	}	
+	
+	public function dateReFormate($formate=null){
+
+		$replacements[0] = '%Y'; $patterns[10] = '/YYYY/';
+		$replacements[1] = '%y'; $patterns[9] = '/YY/'; 	   
+		$replacements[2] = '%b'; $patterns[8] = '/MON/';
+		$replacements[3] = '%M'; $patterns[7] = '/MONTH/'; 	
+		$replacements[4] = '%m'; $patterns[6] = '/MM/'; 	   
+		$replacements[5] = '%a'; $patterns[5] = '/DY/'; 	   
+		$replacements[6] = '%d'; $patterns[4] = '/DD/'; 	   
+		$replacements[7] = '%H'; $patterns[3] = '/HH24/';	
+		$replacements[8] = '%h'; $patterns[2] = '/HH/';     
+		$replacements[9] = '%i'; $patterns[1] = '/MI/'; 	   
+		$replacements[10] = '%s';$patterns[0] = '/SS/'; 	   
+
+		return preg_replace($patterns, $replacements, $formate);
+
+	}
+
+	
+	 public function toDate($date=null,$formate='YYYY-MM-DD',$value=null,$other=false){	
+
+		if(!empty($value)){			
+			return $this->DoDefaultDateFormat($date,$value);		
+		}
+		
+		$formate = $this->dateReFormate($formate);
+		$isField = isset($other['isfield']) ? $other['isfield'] : false;
+		$fx = 'STR_TO_DATE';
+		
+		if($isField)
+			return "{$fx}({$date},'{$formate}')";	
+		else
+			return "{$fx}('{$date}','{$formate}')";	
+			
+		
+		return "TO_DATE('{$value}',{$formate})";	
+	}	
+	
+	public function DoDefaultDateFormat($date=null,$field=null){
+	
+		if(strlen($date) == 10){
+			return $this->DefaultDateFormat($field);
+		}
+		else{
+			return $this->DefaultDateFormat($field,'long');
+		}
+		
+	}
+	
+	public function DefaultDateFormat($field=null,$select='short'){
+	
+		if($select == 'short'){
+			return "STR_TO_DATE(:{$field},'%Y-%m-%d')";
+		}
+		else{
+			return "STR_TO_DATE(:{$field},'%Y-%m-%d %H:%i:%s')";
+		}
+	}
+
+	public function Concat($values=array()){
+		return "CONCAT(" . implode(',',$values) . ")";
+	}
+	
 }
