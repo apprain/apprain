@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,37 +27,38 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
+class appRain_Base_Modules_ACL extends appRain_Base_Objects {
 
-class appRain_Base_Modules_ACL extends appRain_Base_Objects
-{
     const SUPER = 'super';
 
-    public function register($identity = null, $options = array())
-    {
+    public function register($identity = null, $options = array()) {
         App::Module('Hook')->setHookName('ACL')
-            ->setAction("register_detail_acl")
-            ->Register(get_class($this), "register_detail_acl_definition", array('identity' => $identity, 'options' => $options));
+                ->setAction("register_detail_acl")
+                ->Register(get_class($this), "register_detail_acl_definition", array('identity' => $identity, 'options' => $options));
     }
 
-    public function hasAccess($name = null, $expValue = null)
-    {
+    public function hasAccess($name = null, $expValue = null) {
         $adminInfo = App::AdminManager()->thisAdminInfo();
 
-        if (strtolower($adminInfo['type']) == self::SUPER) return true;
+        if (strtolower($adminInfo['type']) == self::SUPER)
+            return true;
 
         $aclobject = unserialize($adminInfo['aclobject']);
 
-        if (!isset($aclobject[$this->getGroupName()][$name])) return false;
+        if (!isset($aclobject[$this->getGroupName()][$name]))
+            return false;
 
         $default = $aclobject[$this->getGroupName()][$name];
 
-        if (is_array($default) && in_array($expValue, $default)) return true;
-        else if ((string)$expValue == $default) return true;
-        else return false;
+        if (is_array($default) && in_array($expValue, $default))
+            return true;
+        else if ((string) $expValue == $default)
+            return true;
+        else
+            return false;
     }
 
-    public function readAccess()
-    {
+    public function readAccess() {
         $adminInfo = App::adminManager()->thisAdminInfo();
 
         if (!isset($adminInfo['type']) || strtolower($adminInfo['type']) == self::SUPER) {
@@ -69,8 +71,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return array();
     }
 
-    public function readNAVAccess($flag = 'Top')
-    {
+    public function readNAVAccess($flag = 'Top') {
 
         $adminInfo = App::adminManager()->thisAdminInfo();
 
@@ -78,8 +79,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
             $adminDefinition = App::__def()->getInterfaceBuilderDefinition();
             if (strtolower($flag) == 'top') {
                 return array_keys($adminDefinition);
-            }
-            else {
+            } else {
                 return $adminDefinition;
             }
         }
@@ -88,8 +88,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
             $acl = unserialize($adminInfo['acl']);
             if (strtolower($flag) == 'top') {
                 return array_keys($acl);
-            }
-            else {
+            } else {
                 return unserialize($adminInfo['acl']);
             }
         }
@@ -97,8 +96,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return array();
     }
 
-    public function accessLinksOnly($accessArr = null)
-    {
+    public function accessLinksOnly($accessArr = null) {
         $tmp = array();
         if (!empty($accessArr)) {
             if (isset($accessArr['child'])) {
@@ -107,8 +105,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
                         $tmp[] = $item['link'];
                     }
                 }
-            }
-            else {
+            } else {
                 foreach ($accessArr as $row) {
                     if (is_array($row)) {
                         $tmp = array_merge($tmp, $row);
@@ -119,8 +116,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return $tmp;
     }
 
-    public function AdminNavList($id = null)
-    {
+    public function AdminNavList($id = null) {
 
         $adminDefinition = $this->getInterfaceBuilderDefinition();
 
@@ -135,10 +131,8 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
             if (isset($adminInfoACL[$name])) {
                 $accessLinks = $this->accessLinksOnly($adminInfoACL[$name]);
                 $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" checked="checked" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()"  />' . $row['parent']['title'] . '</label>');
-            }
-            else {
+            } else {
                 $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()" />' . $row['parent']['title'] . '</label>');
-
             }
             $str .= "<div id=\"inner_{$name}\" style=\"display:none\">";
             $str .= '<ul style="margin-left:15px">';
@@ -150,16 +144,14 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
                     if (in_array($item['link'], $accessLinks)) {
                         $hasOne = true;
                         $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  checked=\"checked\" name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />{$item['title']}";
-                    }
-                    else {
+                    } else {
                         $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />{$item['title']}";
                     }
                 }
                 $childstr .= '</ul>';
                 if ($hasOne) {
                     $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" checked=\"checked\"  name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />{$child['title']}";
-                }
-                else {
+                } else {
                     $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />{$child['title']}";
                 }
                 $str .= $childstr;
@@ -191,8 +183,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return $str;
     }
 
-    public function register_detail_acl_definition($user, $params)
-    {
+    public function register_detail_acl_definition($user, $params) {
         $name = key($params['identity']);
         $title = $params['identity'][$name];
         if (isset($user['aclobject'])) {
@@ -206,8 +197,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
             $inputtype = $row['inputtype'];
             if (strtolower($inputtype) == 'checkboxtag') {
                 $str .= App::Helper('Html')->getTag('h5', $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}][]", $row['options'], $defaultvalue);
-            }
-            else {
+            } else {
                 $str .= App::Helper('Html')->getTag('h5', $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $row['options'], $defaultvalue);
             }
         }
@@ -216,9 +206,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return $str;
     }
 
-
-    public function getInterfaceBuilderDefinition()
-    {
+    public function getInterfaceBuilderDefinition() {
         $access = $this->readaccess();
 
         $accessarray = array();
@@ -234,8 +222,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
                     }
                     $accessarray[$name] = $row;
                 }
-            }
-            else {
+            } else {
                 if (in_array($key, $row['parent']['acl'])) {
                     $accessarray[$name] = $row;
                 }
@@ -244,8 +231,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
         return $accessarray;
     }
 
-    public function getDashboardNAVS()
-    {
+    public function getDashboardNAVS() {
 
         $adminInfo = App::adminManager()->thisAdminInfo();
         $admin_nav_def = App::Module('ACL')->getInterfaceBuilderDefinition();
@@ -274,96 +260,95 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects
 
         return $DashBoardNAVs;
     }
-	
-	public function verifyInformationSetModifyAccessByAction($type=null,$action=null,$redirect=true){
-		$definition = app::__def()->getInformationSetDefinition($type);
-		switch(strtolower($action)){
-			case 'add' :
-				if(isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no'){
-					App::Module('Notification')->Push("Entry Add is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/information/manage/{$type}");
-					}
-					
-				}
-				break;			
-			case 'update' :
-				if(isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no'){
-					App::Module('Notification')->Push("Entry edit is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/information/manage/{$type}");
-					}
-					
-				}
-				break;	
-			case 'delete' : 
-				if(isset($definition['base']['parameters']['delete']) && strtolower($definition['base']['parameters']['delete']) == 'no'){
-					App::Module('Notification')->Push("Entry edit is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/information/manage/{$type}");
-					}
-				}
-				break;					
-			case 'view' :
-				if(isset($definition['base']['parameters']['view']) && strtolower($definition['base']['parameters']['view']) == 'no'){
-					App::Module('Notification')->Push("Entry view is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/information/manage/{$type}");
-					}
-				}
-				break;
-			default:
-				if(isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no'){
-					App::Module('Notification')->Push("User access restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect('/admin/introduction');
-					}
-				}
-				break;
-		}
-		
-		return $definition;
-	}
-	
-	public function verifyCategorySetModifyAccessByAction($type=null,$action=null,$redirect=true){
-	
-		$definition = app::__def()->getCategorySetDefinition($type);
-		
-		switch(strtolower($action)){
-			case 'add' :
-				if(isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no'){
-					App::Module('Notification')->Push("Entry Add is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/category/manage/{$type}");
-					}
-				}
-				break;			
-			case 'update' :
-				if(isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no'){
-					App::Module('Notification')->Push("Entry edit is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/category/manage/{$type}");
-					}
-				}
-				break;			
-			case 'view' :
-				if(isset($definition['base']['parameters']['view']) && sstrtolower($definition['base']['parameters']['view']) == 'no'){
-					App::Module('Notification')->Push("Entry view is restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect("/category/manage/{$type}");
-					}
-				}
-				break;
-			default:
-				if(isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no'){
-					App::Module('Notification')->Push("User access restricted.","Warning");
-					if($redirect){
-						App::Config()->redirect('/admin/introduction');
-					}
-				}
-				break;
-		}
-		
-		return $definition;
-	}
+
+    public function verifyInformationSetModifyAccessByAction($type = null, $action = null, $redirect = true) {
+        $definition = app::__def()->getInformationSetDefinition($type);
+        switch (strtolower($action)) {
+            case 'add' :
+                if (isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no') {
+                    App::Module('Notification')->Push("Entry Add is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/information/manage/{$type}");
+                    }
+                }
+                break;
+            case 'update' :
+                if (isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no') {
+                    App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/information/manage/{$type}");
+                    }
+                }
+                break;
+            case 'delete' :
+                if (isset($definition['base']['parameters']['delete']) && strtolower($definition['base']['parameters']['delete']) == 'no') {
+                    App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/information/manage/{$type}");
+                    }
+                }
+                break;
+            case 'view' :
+                if (isset($definition['base']['parameters']['view']) && strtolower($definition['base']['parameters']['view']) == 'no') {
+                    App::Module('Notification')->Push("Entry view is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/information/manage/{$type}");
+                    }
+                }
+                break;
+            default:
+                if (isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no') {
+                    App::Module('Notification')->Push("User access restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect('/admin/introduction');
+                    }
+                }
+                break;
+        }
+
+        return $definition;
+    }
+
+    public function verifyCategorySetModifyAccessByAction($type = null, $action = null, $redirect = true) {
+
+        $definition = app::__def()->getCategorySetDefinition($type);
+
+        switch (strtolower($action)) {
+            case 'add' :
+                if (isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no') {
+                    App::Module('Notification')->Push("Entry Add is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/category/manage/{$type}");
+                    }
+                }
+                break;
+            case 'update' :
+                if (isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no') {
+                    App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/category/manage/{$type}");
+                    }
+                }
+                break;
+            case 'view' :
+                if (isset($definition['base']['parameters']['view']) && sstrtolower($definition['base']['parameters']['view']) == 'no') {
+                    App::Module('Notification')->Push("Entry view is restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect("/category/manage/{$type}");
+                    }
+                }
+                break;
+            default:
+                if (isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no') {
+                    App::Module('Notification')->Push("User access restricted.", "Warning");
+                    if ($redirect) {
+                        App::Config()->redirect('/admin/introduction');
+                    }
+                }
+                break;
+        }
+
+        return $definition;
+    }
+
 }

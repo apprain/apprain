@@ -67,6 +67,20 @@ class appRain_Base_Modules_Toolbar extends appRain_Base_Objects
             )
         );
     }
+	
+	private function btnsubmit($args = null)
+    {
+        return App::Helper('Html')
+            ->submitTag(
+            'Button[button_submit]',
+            $this->__(
+                (isset($args['name']) ? $args['name'] : 'Submit')
+            ),
+            Array(
+                'title' => $this->__('Submit Entry')
+            )
+        );
+    }
 
     private function btnsaveandupdate($args = null)
     {
@@ -74,10 +88,24 @@ class appRain_Base_Modules_Toolbar extends appRain_Base_Objects
             ->submitTag(
             'Button[button_save_and_update]',
             $this->__(
-                (isset($args['name']) ? $args['name'] : 'Save and Continue')
+                (isset($args['name']) ? $args['name'] : 'Save and Update')
             ),
             Array(
-                'title' => $this->__('Save and Continue')
+                'title' => $this->__('Save and Update')
+            )
+        );
+    }
+	
+	private function btnsaveandadd($args = null)
+    {
+        return App::Helper('Html')
+            ->submitTag(
+            'Button[button_save_and_add]',
+            $this->__(
+                (isset($args['name']) ? $args['name'] : 'Save and New')
+            ),
+            Array(
+                'title' => $this->__('Save and New')
             )
         );
     }
@@ -246,7 +274,7 @@ class appRain_Base_Modules_Toolbar extends appRain_Base_Objects
                 break;
             default :
                 if ($this->getFormJustified()) {
-                    $html = '<div class="buttons">';
+                    $html = '<div class="buttons"  style="margin-left:22%">';
                 }
                 else {
                     $html = '<div class="buttons" style="margin-left:0px">';

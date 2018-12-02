@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,9 +27,8 @@
  * Documents Link
  * http ://www.apprain.org/documents
  */
+class appRain_Base_Modules_component extends appRain_Base_Objects {
 
-class appRain_Base_Modules_component extends appRain_Base_Objects
-{
     // Singleton counter
     private $totalCount = 0;
     private $activeCount = 0;
@@ -38,8 +38,7 @@ class appRain_Base_Modules_component extends appRain_Base_Objects
     const INACTIVE = 'Inactive';
     const ALL = 'All';
 
-    public function count($status = self::ALL)
-    {
+    public function count($status = self::ALL) {
         $list = app::__def()->getComponentList();
 
         if (!empty($list) && !$this->totalCount) {
@@ -47,8 +46,7 @@ class appRain_Base_Modules_component extends appRain_Base_Objects
                 $this->totalCount++;
                 if (strtolower($component['status']) == strtolower(self::INACTIVE)) {
                     $this->inactiveCount++;
-                }
-                else {
+                } else {
                     $this->activeCount++;
                 }
             }
@@ -56,17 +54,16 @@ class appRain_Base_Modules_component extends appRain_Base_Objects
 
         if (strtolower($status) == strtolower(self::INACTIVE)) {
             return $this->inactiveCount;
-        }
-        else if (strtolower($status) == strtolower(self::ACTIVE)) {
+        } else if (strtolower($status) == strtolower(self::ACTIVE)) {
             return $this->activeCount;
-        }
-        else {
+        } else {
             return $this->totalCount;
         }
     }
-	
-	public function exists($name=null){
-		$list = app::__def()->getComponentList();
-		return isset($list[$name]);
-	}
+
+    public function exists($name = null) {
+        $list = app::__def()->getComponentList();
+        return isset($list[$name]);
+    }
+
 }

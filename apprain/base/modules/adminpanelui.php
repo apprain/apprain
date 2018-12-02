@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,11 +27,9 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
+class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects {
 
-class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
-{
-    public function loadAdminLogin()
-    {
+    public function loadAdminLogin() {
         $lastLoginData = App::Model('Admin')->findAll('1=1 Order By lastlogin DESC');
 
         $html = "";
@@ -48,8 +47,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         return $html;
     }
 
-    public function senitizeLink($val = '')
-    {
+    public function senitizeLink($val = '') {
         $val = str_replace('{current_theme}', App::Config()->setting('theme'), $val);
         if (strstr($val, '{[ENCODE[')) {
             $link = "";
@@ -65,21 +63,18 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         return $val;
     }
 
-    public function pageCount($type = 'Content')
-    {
+    public function pageCount($type = 'Content') {
         $result = App::Model('Page')->find("contenttype='{$type}'", null, 'count(*) as cnt');
         return $result['cnt'];
     }
 
-    public function adminName($id = null)
-    {	
-        if (isset($id)){
-			$Info = App::Model('Admin')->findById($id);
-		}
-		else {
-			$Info = App::AdminManager()->thisAdminInfo();
-		}
-		
+    public function adminName($id = null) {
+        if (isset($id)) {
+            $Info = App::Model('Admin')->findById($id);
+        } else {
+            $Info = App::AdminManager()->thisAdminInfo();
+        }
+
         $name = "";
         $name .= isset($Info['f_name']) ? "{$Info['f_name']}" : "";
         $name .= isset($Info['l_name']) ? " {$Info['l_name']}" : "";
@@ -87,8 +82,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         return $name;
     }
 
-    public function cacheChart()
-    {
+    public function cacheChart() {
         $spaceEstimate = App::Load("Module/Developer")->cacheSpaceEstimate();
         $DataGrid = App::Module('DataGrid');
         $size = 0;
@@ -98,57 +92,52 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         }
 
         $DataGrid->setHeader(array('Cache Type', 'Size'))
-            ->setFooter("Total memory size: {$size} kb")
-            ->Render();
-
+                ->setFooter("Total memory size: {$size} kb")
+                ->Render();
     }
 
-    public function autoCompleteInfo($JSReferance = "")
-    {
+    public function autoCompleteInfo($JSReferance = "") {
         $adminInfo = App::Model('Admin')->findAll();
         $data = Array();
 
-        if (!empty($adminInfo['data'])){
+        if (!empty($adminInfo['data'])) {
             foreach ($adminInfo['data'] as $val) {
                 $data[] = $val['email'];
             }
-		}
-        
+        }
+
         return App::Helper('JavaScript')->autoComplete($JSReferance, $data);
     }
 
-    
-
-    public function staticPageLeftLinks($action, $type='staticpage', $id = null)
-    {
+    public function staticPageLeftLinks($action, $type = 'staticpage', $id = null) {
         $page_arr = App::Pagemanager()->getData(null, null, "contenttype='Content'");
         $pageData = App::Pagemanager()->pages($id);
         $pageClass = 'open';
         $snipClass = 'open';
         $pageSelect = '';
         $snipSelect = '';
-        		
-        if ($type=='staticpage') {
+
+        if ($type == 'staticpage') {
             $snipClass = 'closed';
             $pageSelect = 'selected';
-        }
-        else {
+        } else {
             $pageClass = 'closed';
             $snipSelect = 'selected';
         }
 
         $chileClass = 'expended';
 
-        $html =
-            '<h6 id="h-menu-pages" class="' . $pageSelect . '"><a href="#pages"><span>Pages (' . count($page_arr['data']) . ')</span></a></h6>
+        $html = '<h6 id="h-menu-pages" class="' . $pageSelect . '"><a href="#pages"><span>Pages (' . count($page_arr['data']) . ')</span></a></h6>
                     <ul id="menu-pages" class="' . $pageClass . '">
                         <li class="' . (($action == 'create') ? 'selected' : '') . '"><a href="' . App::Config()->baseUrl('/page/manage/create') . '">New Page</a></li>
                         <li class="collapsible last">
                             <a href="#" class="collapsible minus">Manage Pages</a>
                             <ul class="' . $chileClass . '">';
         foreach ($page_arr['data'] as $val) {
-            if ($id == $val['id']) $html .= '<li class="selected"><a href="' . App::Config()->baseUrl("/page/manage/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
-            else $html .= '<li><a href="' . App::Config()->baseUrl("/page/manage/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
+            if ($id == $val['id'])
+                $html .= '<li class="selected"><a href="' . App::Config()->baseUrl("/page/manage/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
+            else
+                $html .= '<li><a href="' . App::Config()->baseUrl("/page/manage/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
         }
         $html .= '</ul>
                         </li>
@@ -164,8 +153,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         foreach ($page_arr['data'] as $key => $val) {
             if ($id == $val['id']) {
                 $html .= '<li class="selected"><a href="' . App::Config()->baseUrl("/page/manage-snip/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
-            }
-            else {
+            } else {
                 $html .= '<li><a href="' . App::Config()->baseUrl("/page/manage-snip/update/{$val['id']}") . '">' . $val['name'] . '</a></li>';
             }
         }
@@ -176,18 +164,16 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         return $html;
     }
 
-    public function pageCodesList()
-    {
+    public function pageCodesList() {
         $page_arr = App::Pagemanager()->getData();
-		
+
         $snipCodeList = "";
         $pageCodeList = "";
 
         foreach ($page_arr['data'] as $val) {
             if ($val['contenttype'] == appRain_Base_Modules_Page::CONTENT) {
                 $pageCodeList .= "{{name=UI type=staticpage name={$val['name']} autoformat=off}}<br />";
-            }
-            else {
+            } else {
                 $snipCodeList .= "{{name=UI type=staticpage name={$val['name']} autoformat=off}}<br />";
             }
         }
@@ -200,67 +186,73 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
                 </div>';
     }
 
-    public function dashBoardLink()
-    {
+    public function dashBoardLink() {
         $__AppConfig = App::Helper('Config');
         $params = $__AppConfig->get('params');
 
         if ((isset($params['controller']) && $params['controller'] == 'admin') &&
-            (isset($params['action']) && $params['action'] == 'introduction')
+                (isset($params['action']) && $params['action'] == 'introduction')
         ) {
             return $__AppConfig->baseUrl('/admin/account');
-        }
-        else {
+        } else {
             return $__AppConfig->baseUrl('/admin/introduction');
         }
-
     }
 
-    public function currentDate()
-    {
-        return '<span style="color:#ffff99">' . date('l, jS F Y h:i:s A', App::Helper('Date')->getTime()) . '</span>';
+    public function currentNavTitle($tabname = null) {
+        $NAVList = App::Module('ACL')->getInterfaceBuilderDefinition();
+
+        $title = '';
+        if (isset($NAVList[$tabname])) {
+            $title .= $NAVList[$tabname]['parent']['title'];
+            $title .= app::__def()->SysConfig('ADMIN_PAGE_TITLE_SAPARATOR');
+        }
+
+        $title .= ucfirst(
+                App::Load("Helper/Config")
+                        ->Load('params')
+                        ->get('action')
+        );
+
+        return $title;
     }
 
-    public function themeInfo($currentTheme = "")
-    {
+    public function currentDate() {
+        return '<span style="color:#ffff99">' . App::Helper('Date')->getdate('l, jS F Y h:i:s A', App::Helper('Date')->getTime()) . '</span>';
+    }
+
+    public function themeInfo($currentTheme = "") {
         $theme_info = App::Load('Helper/Utility')->getDirLising(VIEW_PATH);
         $info = App::__Def()->getThemeInfo($currentTheme);
-		if(!empty( $info)){
-			return $this->__("Current Theme <strong>") . "{$info['name']}</strong>";
-		}
-		else{
-			return 'None';
-		}
+        if (!empty($info)) {
+            return $this->__("Current Theme <strong>") . "{$info['name']}</strong>";
+        } else {
+            return 'None';
+        }
     }
 
-    public function LPCollapseLink()
-    {
+    public function LPCollapseLink() {
         $collapseAdminLeftPan = App::Session()->Read('collapseAdminLeftPan');
         $str = ($collapseAdminLeftPan) ? "&#187;" : "&laquo;";
         return App::Helper('Html')
-            ->LinkTag(
-            'javascript:void(0)',
-            $str,
-            array(
-                'style' => "text-decoration:none;color:#EEE;font-size:18px;font-weight:bold;margin-top:8px;display:block;float:left;margin-left:10px",
-                'onclick' => "jQuery(this).html('&#164;');jQuery(this).css('cursor','wait'); jQuery.ajax({url: siteInfo.baseUrl + '/admin/switchadminleftpan',context: document.body,success: function(){window.location='';}});"
-            )
+                        ->LinkTag(
+                                'javascript:void(0)', $str, array(
+                            'style' => "text-decoration:none;color:#EEE;font-size:18px;font-weight:bold;margin-top:8px;display:block;float:left;margin-left:10px",
+                            'onclick' => "jQuery(this).html('&#164;');jQuery(this).css('cursor','wait'); jQuery.ajax({url: siteInfo.baseUrl + '/admin/switchadminleftpan',context: document.body,success: function(){window.location='';}});"
+                                )
         );
     }
 
-    public function QNColumns()
-    {
+    public function QNColumns() {
         $collapseAdminLeftPan = App::Session()->Read('collapseAdminLeftPan');
         return ($collapseAdminLeftPan) ? 4 : 3;
     }
 
-    public function isAdminLeftPancollapsed()
-    {
+    public function isAdminLeftPancollapsed() {
         return App::Session()->Read('collapseAdminLeftPan');
     }
 
-    public function renderDashboardNAVS()
-    {
+    public function renderDashboardNAVS() {
         $DashBoardNAVs = App::Module('ACL')->getDashboardNAVS();
         echo '<table cellpadding="0" cellspacing="0" width="99%">';
         echo '<tr>';
@@ -274,8 +266,9 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
                     if (!empty($val1['adminicon'])) {
                         $fetchType = $val1['adminicon']['type'];
                         $icon_path = $val1['adminicon']['location'];
+                    } else {
+                        $icon_path = '/themeroot/admin/images/icons/' . App::Helper('utility')->text2Normalize($val1['title']) . '.jpg';
                     }
-                    else $icon_path = '/themeroot/admin/images/icons/' . App::Helper('utility')->text2Normalize($val1['title']) . '.jpg';
 
                     if (!file_exists(App::Config()->basedir("$icon_path")) && !file_exists(App::Config()->rootDir("$icon_path"))) {
                         $fetchType = 'URL';
@@ -283,8 +276,7 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
                     }
                     if (strtolower($fetchType) == 'url') {
                         $icon = App::load("Helper/Html")->imgTag(App::Config()->baseurl($icon_path), null, array("height" => "40", "width" => "40"));
-                    }
-                    else {
+                    } else {
                         $icon = App::load("Helper/Html")->imgDTag(App::Config()->rootDir($icon_path), '/40/fix', array("height" => "40", "width" => "40"));
                     }
                     if ($track != 0 && $track % App::Module('AdminPanelUi')->QNColumns() == 0) {
@@ -292,14 +284,14 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
                     }
 
                     echo '<td class="dashboard-quicklinks">';
-                    echo "<h6>{$val1['title']}</h6>";
+                    echo "<h6>" . $this->__($val1['title']) . "</h6>";
                     echo '<div class="floatleft" style="margin-left: 20px;">';
                     echo $icon;
                     echo '</div>';
                     echo '<div style="float:left;padding:10px">';
 
                     foreach ($val1['items'] as $key2 => $val2) {
-                        echo App::load("Helper/Html")->linkTag(App::Config()->baseurl(App::Module('AdminPanelUi')->senitizeLink($val2['link'])), $val2['title']);
+                        echo App::load("Helper/Html")->linkTag(App::Config()->baseurl(App::Module('AdminPanelUi')->senitizeLink($val2['link'])), $this->__($val2['title']));
                     }
                     echo '</div>';
                     echo '</td>';
@@ -310,20 +302,20 @@ class appRain_Base_Modules_AdminpanelUI extends appRain_Base_Objects
         echo '</tr>';
         echo '</table>';
     }
-	
-	public function pageNameInputBox($action=null,$type='Content',$id=null){
-	
-		if(strtolower($action) == 'create'){
-			return App::Helper("Html")->inputTag("data[Page][name]","",array("class" => "app_input check_notempty","longdesc"=>"A page name is required, Please use alpha numeric value without special character","id" => "page_name"));
-		}
-		else {
-			$page_arr = App::Load("Model/Page")->findAll("contenttype='{$type}'");
 
-			$data = array();
-			foreach ($page_arr['data'] as $key => $val) {
-				$data[$val['id']] = $val['name'];
-			}
-			return App::Helper("Html")->selectTag('data[Page][id]',$data,$id,array("id" => "{$type}_id"),array("off_blank"=>"Yes"));
-		}		
-	}
+    public function pageNameInputBox($action = null, $type = 'Content', $id = null) {
+
+        if (strtolower($action) == 'create') {
+            return App::Helper("Html")->inputTag("data[Page][name]", "", array("class" => "app_input check_notempty", "longdesc" => "A page name is required, Please use alpha numeric value without special character", "id" => "page_name"));
+        } else {
+            $page_arr = App::Load("Model/Page")->findAll("contenttype='{$type}'");
+
+            $data = array();
+            foreach ($page_arr['data'] as $key => $val) {
+                $data[$val['id']] = $val['name'];
+            }
+            return App::Helper("Html")->selectTag('data[Page][id]', $data, $id, array("id" => "{$type}_id"), array("off_blank" => "Yes"));
+        }
+    }
+
 }

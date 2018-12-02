@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -32,16 +33,12 @@
  *
  * @author appRain Team
  */
-class appRain_Base_Modules_Developer extends appRain_Base_Objects
-{
+class appRain_Base_Modules_Developer extends appRain_Base_Objects {
 
-
-    public function clearcache()
-    {
+    public function clearcache() {
         if ($this->getCacheType()) {
             $this->clearCacheByDir($this->getCacheType());
-        }
-        else {
+        } else {
             $this->clearAllCache();
         }
 
@@ -49,8 +46,7 @@ class appRain_Base_Modules_Developer extends appRain_Base_Objects
         #//App::Module('Notification')->Push($this->__("System Cache cleared automaticaly."),array('type'=>'admin-notice','level'=>'Notice'));
     }
 
-    private function clearAllCache()
-    {
+    private function clearAllCache() {
         $paths = $this->setCacheAllDef();
 
         foreach ($paths as $cacheType => $path) {
@@ -58,8 +54,7 @@ class appRain_Base_Modules_Developer extends appRain_Base_Objects
         }
     }
 
-    private function clearCacheByDir($type)
-    {
+    private function clearCacheByDir($type) {
         $dirs = App::Load("Helper/Utility")->getDirLising($this->setCacheAllDef($type));
 
         if (isset($dirs['file'])) {
@@ -69,8 +64,7 @@ class appRain_Base_Modules_Developer extends appRain_Base_Objects
         }
     }
 
-    public function cacheSpaceEstimate()
-    {
+    public function cacheSpaceEstimate() {
         $defs = $this->setCacheAllDef();
         $data = Array();
         foreach ($defs as $defKey => $def) {
@@ -87,8 +81,7 @@ class appRain_Base_Modules_Developer extends appRain_Base_Objects
         return $defs;
     }
 
-    public function setCacheAllDef($path_key = "", $subpart = "")
-    {
+    public function setCacheAllDef($path_key = "", $subpart = "") {
         $cachedef = Array(
             "addon" => array(
                 "title" => "Addon",
@@ -138,36 +131,33 @@ class appRain_Base_Modules_Developer extends appRain_Base_Objects
         ksort($cachedef);
         return isset($cachedef[$path_key]) ? $cachedef[$path_key]['path'] . "/" . $subpart : $cachedef;
     }
-	
-	
-	public function renderExceptionString($HelpId=null){
-		 
-		$arg = isset(App::Config()->get['arg']) ? App::Config()->get['arg'] : array();
-		$help = app::__def()->HelpList($HelpId);
-		if(!empty($help)){
-			foreach($arg as $sl=>$val){
-				$help['description'] = str_replace("{arg{$sl}}",$val,$help['description']);
-			}
-			$help['description'] = str_replace("{Exception2Display}",App::Session()->Read('Exception2Display'),$help['description']);
-			$help['description'] =  App::Helper('Utility')->codeFormated($help['description']);
-		}
-		else {
-			$help = app::__def()->HelpList('help_not_found');
-		}
-		
-		return $help;
-	}
-	
-	
-	public function pathWiseInformationSetList(){
-		$addonPathList = App::__def()->fetchInformationSetPathList();		
-		$List = array();
-		foreach($addonPathList as $path){
-			$def = App::__def()->readInformationSetDefByPath($path);
-			$def['base']['path'] = str_replace(App::Config()->rootDir(),'',$path);
-			$List[] = $def;
-		}		
-		return $List;
-	}
-	
+
+    public function renderExceptionString($HelpId = null) {
+
+        $arg = isset(App::Config()->get['arg']) ? App::Config()->get['arg'] : array();
+        $help = app::__def()->HelpList($HelpId);
+        if (!empty($help)) {
+            foreach ($arg as $sl => $val) {
+                $help['description'] = str_replace("{arg{$sl}}", $val, $help['description']);
+            }
+            $help['description'] = str_replace("{Exception2Display}", App::Session()->Read('Exception2Display'), $help['description']);
+            $help['description'] = App::Helper('Utility')->codeFormated($help['description']);
+        } else {
+            $help = app::__def()->HelpList('help_not_found');
+        }
+
+        return $help;
+    }
+
+    public function pathWiseInformationSetList() {
+        $addonPathList = App::__def()->fetchInformationSetPathList();
+        $List = array();
+        foreach ($addonPathList as $path) {
+            $def = App::__def()->readInformationSetDefByPath($path);
+            $def['base']['path'] = str_replace(App::Config()->rootDir(), '', $path);
+            $List[] = $def;
+        }
+        return $List;
+    }
+
 }

@@ -145,6 +145,17 @@ abstract class appRain_Base_Modules_Validation extends appRain_Base_Objects
 
     public function notEmpty($_value = "")
     {
+		// Empty Value
+		if(empty($_value)) return false;
+		
+		// Empty Date
+		if($_value=='0000-00-00') return false;
+		
+		// Empty Date
+		if($_value=='--')return false;
+		
+		
+	
         return
             $this->setRuleType('notempty')
                 ->setRuleValue($_value)
@@ -234,11 +245,11 @@ abstract class appRain_Base_Modules_Validation extends appRain_Base_Objects
     {
         return
             (
-            checkdate(
-                date('m', strtotime($_value)),
-                date('d', strtotime($_value)),
-                date('Y', strtotime($_value))
-            )
+				checkdate(
+					date('m', strtotime($_value)),
+					date('d', strtotime($_value)),
+					date('Y', strtotime($_value))
+				)
             );
 
     }

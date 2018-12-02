@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,12 +27,12 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
+abstract class appRain_Base_Modules_Date extends appRain_Base_Objects {
 
-
-abstract class appRain_Base_Modules_Date extends appRain_Base_Objects
-{
-    public function getDate($date_formate = 'Y-m-d')
-    {
+    public function getDate($date_formate = 'Y-m-d', $time = null) {
+        if (!empty($time)) {
+            return date($date_formate, $time);
+        }
         return date($date_formate, $this->getTime());
     }
 
@@ -40,18 +41,25 @@ abstract class appRain_Base_Modules_Date extends appRain_Base_Objects
      *
      * @ return string
      */
-    public function getTime()
-    {
-        return time();
+    public function getTime() {
+        $business_date = App::Config()->Setting('business_date');
+        if (empty($business_date)) {
+            $business_date = date('Y-m-d');
+        }
+
+        $business_time = App::Config()->Setting('business_time');
+        if (empty($business_time)) {
+            $business_time = date('H:i:s');
+        }
+
+        return strtotime("{$business_date} {$business_time}"); //time();// + (3*24*60*60);
     }
 
-    public function getTimeZoneList()
-    {
+    public function getTimeZoneList() {
         $zone_list = $this->getAllTimeZoneList();
         if (isset($zone_list)) {
             return $zone_list;
-        }
-        else {
+        } else {
             $zone_list = array();
             if (function_exists('timezone_abbreviations_list')) {
                 $abbrarray = timezone_abbreviations_list();
@@ -79,45 +87,57 @@ abstract class appRain_Base_Modules_Date extends appRain_Base_Objects
         }
     }
 
-
     /*
-     *	To validate time
+     * 	To validate time
      */
-    public function date2MicroTime($mydate)
-    {
+
+    public function date2MicroTime($mydate) {
         if (is_integer($mydate) || is_numeric($mydate)) {
             return intval($mydate);
-        }
-        else {
+        } else {
             return strtotime($mydate);
         }
     }
 
     /*
-     *	Return a pretty for mat of give date
-     *	Exampel: $this->date_formated('1971', "short")
+     * 	Return a pretty for mat of give date
+     * 	Exampel: $this->date_formated('1971', "short")
      */
-    public function dateFormated($date_c = null, $flag = "short")
-    {
+
+    public function dateFormated($date_c = null, $flag = "short") {
+        if (empty($date_c)) {
+            return '';
+        }
+
+        if (substr($date_c,0,10) == '0000-00-00') {
+            return '';
+        }
+
         if ($date_c != null) {
             $formated_date = $this->date2MicroTime($date_c);
-        }
-        else {
-            $formated_date = time();
+        } else {
+            $formated_date = $this->getTime();
         }
 
-        return ($flag == "long") ? date("D, M jS Y, h:ia ", $formated_date) : date(" M jS Y", $formated_date);
-
+        return ($flag == "long") ? date("D, M jS Y, h:ia ", $formated_date) : date("j M Y", $formated_date);
     }
 
-    public function dateDifference($d1, $d2, $select = 'day')
-    {
+    public function dateDifference($d1, $d2, $select = 'day') {
         $d = ($this->date2MicroTime($d1) - $this->date2MicroTime($d2));
         if (strtolower($select) == 'day') {
             return abs(round($d / (60 * 60 * 24)));
         }
 
         return $d;
-
     }
+
+    public function toDate($date = null, $formate = 'Y-m-d H:i:s') {
+
+        if (strlen($date) == 10) {
+            return date('Y-m-d', strtotime($date));
+        } else {
+            return date($formate, strtotime($date));
+        }
+    }
+
 }

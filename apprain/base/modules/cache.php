@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -27,7 +28,6 @@
  * http ://www.apprain.org/general-help-center
  */
 
-
 /**
  *  // Example
  *  // Delte Cache
@@ -50,8 +50,8 @@
  *        pr( $text );
  *    }
  */
-class appRain_Base_Modules_Cache extends appRain_Base_Objects
-{
+class appRain_Base_Modules_Cache extends appRain_Base_Objects {
+
     public $clear_time = false;
     public $path = NULL;
     public $mode = 'BYTE_STREAM';
@@ -61,33 +61,33 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
     /**
      * Prepare basic environment
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->ini();
     }
 
     /**
      * Write Cache in Disc
      *
-     * @param $data MIX
-     * @param $key String
+     * @param $key MIX
+     * @param $data String
      * @return Self
      */
-    public function write($key = "", $data = "")
-    {
-        if (($key == "") || ($data == "")) return false;
+    public function write($key = "", $data = "") {
+        if (($key == "") || ($data == ""))
+            return false;
 
         $key = $this->get_key($key);
 
         if ($this->exists($key)) {
-            if ($this->replace) $this->delete($key);
-            else return false;
+            if ($this->replace)
+                $this->delete($key);
+            else
+                return false;
         }
 
         $this->write_to_disk($this->encode($data), $key);
 
         return true;
-
     }
 
     /**
@@ -96,8 +96,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $key String
      * @return String (Base64_encoded)
      */
-    public function read($key = NULL)
-    {
+    public function read($key = NULL) {
         if (is_null($key)) {
             return "";
         }
@@ -110,8 +109,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      *
      * @param $pre_name String
      */
-    public function delete($pre_name = NULL)
-    {
+    public function delete($pre_name = NULL) {
         if (isset($pre_name)) {
             $path = $this->path . DS . "{$pre_name}.{$this->ext}";
             if (file_exists($path)) {
@@ -128,8 +126,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $data MIS
      * @return BYTE_STREM
      */
-    private function encode($data = NULL)
-    {
+    private function encode($data = NULL) {
         return isset($data) ? serialize($data) : "";
     }
 
@@ -139,8 +136,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $data BYTE_STREM
      * @return MIX
      */
-    private function decoted($data = NULL)
-    {
+    private function decoted($data = NULL) {
         return isset($data) ? unserialize($data) : "";
     }
 
@@ -149,8 +145,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      *
      * @return NULL
      */
-    private function ini()
-    {
+    private function ini() {
         switch ($this->mode) {
             case 'BYTE_STREAM' :
                 $this->path = BYTE_STREAM;
@@ -167,12 +162,10 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $key String
      * @return String
      */
-    public function get_key($key = NULL)
-    {
+    public function get_key($key = NULL) {
         if (isset($key)) {
             return $key;
-        }
-        else {
+        } else {
             return md5(uniqid(rand(), true));
         }
     }
@@ -181,8 +174,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param pre_name String
      * @return Boolean
      */
-    public function exists($pre_name = NULL)
-    {
+    public function exists($pre_name = NULL) {
         return file_exists($this->path . DS . "{$pre_name}.{$this->ext}");
     }
 
@@ -192,8 +184,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $pre_name String
      * @return String
      */
-    public function read_from_desk($pre_name = NULL)
-    {
+    public function read_from_desk($pre_name = NULL) {
         $path = $this->path . DS . "{$pre_name}.{$this->ext}";
         $contents = "";
 
@@ -216,8 +207,7 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
      * @param $pre_name String
      * @return Self
      */
-    public function write_to_disk($data = NULL, $pre_name = NULL)
-    {
+    public function write_to_disk($data = NULL, $pre_name = NULL) {
         $path = $this->path . DS . "{$pre_name}.{$this->ext}";
 
         if (!$handle = fopen($path, 'w')) {
@@ -234,4 +224,5 @@ class appRain_Base_Modules_Cache extends appRain_Base_Objects
 
         return $this;
     }
+
 }

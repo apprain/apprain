@@ -306,7 +306,13 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         $id = substr($name, strrpos($name, "[") + 1, (strlen($name)));
         $id = substr($id, 0, strrpos($id, "]"));
         $formate = isset($options['formate']) ? $options['formate'] : 'Y-ds-m-ds-d';
-        return '<input type="text" class="date"  id="' . $id . '" name="' . $name . '" value="' . $value . '" ' . $this->options2str($options) . '/>';
+		if(!isset($options['class'])){
+			$options['class'] = 'date';
+		}
+		else{
+			$options['class'] .= ' date';
+		}
+        return '<input type="text" id="' . $id . '" name="' . $name . '" value="' . $value . '" ' . $this->options2str($options) . '/>';
 
     }
 
@@ -382,15 +388,14 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         }
 
         $years = array();
-        $value['Start'] = isset($value['Start']) ? $value['Start'] : (date('Y') - 10);
-        $value['End'] = isset($value['End']) ? $value['End'] : (date('Y') + 10);
+        $value['Start'] = isset($value['Start']) ? $value['Start'] : (App::Helper('Date')->getdate('Y') - 10);
+        $value['End'] = isset($value['End']) ? $value['End'] : (App::Helper('Date')->getdate('Y') + 10);
 
-        for ($i = $value['Start']; $i <= $value['End']; $i++) {
+        for($i = $value['Start']; $i <= $value['End']; $i++){
             $years[$i] = $i;
         }
 
-
-        $selected = ($selected != "") ? $selected : date('Y-m-d');
+        $selected = ($selected != "" && is_string($selected)) ? $selected : App::Helper('Date')->getdate('Y-m-d');
 
         $t = explode(" ", $selected);
         $arr1 = explode("-", $t[0]);
@@ -399,13 +404,16 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         foreach ($format_arr as $key => $val) {
             switch (strtolower($val)) {
                 case 'y':
-                    $str .= $this->selectTag($name . "[year]", $years, $arr1[0]);
+					$htmOpt = isset($options['y_htmlopts']) ? $options['y_htmlopts'] : array();
+                    $str .= $this->selectTag($name . "[year]", $years, $arr1[0],$htmOpt);
                     break;
                 case 'm':
-                    $str .= $this->selectTag($name . "[month]", App::Load("Helper/Utility")->get_common_var('months'), $arr1[1]);
+					$htmOpt = isset($options['m_htmlopts']) ? $options['m_htmlopts'] : array();
+                    $str .= $this->selectTag($name . "[month]", App::Load("Helper/Utility")->get_common_var('months'), $arr1[1],$htmOpt);
                     break;
                 case 'd' :
-                    $str .= $this->selectTag($name . "[day]", App::Load("Helper/Utility")->get_common_var('days'), $arr1[2]);
+					$htmOpt = isset($options['d_htmlopts']) ? $options['d_htmlopts'] : array();
+                    $str .= $this->selectTag($name . "[day]", App::Load("Helper/Utility")->get_common_var('days'), $arr1[2],$htmOpt);
                     break;
 
             }
@@ -416,8 +424,8 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
     public function ccExpireDate($name = NULL, $selected = "", $value = NULL, $options = NULL)
     {
         $years = Array();
-        $value['Start'] = isset($value['Start']) ? $value['Start'] : (date('Y'));
-        $value['End'] = isset($value['End']) ? $value['End'] : (date('Y') + 10);
+        $value['Start'] = isset($value['Start']) ? $value['Start'] : (App::Helper('Date')->getdate('Y'));
+        $value['End'] = isset($value['End']) ? $value['End'] : (App::Helper('Date')->getdate('Y') + 10);
         $options['id'] = isset($options['id']) ? $options['id'] : "cc";
 
         $years[''] = 'Expire year';
@@ -455,8 +463,8 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
             $munites[$i] = $x;
         }
 
-        $value['Start'] = isset($value['Start']) ? $value['Start'] : date('Y')-10;
-        $value['End'] = isset($value['End']) ? $value['End'] : date('Y')+10;
+        $value['Start'] = isset($value['Start']) ? $value['Start'] : App::Helper('Date')->getdate('Y')-10;
+        $value['End'] = isset($value['End']) ? $value['End'] : App::Helper('Date')->getdate('Y')+10;
         $years = array();
         for ($i = $value['Start']; $i <= $value['End']; $i++) {
             $years[$i] = $i;
@@ -465,15 +473,15 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         $t = strtotime(($selected != "") ? $selected : $this->get_date("Y-m-d H:i:s"));
 
         $str = "";
-        $str .= $this->selectTag($name . "[day]", App::Load("Helper/Utility")->get_common_var('days'), date('d', $t));
+        $str .= $this->selectTag($name . "[day]", App::Load("Helper/Utility")->get_common_var('days'), App::Helper('Date')->getdate('d', $t));
         $str .= "";
-        $str .= $this->selectTag($name . "[month]", App::Load("Helper/Utility")->get_common_var('months'), date('m', $t));
+        $str .= $this->selectTag($name . "[month]", App::Load("Helper/Utility")->get_common_var('months'), App::Helper('Date')->getdate('m', $t));
         $str .= "";
-        $str .= $this->selectTag($name . "[year]", $years, date('Y', $t));
+        $str .= $this->selectTag($name . "[year]", $years, App::Helper('Date')->getdate('Y', $t));
         $str .= " ";
-        $str .= $this->selectTag($name . "[hour]", App::Load("Helper/Utility")->get_common_var('hours'), date('H', $t));
+        $str .= $this->selectTag($name . "[hour]", App::Load("Helper/Utility")->get_common_var('hours'), App::Helper('Date')->getdate('H', $t));
         $str .= "";
-        $str .= $this->selectTag($name . "[munite]", $munites, date('i', $t));
+        $str .= $this->selectTag($name . "[munite]", $munites, App::Helper('Date')->getdate('i', $t));
         $str .= "";
         $str .= $this->selectTag($name . "[second]", $munites, date('s', $t));
 
@@ -519,7 +527,18 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
 
     public function selectDefaultValue($data = NULL, $key = NULL, $default = NULL)
     {
-        return isset($data[$key]) ? $data[$key] : $default;
+        if(isset($data[$key])){
+			switch($data[$key]){
+				case '0000-00-00':
+					return $default;
+					break;
+				default:
+					return $data[$key];
+			};
+		}
+		else{
+			return $default;
+		}
     }
 
     /**
@@ -537,7 +556,7 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
          * Define the root. We can set parent start as perametre so that it can start form any parent
          */
         $inputType = isset($parameter['inputType']) ? $parameter['inputType'] : "selectTag";
-        $condition = isset($parameter['condition']) ? $parameter['condition'] : "1";
+        $condition = isset($parameter['condition']) ? $parameter['condition'] : "1=1";
         $name = ($inputType == "checkboxTag") ? $name . "[checkbox][]" : $name;
         $parameter['key'] = isset($parameter['key']) ? $parameter['key'] : "id";
         $parameter['val'] = isset($parameter['val']) ? $parameter['val'] : "id";

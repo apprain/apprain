@@ -72,11 +72,11 @@ class appRain_Base_Modules_InformationSet extends appRain_Base_Objects
 				}
 			}
 		
-			App::Model('Information')->__data['lastmodified'] = date('Y-m-d H:i:s');
+			App::Model('Information')->__data['lastmodified'] = App::Helper('Date')->getdate('Y-m-d H:i:s');
 			App::Model('Information')->__data['adminref'] = $thisAdminInfo['id'];
 		}
 		else {
-			$data['Information']['lastmodified'] = date('Y-m-d H:i:s');
+			$data['Information']['lastmodified'] = App::Helper('Date')->getdate('Y-m-d H:i:s');
 			$data['Information']['adminref'] = $thisAdminInfo['id'];
 		}
 

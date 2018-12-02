@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,19 +27,17 @@
  * Documents Link
  * http ://www.apprain.org/documents
  */
-
-class appRain_Base_Modules_Callbacks extends Development_AppCommon
-{
+class appRain_Base_Modules_Callbacks extends Development_AppCommon {
     /*
      * Callback function
      *
      * Call before page randier
      */
-    public function _before_render()
-    {       
-		$this->before_render();
+
+    public function _before_render() {
+        $this->before_render();
         App::Module('Hook')->getHandler('Callback', 'before_render');
-	    if (App::AdminManager()->isLoggedIn()) {
+        if (App::AdminManager()->isLoggedIn()) {
             $this->before_adminpanel_render();
             App::Module('Hook')->getHandler('Callback', 'before_adminpanel_render');
         }
@@ -49,8 +48,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run after page render complete
      */
-    public function _after_render()
-    {
+
+    public function _after_render() {
         $this->after_render();
         App::Module('Hook')->getHandler('Callback', 'after_render');
 
@@ -58,7 +57,7 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
             $this->after_adminpanel_render();
             App::Module('Hook')->getHandler('Callback', 'after_adminpanel_render');
         }
-		
+
         $this->printQuries();
     }
 
@@ -67,8 +66,7 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Before an addon load complete
      */
-    public function _before_addon_load($name = NULL)
-    {
+    public function _before_addon_load($name = NULL) {
         $this->before_addon_load($name);
         App::Module('Hook')->getHandler('Callback', 'before_addon_load', $name);
     }
@@ -78,8 +76,7 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * After an addon load
      */
-    public function _after_addon_load($name = NULL)
-    {
+    public function _after_addon_load($name = NULL) {
         $this->after_addon_load($name);
         App::Module('Hook')->getHandler('Callback', 'after_addon_load', $name);
     }
@@ -90,8 +87,7 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * @param fixedArray
      */
-    public function _on_information_set_view($options = NULL)
-    {
+    public function _on_information_set_view($options = NULL) {
         $this->on_information_set_view($options);
         App::Module('Hook')->getHandler('Callback', 'on_information_set_view', $options);
     }
@@ -101,8 +97,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run when any Information Set entry delete
      */
-    public function _on_information_set_delete($options = NULL)
-    {
+
+    public function _on_information_set_delete($options = NULL) {
         $this->on_information_set_delete($options);
         App::Module('Hook')->getHandler('Callback', 'on_information_set_delete', $options);
     }
@@ -112,8 +108,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run before Information Set entry Save
      */
-    public function _before_information_set_save($options = NULL)
-    {
+
+    public function _before_information_set_save($options = NULL) {
         $this->before_information_set_save($options);
         App::Module('Hook')->getHandler('Callback', 'before_information_set_save', $options);
     }
@@ -123,8 +119,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run after Information Set entry save
      */
-    public function _after_information_set_save($options = NULL)
-    {
+
+    public function _after_information_set_save($options = NULL) {
         $this->after_information_set_save($options);
         App::Module('Hook')->getHandler('Callback', 'after_information_set_save', $options);
     }
@@ -134,8 +130,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run before search data initialized
      */
-    public function _before_search_init($send = NULL)
-    {
+
+    public function _before_search_init($send = NULL) {
         $this->before_search_init($send);
         App::Module('Hook')->getHandler('Callback', 'before_search_init', $send);
     }
@@ -145,8 +141,8 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Run once auto search initialization complete
      */
-    public function _after_search_init($send = NULL)
-    {
+
+    public function _after_search_init($send = NULL) {
         $this->after_search_init($send);
         App::Module('Hook')->getHandler('Callback', 'after_search_init', $send);
     }
@@ -156,10 +152,11 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
      *
      * Helps to modify the URL Manager Definition
      */
-    public function _on_uri_definition_init($send = NULL)
-    {
+
+    public function _on_uri_definition_init($send = NULL) {
         $_send = $this->on_uri_definition_init($send);
-        if (is_array($_send) && !empty($_send)) $send = $_send;
+        if (is_array($_send) && !empty($_send))
+            $send = $_send;
 
         $defs = App::Module('Hook')->getHandler('Callback', 'on_uri_definition_init', null, 'object');
         foreach ($defs as $def) {
@@ -171,33 +168,30 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
         }
         return $send;
     }
-	
-	public function _on_theme_remove($name = null){
-		$themeInfo = app::__def()->getThemeInfo($name);
-		if(!empty($themeInfo['callback'])){ 
-			App::__Obj($themeInfo['callback'])->on_theme_remove($themeInfo);
-		}
-	}
 
-    public function _before_theme_load($_Obj = null)
-    {	
-		$themeInfo = app::__def()->getThemeInfo($_Obj->theme);
-		App::__Obj($themeInfo['callback'])->before_theme_load($_Obj);     
-    } 
-	
-	public function _after_theme_load($_Obj = null)
-    {	
-		$themeInfo = app::__def()->getThemeInfo($_Obj->theme);
-		App::__Obj($themeInfo['callback'])->after_theme_load($_Obj);     
+    public function _on_theme_remove($name = null) {
+        $themeInfo = app::__def()->getThemeInfo($name);
+        if (!empty($themeInfo['callback'])) {
+            App::__Obj($themeInfo['callback'])->on_theme_remove($themeInfo);
+        }
     }
-	
-	public function _before_theme_install($name = null, $def = null)
-    {
-		$themeInfo = app::__def()->getThemeInfo($name);
-		if(!empty($themeInfo['callback'])){ 		
-			App::__Obj($themeInfo['callback'])->before_theme_install($themeInfo);
-		}
-		App::Module('Hook')->getHandler('Callback', 'before_theme_install', $themeInfo);	
+
+    public function _before_theme_load($_Obj = null) {
+        $themeInfo = app::__def()->getThemeInfo($_Obj->theme);
+        App::__Obj($themeInfo['callback'])->before_theme_load($_Obj);
+    }
+
+    public function _after_theme_load($_Obj = null) {
+        $themeInfo = app::__def()->getThemeInfo($_Obj->theme);
+        App::__Obj($themeInfo['callback'])->after_theme_load($_Obj);
+    }
+
+    public function _before_theme_install($name = null, $def = null) {
+        $themeInfo = app::__def()->getThemeInfo($name);
+        if (!empty($themeInfo['callback'])) {
+            App::__Obj($themeInfo['callback'])->before_theme_install($themeInfo);
+        }
+        App::Module('Hook')->getHandler('Callback', 'before_theme_install', $themeInfo);
         $com2Uninstall = isset($themeInfo['components']['auto']['uninstall']) ? $themeInfo['components']['auto']['uninstall'] : Array();
         if (!empty($com2Uninstall)) {
             foreach ($com2Uninstall as $component) {
@@ -208,13 +202,12 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
         }
     }
 
-    public function _after_theme_installed($name = null, $def = null)
-    {
+    public function _after_theme_installed($name = null, $def = null) {
         $themeInfo = app::__def()->getThemeInfo($name);
-		if(!empty($themeInfo['callback'])){ 
-			App::__Obj($themeInfo['callback'])->after_theme_installed($themeInfo);
-		}
-		App::Module('Hook')->getHandler('Callback', 'after_theme_install', $themeInfo);	
+        if (!empty($themeInfo['callback'])) {
+            App::__Obj($themeInfo['callback'])->after_theme_installed($themeInfo);
+        }
+        App::Module('Hook')->getHandler('Callback', 'after_theme_install', $themeInfo);
         $com2Install = isset($themeInfo['components']['auto']['install']) ? $themeInfo['components']['auto']['install'] : Array();
         if (!empty($com2Install)) {
             foreach ($com2Install as $component) {
@@ -225,14 +218,13 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon
         }
     }
 
-    private function printQuries()
-    {
+    private function printQuries() {
         if (!empty(App::$__appData['dbQuries'])) {
             pr("SL  Query");
             foreach (App::$__appData['dbQuries'] as $key => $query) {
                 pr(($key + 1) . ". {$query[0]}");
             }
         }
-
     }
+
 }
