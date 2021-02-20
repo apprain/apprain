@@ -781,8 +781,39 @@ class appRain_Base_Modules_Database_Oci8_Oracle extends appRain_Base_Objects{
 	}
 		
 	
+	public function Equal($fiend=null,$value=null,$quoted=true){
+		
+		if(empty($value)){
+			return " {$fiend} is null";
+		}
+		
+		if($quoted){
+			return " {$fiend} = '{$value}'";
+		}
+		else{
+			return " {$fiend} = {$value}";
+		}
+	}
+	
+	public function NotEqual($fiend=null,$value=null,$quoted=true){
+		
+		if(empty($value)){
+			return " {$fiend} is not null";
+		}
+		
+		if($quoted){
+			return " {$fiend} != '{$value}'";
+		}
+		else{
+			return " {$fiend} != {$value}";
+		}
+	}
+	
+	
 	public function Concat($values=array()){
 		return implode(' || ',$values);
 	}
+	
+	
 
 }

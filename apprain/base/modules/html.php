@@ -180,26 +180,30 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
 
         $pt_str = isset($options) ? $this->options2str($options) : '';
         $size = isset($options['size']) ? $options['size'] : 1;
+		
         $name = ($size > 1) ? "{$name}[]" : $name;
-
-        $element = (isset($parameter['title']))
-            ? $element = "<select name=\"$name\" $pt_str ><option value=\"\">{$parameter['title']}</option>"
-            : (
-                (isset($parameter['off_blank'])
-                    ? $parameter['off_blank']
-                    : 'No'
-                ) == 'No'
-            )
-                ? "<select name=\"$name\" $pt_str ><option value=\"\"></option>"
-                : "<select name=\"$name\" $pt_str >";
-
-
+		
+		if(isset($parameter['title'])){
+			$element = "<select name=\"{$name}\" {$pt_str} ><option value=\"\">{$parameter['title']}</option>";
+		}
+		else{
+		
+			$offblank = isset($parameter['off_blank']) ? $parameter['off_blank'] : 'No';
+			
+			if($offblank == 'No'){
+				$element = "<select name=\"{$name}\" {$pt_str} ><option value=\"\"></option>";
+			}
+			else{
+				$element = "<select name=\"{$name}\" {$pt_str} >";
+			}
+		}
+	
         foreach ($data_arr as $key => $val) {
             if (in_array($key, explode(',', $selected))) {
-                $element .= "<option selected=\"selected\" value=\"$key\">$val</option>";
+                $element .= "<option selected=\"selected\" value=\"{$key}\">{$val}</option>";
             }
             else {
-                $element .= "<option value=\"$key\">$val</option>";
+                $element .= "<option value=\"{$key}\">{$val}</option>";
             }
         }
 
@@ -362,9 +366,9 @@ abstract class appRain_Base_Modules_Html extends appRain_Base_Objects
         $html_options = $this->options2str($html_potions);
 
         if ($mode == "imagemanager" || $mode == "filemanager") {
-            $filemanager_path = App::Helper('Config')->get('filemanager_base_dir');
+            //$filemanager_path = App::Helper('Config')->get('filemanager_base_dir');
 
-            return '<img src="' . App::Helper('Config')->baseurl("/$filemanager_path/$src") . '"' . $html_options . ' />';
+            return '<img src="' . App::Helper('Config')->filemanagerurl("/{$src}") . '"' . $html_options . ' />';
         }
         else {
             return '<img src="' . $src . '"' . $html_options . ' />';

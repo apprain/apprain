@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -32,8 +33,7 @@
  *
  * @author appRain, Inc.
  */
-class appRain_Collection extends Development_Callbacks
-{
+class appRain_Collection extends Development_Callbacks {
 
     public $__menu = Array();
 
@@ -44,10 +44,9 @@ class appRain_Collection extends Development_Callbacks
      * @param $sub_part String
      * @param $secure Boolean
      */
-    public function baseurl($sub_part = NULL, $secure = false)
-    {
+    public function baseurl($sub_part = NULL, $secure = false) {
         return app::load("Helper/Config")->Load()
-            ->baseurl($sub_part, $secure);
+                        ->baseurl($sub_part, $secure);
     }
 
     /**
@@ -57,13 +56,11 @@ class appRain_Collection extends Development_Callbacks
      * @param $sub_part String
      * @param $secure Boolean
      */
-    public function skinurl($sub_part = NULL, $secure = false)
-    {
+    public function skinurl($sub_part = NULL, $secure = false) {
         return App::Load("Helper/Config")->Load()->skinurl($sub_part, $secure);
     }
 
-    public function rootDir($sub_part = NULL)
-    {
+    public function rootDir($sub_part = NULL) {
         return App::Load("Helper/Config")->Load()->rootDir($sub_part);
     }
 
@@ -73,8 +70,7 @@ class appRain_Collection extends Development_Callbacks
      *
      * @param $sub_part String
      */
-    public function basedir($sub_part = NULL)
-    {
+    public function basedir($sub_part = NULL) {
         return App::Load("Helper/Config")->Load()->basedir($sub_part);
     }
 
@@ -84,8 +80,7 @@ class appRain_Collection extends Development_Callbacks
      *
      * @param $sub_part String
      */
-    public function skindir($sub_part = NULL)
-    {
+    public function skindir($sub_part = NULL) {
         return App::Load("Helper/Config")->Load()->skindir($sub_part);
     }
 
@@ -95,8 +90,7 @@ class appRain_Collection extends Development_Callbacks
      * @param $image_name String
      * @return String
      */
-    public function get_img_url($image_name = '')
-    {
+    public function get_img_url($image_name = '') {
         return $this->baseurl("/" . $this->get_config('filemanager_path') . '/' . $image_name);
     }
 
@@ -106,8 +100,7 @@ class appRain_Collection extends Development_Callbacks
      * @param $image_name String
      * @return String
      */
-    public function get_img_dir($image_name = '')
-    {
+    public function get_img_dir($image_name = '') {
         return $this->basedir("/" . $this->get_config('filemanager_path') . '/' . $image_name);
     }
 
@@ -119,11 +112,9 @@ class appRain_Collection extends Development_Callbacks
      * @param $options Array
      * @param $innerHtml String
      */
-    public function get_tag($tag = NULL, $options = NULL, $innerHtml = NULL)
-    {
+    public function get_tag($tag = NULL, $options = NULL, $innerHtml = NULL) {
         return App::Load("Helper/Html")->get_tag($tag, $options, $innerHtml);
     }
-
 
     /**
      * Get File Manage Path for Supper Admin/User
@@ -131,11 +122,10 @@ class appRain_Collection extends Development_Callbacks
      *
      * @param $path String
      */
-    public function filemanager_path()
-    {
-        $filemanager_base_dir = App::Config()->BaseDir( DS.
-			App::Config()->get('filemanager_base_dir')
-		);              
+    public function filemanager_path() {
+        $filemanager_base_dir = App::Config()->BaseDir(DS .
+                App::Config()->get('filemanager_base_dir')
+        );
         return $filemanager_base_dir;
     }
 
@@ -148,8 +138,7 @@ class appRain_Collection extends Development_Callbacks
      * @param $mode String
      * @param $https Boolean
      */
-    public function redirect($url_part = "", $mode = "header", $https = false)
-    {
+    public function redirect($url_part = "", $mode = "header", $https = false) {
         App::Helper('Config')->redirect($url_part, $mode, $https);
     }
 
@@ -157,21 +146,27 @@ class appRain_Collection extends Development_Callbacks
      * Redirect control with message display.
      * We also can set some post data
      */
-    public function transfer($redirectUrl = NULL, $message = null)
-    {
+    public function transfer($redirectUrl = NULL, $message = null) {
         App::Helper('Config')->setPostVars($this->getPostVars())
-            ->transfer($redirectUrl, $message);
+                ->transfer($redirectUrl, $message);
     }
 
     /**
      *    A sudo function to check admin logged in status
      */
-    public function check_admin_login()
-    {
-        if ($this->isByPassTrue()) return true;
+    public function check_admin_login() {
+        if ($this->isByPassTrue())
+            return true;
 
         $admin_info = App::Load("Module/Session")->read('User');
-        $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
+        if(empty($admin_info)){
+			$this->writeRequestURI();
+            $this->redirect('/admin/exception_here');
+		}
+		
+		$admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
+		
+		
         if ($admin_info['status'] != 'Admin') {
             $this->writeRequestURI();
             $this->redirect('/admin/exception_here');
@@ -182,63 +177,60 @@ class appRain_Collection extends Development_Callbacks
     /**
      * Verify Bypass request
      */
-    public function isByPassTrue()
-    {
+    public function isByPassTrue() {
         $SuperAuthByPassFlag = App::Module('Session')->read('SuperAuthByPassFlag');
         $SuperAuthByPassFlag = isset($SuperAuthByPassFlag) ? $SuperAuthByPassFlag : false;
         return $SuperAuthByPassFlag;
     }
 
-
-    public function hasRequestURI()
-    {
+    public function hasRequestURI() {
         $_redirectToRequestURI = App::Load("Module/Session")->read("_redirectToRequestURI");
         return ($_redirectToRequestURI == "") ? false : true;
     }
 
-    public function writeRequestURI()
-    {
+    public function writeRequestURI() {
         App::Load("Module/Session")->write("_redirectToRequestURI", App::Load("Helper/Config")->getServerInfo("REQUEST_URI"));
     }
 
-    public function redirectToRequestURI()
-    {
+    public function redirectToRequestURI() {
         $redirectURI = App::Load("Helper/Config")->get('http') . App::Load("Helper/Config")->get('host') . App::Load("Module/Session")->read("_redirectToRequestURI");
         App::Load("Module/Session")->delete("_redirectToRequestURI");
         header("location:{$redirectURI}");
         exit;
     }
 
-    public function check_admin_tab_access($tab)
-    {
+    public function check_admin_tab_access($tab) {
         $admin_panel_tabs = App::Module('ACL')->readNAVAccess('top');
         // $user = App::Load('Module/Session')->read('User');
         //  $user['admin_panel_tabs'] = isset($user['admin_panel_tabs']) ? $user['admin_panel_tabs'] : Array();
         return in_array($tab, $admin_panel_tabs);
     }
 
-    public function setAdminTab($tab = "")
-    {
+    public function setAdminTab($tab = "") {
+		
         $this->check_admin_login();
+		
         if ($this->check_admin_tab_access($tab)) {
+			
             $this->layout = "admin";
             $this->admin_tab = $tab;
-        }
-        else {
+        } else {
+			pre('Don\'t have permission. Collection.php line 211' . $tab);
             $this->redirect("/admin/introduction");
         }
     }
-
 
     /**
      * Check if a user alrady logged in
      *
      * @param $type String
      */
-    public function user_already_loggedin($type = 'Admin')
-    {
+    public function user_already_loggedin($type = 'Admin') {
         $admin_info = App::Load("Module/Session")->read('User');
-        $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
+		if(empty($admin_info)){
+			return false;
+		}
+        $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : "";
         if ($admin_info['status'] == $type) {
             $this->redirect('/admin/introduction');
             exit;
@@ -250,8 +242,7 @@ class appRain_Collection extends Development_Callbacks
      *
      * @return boolean
      */
-    public function check_user_login($uri = '/')
-    {
+    public function check_user_login($uri = '/') {
         $admin_info = App::Load("Module/Session")->read('User');
         $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
 
@@ -266,24 +257,20 @@ class appRain_Collection extends Development_Callbacks
      *
      * @return boolean
      */
-    public function is_user_logged_in()
-    {
+    public function is_user_logged_in() {
         $user_info = App::Load("Module/Session")->read('User');
         $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
 
         return ($admin_info['status'] == "User") ? true : false;
-
     }
 
-    
     /**
      * Fetch User Setting Set by UserStatusId
      *
      * @param Array
      */
-    public function user_settings()
-    {
-		return App::Config()->siteInfo();
+    public function user_settings() {
+        return App::Config()->siteInfo();
     }
 
     /**
@@ -291,21 +278,19 @@ class appRain_Collection extends Development_Callbacks
      * @param $skey String
      * @param $load String
      */
-    public function get_config($skey = NULL, $load = "site_info")
-    {
+    public function get_config($skey = NULL, $load = "site_info") {
         $rtn = NULL;
         switch ($skey) {
-            case 'filemanager_path'  :
-                return $this->filemanager_path();
+            case 'filemanager_path' :
+                return App::Config()->fileManagerDir();
                 break;
             default:
-                return ($load) ? 				
-					App::Helper("Config")
-						->load($load)
-						->get($skey) 
-					: 
-						App::load("Helper/Config")
-							->get($skey);
+                return ($load) ?
+                        App::Helper("Config")
+                                ->load($load)
+                                ->get($skey) :
+                        App::load("Helper/Config")
+                                ->get($skey);
                 break;
         }
     }
@@ -315,8 +300,7 @@ class appRain_Collection extends Development_Callbacks
      *
      * @return Mix
      */
-    public function current_admin_info($select = NULL)
-    {
+    public function current_admin_info($select = NULL) {
         $admin_arr = App::Load("Module/Session")->read('User');
         return isset($select) ? $admin_arr[$select] : $admin_arr;
     }
@@ -326,16 +310,14 @@ class appRain_Collection extends Development_Callbacks
      *
      * @return Array
      */
-    public function get_admin_nav()
-    {
+    public function get_admin_nav() {
         return App::Module('ACL')->getInterfaceBuilderDefinition();
     }
 
     /**
      * Admin tab information
      */
-    public function get_admin_links($admin_flag = NULL, $section = NULL)
-    {
+    public function get_admin_links($admin_flag = NULL, $section = NULL) {
         global $admintop_arr;
         global $adminleft_arr;
         $this->set('admintop_arr', $admintop_arr);
@@ -345,26 +327,23 @@ class appRain_Collection extends Development_Callbacks
         }
     }
 
-
     /**
      * Access level of admin Tab
      *
      * @param $admin_type String
      * @return Array()
      */
-    public function admin_tab_access($admin_type = NULL)
-    {
+    public function admin_tab_access($admin_type = NULL) {
         $definiation = $this->get_admin_nav();
         $admin_tab_access = array();
         foreach ($definiation as $key => $val) {
-            if (in_array($admin_type, $val['parent']['acl'])) $admin_tab_access[] = $key;
+            if (in_array($admin_type, $val['parent']['acl']))
+                $admin_tab_access[] = $key;
         }
         return $admin_tab_access;
     }
 
-
-    public function staticPageNameToMetaInfo($name = NULL)
-    {
+    public function staticPageNameToMetaInfo($name = NULL) {
         $pageInfo = App::PageManager()->getData($name);
 
         if (!empty($pageInfo)) {
@@ -382,8 +361,7 @@ class appRain_Collection extends Development_Callbacks
      * It's good practice to call this function
      * before adding menu nodes.
      */
-    public function siteMenuClear()
-    {
+    public function siteMenuClear() {
         $this->__menu = Array();
         return $this;
     }
@@ -391,8 +369,7 @@ class appRain_Collection extends Development_Callbacks
     /**
      * Add each menu link
      */
-    public function siteMenu($link = "", $title = "_MENU_NAME_", $selected = "")
-    {
+    public function siteMenu($link = "", $title = "_MENU_NAME_", $selected = "") {
         $this->__menu[] = array($link, $this->__($title), $selected);
         return $this;
     }
@@ -400,8 +377,7 @@ class appRain_Collection extends Development_Callbacks
     /**
      * Render menu
      */
-    public function siteMenuRender($renderType = 'HTML', $spage = "", $sClass = 'selected', $nClass = '')
-    {
+    public function siteMenuRender($renderType = 'HTML', $spage = "", $sClass = 'selected', $nClass = '') {
         $_links = App::Module('Hook')->getHandler('Sitemenu', 'register_sitemenu');
 
         if (!empty($_links)) {
@@ -415,7 +391,7 @@ class appRain_Collection extends Development_Callbacks
         }
 
         $vandordata = App::Module('Hook')->getHandler('Sitemenu', 'update_sitemenu', $this->__menu);
-        if (isset($vandordata[0]) and !empty($vandordata[0])) {
+        if (isset($vandordata[0]) and ! empty($vandordata[0])) {
             $this->__menu = $vandordata[0];
         }
 
@@ -429,25 +405,22 @@ class appRain_Collection extends Development_Callbacks
 
                     if ($key == 0) {
                         $opts = $this->formatedHtmlOptions($this->getFirstItemHtmlOpts(), $class);
-                    }
-                    else if ($key == (count($this->__menu) - 1)) {
+                    } else if ($key == (count($this->__menu) - 1)) {
                         $opts = $this->formatedHtmlOptions($this->getLastItemHtmlOpts(), $class);
                     }
                     $html .= $this->get_tag("li", $opts, $Html->linkTag($val[0], $this->__($val[1]), array('class' => $class)));
                 }
                 return $Html->getTag('ul', $rootOpts, $html);
-                break;
             default :
                 return $this->__menu;
-                break;
         }
     }
 
-    private function formatedHtmlOptions($opts = array(), $class = "")
-    {
+    private function formatedHtmlOptions($opts = array(), $class = "") {
         if (empty($opts) && $class == "") {
             return array();
         }
         return $opts;
     }
+
 }

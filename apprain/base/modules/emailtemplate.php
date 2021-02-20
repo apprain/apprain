@@ -83,31 +83,69 @@ class appRain_Base_Modules_Emailtemplate extends appRain_Base_Objects {
         $siteInfo = App::Helper('Config')->siteInfo();
 
         $to = $this->getTo();
-        if (!$to)
+		
+        if (empty($to)){
             $to = array($siteInfo['admin_email'], $siteInfo['admin_title']);
-
+		}
+		
         $from = $this->getFrom();
-        if (!$from)
-            $from = array($siteInfo['admin_email'], $siteInfo['admin_title']);
+		# NEED TO UPDATE LATER
+        if (!$from){
+			if(isset($siteInfo['emailsetup_from_email']) && empty($siteInfo['emailsetup_from_email'])){
+				$from = array($siteInfo['emailsetup_from_email'], $siteInfo['admin_title']);
+			}
+			else{
+				$from = array($siteInfo['admin_email'], $siteInfo['admin_title']);
+			}
+		}
+		
+		$from = array($siteInfo['admin_email'], $siteInfo['admin_title']);
+		
+		/*$to      = "reazulk@gmail.com";
+		$subject = 'the subject';
+		$message = 'hello';
+		$headers = 'From: ' . $siteInfo['admin_email'] . "\r\n" .
+			'Reply-To: webmaster@example.com' . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
 
+		mail($to, $subject, $message, $headers);*/
+
+		
         // Set configuration Admin > Preference > Sie Settings
-        App::Plugin('Mailing_PHPMailer')->ContentType = "text/html";
-        App::Plugin('Mailing_PHPMailer')->Host = App::Config()->setting('emailsetup_host', 'localhost');
-        App::Plugin('Mailing_PHPMailer')->Port = App::Config()->setting('emailsetup_port', '25');
-        App::Plugin('Mailing_PHPMailer')->Username = App::Config()->setting('emailsetup_username', '');
-        App::Plugin('Mailing_PHPMailer')->Password = App::Config()->setting('emailsetup_password', '');
+       // App::Plugin('Mailing_PHPMailer')->ContentType = "text/html";
+       // App::Plugin('Mailing_PHPMailer')->Host = App::Config()->setting('emailsetup_host', 'localhost');
+       // App::Plugin('Mailing_PHPMailer')->Port = App::Config()->setting('emailsetup_port', '25');
+       // App::Plugin('Mailing_PHPMailer')->Username = App::Config()->setting('emailsetup_username', '');
+       // App::Plugin('Mailing_PHPMailer')->Password = App::Config()->setting('emailsetup_password', '');
 
-        if (isset($from[0]))
+        if (isset($from[0])){
             App::Plugin('Mailing_PHPMailer')->From = $from[0];
-        if (isset($from[1]))
+		}
+		
+        if (isset($from[1])){
             App::Plugin('Mailing_PHPMailer')->FromName = $from[1];
+		}
 
         App::Plugin('Mailing_PHPMailer')->AddAddress($to[0], $to[1]);
         App::Plugin('Mailing_PHPMailer')->Subject = $this->tempaltedata['subject'];
         App::Plugin('Mailing_PHPMailer')->MsgHTML($this->tempaltedata['message']);
         App::Plugin('Mailing_PHPMailer')->send();
     }
+	
+	
 
+    public function AddAddress($email = null,$name = null) {
+		 App::Plugin('Mailing_PHPMailer')->AddAddress($email, $name);
+		 
+		 return $this;
+	}
+
+	public function ClearAddresses() {
+		 App::Plugin('Mailing_PHPMailer')->ClearAddresses();
+		 
+		 return $this;
+	}
+	
     public function load($data = null) {
         $Template = App::InformationSet('emailtemplate')->findByTemplateType($data['templateType']);
         if (empty($Template)) {

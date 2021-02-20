@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,13 +27,13 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
-
-abstract class appRain_Base_Abstract
-{
+abstract class appRain_Base_Abstract {
 
     private static $__connection = NULL;
+
     const PRIMARY = 'primary';
     const _APP = 'app_';
+
     public $_cname = null;
 
     /**
@@ -40,15 +41,13 @@ abstract class appRain_Base_Abstract
      *
      * @return object
      */
-    protected function get_conn($cname = null)
-    {
+    protected function get_conn($cname = null) {
         $this->defineCName($cname);
         if (!isset(App::$__appData["db_connection"][$this->_cname])) {
-            try {	
-				$db_config = $this->readdbconfig();
-				App::$__appData["db_connection"][$this->_cname] = App::Module("Database_{$db_config['driver']}_{$db_config['type']}")->Connect($db_config); 
-            }
-            catch (Exception $e) {
+            try {
+                $db_config = $this->readdbconfig();
+                App::$__appData["db_connection"][$this->_cname] = App::Module("Database_{$db_config['driver']}_{$db_config['type']}")->Connect($db_config);
+            } catch (Exception $e) {
                 echo "<pre>";
                 echo ("<strong>" . $e->getMessage() . "</strong>");
                 echo ("\n\n<strong>Hints</strong>\nWe are unable to connect database. Please edit databse definition xml (Path: development/definition/database.xml)");
@@ -60,17 +59,26 @@ abstract class appRain_Base_Abstract
         return App::$__appData["db_connection"][$this->_cname];
     }
 
-    private function defineCName($cname = null)
-    {
+    private function defineCName($cname = null) {
         if (isset($cname)) {
             $this->_cname = $cname;
+            return;
         }
-        else if (isset($this->conn) && $this->conn != 'auto' && !is_bool($this->conn)) {
+
+        if (isset($this->conn) && $this->conn != 'auto' && !is_bool($this->conn)) {
             $this->_cname = $this->conn;
+            return;
+        } else {
+            $definition = App::__def()->getURIManagerDefinition();
+            if (!empty($definition['bootrouter']['connection'])) {
+                $this->_cname = $definition['bootrouter']['connection'];
+                return;
+            }
         }
-        else {
-            $this->_cname = self::PRIMARY;
-        }
+
+        $this->_cname = self::PRIMARY;
+
+        return;
     }
 
     /**
@@ -79,10 +87,10 @@ abstract class appRain_Base_Abstract
      * @parameter null
      * @return array
      */
-    public function readdbconfig($key = null, $cname = self::PRIMARY)
-    {
+    public function readdbconfig($key = null, $cname = self::PRIMARY) {
         $cnf = App::Module("definition")
-            ->getDBConfig(null, $this->_cname);
+                ->getDBConfig(null, $this->_cname);
         return isset($cnf[$key]) ? $cnf[$key] : $cnf;
     }
+
 }

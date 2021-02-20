@@ -58,14 +58,34 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
             return false;
     }
 
-    public function readAccess() {
+	
+	// Type acl , aclobject
+	// return value or true of super admin
+    public function readAccess($type='acl', $link= null) {
         $adminInfo = App::adminManager()->thisAdminInfo();
 
         if (!isset($adminInfo['type']) || strtolower($adminInfo['type']) == self::SUPER) {
             return true;
         }
-        if ($adminInfo['acl'] != '') {
-            return unserialize($adminInfo['acl']);
+        if ($adminInfo[$type] != '') {
+            $data =  unserialize($adminInfo[$type]);
+
+			if( isset($link) and !empty($link)){
+				$list = explode('/',$link);
+				
+				foreach($list as $key){
+					if(isset($data[$key])){
+						$data = $data[$key];
+					}
+					else{
+						$data = "";
+					}
+				}
+				
+				return $data;
+			}
+			
+			return $data;
         }
 
         return array();
@@ -196,9 +216,9 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
             $defaultvalue = isset($userdata[$name][$fieldname]) ? $userdata[$name][$fieldname] : $row['defaultvalue'];
             $inputtype = $row['inputtype'];
             if (strtolower($inputtype) == 'checkboxtag') {
-                $str .= App::Helper('Html')->getTag('h5', $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}][]", $row['options'], $defaultvalue);
+                $str .= App::Helper('Html')->getTag('h5',array('style'=>'margin-left:0'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}][]", $row['options'], $defaultvalue);
             } else {
-                $str .= App::Helper('Html')->getTag('h5', $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $row['options'], $defaultvalue);
+                $str .= App::Helper('Html')->getTag('h5', array('style'=>'margin-left:0'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $row['options'], $defaultvalue);
             }
         }
         $str .= "</div>";

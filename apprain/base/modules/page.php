@@ -151,6 +151,10 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
             $hookDD .= "<option value=\"quicklinks\">Quick Links</option>";
         }
 
+		if(!isset($themeInfo['hooks']) || empty($themeInfo['hooks'])){
+			return 'Theme Developer did not add any hook';
+		}
+		
         foreach ($themeInfo['hooks'] as $hook) {
             $hookDD .= "<optgroup label=\"{$hook['title']}\">";
             foreach ($hook['list'] as $value => $title) {
@@ -275,6 +279,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
 
     public function getQuickLinks()
     {
+		
         $data = App::Model('Page')->findAll("hook LIKE '%quicklinks%' ORDER BY sort_order ASC");
         $links = array();
         foreach ($data['data'] as $row) {

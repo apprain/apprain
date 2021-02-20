@@ -171,7 +171,7 @@ class DataGridRow {
 
     public $cells;
 
-    function DataGridRow() {
+    function __construct() {
         $array = func_get_args();
         $this->cells = $array[0];
     }

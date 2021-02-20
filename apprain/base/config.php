@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -111,10 +112,16 @@ define("REPORT_CACHE_PATH", APPRAIN_ROOT . "development/cache/data/report");
 
 # Attach the configuration file and database information
 if (!file_exists(DATABASE_PATH . DS . "database.xml") && !isset($AUTO_STRT_INSTALL_OFF)) {
-    if (file_exists(APPRAIN_ROOT . "webroot/install/install.php")) header("location:install/install.php");
-    else   die ("Run appRain installer to Start Installation Process");
+    if (file_exists(APPRAIN_ROOT . "webroot/install/install.php"))
+        header("location:install/install.php");
+    else
+        die("Run appRain installer to Start Installation Process");
 }
 
+## Load Basics
+require_once(APPRAIN_ROOT . "apprain/base/abstract.php");
+require_once(APPRAIN_ROOT . "apprain/base/objects.php");
+require_once(APPRAIN_ROOT . "apprain/base/modules/definition.php");
 require_once(APPRAIN_ROOT . "apprain/base/appmodel.php");
 require_once(APPRAIN_ROOT . "apprain/base/model.php");
 require_once(APPRAIN_ROOT . "apprain/base/globalfx.php");
@@ -128,9 +135,10 @@ define('ERROR_BACKGROUND', app::__def()->sysConfig('ERROR_BACKGROUND'));
 define('DEFAULT_BACKGROUND', app::__def()->sysConfig('DEFAULT_BACKGROUND'));
 define('CATEGORY_PATH_MODE', app::__def()->sysConfig('CATEGORY_PATH_MODE'));
 
-if (get_magic_quotes_gpc()) {
+//if (get_magic_quotes_gpc()) 
+/*{
     $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-    while (list($key, $val) = each($process)) {
+    foreach ($process as $key=>$val) {
         foreach ($val as $k => $v) {
             unset($process[$key][$k]);
             if (is_array($v)) {
@@ -142,114 +150,108 @@ if (get_magic_quotes_gpc()) {
         }
     }
     unset($process);
-}
+}*/
 
-function __autoload($class_name)
-{
-    if (strstr(strtolower($class_name), "model") == 'model') {
-        if (file_exists(MODEL_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 5))) . ".php")) {
-            if (!class_exists($class_name)) require_once(MODEL_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 5))) . ".php");
-        }
-        else {
-            $_CE = true;
-            $hookResource = App::Module('Hook')->getHookResouce('Model', 'register_model');
 
-            if (!empty($hookResource)) {
-                foreach ($hookResource as $node) {
-                    if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
-                        $_rtn_resources = App::__obj($class)->$method();
+spl_autoload_register(
 
-                        if (!empty($_rtn_resources)) {
-                            foreach ($_rtn_resources as $res) {
-                                if (strtolower("{$res['name']}Model") == strtolower($class_name)) {
-                                    $_CE = false;
-                                    if (!class_exists($class_name)) {
-                                        require_once($res['model_path'] . DS . strtolower($res['name']) . ".php");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+	function ($class_name) {
+		if (strstr(strtolower($class_name), "model") == 'model') {
+			if (file_exists(MODEL_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 5))) . ".php")) {
+				if (!class_exists($class_name))
+					require_once(MODEL_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 5))) . ".php");
+			}
+			else {
+				$_CE = true;
+				$hookResource = App::Module('Hook')->getHookResouce('Model', 'register_model');
 
-            if ($_CE) {
-                if (app::__def()->sysConfig('DEBUG_MODE') > 0) {
-                    try {
-                        throw new AppException('Trace:');
-                    }
-                    catch (AppException $e) {
-                        $__mdl = UCfirst(substr($class_name, 0, (strlen($class_name) - 5))); 
-						App::__transfer("/developer/exception/invalid_model?arg[]={$__mdl}&arg[]=" . strtolower($__mdl) . "&arg[]=" . App::Model('Admin')->DbPrefix());
-                    }
-                }
-                else {
-                    App::__transfer(App::__def()->sysConfig('URL_FOR_404_PAGE'));
-                }
-            }
-        }
-    }
-    else if (strstr(strtolower($class_name), "controller") == 'controller') {
-        if (
-            file_exists(
-                CONTROLLER_PATH . DS . strtolower(
-                    substr(
-                        $class_name, 0, (strlen($class_name) - 10)
-                    )
-                ) . ".php"
-            )
-        ) {
-            require_once(CONTROLLER_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 10))) . ".php");
-        }
-        else {
-            $_CE = true;
-            $hookResource = App::Module('Hook')->getHookResouce('Controller', 'register_controller');
-            if (!empty($hookResource)) {
-                foreach ($hookResource as $node) {
-                    if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
-                        $_rtn_resources = App::__obj($class)->$method();
+				if (!empty($hookResource)) {
+					foreach ($hookResource as $node) {
+						if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
+							$_rtn_resources = App::__obj($class)->$method();
 
-                        if (!empty($_rtn_resources)) {
-                            foreach ($_rtn_resources as $res) {
-                                if (strtolower("{$res['name']}Controller") == strtolower($class_name)) {
-                                    $_CE = false;
-                                    App::$__appData['controllerLoadByComponent_data'] = $res;
-                                    require_once($res['controller_path'] . DS . strtolower($res['name']) . ".php");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ($_CE) {
-                if (app::__def()->sysConfig('DEBUG_MODE') > 0) {
-                    try {
-                        throw new AppException('Trace:');
-                    }
-                    catch (AppException $e) {
-                        $__ctrl = strtolower(substr($class_name, 0, (strlen($class_name) - 10)));
-						App::__transfer("/developer/exception/invalid_controller?arg[]={$__ctrl}");
-                    }
-                }
-                else {
-                    App::__transfer(App::__def()->sysConfig('URL_FOR_404_PAGE'));
-                }
-            }
-        }
+							if (!empty($_rtn_resources)) {
+								foreach ($_rtn_resources as $res) {
+									if (strtolower("{$res['name']}Model") == strtolower($class_name)) {
+										$_CE = false;
+										if (!class_exists($class_name)) {
+											require_once($res['model_path'] . DS . strtolower($res['name']) . ".php");
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if ($_CE) {
+					if (app::__def()->sysConfig('DEBUG_MODE') > 0) {
+						try {
+							throw new AppException('Trace:');
+						} catch (AppException $e) {
+							$__mdl = UCfirst(substr($class_name, 0, (strlen($class_name) - 5)));
+							App::__transfer("/developer/exception/invalid_model?arg[]={$__mdl}&arg[]=" . strtolower($__mdl) . "&arg[]=" . App::Model('Admin')->DbPrefix());
+						}
+					} else {
+						App::__transfer(App::__def()->sysConfig('URL_FOR_404_PAGE'));
+					}
+				}
+			}
+		} else if (strstr(strtolower($class_name), "controller") == 'controller') {
+			if (
+					file_exists(
+							CONTROLLER_PATH . DS . strtolower(
+									substr(
+											$class_name, 0, (strlen($class_name) - 10)
+									)
+							) . ".php"
+					)
+			) {
+				require_once(CONTROLLER_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 10))) . ".php");
+			} else {
+				$_CE = true;
+				$hookResource = App::Module('Hook')->getHookResouce('Controller', 'register_controller');
+				if (!empty($hookResource)) {
+					foreach ($hookResource as $node) {
+						if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
+							$_rtn_resources = App::__obj($class)->$method();
+
+							if (!empty($_rtn_resources)) {
+								foreach ($_rtn_resources as $res) {
+									if (strtolower("{$res['name']}Controller") == strtolower($class_name)) {
+										$_CE = false;
+										App::$__appData['controllerLoadByComponent_data'] = $res;
+										require_once($res['controller_path'] . DS . strtolower($res['name']) . ".php");
+									}
+								}
+							}
+						}
+					}
+				}
+				if ($_CE) {
+					if (app::__def()->sysConfig('DEBUG_MODE') > 0) {
+						try {
+							throw new AppException('Trace:');
+						} catch (AppException $e) {
+							$__ctrl = strtolower(substr($class_name, 0, (strlen($class_name) - 10)));
+							App::__transfer("/developer/exception/invalid_controller?arg[]={$__ctrl}");
+						}
+					} else {
+						App::__transfer(App::__def()->sysConfig('URL_FOR_404_PAGE'));
+					}
+				}
+			}
+		} else if (strstr(strtolower($class_name), "appmodule") == 'appmodule') {
+			include_once(MODULE_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 9)) . ".php"));
+		} else if (strtolower($class_name) == 'appexception') {
+			include_once(MODULE_PATH . DS . strtolower("{$class_name}.php"));
+		} else if (file_exists(PLUGIN_PATH . DS . strtolower($class_name . DS . "{$class_name}.php"))) {
+			include(PLUGIN_PATH . DS . strtolower($class_name . DS . "{$class_name}") . ".php");
+		} elseif (file_exists(APPRAIN_ROOT . strtolower(str_replace("_", DS, $class_name)) . ".php")) {
+			require_once APPRAIN_ROOT . strtolower(str_replace("_", DS, $class_name)) . ".php";
+		} else {
+			App::__transfer("/developer/exception/class_not_defined?arg[]=" . ucfirst($class_name) . "&arg[]={$class_name}");
+		}
     }
-    else if (strstr(strtolower($class_name), "appmodule") == 'appmodule') {
-        include_once(MODULE_PATH . DS . strtolower(substr($class_name, 0, (strlen($class_name) - 9)) . ".php"));
-    }
-    else if (strtolower($class_name) == 'appexception') {
-        include_once(MODULE_PATH . DS . strtolower("{$class_name}.php"));
-    }
-    else if (file_exists(PLUGIN_PATH . DS . strtolower($class_name . DS . "{$class_name}.php"))) {
-        include(PLUGIN_PATH . DS . strtolower($class_name . DS . "{$class_name}") . ".php");
-    }
-    elseif (file_exists(APPRAIN_ROOT . strtolower(str_replace("_", DS, $class_name)) . ".php")) {
-        require_once APPRAIN_ROOT . strtolower(str_replace("_", DS, $class_name)) . ".php";
-    }
-    else {
-		App::__transfer("/developer/exception/class_not_defined?arg[]=" . ucfirst($class_name) . "&arg[]={$class_name}");
-    }
-}
+
+);

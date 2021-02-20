@@ -188,7 +188,7 @@ class appRain_Base_Modules_CategorySet extends appRain_Base_Objects {
          */
         $parent_start = isset($parameter['parent_start]']) ? $parameter['parent_start]'] : 0;
         $inputType = isset($parameter['inputType']) ? $parameter['inputType'] : "selectTag";
-        $name = ($inputType == "checkboxTag") ? $name . "[checkbox][]" : $name;
+        $name = ($inputType == "checkboxTag" && substr($name,-2) != '[]') ? $name . "[checkbox][]" : $name;
 
         /**
          * Requesting for respactive category
@@ -298,9 +298,14 @@ class appRain_Base_Modules_CategorySet extends appRain_Base_Objects {
      * @return Object
      */
     public function save_category($_data = NULL) {
+		
         $user = App::Load("Module/Session")->read('User');
 
         $data['Category'] = isset($_data['Category']) ? $_data['Category'] : $_data;
+
+		if(!isset($data['Category']['type'])){
+			$data['Category']['type'] = $this->getCategorySetType();
+		}
         $data['Category']['adminref'] = isset($user['adminref']) ? $user['adminref'] : 0;
         $data['Category']['entrydate'] = isset($data['Category']['entrydate']) ? $data['Category']['entrydate'] : App::Load("Helper/Date")->getDate('Y-m-d H:i:s');
         $data['Category']['lastmodified'] = App::Load("Helper/Date")->getDate('Y-m-d H:i:s');
@@ -309,6 +314,7 @@ class appRain_Base_Modules_CategorySet extends appRain_Base_Objects {
     }
 
     public function Save($_data) {
+		
         return $this->save_category($_data);
     }
 

@@ -700,28 +700,32 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
             }
         }
 
-
         // RUN Callbacks
         $DynamicallyChnagedDefiniton = App::__obj('Development_Callbacks')->_on_uri_definition_init($this->URIManagerSingleToneCache);
-        if (is_array($DynamicallyChnagedDefiniton) && !empty($DynamicallyChnagedDefiniton))
+		
+        if (is_array($DynamicallyChnagedDefiniton) && !empty($DynamicallyChnagedDefiniton)){
             $this->URIManagerSingleToneCache = $DynamicallyChnagedDefiniton;
+		}
 
         $hookResource = App::Module('Hook')->getHookResouce('URIManager', 'on_initialize');
+		$list = array();
         if (!empty($hookResource)) {
-
-            $clean_key = "{$hookResource[0]['resource'][0]}|{$hookResource[0]['resource'][1]}";
-            if (!in_array($clean_key, $this->to_clean)) {
-                $this->to_clean[] = $clean_key;
-                foreach ($hookResource as $node) {
-                    if (($class = $node['resource'][0]) != "" && ($method = $node['resource'][1]) != "") {
-                        $r2 = isset($node['resource'][2]) ? $node['resource'][2] : null;
-                        $DynamicallyChnagedDefiniton = App::__obj($class)->$method($this->URIManagerSingleToneCache, $r2);
-                        if (is_array($DynamicallyChnagedDefiniton) && !empty($DynamicallyChnagedDefiniton)) {
-                            $this->URIManagerSingleToneCache = $DynamicallyChnagedDefiniton;
-                        }
-                    }
-                }
-            }
+			foreach ($hookResource as $nodkey=>$node) {
+				if(!isset($node['resource'][0]) || !isset($node['resource'][1])){
+					continue;
+				}				
+				$class = $node['resource'][0];
+				$method = $node['resource'][1];
+				$key = $class . $method;
+				if(!isset($this->to_clean[$key])){
+					$this->to_clean[$key] = time();
+					$r2 = isset($node['resource'][2]) ? $node['resource'][2] : null;
+					$DynamicallyChnagedDefiniton = App::__obj($class)->$method($this->URIManagerSingleToneCache, $r2);
+					if (is_array($DynamicallyChnagedDefiniton) && !empty($DynamicallyChnagedDefiniton)) {
+						$this->URIManagerSingleToneCache = $DynamicallyChnagedDefiniton;
+					}				
+				}
+			}
         }
         return $this->URIManagerSingleToneCache;
     }
@@ -741,6 +745,9 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
                 ->item(0)
                 ->getElementsByTagName('bootrouter');
 
+
+		$DOMAIN = App::Helper('Config')->getServerInfo('HTTP_HOST');
+
         foreach ($bootrouter as $val) {
             $theme = (strtolower($val->getElementsByTagName('theme')->item(0)->nodeValue) == 'auto') ? "" : $val->getElementsByTagName('theme')->item(0)->nodeValue;
 
@@ -753,7 +760,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
                     'action' => $val->getElementsByTagName('action')->item(0)->nodeValue,
                     'connection' => $val->getElementsByTagName('connection')->item(0)->nodeValue
                 );
-            } else if ((str_replace('www.', '', App::Helper('Config')->getServerInfo('SERVER_NAME')) . App::getBaseUrl()) == str_replace('www.', '', $val->getElementsByTagName('domain')->item(0)->nodeValue)) {
+            } else if ((str_replace('www.', '', $DOMAIN) . App::getBaseUrl()) == str_replace('www.', '', $val->getElementsByTagName('domain')->item(0)->nodeValue)) {
                 $definition['bootrouter'] = Array(
                     'type' => $val->getElementsByTagName('type')->item(0)->nodeValue,
                     'domain' => $val->getElementsByTagName('domain')->item(0)->nodeValue,
@@ -851,19 +858,24 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
 
                     if (!empty($_rtn_resources)) {
                         foreach ($_rtn_resources['filepaths'] as $filepath) {
+							
                             $def = $this->parseSiteSettingByFile($filepath);
 
-                            // Merge definition
-                            $key = key($def);
-                            if (isset($definition[$key])) {
-                                $definition[$key]['groups'] = array_merge($definition[$key]['groups'], $def[$key]['groups']);
-                            } else
-                                $definition = array_merge($definition, $def);
+							foreach($def as $key=>$defrow){
+
+								if (isset($definition[$key])) {
+									$definition[$key]['groups'] = array_merge($definition[$key]['groups'], $defrow['groups']);
+								} else{
+									$definition[$key] = $defrow;
+								}
+								
+							}
                         }
                     }
                 }
             }
         }
+
         return $definition;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,33 +27,30 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
-
-class Apprain_Base_appModel extends appRain_Base_Objects
+class Apprain_Base_appModel extends appRain_Base_Objects 
 {
+
     protected $relation_data = false;
     protected $id = NULL;
     private $load_ptr = NULL;
     public $error = Array();
     public $debugQuries = Array();
 
-    public function getVersion()
-    {
+    public function getVersion() {
         $data = App::Load("Model/Coreresource")->findByName($this->name);
         $this->core_version = isset($data['version']) ? $data['version'] : "0.0.0";
 
         return $this;
     }
 
-    public function load($var_name = NULL)
-    {
+    public function load($var_name = NULL) {
         if (isset($this->load_ptr)) {
             if (is_object($this->load_ptr)) {
                 $this->load_ptr = $this->load_ptr->$var_name;
-            }
-            else if (is_array($this->load_ptr)) {
+            } else if (is_array($this->load_ptr)) {
                 $this->load_ptr = $this->load_ptr[$var_name];
-            }
-            else $this->load_ptr = NULL;
+            } else
+                $this->load_ptr = NULL;
         }
         else {
             $this->load_ptr = isset($this->$var_name) ? $this->$var_name : NULL;
@@ -61,8 +59,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
         return $this;
     }
 
-    public function fieldToField($key = null, $val = null, $field = null, $options = null)
-    {
+    public function fieldToField($key = null, $val = null, $field = null, $options = null) {
         if (isset($key) && isset($val)) {
             $data = $this->find("{$key}='{$val}'");
             if (is_array($field)) {
@@ -76,67 +73,60 @@ class Apprain_Base_appModel extends appRain_Base_Objects
                 }
 
                 return implode(" ", $a);
-            }
-            else {
+            } else {
                 return $data[$field];
             }
         }
     }
 
-    public function getValue($var_name = NULL)
-    {
+    public function getValue($var_name = NULL) {
         $__obj = isset($this->load_ptr) ? $this->load_ptr : $this;
         if (is_object($__obj)) {
             return isset($__obj->$var_name) ? $__obj->$var_name : NULL;
-        }
-        else if (is_array($__obj)) {
+        } else if (is_array($__obj)) {
             return isset($__obj[$var_name]) ? $__obj[$var_name] : NULL;
-        }
-        else return NULL;
+        } else
+            return NULL;
     }
 
-	public function idToName($id,$field,$b,$c){
-		$data = $this->findById($id);
-		return isset($row[$field]) ? $row[$field] : '';
-	}
-	
-    /**
-         * Count entry of a table
-         * @parameter condition string
-         * @parameter from_clause string
-         * @return integer
-        */
-    public function countEntry($condition = NULL, $from_clause = NULL)
-    {
-		
-		return $this->get_conn()->countEntry($condition, $this->model2table($from_clause));
-		
+    public function idToName($id, $field) {
+        $row = $this->findById($id);
+        return isset($row[$field]) ? $row[$field] : '';
     }
 
     /**
-         *Find one row
-        * @parameter condition string
-         * @parameter from_clause string
-         * @return array
-         */
-		 
-    function find($condition = null, $from_clause = null, $str_from = null)
-    {
-		return $this->get_conn()->find($condition , $this->model2table($from_clause), $str_from);
+     * Count entry of a table
+     * @parameter condition string
+     * @parameter from_clause string
+     * @return integer
+     */
+    public function countEntry($condition = NULL, $from_clause = NULL) {
+
+        return $this->get_conn()->countEntry($condition, $this->model2table($from_clause));
     }
 
     /**
-         * Find All data except pagination
-         * @parameter condition string
-         * @parameter from_clause string
-         * @return array
-         */
-		 
-    function findAll($condition = null, $from_clause = null, $str_from = null)
-    {
-        $retrun = $this->get_conn()->findAll($condition , $this->model2table($from_clause), $str_from);
-		
-		return array('data'=>$retrun);
+     * Find one row
+     * @parameter condition string
+     * @parameter from_clause string
+     * @return array
+     */
+    function find($condition = null, $from_clause = null, $str_from = null) {
+        return $this->get_conn()->find($condition, $this->model2table($from_clause), $str_from);
+    }
+
+    /**
+     * Find All data except pagination
+     * @parameter condition string
+     * @parameter from_clause string
+     * @return array
+     */
+    function findAll($condition = null, $from_clause = null, $str_from = null) {
+        $retrun = $this->get_conn()
+                ->setLimit($this->getLimit())
+                ->findAll($condition, $this->model2table($from_clause), $str_from);
+
+        return array('data' => $retrun);
     }
 
     /**
@@ -146,20 +136,16 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter value string
      * @return array
      */
-    function callByFiled($method = null, $value = null)
-    {
+    function callByFiled($method = null, $value = null) {
         if (($field = str_replace("findallby", "", strtolower($method))) != strtolower($method)) {
             return $this->findAll("$field = '$value'");
-        }
-        else if (($field = str_replace("findby", "", strtolower($method))) != strtolower($method)) {
+        } else if (($field = str_replace("findby", "", strtolower($method))) != strtolower($method)) {
             $data = $this->find("$field = '$value'");
             return $data;
-        }
-        else if (($field = str_replace("deleteby", "", strtolower($method))) != strtolower($method)) {
+        } else if (($field = str_replace("deleteby", "", strtolower($method))) != strtolower($method)) {
             $data = $this->delete("$field = '$value'");
             return $data;
-        }
-        else {
+        } else {
             show_debug(" Model: Invalid call of  $method", "1+2");
         }
     }
@@ -173,54 +159,54 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter from_clause string
      * @return array
      */
-    public function paging($condition = null, $listing_per_page = NULL, $h_link = NULL, $from_clause = NULL)
-    {
-		return $this->get_conn()
-			->paging(
-				$condition,
-				$listing_per_page,
-				$h_link,
-				$this->model2table($from_clause)
-			);
+    public function paging($condition = null, $listing_per_page = NULL, $h_link = NULL, $from_clause = NULL,$str_from=null) {
+        return $this->get_conn()
+                        ->paging(
+                                $condition, $listing_per_page, $h_link, $this->model2table($from_clause),$str_from
+        );
     }
 
-	function save($data = null, $_condition = null)
-    {		
-		$this->data[$this->name] = ($data[$this->name]) ? $data[$this->name] : $this->__data;
+    public function clear() {
+        $this->__data = array();
+        return $this;
+    }
+
+    public function save($data = null, $_condition = null) {
+        $this->data[$this->name] = ($data[$this->name]) ? $data[$this->name] : $this->__data;
         $this->_beforeSave($this);
-		if(!isset($this->data[$this->name]['id'])){
-			$this->data[$this->name]['id'] = null;
-		}	
-		
-        if ($this->modelDataValidation($this->data)) {		
-            $this->_onValidationSuccess($this);
-            $_model = $this->obj2str($this->name);			
-            $_dbTable = $this->model2table();			
-            $_tableFieldInfo = $this->data[$_model];
-			
-			$id = $this->get_conn()->save($_dbTable,$_tableFieldInfo, $_condition);
-			
-			if($id) {
-                $this->setId($id);
-				$this->setQueryStatus("Success");
-				$this->setErrorInfo();
-            }	
-            else{
-				$this->setQueryStatus("Failed");
-				$this->setError('Failed');
-				$this->setErrorInfo('Unable to execute');
-			}
+        if (!isset($this->data[$this->name]['id'])) {
+            $this->data[$this->name]['id'] = null;
         }
-        else {
+
+        if ($this->modelDataValidation($this->data)) {
+            $this->_onValidationSuccess($this);
+            $_model = $this->obj2str($this->name);
+            $_dbTable = $this->model2table();
+            $_tableFieldInfo = $this->data[$_model];
+
+            $id = $this->get_conn()->save($_dbTable, $_tableFieldInfo, $_condition);
+
+            if ($id) {
+                $this->setId($id);
+                $this->setQueryStatus("Success");
+                $this->setErrorInfo();
+            } else {
+                $this->setQueryStatus("Failed");
+                $this->setError('Failed');
+                $this->setErrorInfo('Unable to execute');
+            }
+        } else {
             $this->_onValidationFailed($this);
         }
-		
+
         $this->_afterSave($this);
-		
+
+        if(isset($this->data[$this->name])){
+            unset($this->data[$this->name]);
+        }
+        
         return $this;
-		
     }
-	
 
     /**
      * Check Model Validation
@@ -228,12 +214,13 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @param array $data
      * @return boolean
      */
-    private function modelDataValidation($data = null)
-    {
+    private function modelDataValidation($data = null) {
         $this->error = Array();
 
-        if (is_null($data)) $error[] = "No Data Found";
-        else if (empty($data[$this->name])) $error[] = "No Data Found";
+        if (is_null($data))
+            $error[] = "No Data Found";
+        else if (empty($data[$this->name]))
+            $error[] = "No Data Found";
 
         foreach ($data[$this->name] as $fieldKey => $fieldValue) {
             if (isset($this->model_validation[$fieldKey])) {
@@ -241,7 +228,8 @@ class Apprain_Base_appModel extends appRain_Base_Objects
                 foreach ($rules as $rule) {
                     $validationRule = $rule['rule'];
                     $options = isset($rule['options']) ? $rule['options'] : Array();
-                    if ($validationRule == 'unique') $options = Array("model" => $this->name, "field" => $fieldKey, "id" => isset($data[$this->name]['id']) ? $data[$this->name]['id'] : "");
+                    if ($validationRule == 'unique')
+                        $options = Array("model" => $this->name, "field" => $fieldKey, "id" => isset($data[$this->name]['id']) ? $data[$this->name]['id'] : "");
                     if (!$result = App::Load("Helper/Validation")->$validationRule($fieldValue, $options)) {
                         $this->error[] = isset($rule['message']) ? $rule['message'] : "Valid '{$validationRule}' value expected in '{$fieldKey}' field";
                     }
@@ -258,25 +246,24 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter data array
      * @return array
      */
-    function get_fancy_data($data)
-    {
+    function get_fancy_data($data) {
         /*
-        * Initialize value
-        */
+         * Initialize value
+         */
         $collection = array();
         $basemodel = NULL;
         $i = 0;
 
         /*
-        * Outer loop to run untill the data array end
-        */
+         * Outer loop to run untill the data array end
+         */
         foreach ($data as $k => $v) {
             /* Ndoe generator */
             $node = array();
 
             /*
-            * Preserver first instance of the row in to a dummy variable
-            */
+             * Preserver first instance of the row in to a dummy variable
+             */
             foreach ($v as $key => $val) {
                 if (!is_numeric($key)) {
                     $keys = explode(".", $key);
@@ -286,24 +273,22 @@ class Apprain_Base_appModel extends appRain_Base_Objects
             }
 
             /*
-            * Collect the first node baded model id
-            */
+             * Collect the first node baded model id
+             */
             $key_cur = isset($key_cur) ? $key_cur : $v["$basemodel.id"];
 
             /*
-            * Set the values in correct place of the the node array
-            */
+             * Set the values in correct place of the the node array
+             */
             foreach ($node as $y => $z) {
                 if ($y == $basemodel) {
                     /* For princilple model it save in to a single array */
                     $collection[$v["$basemodel.id"]][$y] = $z;
-                }
-                else {
+                } else {
                     if (implode("", $z) != "") {
                         /* For relational model it save in to a nulti dymantional array array */
                         $collection[$v["$basemodel.id"]][$y][] = $z;
-                    }
-                    else if (!isset($collection[$v["$basemodel.id"]][$y])) {
+                    } else if (!isset($collection[$v["$basemodel.id"]][$y])) {
                         /* Create an empty array of no data found in a relational model */
                         $collection[$v["$basemodel.id"]][$y] = array();
                     }
@@ -333,32 +318,30 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter condition string
      * @return integer
      */
-    function delete($condition = NULL)
-    {
+    function delete($condition = NULL) {
         $db_table = $this->model2table();
 
         $c2 = isset($this->id) ? " WHERE id=" . $this->id : "";
         $c = isset($condition) ? "WHERE {$condition}" : $c2;
 
-       if (!$this->getDonotLog() && $this->name != 'Log') {
-            $this->logDeletedData($c,$db_table);
+        if (!$this->getDonotLog() && $this->name != 'Log') {
+            $this->logDeletedData($c, $db_table);
         }
 
-		$this->_beforeDelete($this);
-		$retrun = $this->get_conn()->Delete($db_table,$c);
+        $this->_beforeDelete($this);
+        $retrun = $this->get_conn()->Delete($db_table, $c);
         $this->_afterDelete($this);
 
         return $retrun;
     }
 
-    private function logDeletedData($condition=null,$from_clause=null)
-    {
-        if (App::__def()->sysConfig('LOG_DELETED_DATA')) {		
+    private function logDeletedData($condition = null, $from_clause = null) {
+        if (App::__def()->sysConfig('LOG_DELETED_DATA')) {
 
             $query = "SELECT * FROM {$from_clause} {$condition}";
 
             $data = $this->custom_query($query);
-			
+
             $user = App::Module('Session')->read('User');
 
             $fkey = isset($user['adminref']) ? $user['adminref'] : NULL;
@@ -366,10 +349,10 @@ class Apprain_Base_appModel extends appRain_Base_Objects
 
             if (!empty($data)) {
                 App::Helper('Log')
-                    ->setLogType('DataDeleted')
-                    ->setLogSaveMode('Db')
-                    ->setFkey($fkey)
-                    ->Write($data);
+                        ->setLogType('DataDeleted')
+                        ->setLogSaveMode('Db')
+                        ->setFkey($fkey)
+                        ->Write($data);
             }
         }
     }
@@ -380,12 +363,12 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter sql string
      * @return array
      */
-    function custom_execute($sql = NULL)
-    {
+
+    function custom_execute($sql = NULL) {
         $this->varifysql($sql);
-       // $sth = $this->get_conn()->custom_execute($sql);
-       return $this->get_conn()->fetch_rows($sql);
-      //  return $this;
+        // $sth = $this->get_conn()->custom_execute($sql);
+        return $this->get_conn()->fetch_rows($sql);
+        //  return $this;
     }
 
     /*
@@ -394,25 +377,24 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter sql string
      * @return array
      */
-    public function custom_query($sql = NULL)
-    {
-	    $this->varifysql($sql);
+
+    public function custom_query($sql = NULL) {
+        $this->varifysql($sql);
         return $this->get_conn()->custom_execute($sql);
-		
     }
 
-  /*
-    * Build query
-    * If $this->relation_data is set to true then it fetch data from related table
-    *
-    * @parameter model string
-    * @parameter condition string
-    * @parameter from_clause string
-    * @parameter str_from string
-    * @return array
-    */
-    public function query_builder($model = NULL, $condition = NULL, $from_clause = NULL, $str_from = "*")
-    {
+    /*
+     * Build query
+     * If $this->relation_data is set to true then it fetch data from related table
+     *
+     * @parameter model string
+     * @parameter condition string
+     * @parameter from_clause string
+     * @parameter str_from string
+     * @return array
+     */
+
+    public function query_builder($model = NULL, $condition = NULL, $from_clause = NULL, $str_from = "*") {
         $condition = isset($condition) ? $condition : "1";
         $type = "normal";
         $str_from = isset($from_clause) ? $from_clause : $str_from;
@@ -430,8 +412,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
 
             $sql = "Select $str_from From " . $this->model2table($model) . " AS $model $sql_body WHERE $condition";
             $type = "relational";
-        }
-        else {
+        } else {
             $sql = "SELECT $str_from FROM " . $this->model2table($from_clause) . " WHERE $condition";
         }
 
@@ -444,8 +425,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter model string
      * @return string
      */
-    public function model2querystr($model = NULL)
-    {
+    public function model2querystr($model = NULL) {
         $table_description = $this->describe($model);
 
         $arr = array();
@@ -461,8 +441,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter model string
      * @return string
      */
-    public function describe($model = NULL)
-    {
+    public function describe($model = NULL) {
         $model = isset($model) ? $model : $this->name;
         $db_table = $this->model2table($model);
 
@@ -471,23 +450,22 @@ class Apprain_Base_appModel extends appRain_Base_Objects
 
             if (!empty($data["table_description"])) {
                 return ($data["table_description"]);
-            }
-            else {
+            } else {
                 return $this->table_description($db_table);
             }
-        }
-        else return "";
+        } else
+            return "";
     }
-	
-	public function collumns(){
-		$db_table = $this->model2table();
-		return $this->get_conn()->collumns($db_table);
-	}
 
-	public function createField($name=null,$def=null){
-		$db_table = $this->model2table();
-		return $this->get_conn()->createField($db_table,$name,$def);
-	}
+    public function collumns() {
+        $db_table = $this->model2table();
+        return $this->get_conn()->collumns($db_table);
+    }
+
+    public function createField($name = null, $def = null) {
+        $db_table = $this->model2table();
+        return $this->get_conn()->createField($db_table, $name, $def);
+    }
 
     /**
      *    Return the table description
@@ -495,8 +473,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter db_table string
      * @return array
      */
-    public function table_description($db_table)
-    {
+    public function table_description($db_table) {
         return $this->fetch_rows(array("type" => "normal", "SQL" => "DESCRIBE $db_table"));
     }
 
@@ -506,11 +483,10 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter query string
      * @return array
      */
-    public function db_execute($query)
-    {
+    public function db_execute($query) {
         /*
-        * Execute the Query
-        */
+         * Execute the Query
+         */
         $this->varifysql($query["SQL"]);
         return $this->get_conn()->query($query["SQL"], PDO::FETCH_ASSOC);
     }
@@ -521,33 +497,28 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter query string
      * @return array
      */
-    public function fetch_rows($query)
-    {	
-		return $this->get_conn()->fetch_rows($query["SQL"]);
+    public function fetch_rows($query) {
+        return $this->get_conn()->fetch_rows($query["SQL"]);
     }
 
-  /**
+    /**
      *    Get table name from model
      *
      * @parameter model string
      * @return string
      */
-    public function model2table($model = NULL)
-    {
+    public function model2table($model = NULL) {
         $model = isset($model) ? $model : $this->name;
         $cname = isset($this->conn) ? $this->conn : 'primary';
         $prefix = App::Load("Module/definition")->getDBConfig('prefix', $cname);
 
         if ($this->name == $model) {
             return $prefix . $this->db_table;
-        }
-        else {
+        } else {
             //$data = $this->model2cashedata($model);
             //$this->db_table = isset($data["table_name"]) ? $data["table_name"] : $this->db_table;
-            return (substr($model,0,strlen($prefix)) == $prefix) ? $model :$prefix . $model;
+            return (substr($model, 0, strlen($prefix)) == $prefix) ? $model : $prefix . $model;
         }
-
-
     }
 
     /**
@@ -556,23 +527,20 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter model string
      * @return array
      */
-    public function model2cashedata($model)
-    {
+    public function model2cashedata($model) {
         $path = MODEL_CACHE_PATH . DS . strtolower($model) . '.mcf';
 
         return file_exists($path) ? unserialize($this->fatchfilecontent($path)) : $this->create_model_cache($model);
     }
 
-    private function create_model_cache($model = NULL)
-    {
+    private function create_model_cache($model = NULL) {
         $obj = is_object($model) ? $model : App::Model($model);
 
         $mode_cash_path = MODEL_CACHE_PATH . DS . strtolower($obj->name) . '.mcf';
 
         if (file_exists($mode_cash_path)) {
             return unserialize($this->fatchfilecontent($mode_cash_path));
-        }
-        else {
+        } else {
             $db_table_desc = ($obj->db_table != "") ? $this->custom_query("DESCRIBE " . App::get('db_prefix') . $obj->db_table) : "";
             $cache_data = array(
                 "table_name" => $obj->db_table,
@@ -591,8 +559,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter value string
      * @return string
      */
-    public function quote_smart($value)
-    {
+    public function quote_smart($value) {
         return $value;
     }
 
@@ -602,8 +569,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter obj object
      * @return string
      */
-    public function obj2str($obj)
-    {
+    public function obj2str($obj) {
         return "$obj";
     }
 
@@ -613,8 +579,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
      * @parameter file_path string
      * @return string
      */
-    public function fatchfilecontent($file_path = NULL)
-    {
+    public function fatchfilecontent($file_path = NULL) {
         $handle = fopen($file_path, "r");
         $contents = '';
         while (!feof($handle)) {
@@ -624,22 +589,44 @@ class Apprain_Base_appModel extends appRain_Base_Objects
         return $contents;
     }
 
-    private function varifysql($sql = "")
-    {
+    private function varifysql($sql = "") {
         if (DEBUG_MODE == 2) {
             App::$__appData['dbQuries'][] = array($sql);
         }
         return $sql;
     }
+
+    // Special Development For Information Set
+    public function SuperviseInformationSetFirstInstance() {
+        $db_table = $this->model2table();
+        return $this->get_conn()->SuperviseInformationSetFirstInstance($db_table);
+    }
+
+    public function createModifyInformationSetFields($field_name = null, $db_attributes = array()) {
+        $db_table = $this->model2table();
+        $this->get_conn()->createModifyInformationSetFields($db_table, $field_name, $db_attributes);
+    }
+
+    public function DefaultDateFormat($field = null, $select = 'short') {
+
+        return $this->get_conn()->DefaultDateFormat($field, $select);
+    }
+
+    public function toDate($date = null, $formate = '%Y-%m-%d', $value = null, $other = null) {
+
+        return $this->get_conn()->toDate($date, $formate, $value, $other);
+    }
+
+    public function Equal($field=null,$value = null,$quoted=true) {
+        return $this->get_conn()->Equal($field,$value,$quoted);
+    }
+
+	public function NotEqual($field=null,$value = null,$quoted=true) {
+        return $this->get_conn()->NotEqual($field,$value,$quoted);
+    }
 	
-	// Special Development For Information Set
-	public function SuperviseInformationSetFirstInstance(){
-		$db_table = $this->model2table();
-		return $this->get_conn()->SuperviseInformationSetFirstInstance($db_table);
-	}
-	
-	public function createModifyInformationSetFields($field_name=null,$db_attributes=array()){
-		$db_table = $this->model2table();
-		$this->get_conn()->createModifyInformationSetFields($db_table,$field_name,$db_attributes);
-	}
+	public function Concat($values = array()) {
+        return $this->get_conn()->Concat($values);
+    }
+
 }

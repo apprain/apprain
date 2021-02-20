@@ -150,21 +150,25 @@ abstract class appRain_Base_Modules_Config extends appRain_Base_Objects {
     }
 
     public function skinurl($sub_part = NULL, $https = false) {
-        $fileresource_id = App::Config()->Setting('fileresource_id');
+		return $this->baseurl(DS . "themeroot" . DS . $this->__config['theme'] . $sub_part, $https);
+		
+       /* $fileresource_id = '';//App::Config()->Setting('fileresource_id');
         if (!empty($fileresource_id)) {
             return $this->baseurl(DS . "themeroot" . DS . $this->__config['theme'] . DS . $fileresource_id . $sub_part, $https);
         } else {
             return $this->baseurl(DS . "themeroot" . DS . $this->__config['theme'] . $sub_part, $https);
-        }
+        }*/
     }
 
     public function skindir($sub_part = NULL) {
-        $fileresource_id = App::Config()->Setting('fileresource_id');
+        /*$fileresource_id = '';//App::Config()->Setting('fileresource_id');
         if (!empty($fileresource_id)) {
             return $this->basedir(DS . "themeroot" . DS . $this->__config['theme'] . DS . $fileresource_id . $sub_part);
         } else {
             return $this->basedir(DS . "themeroot" . DS . $this->__config['theme'] . $sub_part);
         }
+		*/
+		return $this->basedir(DS . "themeroot" . DS . $this->__config['theme'] . $sub_part);
     }
 
     // Redirect

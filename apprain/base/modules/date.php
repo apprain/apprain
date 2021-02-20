@@ -119,7 +119,16 @@ abstract class appRain_Base_Modules_Date extends appRain_Base_Objects {
             $formated_date = $this->getTime();
         }
 
-        return ($flag == "long") ? date("D, M jS Y, h:ia ", $formated_date) : date("j M Y", $formated_date);
+        if($flag == "long") {			
+			//return date("D, M jS Y, h:ia ", $formated_date);
+			return date("j M Y, h:ia ", $formated_date);
+		}
+		else if($flag == "short"){
+			return date("j M Y", $formated_date);
+		}
+		else{
+			return date($flag, $formated_date);
+		}
     }
 
     public function dateDifference($d1, $d2, $select = 'day') {

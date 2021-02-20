@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -31,11 +32,11 @@
  * echo App::Module('Universal_Formating')->blockFormated($page_content['content'],$page_content['name']);
  * echo App::Module('Universal_Formating')->pageFormated($page_content['id'])
  */
+class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Utility {
 
-class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Utility
-{
     private $content = "";
     private $fields = array();
+
     const CACHE_PAGE_PRE_FIX = '__UF__';
     const REGEXP_TAGSPLIT = '[{{|}}]';
     const REGEXP_ENTITY = '[=| ]';
@@ -45,11 +46,10 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
     const ON = 'on';
     const CONTENT_CACHE = false;
     const MAX_ROUND = 5;
+
     private $cnt = 1;
 
-
-    public function blockFormated($content = "", $hash = "", $isCache = true)
-    {
+    public function blockFormated($content = "", $hash = "", $isCache = true) {
         if (empty($content)) {
             return "";
         }
@@ -61,12 +61,10 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
         return $this->secretary($content, $hash, $isCache);
     }
 
-    public function pageFormated($page, $isCache = true)
-    {
+    public function pageFormated($page, $isCache = true) {
         if (is_numeric($page)) {
             $page = App::Model('Page')->findById($page);
-        }
-        else if (is_string($page)) {
+        } else if (is_string($page)) {
             $page = App::PageManager()->getData($page);
         }
 
@@ -74,60 +72,50 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
             $hash = "{$page['name']}{$page['id']}";
 
             return $this->secretary($page['content'], $hash, $isCache);
-
-        }
-        else {
+        } else {
             return "";
         }
     }
 
-    private function secretary($content = "", $hash = "", $isCache = true)
-    {
+    private function secretary($content = "", $hash = "", $isCache = true) {
         $this->cnt = 1;
         if ($isCache && $hash != "" && self::CONTENT_CACHE) {
             $hash = self::CACHE_PAGE_PRE_FIX . $hash;
             if (!$this->hasCache($hash)) {
                 return $this->createCache($hash, $this->typeWritter($content));
-            }
-            else {
+            } else {
                 return $this->readCache($hash);
             }
-        }
-        else {
+        } else {
             return $this->typeWritter($content);
         }
     }
 
-    private function typeWritter($content = "", $autoFormated = true)
-    {
+    private function typeWritter($content = "", $autoFormated = true) {
         // First fragmentize the
         // the content by TAG
         $this->Fragmentize($content)
-        // Process the content
-            ->Processing($autoFormated)
-        // Finalize the formated
-        // content.
-            ->Finaize();
+                // Process the content
+                ->Processing($autoFormated)
+                // Finalize the formated
+                // content.
+                ->Finaize();
 
         if (preg_match("/\{\{(.*?)\}\}/i", $this->content) && $this->cnt < self::MAX_ROUND) {
             $this->cnt++;
             return $this->typeWritter($this->content, $autoFormated);
-        }
-        else {
+        } else {
             return $this->content;
         }
     }
 
-
-    private function fragmentize($content)
-    {
+    private function fragmentize($content) {
         $this->content = preg_split(self::REGEXP_TAGSPLIT, $content);
 
         return $this;
     }
 
-    private function Processing($autoFormated)
-    {
+    private function Processing($autoFormated) {
         foreach ($this->content as $key => $row) {
             if ($key % 2 == 1 && trim($row)) {
                 $this->fields = $this->splitInLine($row);
@@ -139,10 +127,9 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
                         $this->Hook($key);
                         break;
                 }
-            }
-            else {
+            } else {
                 if ($autoFormated) {
-                    $this->content[$key] = App::Helper('Utility')->codeFormated($this->content[$key]);
+                    //$this->content[$key] = App::Helper('Utility')->codeFormated($this->content[$key]);
                 }
             }
         }
@@ -150,8 +137,7 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
         return $this;
     }
 
-    private function splitInLine($row)
-    {
+    private function splitInLine($row) {
         $row = preg_split(self::REGEXP_ENTITY, $row);
         $tmp = array();
         for ($kk = 0; $kk < sizeof($row); $kk += 2) {
@@ -162,21 +148,18 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
         return $tmp;
     }
 
-    private function StaticPage($key)
-    {
+    private function StaticPage($key) {
         $page = App::PageManager()->getData($this->fields[self::NAME]);
         $data = isset($page['content']) ? $page['content'] : "";
         if ($page['contenttype'] == 'Content') {
             $this->replaceData($key, $data);
-        }
-        else {
+        } else {
             $this->replacePHPCode($key, $data);
             ;
         }
     }
 
-    private function Hook($key)
-    {
+    private function Hook($key) {
         $name = isset($this->fields['name']) ? $this->fields['name'] : "UI";
         $action = isset($this->fields['action']) ? $this->fields['action'] : "";
         $peram = isset($this->fields['peram']) ? $this->fields['peram'] : "";
@@ -187,29 +170,24 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
         $this->replaceData($key, $data);
     }
 
-    private function finaize()
-    {
+    private function finaize() {
         $this->content = implode("", $this->content);
     }
 
-    private function readCache($code = "")
-    {
+    private function readCache($code = "") {
         return App::Module('Cache')->Read($code);
     }
 
-    private function createCache($code, $content)
-    {
+    private function createCache($code, $content) {
         App::Module('Cache')->Write($code, $content);
         return $content;
     }
 
-    private function hasCache($code = "")
-    {
+    private function hasCache($code = "") {
         return App::Module('Cache')->exists($code);
     }
 
-    private function replaceData($key, $data)
-    {
+    private function replaceData($key, $data) {
         $autoformate = isset($this->fields[self::AUTOFORMATE]) ? $this->fields[self::AUTOFORMATE] : self::ON;
 
         if ($autoformate != self::OFF) {
@@ -219,8 +197,8 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
         $this->content[$key] = $data;
     }
 
-    private function replacePHPCode($key, $data)
-    {
+    private function replacePHPCode($key, $data) {
         $this->content[$key] = App::Helper('Utility')->parsePHP($data);
     }
+
 }

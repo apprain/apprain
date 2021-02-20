@@ -81,7 +81,7 @@ class Callback
     public $method;
     public $context;
 
-    public function Callback($method, $context)
+    public function __construct($method, $context)
     {
         $this->method = $method;
         $this->context = $context;

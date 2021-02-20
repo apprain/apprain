@@ -30,6 +30,7 @@
 class appRain_Base_Modules_Admin extends appRain_Base_Objects {
 
     const ADMIN = 'Admin';
+    const SUPER = 'Super';
 
     public $thisAdminInfo = Array();
 
@@ -46,8 +47,14 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
       } */
 
     public function isLoggedIn() {
+
         $admin_info = App::Load("Module/Session")->read('User');
-        $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
+		if(empty($admin_info)){
+			return false;
+		}
+	   
+		$admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : "Admin";
+		
         return ($admin_info['status'] == self::ADMIN);
     }
 
@@ -55,6 +62,13 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
         return App::Session()->read('User');
     }
 
+    public function isSuper($field = null) {
+		
+		$type = $this->thisAdminInfo('type');
+		
+		return (self::SUPER == $type);
+	}
+	
     public function thisAdminInfo($field = null) {
         if (empty($this->thisAdminInfo)) {
             $user_arr = $this->thisAdminSession();
@@ -264,7 +278,7 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
 
             if ($emailNotification) {
                 $this->setAdminId($id)
-                        ->sendNotification('forgotpassword');
+					->sendNotification('forgotpassword');
             }
             return true;
         }

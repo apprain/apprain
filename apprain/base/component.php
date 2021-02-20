@@ -1,4 +1,5 @@
 <?php
+
 /**
  * appRain CMF
  *
@@ -26,56 +27,54 @@
  * Documents Link
  * http ://www.apprain.org/documents
  */
+class appRain_Base_component extends appRain_Base_Objects {
 
-class appRain_Base_component extends appRain_Base_Objects
-{
     const STATUS_ACTIVE = 'Active';
     const STATUS_INACTIVE = 'Inactive';
     const COMPONENT = 'Component';
     const BOOT_FILE = 'register';
+
     public $helper_path = "helpers";
-	private $listSingleTone = Array();
+    private $listSingleTone = Array();
 
     /**
      * FUNCTION Called each time it activate
      */
-    protected function init()
-    {
+    protected function init() {
+        
     }
 
     /**
      * FUNCTION Called each time it installed
      */
-    protected function init_on_install()
-    {
+    protected function init_on_install() {
+        
     }
 
     /**
      * Function run on uninstall
      */
-    protected function init_on_uninstall()
-    {
+    protected function init_on_uninstall() {
+        
     }
 
-    public function getCoreResourceInstance()
-    {
-		if(empty(App::$__appData['ComponentCoreResourceInstance'])){
-			$List = App::Model('CoreResource')->findAllByType(self::COMPONENT);
-			foreach($List['data'] as $row){
-				App::$__appData['ComponentCoreResourceInstance'][$row['name']] = $row;
-			}
-		}
-		
-		return isset(App::$__appData['ComponentCoreResourceInstance'][$this->getNameSpace()]) ? App::$__appData['ComponentCoreResourceInstance'][$this->getNameSpace()] : null;
+    public function getCoreResourceInstance() {
+        if (empty(App::$__appData['ComponentCoreResourceInstance'])) {
+            $List = App::Model('CoreResource')->findAllByType(self::COMPONENT);
+            foreach ($List['data'] as $row) {
+                App::$__appData['ComponentCoreResourceInstance'][$row['name']] = $row;
+            }
+        }
+
+        return isset(App::$__appData['ComponentCoreResourceInstance'][$this->getNameSpace()]) ? App::$__appData['ComponentCoreResourceInstance'][$this->getNameSpace()] : null;
     }
 
-    public function status()
-    {
+    public function status() {
         if (!$this->getStatus()) {
             $coreResource = $this->getCoreResourceInstance();
             $status = isset($coreResource['status']) ? $coreResource['status'] : self::STATUS_INACTIVE;
             $info = Array();
-            if ($coreResource['info'] != "") {
+            if (!empty($coreResource['info'])) {
                 $info = unserialize($coreResource['info']);
             }
             $this->setStatus($status);
@@ -84,8 +83,7 @@ class appRain_Base_component extends appRain_Base_Objects
         return $this->getStatus();
     }
 
-    public function chnageStatus($newstatus = 'toggle')
-    {
+    public function chnageStatus($newstatus = 'toggle') {
         $coreResource = $this->getCoreResourceInstance();
 
         if ($newstatus == 'toggle') {
@@ -96,31 +94,28 @@ class appRain_Base_component extends appRain_Base_Objects
         $ID = isset($coreResource['id']) ? $coreResource['id'] : null;
         $data = serialize(Array('installdate' => $this->getNewInstallationDate()));
         App::Model('CoreResource')
-            ->setId($ID)
-            ->setStatus($newstatus)
-            ->setName($this->getNameSpace())
-            ->setVersion($this->getVersion())
-            ->setType(self::COMPONENT)
-            ->setInfo($data)
-            ->Save();
+                ->setId($ID)
+                ->setStatus($newstatus)
+                ->setName($this->getNameSpace())
+                ->setVersion($this->getVersion())
+                ->setType(self::COMPONENT)
+                ->setInfo($data)
+                ->Save();
 
         $this->excuteInstallerCallbacks($newstatus);
 
         return $this;
     }
 
-    private function getNewInstallationDate()
-    {
+    private function getNewInstallationDate() {
         return date('Y-m-d H:i:s');
     }
 
-    protected function attachMyPath($p = null)
-    {
+    protected function attachMyPath($p = null) {
         return ($p) ? $this->getMyPath() . DS . $p : $this->getMyPath();
     }
 
-    protected function excuteInstallerCallbacks($staus)
-    {
+    protected function excuteInstallerCallbacks($staus) {
         switch ($staus) {
             case self::STATUS_ACTIVE :
                 $this->init_on_install();
@@ -131,18 +126,17 @@ class appRain_Base_component extends appRain_Base_Objects
         }
     }
 
-    public function Helper($name)
-    {
+    public function Helper($name) {
         $path = $this->getMypath() . DS . $this->helper_path . DS . $name . SEXT;
         return App::__pathToClass($path);
     }
 
-    public function autoRegisterAdminTopNav($tab)
-    {
+    public function autoRegisterAdminTopNav($tab) {
         $User = App::Module('Session')->read('User');
         if (!in_array($tab, $User['admin_panel_tabs'])) {
             $User['admin_panel_tabs'][] = $tab;
             App::Module('Session')->Write('User', $User);
         }
     }
+
 }

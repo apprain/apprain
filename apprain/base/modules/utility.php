@@ -95,6 +95,10 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
      */
     public function createThumb($oldimg = NULL, $newimg = NULL, $maxwidth = NULL, $maxheight = NULL)
     {
+		if(!file_exists($oldimg)){
+			return ;
+		}
+		
         $imagedata = GetImageSize($oldimg);
         $imagewidth = $imagedata[0];
         $imageheight = $imagedata[1];
@@ -140,7 +144,7 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
 
 
             ImageCopyResampled($dst_img, $src_img, 0, 0, 0, 0, $dest_width, $dest_height, $imagewidth, $imageheight);
-            imagepng($dst_img, $newimg, 100);
+            imagepng($dst_img, $newimg, 9);
             imagedestroy($src_img);
             imagedestroy($dst_img);
         }
@@ -175,7 +179,7 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
      * @ parameter recipient string
      * @ parameter from string
      * @ parameter subj string
-     * @ parameter body string
+     * @ parameter body string 
      * @ parameter bcc string
      */
     public function mailing($recipient = "", $from = "", $subj = "", $body = "", $bcc = "")
@@ -576,6 +580,7 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
 		
         $data = str_replace('{baseurl}', App::Load("Helper/Config")->baseUrl(), $data);
         $data = str_replace('{skinurl}', App::Load("Helper/Config")->skinUrl(), $data);
+        $data = str_replace('{filemanagerurl}', App::Load("Helper/Config")->filemanagerUrl(), $data);
         $data = str_replace('{filemanagerpath}', App::Load("Helper/Config")->get_img_url(), $data);
 		
 		

@@ -115,8 +115,9 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	/*
 	// Create paging for all transaction
 	*/
-	public function paging($condition = "1=1", $listing_per_page = NULL, $h_link = NULL, $from_clause = NULL)
+	public function paging($condition = "1=1", $listing_per_page = NULL, $h_link = NULL, $from_clause = NULL, $str_from = null)
     {
+
         /*
         * General link
         */
@@ -209,7 +210,8 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 		if(empty($condition)){
 			$condition = "1=1";
 		}
-        $query = $this->query_builder($condition . $limite, $from_clause);	
+        $query = $this->query_builder($condition . $limite, $from_clause,$str_from);	
+		
 		$info_array = $this->fetch_rows($query['SQL']);
 
         /*
@@ -294,11 +296,15 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 
 		$_sthSQLBody = NULL;
 		$_sthBindValues = NULL;
+
 		foreach ($_tableFieldInfo as $key => $val) {
 			if (isset($data[$val['field']]) && $val['field'] != 'id') {					
 				if(is_array($data[$val['field']])){
-					$data[$val['field']] = implode(',',$data[$val['Field']]);
-				}				
+					$data[$val['field']] = implode(',',$data[$val['field']]);
+				}		
+				elseif(in_array('id',array('int'))){
+					$data[$val['field']] = 0;
+				}	
 				$_sthSQLBody .= (isset($_sthSQLBody)) ? ",{$val['field']} = :{$val['field']}" : "{$val['field']} = :{$val['field']}";
 				$_sthBindValues[":{$val['field']}"] = $data[$val['field']];
 			}
@@ -533,7 +539,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 		
 		$formate = $this->dateReFormate($formate);
 		$isField = isset($other['isfield']) ? $other['isfield'] : false;
-		$fx = 'STR_TO_DATE';
+		$fx = 'DATE_FORMAT';
 		
 		if($isField)
 			return "{$fx}({$date},'{$formate}')";	
@@ -558,10 +564,30 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	public function DefaultDateFormat($field=null,$select='short'){
 	
 		if($select == 'short'){
-			return "STR_TO_DATE(:{$field},'%Y-%m-%d')";
+			return "DATE_FORMAT(:{$field},'%Y-%m-%d')";
 		}
 		else{
-			return "STR_TO_DATE(:{$field},'%Y-%m-%d %H:%i:%s')";
+			return "DATE_FORMAT(:{$field},'%Y-%m-%d %H:%i:%s')";
+		}
+	}
+	
+	public function Equal($fiend=null,$value=null,$quoted=true){
+		
+		if($quoted){
+			return " {$fiend} = '{$value}'";
+		}
+		else{
+			return " {$fiend} = {$value}";
+		}
+	}
+	
+	public function NotEqual($fiend=null,$value=null,$quoted=true){
+		
+		if($quoted){
+			return " {$fiend} != '{$value}'";
+		}
+		else{
+			return " {$fiend} != {$value}";
 		}
 	}
 
