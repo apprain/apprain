@@ -38,13 +38,7 @@ class Development_View_Business_Definition_Register extends appRain_Base_Objects
 		$BootInfo = App::Config()->getBootInfo(true);
 		
 		$Send->layout = 'default';
-		/*if(App::Config()->isPageView()){
-			$Send->layout = App::Config()->Setting('site_pageview_layout','right_column');
-		}
 		
-		if(App::Config()->isHomePage()){
-			$Send->layout = App::Config()->Setting('site_homepage_layout','left_column');
-		}*/
 	}
 	
 	public function after_theme_load($Send=null){}

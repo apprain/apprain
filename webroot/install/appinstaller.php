@@ -198,7 +198,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                 </div>
                 <div class="clearboth"></div>
                 <div class="footer">
-                     Copy Right &copy; appRain Content Management Framework
+                     Copy Right &copy; appRain Technologies
                 </div>
             </div>
 
