@@ -187,6 +187,7 @@ class pageController extends appRain_Base_Core
      */
     public function viewAction($page_name = 'about_us')
     {
+
         $page_content = $this->staticPageNameToMetaInfo($page_name);
 
         if ($page_content['contenttype'] == 'Snip') {

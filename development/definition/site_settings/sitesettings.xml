@@ -54,7 +54,14 @@
                         <name>admin_title</name>
                         <default>Hodecli Mokoma Mas</default>
                         <type>inputTag</type>
-                    </selection>
+                    </selection>								
+					<selection>
+						<title>Logo</title>
+						<name>logo</name>
+						<hints>JPG,PNG</hints>
+						<default></default>
+						<type>fileTag</type>
+					</selection>                
                     <selection>
                         <title>Copy Right Text</title>
                         <name>copy_right_text</name>
@@ -88,6 +95,48 @@
             </group>
         </groups>
     </sections>
+	<sections>
+        <base name="businessdate">
+            <title>Business Date</title>
+            <admin_tab>developer</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="date">
+                    <title>System Date</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>System Business Date</title>
+                        <name>business_date</name>
+                        <default></default>
+						<hints><![CDATA[User format YYYY-MM-DD, For example: 1971-12-16<br /> Keep blank to use System Present Date]]></hints>
+                        <type>inputTag</type>
+                    </selection>                    
+                </selections>
+            </group>
+            <group>
+                <base name="time">
+                    <title>Time</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>System Business Time</title>
+                        <name>business_time</name>
+                        <default></default>
+						<hints><![CDATA[User format H:m:s, For example: 13:15:30 equivalent to 01:15:30 PM<br /> Keep blank to use System Present Time]]></hints>						
+                        <type>inputTag</type>
+                    </selection>
+                </selections>
+            </group>
+        </groups>
+    </sections>	
     <sections>
         <base name="opts">
             <title>Site Options</title>
@@ -135,6 +184,16 @@
 					<selection>
                         <title>Quick Navigation Widget</title>
                         <name>quick_navigation_widget</name>
+                        <type>radioTag</type>
+                        <default>Yes</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
+					<selection>
+                        <title>Show Calander</title>
+                        <name>quick_navigation_show_calander</name>
                         <type>radioTag</type>
                         <default>Yes</default>
                         <options>
@@ -207,7 +266,26 @@
                         <default>500</default>
                         <type>inputTag</type>
                     </selection>
-
+                    <selection>
+                        <title>Admin Login BG Image</title>
+                        <name>admin_login_background</name>
+                        <default></default>
+                        <type>fileTag</type>
+                    </selection>
+                    <selection>
+                        <title>File Resouce Token</title>
+                        <name>fileresource_id</name>
+						<hints>This String use to profle uploaded files</hints>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Admin Landing Page</title>
+                        <name>admin_landing_page</name>
+						<hints>Landing page after admin login(controller/action example: admin/introduction)</hints>
+                        <default>admin/introduction</default>
+                        <type>inputTag</type>
+                    </selection>
                 </selections>
             </group>
             <group>
@@ -259,6 +337,12 @@
                         </options>
                     </selection>
                     <selection>
+                        <title>From Email</title>
+                        <name>emailsetup_from_email</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+                    <selection>
                         <title>Host</title>
                         <name>emailsetup_host</name>
                         <default>localhost</default>
@@ -298,6 +382,31 @@
                         <name>time_zone</name>
                         <type>selectTag</type>
                         <default>America/Los_Angeles</default>
+                        <options/>
+                    </selection>
+					<selection>
+                        <title>Time Padding</title>
+						<hints>Adjust in Minutes</hints>
+                        <name>time_zone_padding</name>
+                        <type>inputTag</type>
+                        <default></default>
+                        <options/>
+                    </selection>				
+                </selections>
+            </group> 
+			<group>
+                <base name="database">
+                    <title>Database Version</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+                    <selection>
+                        <title>Database Version</title>
+                        <name>db_version</name>
+                        <type>inputTag</type>
+                        <default>1.0.1</default>
                         <options/>
                     </selection>
                 </selections>

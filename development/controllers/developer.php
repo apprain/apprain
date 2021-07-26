@@ -457,6 +457,8 @@ class developerController extends appRain_Base_Core
     public function debug_logAction($mode = 'file', $action = NULL)
     {
         $this->setAdminTab('developer');
+		
+		$s = isset($this->get['s']) ? $this->get['s'] : '';
 
         if ($mode == 'file') {
             if ($action == 'clear') {
@@ -469,11 +471,17 @@ class developerController extends appRain_Base_Core
             if ($action == 'clear') {
                 App::Model('Log')->delete();
             }
+			
+			$cnd = '1=1';
+			if(!empty($s)){
+				$cnd = "type='{$s}' or data like '%{$s}%' ";
+			}
 
-            $logData = App::Model('Log')->paging(null, 50);
+            $logData = App::Model('Log')->paging("{$cnd} ORDER BY id DESC");
             $this->set('logData', $logData);
         }
         $this->set('mode', $mode);
+        $this->set('s', $s);
     }
 
     public function componentsOnlineAction($action = null)

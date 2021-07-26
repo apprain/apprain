@@ -33,8 +33,8 @@
         <!--
             CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
         -->
-        <appRainversion>4.0.6</appRainversion>
-        <appRainLicenseKey>0123456789101112</appRainLicenseKey>
+        <appRainversion>4.0.5</appRainversion>
+        <appRainLicenseKey>123456789012</appRainLicenseKey>
     </base>
     <options>
         <!--
@@ -47,9 +47,9 @@
          -->
         <option type="Integer" name="DEBUG_MODE">
             <title>Debug Mode</title>
-            <value><![CDATA[0]]></value>
+            <value><![CDATA[1]]></value>
             <default><![CDATA[0]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>0|1|2</choice>
             <editable>1</editable>
         </option>
@@ -89,18 +89,18 @@
         -->
         <option type="Boolean" name="MODEL_CACHE">
             <title>Enable Model Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
 
         <option type="Boolean" name="ADDON_CACHE">
             <title>Addon Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
@@ -116,18 +116,18 @@
 
         <option type="Boolean" name="URI_MANAGER_CACHE">
             <title>URI Manager Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
 
         <option type="Boolean" name="SITE_SETTINGS_CACHE">
             <title>Site Settings Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
@@ -143,27 +143,27 @@
 
         <option type="Boolean" name="CATEGORY_SET_CACHE">
             <title>Category Set Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
 
         <option type="Boolean" name="INFORMATION_SET_CACHE">
             <title>Information Set Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>
 
         <option type="Boolean" name="LANGUAGE_CACHE">
             <title>Language Cache</title>
-            <value><![CDATA[Yes]]></value>
+            <value><![CDATA[No]]></value>
             <default><![CDATA[Yes]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>

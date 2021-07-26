@@ -37,9 +37,8 @@ $__AdminNavDefs = $this->get_admin_nav();
     <!-- user -->
     <ul id="user">
         <li class="first"><?php echo App::Module('AdminpanelUI')->currentDate(); ?></li>
-        <li ><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>
-        
-        <li><a href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("Account"); ?></a></li>
+        <li ><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>      
+        <li><a href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("Profile"); ?></a></li>
 		<li><a onclick="window.open(siteInfo.baseUrl + '/admin/filemanager','Window1','menubar=no,toolbar=no,scrollbars=yes');" href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("File Manager"); ?></a></li>
         <li><a href="<?php echo $this->baseUrl('/admin/logout');?>"><?php echo $this->__("Logout"); ?></a></li>
         <li class="highlight last"><a href="<?php echo $this->baseUrl();?>" target="_blank"><?php echo $this->__("View Site"); ?></a></li>
@@ -49,8 +48,43 @@ $__AdminNavDefs = $this->get_admin_nav();
     <div id="header-inner">
         <div id="home">
             <a href="<?php echo App::Module('adminPanelUi')->dashBoardLink(); ?>" title="Home"></a>
-        </div>         
-        <?php echo App::Module('AdminPanelUi')->LPCollapseLink();?>
+        </div> 
+		<style type="text/css">
+			#togglebar_fscr{
+				text-decoration:none;
+				color:yellow;
+				font-size:18px;
+				font-weight:bold;
+				margin-top:8px;
+				display:block;
+				float:left;
+				margin-left:10px
+			}
+			#togglebar_fscr_2{
+				position:fixed;
+				top:0px;
+				left:0px;
+				text-decoration:none;
+				color:white;
+				font-size:18px;
+				font-weight:bold;
+				margin:50px 0 0 0;
+				padding:12px 12px 12px 5px;
+				background-color:#ec0b16;
+				border-radius: 0 25px 25px 0;
+			}
+		</style>		
+		<a href="javascript:void(0)" id="togglebar_fscr">&#x26F6;</a>
+		<script type="text/javascript">
+			jQuery(document).ready(function () {
+				jQuery("#togglebar_fscr").click(function(event) {					
+					jQuery('html').prepend('<a href="javascript:void(0)" onclick="jQuery(\'#header\').toggle();jQuery(\'#left\').toggle();jQuery(this).remove()" id="togglebar_fscr_2" >&#x26F6</a>');					
+					jQuery('#header').toggle();
+					jQuery('#left').toggle();					
+				});
+			});	
+		</script>
+        <?php //echo App::Module('AdminPanelUi')->LPCollapseLink();?>
         <!-- quick -->
         <ul id="quick">
             <?php foreach ($NAVAccess as $assigntab): ?>
@@ -63,23 +97,23 @@ $__AdminNavDefs = $this->get_admin_nav();
                         <?php if (file_exists($this->baseDir($__AdminNavDef['parent']['icon'])) && $__AdminNavDef['parent']['icon'] != '' && App::Config()->setting('disable_menu_icon') != 'Yes'): ?>
                         <span class="icon"><img src="<?php echo $this->baseUrl($__AdminNavDef['parent']['icon']) ?>" alt="<?php echo $__AdminNavDef['parent']['title'];?>"/></span>
                         <?php endif;?>
-                        <span class="normal"><?php echo $__AdminNavDef['parent']['title'];?></span></a>
+                        <span class="normal"><?php echo $this->__($__AdminNavDef['parent']['title']);?></span></a>
                     <?php if (isset($__AdminNavDef['parent']['submenu']) && !empty($__AdminNavDef['parent']['submenu'])): ?>
                     <ul>
                         <?php foreach ($__AdminNavDef['parent']['submenu'] as $skey => $submenu): ?>
                         <li <?php if (((count($__AdminNavDef['parent']['submenu']) - 1)) == $skey): ?>class="last"<?php endif;?>>
                             <?php if (isset($submenu['child']) && !empty($submenu['child'])): ?>
                             <a href="<?php echo $this->baseUrl($submenu['link']);?>" class="childs"
-                               title="<?php echo $submenu['title'];?>"><?php echo $submenu['title'];?></a>
+                               title="<?php echo $submenu['title'];?>"><?php echo $this->__($submenu['title']);?></a>
                             <ul>
                                 <?php foreach ($submenu['child'] as $ckey => $child): ?>
                                 <li <?php if (((count($submenu['child']) - 1)) == $ckey): ?>class="last"<?php endif;?>>
                                     <a href="<?php echo $this->baseUrl($child['link']);?>"
-                                       title="<?php echo $child['title'];?>"><?php echo $child['title'];?></a></li>
+                                       title="<?php echo $child['title'];?>">dd</a></li>
                                 <?php endforeach;?>
                             </ul>
                             <?php else: ?>
-                            <a href="<?php echo $this->baseUrl($submenu['link']);?>"  title="<?php echo $submenu['title'];?>"><?php echo $submenu['title'];?></a>
+                            <a href="<?php echo $this->baseUrl($submenu['link']);?>"  title="<?php echo $submenu['title'];?>"><?php echo $this->__($submenu['title']);?></a>
                             <?php endif;?>
                         </li>
                         <?php endforeach;?>
@@ -93,4 +127,5 @@ $__AdminNavDefs = $this->get_admin_nav();
         <div class="corner tl"></div>
         <div class="corner tr"></div>
     </div>
+    <?php App::Hook('UI')->Render('adminpanel_toolbar_menu_bottom'); ?>
 </div>

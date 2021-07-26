@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/documents
+ */
+-->
+<InterfaceBuilder>
+    <navigation name="page_manager">
+        <parent>
+            <title>Page Manager</title>
+            <action>/page/manage-static-pages</action>
+            <acl>
+                <group>superadmin</group>
+            </acl>
+            <submenu>
+                <item>
+                    <title>Manage Static Pages</title>
+                    <link>/page/manage-static-pages</link>
+                </item>			
+                <item>
+                    <title>Manage Dynamic Pages</title>
+                    <link>/page/manage-dynamic-pages</link>
+                </item>				
+            </submenu>
+            <sort_order>1</sort_order>
+            <icon>/themeroot/admin/images/icons/page_manager.png</icon>
+        </parent>
+        <child>
+            <menu>
+                <title>Static Pages</title>
+                <items>
+                    <item>
+                        <title>Create New</title>
+                        <link>/page/manage-static-pages/create</link>
+                    </item>
+                    <item>
+                        <title>Manage Pages</title>
+                        <link>/page/manage-static-pages</link>
+                    </item>				
+                </items>
+            </menu>
+            <menu>
+                <title>Dynamic Pages</title>
+                <items>
+                    <item>
+                        <title>Create New</title>
+                        <link>/page/manage-dynamic-pages/create</link>
+                    </item>
+                    <item>
+                        <title>Manage Pages</title>
+                        <link>/page/manage-dynamic-pages</link>
+                    </item>				
+                </items>
+            </menu>					
+        </child>
+    </navigation>
+</InterfaceBuilder>

@@ -39,7 +39,7 @@ class appslideController extends appRain_Base_Core
         if(isset($id))  {
             $this->layout="empty";
             $data  = App::InformationSet('appslide')->findById($id);
-			$data['description'] = App::Helper('Utility')->codeFormated($data['description']);
+			//$data['description'] = App::Helper('Utility')->codeFormated($data['description']);
             echo "{$data['description']}";
         }
         exit;

@@ -117,7 +117,7 @@ class appeditorController extends appRain_Base_Core
 			return $newqueu;
 		}
 		else if(!$queue || !in_array($loc,$queue)){
-			$queue[] = $loc;
+			$queue = array($loc);
 			App::Session()->Write('fileeditorqueue',$queue);
 			
 			return $queue;

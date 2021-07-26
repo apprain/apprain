@@ -1,0 +1,135 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+?>
+
+<?php if($action == 'add' || $action == 'update'):?>
+<?php
+	$acl = array();
+	$aclObject = array();
+
+	if(!empty($Entry)){
+		$acl_description = json_decode($Entry['description'],true);
+		$acl = $acl_description['acl'];
+		$aclObject = $acl_description['aclobject'];
+	}
+?>
+
+<form method="post" action="<?php echo $this->baseUrl("/admin/managegroup/{$action}/{$id}"); ?>">
+
+    <div class="box box-left box-padding box-left-tabs">
+        <div class="title">
+            <h5><?php echo $this->__('Group Information') ;?></h5>
+        </div>
+        <div id="box-left-forms">
+            <div class="form">
+                <div class="fields">
+                    <div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Group Name:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::load("Helper/Html")->inputTag("data[Group][name]", App::Html()->selectDefaultValue($Entry,'title'), array("id" => "f_name", "class" => "large check_notempty", "longdesc" => "Please enter  first name"));?>
+                        </div>
+                    </div>
+					<div class="field">
+                        <div class="label">
+                            <label for="input"><?php echo $this->__("Strict User View Access");?></label>
+                        </div>
+                        <div class="input">
+							<input name="data[Group][accessall]"
+							<?php 
+								$attributes = array('class'=>'groupaccesside');
+								if(empty(App::Html()->selectDefaultValue($Entry,'generic'))):
+									$attributes = array('class'=>'groupaccesside','disabled'=>'disabled');
+								?>
+								checked="checked"
+								
+							<?php endif; ?> id="accesstoall" value="Yes"  type="checkbox" /> All 
+						</div>
+					</div>
+					
+					<div class="field">
+						<div class="input">
+                            <?php 
+								echo App::CategorySet('usergroup')->tag('data[Group][access][]',App::Html()->selectDefaultValue($Entry,'generic'),array('inputType'=>'checkboxTag'),$attributes);
+							?>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" name="data[Admin][submit]"  value="Save Group Data"/>
+                        <div class="message msgrightalign"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+			jQuery(document).ready(function () {
+				jQuery("#accesstoall").click(function(event) {				
+					jQuery('.groupaccesside').prop("disabled",
+						jQuery(this).prop('checked')
+					);
+				});
+			});	
+		
+		</script>
+
+    <div class="box box-right">
+        <div class="title">
+            <h5><?php echo $this->__("Access Control Limit") . App::Helper('Html')->helpTag('admin-manager-access-control-limit');?></h5>
+        </div>
+		<div class="form">
+			<?php echo App::Module('Acl')->AdminNavList($acl);?>
+			<?php
+				App::Module('Hook')->getHandler('acl', 'register_detail_acl', $aclObject, 'display'); 
+			?></p>
+		</div>
+    </div>
+</form>
+
+<!-- -- VALIDATION DATA -- -->
+<?php App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => false))->appForm('form'); ?>
+<?php else:?>
+<?php App::Helper('Toolbar')->setTitle("User List")->setBtnBack()->Render(array('code' => 'admin_list_view_top')); ?>
+<?php if (!empty($DataList["data"])): ?>
+    <?php
+        $Grid = App::Module('DataGrid');
+        $Grid->setHeader(array('#',  'Group Name',  'Options'));
+        $Grid->setFooter($DataList['paging_str']);
+        foreach ($DataList["data"] as $key => $val) {
+                $Grid->addRow((($DataList["page"] - 1) * $this->get_config('default_pagination') + $key + 1), $val['title'], App::load("Helper/Html")->linkTag($this->baseurl('/admin/managegroup/update/' . $val['id']), App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/edit.gif'), NULL, array('title' => 'Edit ', 'alt' => 'Edit', "class" => "icon")), array("title" => "Edit user information")) . '&nbsp;' . App::load("Helper/Html")->linkTag(App::Config()->baseUrl("/admin/managegroup/delete/{$val['id']}"), App::load("Helper/Html")->imgTag($this->baseurl('/images/admin/remove.gif'), NULL, array('title' => 'Delete', 'alt' => 'Delete')), array('id' => 'Admin', 'class' => 'link_delete icon', 'title' => 'Admin_' . $val['id'])));
+           
+        }
+        $Grid->Render();
+        ?>
+    <?php else: ?>
+		<?php echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'warning', 'message' => 'No data found')); ?>
+    <?php endif; ?>
+<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'admin_list_view_bottom')); ?>
+<?php endif;?>

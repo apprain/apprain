@@ -119,18 +119,24 @@ class Component_DBExpert_Helpers_Dbimexport extends appRain_Base_Objects
         /*if (is_array($table)) {
             list($key, $table) = each($table);
         }*/
-        $getDumpTable = "";
-        $q_getDumpTable = $this->execute("LOCK TABLES {$table} WRITE");
-
-        $getDumpTable .= $this->getBOL() . "DROP TABLE IF EXISTS " . $table . $this->getEOL();
 		
-        $row = $this->execute("SHOW CREATE TABLE " . $table);
-
-        $getDumpTable .= $this->getBOL() . $row[0]['create table'] . $this->getEOL();
-
-        $getDumpTable .= $this->_getInsertsTable($table);
-
-        $this->execute("UNLOCK TABLES");
+		$TabelDef = $this->execute("SHOW CREATE TABLE " . $table);
+		$TabelDef = isset($TabelDef[0]) ? $TabelDef[0] : null;
+		
+        $getDumpTable = "";     		
+		if(isset($TabelDef['create table'])){
+			$q_getDumpTable = $this->execute("LOCK TABLES {$table} WRITE");
+			$getDumpTable .= $this->getBOL() . "DROP TABLE IF EXISTS " . $table . $this->getEOL();		
+			$getDumpTable .= $this->getBOL() . $TabelDef['create table'] . $this->getEOL();		
+			$getDumpTable .= $this->_getInsertsTable($table);
+			$this->execute("UNLOCK TABLES");
+		}
+		else{
+			$start = (strpos($TabelDef['create view'],$table)-1);
+			$end = strlen($TabelDef['create view']);
+			$getDumpTable .= $this->getBOL() . "DROP VIEW IF EXISTS " . $table . $this->getEOL();		
+			$getDumpTable .= $this->getBOL() . 'CREATE VIEW ' . substr($TabelDef['create view'],$start,$end) . $this->getEOL();			
+		}
 
         return $getDumpTable;
     }
@@ -143,14 +149,43 @@ class Component_DBExpert_Helpers_Dbimexport extends appRain_Base_Objects
 
         $getInsertsTable = "";
         $result = $this->execute("SELECT * FROM " . $table);
+		$DescTable = $this->execute("DESC " . $table);
+		
+		$datepointer = array();
+		/*foreach($DescTable as $key=>$row){
+			if($row['type'] == 'date'){
+				$datepointer[$key] = $row['type'];
+			}
+			elseif($row['type'] == 'datetime'){
+				$datepointer[$key] = $row['type'];
+			}
+		}*/
 
+	
+		
         foreach ($result as $row) {
             $getInsertsTables = "";
+			$seq = 0;
             foreach ($row as $data) {
-                $getInsertsTables .= "'" . $this->getSafeData($data) . "', ";
+				if($seq){
+					$getInsertsTables .= ',';
+				}
+				if(isset($datepointer[$seq])){
+					if($datepointer[$seq] == 'datetime'){
+						$getInsertsTables .= "to_date('{$data}','yyyy-mm-dd HH24:MI:SS')";
+					}
+					else{
+						$getInsertsTables .= "to_date('{$data}','yyyy-mm-dd')";
+					}
+				}
+				else{
+					$getInsertsTables .= "'" . $this->getSafeData($data) . "'";
+				}
+				
+				$seq++;
             }
-
-            $getInsertsTables = substr($getInsertsTables, 0, -2);
+//pre($getInsertsTables);
+           // $getInsertsTables = substr($getInsertsTables, 0, -2);
             $getInsertsTable .= $this->getBOL() . 'INSERT INTO ' . $table . ' VALUES (' . $getInsertsTables . ')' . $this->getEOL();
         }
 

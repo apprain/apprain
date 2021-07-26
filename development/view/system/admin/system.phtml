@@ -31,8 +31,7 @@
 
     <!-- login -->
     <div class="title">
-        <h5><?php echo $this->__('Sign In to Administrative Panel');?>
-            (<?php echo App::Config()->siteInfo('site_title');?>)</h5>
+        <h5><?php echo $this->__('Welcome');?> (<?php echo App::Config()->siteInfo('site_title');?>)</h5>
 
         <div class="corner tl"></div>
         <div class="corner tr"></div>
@@ -55,8 +54,8 @@
         </div>
     </div>
     <?php endif;?>
-
-    <div class="inner">
+    <?php $admin_login_background =  App::Config()->Setting('admin_login_background');?>
+    <div class="inner" <?php if(!empty($admin_login_background)):?>style="background:#FFFFFF url(<?php echo App::Config()->fileManagerUrl("/{$admin_login_background}");?>) no-repeat top left;"<?php endif;?>>
         <form action="<?php echo $this->baseurl('/admin/system');?>" method="post">
             <div class="form">
                 <!-- fields -->
@@ -87,7 +86,7 @@
                     </div>
                     <div class="buttons">
                         <div class="floatleft">
-                            <a href="<?php echo $this->baseurl('/admin/forgotlogin'); ?>"><?php echo $this->__("Forgot Login?");?></a>
+                            <a href="<?php echo $this->baseurl('/admin/forgotlogin'); ?>"><?php echo $this->__("Forgot Password?");?></a>
                             <a href="<?php echo $this->baseurl('/'); ?>"><?php echo $this->__("View Website?");?></a>
                         </div>
                         <input type="submit" value="SIGN IN"/>
@@ -99,11 +98,14 @@
 </div>
 
 <div class="auth-copy-right">
-	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.org">
+	<a title="<?php echo $this->__('appRain Content Management Framework');?>" href="http://www.apprain.com">
 		<img src="<?php echo $this->baseUrl('/images/smalllogo.gif');?>" alt="<?php echo $this->__('appRain Content Management Framework');?>">
+		<a target="blank" href="https://www.plexuscloud.com.bd/">
+			<img src="<?php echo $this->baseUrl('/images/plexus.jpg');?>" alt="<?php echo $this->__('Plexus Cloud and Sadhin Wifi');?>">
+			</a>
 	</a>
 	<div class="copy-right-text">
-		<?php echo $this->__('Content Management Framework.');?>
-		<?php echo $this->__('Copyright &copy;' . date('Y'));?>, <a title="appRain Content Management Framework" target="_blank" href="http://www.apprain.org/license"><?php echo $this->__('License');?></a>.		
+		&nbsp; <?php echo $this->__('Copyright &copy; ' . App::Helper('Date')->getdate('Y') . ', appRain Techenology');?>.
+		We are hosted in Plexus Clould.
 	</div>
 </div>

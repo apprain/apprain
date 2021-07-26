@@ -1,0 +1,61 @@
+<style type="text/css">
+    #adminpanel_toolbar_menu_bottom {
+        background-color: #FFF;
+        padding: 0 10px 6px 10px;
+    }
+    #adminpanel_toolbar_menu_bottom img{
+        border:1px solid #EEE;
+        margin-right: 3px;
+        height:35px;
+        padding:2px;
+    }
+
+    #adminpanel_toolbar_menu_bottom a{
+        text-decoration:none;
+    }
+
+    .admin_bottom_tool_bar_icon{
+        float:left;
+        width:80px;
+        text-align: center;
+    }
+
+    #adminpanel_toolbar_menu_bottom span{
+        display:block;
+        font-size:8px;
+    }
+
+    .admin_bottom_tool_bar_icon_right{
+        float:right;
+        text-align: center;
+
+    }
+</style>
+<div id="adminpanel_toolbar_menu_bottom">
+    <?php 
+    
+    // echo App::Config()->baseUrl("/themeroot/admin/images/icons/system.jpg");
+    $adminpanelquickList = App::Component('adminpanelquicklaunch')->Helper('Data')->listOfLinks(); ?>
+    <?php foreach ($adminpanelquickList as $row): $row = (array) $row; ?>
+        <div class="admin_bottom_tool_bar_icon">
+            <a title="<?php echo $row['title']; ?>" href="<?php echo App::Config()->baseUrl($row['mylink']); ?>">
+                <?php echo App::Component('adminpanelquicklaunch')->Helper('Data')->adminLinksIcon($row['fetchtype'],$row['iconpath'],40); ?>
+            </a>
+            <span>
+			
+			<?php echo $row['title']; ?>
+			</span>
+        </div>   
+    <?php endforeach; ?>
+	
+	
+	<?php App::Hook('UI')->Render('admin_bottom_tool_bar_icon_right', array('toolbarlinks' => $adminpanelquickList)); ?>
+	
+    <div class="admin_bottom_tool_bar_icon_right">
+        <a title="Configure Options" href="<?php echo App::Config()->baseUrl("/adminpanelquicklaunch/configure") ?>" >
+            <img src="<?php echo App::Config()->baseUrl("/themeroot/admin/images/icons/system.jpg"); ?>" />
+        </a>
+        <span><?php echo $this->__('Settings'); ?></span>
+    </div>    
+    <div class="clearboth"></div>
+</div>

@@ -1,0 +1,93 @@
+<?php
+/** Check Post Inputs **/
+if(empty(App::Config()->post)){
+
+   // Create Dialog Box
+   Dialog();
+}
+else {
+  // Display Report Header
+  ReportHeader();
+
+  // Execute Report Main body
+  Execute();
+}
+
+
+/* Create Dialog window */
+function Dialog(){
+    // Create HTML Form 
+    echo App::Helper('Html')->getTag('form',array('method'=>'post'));
+
+    // Create Data Gird 
+    App::Module('DataGrid')->setDisplay('FormListing')
+       // Create From Date Tag 
+       ->addRow('From Date',App::Helper('Html')->dateDDTag('data[Report][sdate]'))
+       // Create To date Tag 
+       ->addRow('To Date',App::Helper('Html')->dateDDTag('data[Report][tdate]'))
+       // Create Submit button
+       ->addRow('',App::Helper('Html')->submitTag('data[Report][submit]','Generate',array('class'=>'button')))
+       // Render  Grid 
+       ->Render(); 
+
+    // End Form
+    echo App::Helper('Html')->getTag('form',null,'/');
+}
+
+/** 
+ * Create Report Header
+ */
+function ReportHeader(){
+	$C1 = 40;
+	$C2 = 40;
+	$TW = $C1 + $C1 + $C2 + 4;  
+    $param = App::Config()->post['data'];
+	$Format = App::Component('AppReport')->Helper('formatting');
+	pr($Format->cpad(App::Config()->Setting('site_title'),$TW,' '));
+	pr($Format->cpad('TEST',$TW,' '));
+	pr($Format->cpad('REPORT TIME: ' . App::Helper('Date')->getdate('d-M-Y H:s A'),$TW,' '));
+	pr($Format->cpad('DATE RANGE: ' . "'{$param['Report']['sdate']['day']}-{$param['Report']['sdate']['month']}-{$param['Report']['sdate']['year']}' To '{$param['Report']['tdate']['day']}-{$param['Report']['tdate']['month']}-{$param['Report']['tdate']['year']}'"));
+}
+
+/** 
+ * Generate Report 
+ */
+function Execute(){
+
+  $C1 = 40;
+  $C2 = 40;
+  $TW = $C1 + $C1 + $C2 + 4;
+
+   // Instantiate Formatting Class
+  $Format = App::Component('AppReport')->Helper('formatting');
+
+  // Find Admin List
+  $param = App::Config()->post['data'];
+
+  // Find Account Heads 
+  $List = App::Model('Admin')->findAll();
+  
+  $Format->Printr($Format->rpad('',$TW,'-'));
+  $Format->Printr(
+       '|' .
+       $Format->rpad('F Name',$C1) . '|' .
+       $Format->lpad('L Name',$C1) . '|' .
+       $Format->lpad('User Name',$C2) .
+      '|' 
+   );
+     $Format->Printr($Format->rpad('',$TW,'-'));
+  
+
+  foreach($List['data'] as $row){
+      $Format->Printr(
+         '|' .
+         $Format->rpad($row['f_name'],$C1) . '|' .
+         $Format->lpad($row['l_name'],$C1) . '|' .
+         $Format->lpad($row['username'],$C2) .
+         '|' 
+      );
+  }
+  pr($Format->rpad('',$TW,'-')); 
+  
+}
+?>

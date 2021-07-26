@@ -599,8 +599,8 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                         <form action="install.php?step=1" method="post">
                         <ul class="lists">
                             <li>Apache web server with mod_rewrite (ability to use .htaccess files)</li>
-                            <li>PHP Version 5.1.0 or newer</li>
-                            <li>Latest MySQL/Oracle Database</li>
+                            <li>PHP Version 7.2.0 or newer</li>
+                            <li>Latest MySQL Database</li>
 							<li>Database except listed on next page can be install manually.</li>
                         </ul>
                         <input type="submit" class="ins-button" name="step" value="Next >>" />

@@ -46,7 +46,7 @@ class Component_Homepress_Register extends appRain_Base_Component
             ->setAction("register_definition")
             ->Register(get_class($this), "register_sitesettings_defination");		
 
-        App::Module('Hook')
+        /*App::Module('Hook')
             ->setHookName('UI')
             ->setAction("template_left_column_B")
             ->Register(get_class($this),"add_search_box");
@@ -54,7 +54,7 @@ class Component_Homepress_Register extends appRain_Base_Component
 		App::Module('Hook')
             ->setHookName('UI')
             ->setAction("template_right_column_A")
-            ->Register(get_class($this),"add_search_box");
+            ->Register(get_class($this),"add_search_box");*/
 			
         App::Module('Hook')
             ->setHookName('UI')

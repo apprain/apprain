@@ -159,14 +159,11 @@ class appRain_Collection extends Development_Callbacks {
             return true;
 
         $admin_info = App::Load("Module/Session")->read('User');
-        if(empty($admin_info)){
-			$this->writeRequestURI();
-            $this->redirect('/admin/exception_here');
+		if(empty($admin_info)){
+			$this->redirect('/admin/exception_here');
 		}
 		
-		$admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
-		
-		
+        $admin_info['status'] = isset($admin_info['status']) ? $admin_info['status'] : '';
         if ($admin_info['status'] != 'Admin') {
             $this->writeRequestURI();
             $this->redirect('/admin/exception_here');
@@ -215,7 +212,7 @@ class appRain_Collection extends Development_Callbacks {
             $this->layout = "admin";
             $this->admin_tab = $tab;
         } else {
-			pre('Don\'t have permission. Collection.php line 211' . $tab);
+			pre('You don\'t have permission @ ' . $tab); // . Collection.php line 211
             $this->redirect("/admin/introduction");
         }
     }

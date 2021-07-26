@@ -1,0 +1,69 @@
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+-->
+<SiteSettings>
+    <sections>
+        <base name="appsearch">
+            <title>Search and Window Manager</title>
+            <admin_tab>component</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="opts">
+                    <title>Preferences</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>
+					<selection>
+                        <title>Quick Dashboard Mode</title>
+                        <name>appsearch_dashboard</name>
+                        <type>selectTag</type>
+                        <default>Disabled</default>
+                        <options>
+                            <option value="Enabled">Enabled</option>
+                            <option value="Disabled">Disabled</option>
+                        </options>
+                    </selection>
+                    <selection>
+                        <title>Admin Wrapper Shortcut</title>
+                        <name>appsearch_shortcut</name>
+                        <type>selectTag</type>
+                        <default>Disabled</default>
+                        <options>
+                            <option value="Enabled">Enabled</option>
+                            <option value="Disabled">Disabled</option>
+                        </options>
+                    </selection>
+                </selections>
+            </group>
+        </groups>
+    </sections>
+</SiteSettings>

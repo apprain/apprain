@@ -1,0 +1,34 @@
+ 
+	<div class="col-md-6">
+		<?php if (isset($staticpage['content']) && $staticpage['content'] != ""): ?><?php echo $staticpage['content']; ?><?php endif;?>
+	</div>
+	<div class="col-md-6">
+		<p><span class="message"></span></p>
+		<form method="post" class="app_contact form" action="<?php echo $this->baseUrl("/contactus"); ?>">
+			<div class="col-md-6">
+				<div class="form-group"><input type="text" name="data[Contact][f_name]" class="form-control check_notempty" placeholder="First Name" value="" /></div>					
+			</div>
+			<div class="col-md-6">
+				<div class="form-group"><input type="text" name="data[Contact][l_name]" class="form-control check_notempty" placeholder="Last Name" value="" /></div>					
+            </div>
+			<div class="col-md-6">
+				<div class="form-group"><input type="text" name="data[Contact][phoneno]" class="form-control check_notempty" placeholder="Phone No" value="" /></div>					
+            </div>
+			<div class="col-md-6">
+				<div class="form-group"><input type="text" name="data[Contact][email]" class="form-control check_email" placeholder="Email Address" value="" /></div>					
+            </div>
+			<div class="col-md-12">
+			<div class="form-group"><textarea name="data[Contact][message]" class="form-control check_notempty" placeholder="Message"></textarea></div>					
+            </div>
+			<div class="col-md-3">
+			<div class="form-group"><?php echo App::Helper('Html')->capachaTag("contactus", Array("bk_color" => "#111111", "font_color" => "#FFFFFF"));?></div>					
+            </div>
+			<div class="col-md-9">
+			<div class="form-group"><input type="text" name="data[Contact][capacha]" class="form-control check_notempty" placeholder="Please fill in the text display in the image" value="" /></div>					
+            </div>
+			<div class="col-md-12">
+				<div class="form-group"><input type="submit" name="data[Contact][submit]" class="btn btn-default primary" value="Submit" /></div>
+			</div>
+		</form>
+		<?php  App::Helper('JavaScript')->setValidation(array('errorMark'=>'border'))->setAjax(array("debug" => false, "autoHide" => true))->appForm('.app_contact');?>
+	</div>

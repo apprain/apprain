@@ -27,8 +27,8 @@
  * http ://www.apprain.org/general-help-center
  */
 ?>
-<form method="post" action="<?php echo $this->baseurl("/developer/clearcache");?>">
-    <?php App::Helper('Toolbar')->setTitle("Log")->setBtnCustomHTML(App::Helper("Html")->ButtonTag("ClearDbLog", "Flush All Log", array("onclick" => "document.location='" . $this->baseurl("/developer/debug-log/{$mode}/clear") . "';")))->setBtnBack()->Render(array('code' => 'debug_top'));?>
+<form method="get" action="<?php echo $this->baseurl("/developer/debug-log/db");?>">
+    <?php App::Helper('Toolbar')->setTitle("Log")->setBtnCustomHTML('<input type="text" name="s" class="small" style="width:100px" value="' .  $s . '" /> <input type="submit" class="button" value="Search" /> ' . App::Helper("Html")->ButtonTag("ClearDbLog", "Flush All Log", array("onclick" => "document.location='" . $this->baseurl("/developer/debug-log/{$mode}/clear") . "';")))->setBtnBack()->Render(array('code' => 'debug_top'));?>
     <?php if ($mode == 'file'): ?>
     <div class="field field-first">
         <textarea class="app_input" style="height:500px;width:99%;margin:auto"
@@ -38,7 +38,7 @@
     if (!empty($logData['data'])):
         $Grid = App::Module('DataGrid');
         foreach ($logData['data'] as $row):
-            $Grid->addRow($row['id'], $row['fkey'], $row['type'], App::Helper('Date')->dateFormated($row['dated'], 'long'), App::Helper('Html')->textareaTag('Log', $row['data'], Array("readonly" => "readonly", 'style' => 'width:95%', 'class' => 'app_input')));
+            $Grid->addRow($row['id'], $row['fkey'],	App::Html()->linkTag('?s=' . $row['type'],$row['type']), App::Helper('Date')->dateFormated($row['dated'], 'long'), $row['data']);
         endforeach;
         $Grid->setHeader(Array('ID', 'Ref#', 'Type', 'Dated', 'Data'));
         $Grid->setFooter("{$logData['paging_str']}");

@@ -13,7 +13,7 @@
 		<addon_uri>http://www.apprain.org</addon_uri>
         <layouts>All</layouts>
         <layouts_except></layouts_except>
-        <status>Active</status>
+        <status>Inactive</status>
         <load>Always</load>        
     </addon>
 </Addons>

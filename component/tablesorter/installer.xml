@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer>
+    <command>
+        <copy>
+            <src>/component/tablesorter</src>
+            <des>/component/tablesorter</des>
+        </copy>
+        <copy>
+            <src>/addons/tablesorter</src>
+            <des>/webroot/addons/tablesorter</des>
+        </copy>
+    </command>
+</installer> 

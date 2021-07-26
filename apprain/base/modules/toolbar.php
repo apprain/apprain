@@ -212,7 +212,7 @@ class appRain_Base_Modules_Toolbar extends appRain_Base_Objects
 
         $htmlHelper = App::Helper('Html');
         $html = $htmlHelper->getTag('form', array('method' => 'get', 'action' => $Config->baseurl("/information/manage/{$args[0]['type']}")));
-        $html .= $htmlHelper->getTag('div', array('class' => 'left'), '<div class="button">' . App::load("Helper/Html")->inputTag("src_key", $src_key) . '  ' . $htmlHelper->selectTag("src_field", $key_arr, $src_field, array('style' => 'padding:3px')) . '  ' . App::categorySet()->GroupTag("src_cat", $categoryTypesarr, $src_cat, array('style' => 'padding:3px')) . ' ' . $htmlHelper->submitTag("", "Search") . '</div> &nbsp;&nbsp;');
+        $html .= $htmlHelper->getTag('div', array('class' => 'left'), '<div class="button">' . App::load("Helper/Html")->inputTag("src_key", $src_key) . '  ' . $htmlHelper->selectTag("src_field", $key_arr, $src_field, array('style' => 'padding:3px;width:150px')) . '  ' . App::categorySet()->GroupTag("src_cat", $categoryTypesarr, $src_cat, array('style' => 'padding:3px;width:150px')) . ' ' . $htmlHelper->submitTag("", "Search") . '</div> &nbsp;&nbsp;');
         $html .= $htmlHelper->getTag('/form');
 
         return array('box' => $html);

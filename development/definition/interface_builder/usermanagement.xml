@@ -41,15 +41,28 @@
             <icon>/themeroot/admin/images/icons/usermanagement.png</icon>
         </parent>
         <child>
-            <menu>
-                <title>Administrator</title>
+			<menu>
+                <title>Manage Group</title>
                 <items>
                     <item>
-                        <title>Add New Admin</title>
+                        <title>Add New Group</title>
+                        <link>/admin/managegroup/add</link>
+                    </item>
+                    <item>
+                        <title>Manage Group</title>
+                        <link>/admin/managegroup</link>
+                    </item>
+                </items>
+            </menu>
+            <menu>
+                <title>Manage Users</title>
+                <items>
+                    <item>
+                        <title>Add New User</title>
                         <link>/admin/manage/add</link>
                     </item>
                     <item>
-                        <title>Manage Admins</title>
+                        <title>Manage Users</title>
                         <link>/admin/manage</link>
                     </item>
                 </items>

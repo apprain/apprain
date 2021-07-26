@@ -201,6 +201,7 @@ class appRain_Base_Modules_CategorySet extends appRain_Base_Objects {
          * Generate a 1D array for dropdown list
          */
         $data_arr = App::load("Helper/Utility")->get_1d_arr($tmp['data'], 'id', $filter_node);
+		$data_arr[''] = 'Select';
 
         /*
          * Return the HTML Deopdown list

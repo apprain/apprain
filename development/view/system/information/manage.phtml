@@ -57,10 +57,10 @@
         $generic 	= isset( $data_list['generic'] ) ? $data_list['generic'] : '';
 
 
-         echo $this->get_tag("form",array("action"=>$this->baseurl("/information/manage/$type/$action"),'method'=>'post','enctype'=>'multipart/form-data','id'=>'auto_chk_submit','class'=>'app_form app_validation'));
+         echo $this->get_tag("form",array("action"=>$this->baseurl("/information/manage/{$type}/{$action}"),'method'=>'post','enctype'=>'multipart/form-data','id'=>'auto_chk_submit','class'=>'app_form app_validation'));
 
         // Call the tools bar -->
-        App::Helper('Toolbar')->setTitle($definition['base']['title'])->setBtnSave()->setBtnSaveAndUpdate()->setBtnFileManager()->setBtnBack()->Render(array('code'=>'informationset_update_top','type'=>$type,'id'=>$id));
+        App::Helper('Toolbar')->setTitle($definition['base']['title'])->setBtnSave()->setBtnSaveAndUpdate()->setBtnSaveAndAdd()->setBtnFileManager()->setBtnBack()->Render(array('code'=>'informationset_update_top','type'=>$type,'id'=>$id));
 
             echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'error', 'message' => $errors));
 
@@ -108,27 +108,27 @@
                             switch( $field_type )
                             {
                                 case "dateTimeTag"		:
-                                                            $Grid->addRow("{$val['title']}",App::load("Helper/Html")->$field_type("data[Option][$key]", $val['tag-attributes'],$$key),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key]", $val['tag-attributes'],$$key),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "selectTag"		:
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key,$val['tag-attributes'],$val['parameters']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key,$val['tag-attributes'],$val['parameters']),$hints,$rowHtmlOpts, $validation_text);
 
                                                             break;
                                 case "radioTag"			:
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key]",$val['options'],$$key),$hints,$rowHtmlOpts, $validation_text);
 
                                                             break;
                                 case "checkboxTag"		:
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key][checkbox][]",$val['opton_arr'],$$key),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key][checkbox][]",$val['opton_arr'],$$key),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "categoryTag"		:
-                                                            $Grid->addRow("{$val['title']} ",App::CategorySet($val['category_type'])->Tag("data[Option][$key]",$$key, $val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::CategorySet($val['category_type'])->Tag("data[Option][$key]",$$key, $val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "informationTag"	:
-                                                            $Grid->addRow("{$val['title']} ",App::InformationSet($val['parameters']['information_type'])->Tag("data[Option][$key]",$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::InformationSet($val['parameters']['information_type'])->Tag("data[Option][$key]",$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "modelTag"	:
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$val['parameters']['model_name'],$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key]",$val['parameters']['model_name'],$$key,$val['parameters'],$val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "textareaTag"	:
                                                             $val['parameters']['richtexteditor']= isset($val['parameters']['richtexteditor']) ? $val['parameters']['richtexteditor'] : 'Yes';
@@ -136,7 +136,7 @@
                                                             {
                                                                 $val['tag-attributes']['class'] = isset($val['tag-attributes']['class']) ? $val['tag-attributes']['class'] . " richtexteditor" : "richtexteditor";
                                                             }
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                                 case "fileTag"			:	
                                                             $app_file_name = "";
@@ -152,18 +152,18 @@
                                                                 }
                                                             }
 
-                                                            $Grid->addRow("{$val['title']} ","<span>$app_file_name</span><div class=\"hints\">{$hints}</div>". App::load("Helper/Html")->$field_type("data[Option][$key]",NULL, $val['tag-attributes']),NULL,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__("{$val['title']}"),"<span>$app_file_name</span><div class=\"hints\">{$hints}</div>". App::load("Helper/Html")->$field_type("data[Option][$key]",NULL, $val['tag-attributes']),NULL,$rowHtmlOpts, $validation_text);
 
 
                                                             break;
                                 default					:
-                                                            $Grid->addRow("{$val['title']} ",App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
+                                                            $Grid->addRow($this->__($val['title']),App::load("Helper/Html")->$field_type("data[Option][$key]",$$key, $val['tag-attributes']),$hints,$rowHtmlOpts, $validation_text);
                                                             break;
                             }
                         }
 
         $Grid->render();
-        App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnBack()->setFormJustified(true)->Render(array('code'=>'informationset_update_bottom','type'=>$type,'id'=>$id));
+        App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnSaveAndAdd()->setBtnBack()->setFormJustified(true)->Render(array('code'=>'informationset_update_bottom','type'=>$type,'id'=>$id));
 
                 $this->get_tag('div');
                     echo App::load("Helper/Html")->hiddenTag("data[Information][id]",$id);
@@ -183,6 +183,7 @@
             App::Helper('Toolbar')
 				->setTitle($definition['base']['title'])
 				->setBtnBack()
+				->setBtnCustomHtml('<input type="button" onclick="window.location=siteInfo.baseUrl + \'/information/manage/' . $type . '/update/' . $data_list['id'] . '\'" value="Update" />')
 				->Render(
 					array(
 						'code'=>'informationset_list_single_view_top',
@@ -424,7 +425,7 @@ else
 			App::Helper('Toolbar')->setBtnDelete(array("id"=>"{'mode':'informationset,{$type}'}"))->setBtnInformationSetExportBox(array('type'=>$type,'config'=>App::Helper('Config')))->setBtnBack()->Render(array('code'=>'informationset_list_view_bottom','type'=>$type));
 		}
 		else  {
-			echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'message', 'message' => $this->__('No Data found.')));
+			echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'message', 'message' => $this->__('No data found.')));
 			App::Helper('Toolbar')->Render(array('code'=>'informationset_list_view_bottom','type'=>$type));
 		}
 	?>

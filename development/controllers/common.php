@@ -58,7 +58,12 @@ class commonController extends appRain_Base_Core
     public function get_imageAction( $file = NULL,  $size = NULL,$resize_flag = 'per' )
     {
         $this->layout   ='blank';
-        $file           =  base64_decode($file);
+        $file =  base64_decode($file);
+
+		if(!App::Helper('Validation')->isImage($file) || !file_exists($file)){
+			return null;
+		}
+		
 		$imagedata      = GetImageSize($file);
   
         $width          = $imagedata[0];
@@ -67,6 +72,8 @@ class commonController extends appRain_Base_Core
 
         // Setting the resize parameters
         list($width, $height) = getimagesize($file);
+
+		
         
         if ($resize_flag == 'per') {
             $modwidth = $width * $size;
@@ -93,9 +100,18 @@ class commonController extends appRain_Base_Core
             imagedestroy($image);
         }
         elseif ($imagetype == 3) {
+
             header('Content-type: image/png');
             $tn = imagecreatetruecolor($modwidth, $modheight);
             $image = imagecreatefrompng($file);
+			//////////////
+			imagealphablending($tn, false);
+            imagesavealpha($tn, true);
+            $transparent = imagecolorallocatealpha($tn, 255, 255, 255, 127);
+            imagefilledrectangle($tn, 0, 0, $modwidth, $modheight, $transparent);
+			//////////////
+			
+			
             imagecopyresampled($tn, $image, 0, 0, 0, 0, $modwidth, $modheight, $width, $height);
             imagepng($tn);
             imagedestroy($tn);
@@ -376,7 +392,8 @@ class commonController extends appRain_Base_Core
     {
         /* Decode the file */
         $dwn_path = base64_decode($dwn_path);
-
+		$file_name = '';
+		
         /* Check the file if exists */
         if( @file_exists($dwn_path)) {
             $tmp = @explode( "/", $dwn_path);
@@ -390,7 +407,14 @@ class commonController extends appRain_Base_Core
         }
         else {
             /*  Die if no file exists */
-            die("Temporarily file is not available!  Please try after sometime.");
+			if(!empty($dwn_path)){
+				$tmp = @explode( "/", $dwn_path);
+				$file_name = @end($tmp);
+				$tmp = @explode( ".", $file_name);
+				$ext = @end($tmp);
+			}
+			
+            die("Sorry {$file_name}! <br /> File is not available or moved!  Please try after sometime.");
         }
     }
 
@@ -435,7 +459,7 @@ class commonController extends appRain_Base_Core
 *  Project Name    : {$this->get_config('site_title')}
 **/";
 		
-		App::Module('Hook')->getHandler('Javascript', 'register_Javascript_Code', __FILE__, 'display');
+		App::Module('Hook')->getHandler('Javascript', 'register_javascript_code', __FILE__, 'display');
 		exit;
     }
   }

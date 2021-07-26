@@ -71,6 +71,16 @@
 							<option value="4">Four</option>
                         </options>
                     </selection>
+					<selection>
+                        <title>Background Box</title>
+                        <name>homepresssettings_displaybox</name>
+                        <default>No</default>
+                        <type>selectTag</type>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>
                 </selections>
             </group>
         </groups>

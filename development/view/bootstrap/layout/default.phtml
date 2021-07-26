@@ -47,10 +47,10 @@ echo App::Config()->isSiteLive(); ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
     <?php App::Hook('UI')->Render('template_head_tag_end'); #User Interface Hook ?>
 </head>
  <body role="document"> 
- 	<?php  echo $this->callElement("header"); ?>
+ 	<?php // echo $this->callElement("header"); ?>
 	<div class="container">
 		<?php echo $content_rendered;?>			
 	</div>
-	<?php echo $this->callElement("footer"); ?>		
+	<?php //echo $this->callElement("footer"); ?>		
 </body>	
 </html>

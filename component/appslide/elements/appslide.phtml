@@ -4,7 +4,7 @@
 			<div class="col-md-6">
 				<div class="press-img-pan">
 					<?php if(isset($pressdata['data']['0']['image'])):?>
-						<img class="img-thumbnail" src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$pressdata['data']['0']['image']}");?>" alt="" />
+						<img class="img-thumbnail" src="<?php echo App::Helper('Config')->filemanagerUrl("/{$pressdata['data']['0']['image']}");?>" alt="" />
 					<?php endif;?>
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 					 </div>
 					<div id="app-slide-right">
 						<?php if(isset($row['image'])):?>
-						<img height="245" src="<?php echo App::Helper('Config')->baseUrl("/uploads/filemanager/{$row['image']}");?>" alt="" />
+						<img height="245" src="<?php echo App::Helper('Config')->filemanagerUrl("/{$row['image']}");?>" alt="" />
 					<?php endif;?>
 					</div>
 				</li>    

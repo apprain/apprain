@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Fjalla+One);
+/*@import url(http://fonts.googleapis.com/css?family=Fjalla+One);*/
 
 body {
   margin-top:0px;
@@ -34,8 +34,12 @@ body {
 	 color: #FFF;
 }
 
+h1{
+	font-size:25px;
+}
+
 h1,h2,h3{
-    margin-top:30px;
+    margin-top:20px;
 }
 
 h1,h2,h3, h4,thead th, tfoot th{

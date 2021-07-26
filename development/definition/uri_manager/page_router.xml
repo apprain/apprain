@@ -31,16 +31,13 @@
 <URIManager>
     <pagerouter>
         <!-- Home controller -->
-        <role>
+        <!--role>
             <actual>home/search</actual>
             <virtual>search</virtual>
-        </role>
+        </role-->
         <!-- Home controller End -->
         <!-- Page controller -->
-        <role>
-            <actual>page/view/terms</actual>
-            <virtual>terms-and-conditions</virtual>
-        </role>
+        
         <role>
             <actual>page/view/aboutus</actual>
             <virtual>about-us</virtual>

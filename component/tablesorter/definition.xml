@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+	<version>1.0.2</version>
+    <name>Table Sorter</name>
+	<uri>http://www.apprain.com</uri>
+	<description>
+		<![CDATA[
+			JavaScript Table Sorter Addon
+		]]>
+	</description>
+	<author>Reazaul Karim</author>
+	<author_uri>http://www.apprain.com</author_uri>
+	<namespace>auto</namespace>
+	<help>
+		<![CDATA[
+			__HELP__
+		]]>
+	</help>
+	<checkfiles>
+		<filepath>register.php</filepath>
+	</checkfiles>
+</database>

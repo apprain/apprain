@@ -66,4 +66,27 @@
 // @link www.apprain.org/manual
 class Development_Helper_Cronjob extends appRain_Base_Modules_Cronjob
 {
+		 /**
+	  * An Example funcntion
+	  * on each time Cron Job run
+	  *
+	  * @schedule [*]
+	  */
+	 protected function testFx1JOb()
+	 {
+			echo 'START';
+			$obj = App::__obj('appRain_Base_Modules_Definition');
+			$obj->parseComponentList();
+			App::Component('Billspay')->init();
+			App::Component('Billspay')->Helper('Contract')->ProcessByAdjustList();
+			echo 'DONE';
+			$to      = 'info@apprain.com';
+			$subject = 'the cron';
+			$message = 'done';
+			$headers = 'From: info@apprain.com' . "\r\n" .
+				'Reply-To: info@apprain.com' . "\r\n" .
+				'X-Mailer: PHP/' . phpversion();
+
+			mail($to, $subject, $message, $headers);
+ 	 }
 }

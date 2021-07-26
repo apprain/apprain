@@ -31,12 +31,13 @@
 	<div id="app-help-dialog-modal-inner"><!-- appRain Help --></div>
 </div>
 <div id="footer">
-	<a href="http://www.apprain.org" title="<?php echo $this->__('appRain Content Management Framework');?>">
+	<a href="http://www.apprain.com" title="<?php echo $this->__('appRain Content Management Framework');?>">
 		<img src="<?php echo $this->baseUrl("/images/smalllogo.gif"); ?>" alt="<?php echo $this->__('appRain Content Management Framework');?>" />
 	</a>
     <p>		
         <strong><?php echo(App::Load('Helper/Config')->Load('site_info')->get('site_title')); ?></strong> |
         <?php echo $this->__('License Key');?> <?php echo App::__Def()->sysConfig('APPRAINLICENSEKEY'); ?> |
+        <?php echo $this->__('DB Version');?> <?php echo App::Config()->Setting('db_version','1.0.1'); ?> |
         <?php echo $this->__('Version');?> <?php echo App::__Def()->sysConfig('APPRAINVERSION'); ?> |
         <?php echo app::load("Helper/Html")->linkTag($this->baseurl('/admin/logout'), $this->__('Logout')); ?>
     </p>

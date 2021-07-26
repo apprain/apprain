@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database>
+    <version>0.1.1</version>
+    <name>Contact us Page</name>
+    <uri>http://www.apprain.com</uri>
+    <description><![CDATA[
+            Create an AJAX based contact us page with email notification.<br /><br />
+            <strong>Component's Features</strong>  <br />
+            - Create a form for user   <br />
+            - Send e-mail notification  <br />
+            - Add Email Template
+        ]]></description>
+    <author>Reazaul Karim</author>
+    <author_uri>http://reazulk.wordpress.com</author_uri>
+    <namespace>auto</namespace>
+    <help>
+        <![CDATA[
+            <strong>Guide line</strong>  <br />
+            - Click "ACTIVATE" link to install it.<br />
+            - Contact us Page.
+        ]]>
+    </help>
+    <checkfiles>
+        <filepath>register.php</filepath>
+    </checkfiles>
+</database>

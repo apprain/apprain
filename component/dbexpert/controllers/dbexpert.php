@@ -60,7 +60,7 @@ class dbexpertController extends appRain_Base_Core
         if (!empty($this->data)) {
             if (isset($this->data['ImExport']['export'])) {
                 App::Component('DBExpert')->Helper('Dbimexport')->download = true;
-                App::Component('DBExpert')->Helper('Dbimexport')->file_name = date("Y-m-d_H-i-s");
+                App::Component('DBExpert')->Helper('Dbimexport')->file_name = date("Y-m-d_h-i-s_A");
                 App::Component('DBExpert')->Helper('Dbimexport')->export();
             }
             else if (isset($this->data['ImExport']['import'])) {
@@ -82,7 +82,7 @@ class dbexpertController extends appRain_Base_Core
                 App::Component('DBExpert')->Helper('Dbimexport')->download_path = DATA . DS . "database";
                 App::Component('DBExpert')->Helper('Dbimexport')->export();
 
-                App::Module('Notification')->Push($this->__("Backup has creaded successfully."));
+                App::Module('Notification')->Push($this->__("Backup has created successfully."));
             }
             else if (isset($this->data['ImExport']['restore'])) {
                 if ($this->data['ImExport']['file_name'] == "") {
@@ -91,7 +91,7 @@ class dbexpertController extends appRain_Base_Core
                 else {
                     App::Component('DBExpert')->Helper('Dbimexport')->import_path = DATA . DS . "/database/{$this->data['ImExport']['file_name']}";
                     App::Component('DBExpert')->Helper('Dbimexport')->import();
-                    App::Module('Notification')->Push("Database restorded successfully to {$this->data['ImExport']['file_name']}");
+                    App::Module('Notification')->Push("Database restored successfully to {$this->data['ImExport']['file_name']}");
                 }
             }
             $this->redirect('/dbexpert/imexport/');

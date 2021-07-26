@@ -45,4 +45,7 @@
  */
 class Development_Helper_Utility extends appRain_Base_Modules_Utility
 {
+    public function testFX(){
+        return "MY TEXT";
+    }
 }

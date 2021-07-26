@@ -51,7 +51,7 @@
 	<?php App::Helper('Toolbar')->setFormJustified(true)->setBtnSave()->setBtnBack()->setBtnCustomHtml('<div class="message" style="color:red;display:inline-block;width:200px"></div>')->Render(array('code'=>'snip_bottom'));?>
 	</form>
 <?php elseif(in_array($action,array('update'))):?>
-	<?php App::Helper('Toolbar')->setTitle("Dynamic Pages")->setBtnfileManager()->setBtnCustomHtml('<input type="button" onclick="window.location = siteInfo.baseUrl + \'/page/manage-snip/delete/' . $id . '\'" value="Delete" /> ' )->setBtnBack()->Render(array('code'=>'page_manager_top'));	?>
+	<?php App::Helper('Toolbar')->setTitle("Dynamic Pages (" . App::PageManager()->FieldValueById($id,'name') . ")")->setBtnfileManager()->setBtnCustomHtml('<input type="button" onclick="window.location = siteInfo.baseUrl + \'/page/manage-snip/delete/' . $id . '\'" value="Delete" /> ' )->setBtnBack()->Render(array('code'=>'page_manager_top'));	?>
 	<div id="code-editor" name="code"><?php echo htmlspecialchars(App::PageManager()->FieldValueById($id,'content'));?></div>
 	<script type="text/javascript">	
 		var editor = ace.edit("code-editor");
@@ -92,7 +92,7 @@
 		}
 	</style>
 	<div style="margin-left:40px">
-		<?php App::Helper('Toolbar')->setFormJustified(true)->setBtnSave()->setBtnBack()->Render(array('code'=>'snip_bottom'));?>
+		<?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->Render(array('code'=>'snip_bottom'));?>
 	</div>
 <?php else: ?>
 	<?php App::Helper('Toolbar')->setTitle("Manage Static Page")->setBtnBack()->Render(array('code'=>'toolbar_top'));?>
@@ -130,6 +130,6 @@
 			);
 		}
 	?>
-	<?php App::Helper('Toolbar')->setBtnBack()->setFormJustified(true)->Render(array('code'=>'toolbar_bottom'));?>
+	<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code'=>'toolbar_bottom'));?>
 <?php endif;?>
 

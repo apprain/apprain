@@ -45,7 +45,7 @@
 		<author_uri>http://reazulk.wordpress.com</author_uri>
 		<addon_uri>http://www.apprain.org</addon_uri>
         <layouts>All</layouts>
-        <layouts_except/>
+        <layouts_except></layouts_except>
         <status>Active</status>
         <load>Always</load>        
     </addon>
@@ -58,9 +58,11 @@
 <![CDATA[
 <script type="text/javascript">
 $.noConflict();
+$=jQuery;
 var siteInfo = {
 		'baseUrl' : '{baseurl}',
-		'skinUrl' : '{skinurl}'
+		'skinUrl' : '{skinurl}',
+		'filemanagerUrl' : '{filemanagerurl}'
 	};
 
 jQuery(document).ready(function () {

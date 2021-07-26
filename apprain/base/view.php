@@ -60,14 +60,10 @@ class appRain_Base_View extends appRain_Base_Objects {
 
 	public function Helper($name="Data"){
 	
-		## Class Path In String
-		$str_path = App::Config()->Setting('theme') . DS . $this->helper_path . DS . $name . SEXT;
-
-		$str_path = strtolower($str_path);
+		$path = VIEW_PATH . DS . App::Config()->Setting('theme') . DS . $this->helper_path . DS . $name . SEXT;
 		
-		## Attach actual View Path
-		$path = VIEW_PATH . DS . $str_path;
-
+		$path = strtolower($path);
+		
 		if(!file_exists($path)){
 			return null;
 		}

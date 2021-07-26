@@ -101,7 +101,7 @@ var appslide =
                 },
     loadimage  :function(image)
                 {
-  			       jQuery('.press-img-pan').append('<img src="' + siteInfo.baseUrl + '/uploads/filemanager/' + image + '" class="img-thumbnail" style="display:none" />');
+  			       jQuery('.press-img-pan').append('<img src="' + siteInfo.filemanagerUrl + '/' + image + '" class="img-thumbnail" style="display:none" />');
                 },
     loop       :function(){
 	                if(appslide._auto){

@@ -43,9 +43,10 @@
     $adminlist['description'] = isset($adminlist['description']) ? $adminlist['description'] : "";
     $adminlist['status'] = isset($adminlist['status']) ? $adminlist['status'] : "";
     $adminlist['type'] = isset($adminlist['type']) ? $adminlist['type'] : "Normal";
+    $adminlist['groupid'] = isset($adminlist['groupid']) ? $adminlist['groupid'] : "";
     ?>
 
-<form method="post" action="<?php echo $this->baseUrl("/admin/manage/$action/" . $adminlist['id']); ?>">
+<form method="post" action="<?php echo $this->baseUrl("/admin/manage/{$action}/{$adminlist['id']}"); ?>">
 
     <div class="box box-left box-padding box-left-tabs">
         <div class="title">
@@ -61,8 +62,9 @@
         </div>
         <div id="box-left-forms">
             <div class="form">
-                <div class="fields">
-                    <div class="field">
+                <div class="fields first">
+                    
+					<div class="field">
                         <div class="label">
                             <label for="input"><?php echo $this->__("First Name:");?></label>
                         </div>
@@ -103,7 +105,17 @@
                             <?php echo App::load("Helper/Html")->passwordTag("data[Admin][password]", '', array("id" => "password", "class" => "large check_notempty", "longdesc" => "Please enter with combination of A-Za-z0-9"));?>
                         </div>
                     </div>
+                    <?php else: ?>
+						<div class="field">
+                        <div class="label">
+                            <label for="username"><?php echo $this->__("Username:");?></label>
+                        </div>
+                        <div class="input">
+                            <?php echo App::load("Helper/Html")->inputTag("readonly_username", $adminlist['username'], array("id" => "username", "class" => "large","readonly"=>"readonly"));?>
+                        </div>
+                    </div>
                     <?php endif;?>
+					
                     <div class="field">
                         <div class="label">
                             <label for="status"><?php echo $this->__("Status:");?></label>
@@ -168,23 +180,63 @@
         <?php endif;?>
     </div>
 
-    <div class="box box-right">
+    <div class="box box-right box-left-tabs">
         <div class="title">
             <h5><?php echo $this->__("Access Control Limit") . App::Helper('Html')->helpTag('admin-manager-access-control-limit');?></h5>
         </div>
-        <?php if (strtolower($adminlist['type']) != 'super'): ?>
-        <div class="form">
-            <?php echo App::Module('Acl')->AdminNavList($adminlist['id']);?>
-            <p>
-                <?php App::Module('Hook')->getHandler('acl', 'register_detail_acl', $adminlist, 'display'); ?></p>
-        </div>
-        <?php else: ?>
-        <h4><?php echo $this->__("Inportant");?></h4>
-        <p>
-            <?php echo $this->__("This is super admin has access in all tab.");?><br/>
-            <?php echo(implode(', ', $admin_nav_def)); ?>
-        </p>
-        <?php endif;?>
+		<div id="box-right-access">
+			<?php if (strtolower($adminlist['type']) != 'super'): ?>
+			<div class="form">
+				<div class="fields">
+					<div class="field" id="groupiddiv">
+						<div class="label">
+							<label for="input"><?php echo $this->__("Group Wise Access:");?></label>
+						</div>
+						<div class="input">
+							<?php echo App::CategorySet('usergroup')->Tag("data[Admin][groupid]", $adminlist['groupid'], null,array("id" => "groupid", "class" => "large"));?>
+						</div>
+					</div>
+					
+					<div id="individualaccess"
+					<?php if(!empty($adminlist['groupid'])): ?>
+					style="display:none"
+					<?php endif; ?>>
+						
+						<div class="field">
+							<?php echo App::Module('Acl')->AdminNavList($adminlist['id']);?>
+							<p><?php App::Module('Hook')->getHandler('acl', 'register_detail_acl', $adminlist, 'display'); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				jQuery(document).ready(function () {					
+					if(jQuery('#groupid').find('option').length <= 1){
+						jQuery('#groupiddiv').remove();
+					}
+					
+					jQuery("#groupid").change(function(event) {
+						if(jQuery(this).val() != ''){
+							jQuery('#individualaccess').hide();
+						}
+						else{
+							jQuery('#individualaccess').show();
+						}
+					});
+				});	
+			
+			</script>
+			
+			
+			<?php else: ?>
+			<h4><?php echo $this->__("Inportant");?></h4>
+			<p>
+				<?php echo $this->__("This is super admin has access in all tab.");?><br/>
+				<?php echo(implode(', ', $admin_nav_def)); ?>
+			</p>
+			<?php endif;?>
+		</div>
+	
     </div>
 </form>
 
@@ -192,7 +244,7 @@
 <?php App::Helper('JavaScript')->setAjax(array("debug" => false, "autoHide" => false))->appForm('form'); ?>
 
 <?php else: ?>
-<?php App::Helper('Toolbar')->setTitle("View Administrators")->setBtnBack()->Render(array('code' => 'admin_list_view_top')); ?>
+<?php App::Helper('Toolbar')->setTitle("User List")->setBtnBack()->Render(array('code' => 'admin_list_view_top')); ?>
 <?php if (!empty($adminlist["data"])): ?>
     <?php
         $Grid = App::Module('DataGrid');

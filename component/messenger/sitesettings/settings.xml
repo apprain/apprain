@@ -1,0 +1,103 @@
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/docs
+ */
+-->
+<SiteSettings>
+    <sections>
+        <base name="vouchersettings">
+            <title>Settings</title>
+            <admin_tab>accounts</admin_tab>
+        </base>
+        <groups>
+            <group>
+                <base name="opts">
+                    <title>Setting</title>
+                    <acl>
+                        <ugroup>vouchersettings</ugroup>
+                    </acl>
+                </base>
+                <selections>				
+                    <selection>
+                        <title>Common Cash A/C</title>
+                        <name>vouchersettings_cash_account</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+										
+                    <selection>
+                        <title>Receivable Income A/C</title>
+                        <name>vouchersettings_receivable_account</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+										
+                    <selection>
+                        <title>Payable Expense A/C</title>
+                        <name>vouchersettings_payable_account</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>										
+					<selection>
+                        <title>Sales A/C</title>
+                        <name>vouchersettings_sales_account</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Purchase A/C</title>
+                        <name>vouchersettings_purchase_account</name>
+                        <default></default>
+                        <type>inputTag</type>
+                    </selection>	
+					<selection>
+                        <title>Default Income Code</title>
+                        <name>vouchersettings_income_entrycode</name>
+                        <default>FEES</default>
+                        <type>inputTag</type>
+                    </selection>
+					<selection>
+                        <title>Default Cash Receive Code</title>
+                        <name>vouchersettings_cash_entrycode</name>
+                        <default>CASH_IN</default>
+                        <type>inputTag</type>
+                    </selection>					
+					<selection>
+                        <title>Transaction Mode</title>
+                        <name>vouchersettings_transaction_mode</name>
+                        <default>C</default>
+                        <type>selectTag</type>
+                        <options>
+                            <option value="C">C | Consolidated</option>
+                            <option value="S">S | Segregated</option>
+                        </options>
+                    </selection>					
+                </selections>
+            </group>
+        </groups>
+    </sections>
+</SiteSettings>

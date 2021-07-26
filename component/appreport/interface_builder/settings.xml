@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain v 0.1.x
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/documents
+ */
+-->
+<InterfaceBuilder>
+	<navigation name="appreport">
+        <parent>
+            <title>Reports</title>
+            <action>/appreport/executor</action>
+			<submenu />
+            <acl>
+                <group>superadmin</group>
+            </acl>
+            <sort_order>7</sort_order>
+        </parent>
+        <child>
+			<menu>
+                <title>Dictionary of Groups</title>
+                <items>
+				    <item>
+                        <title>Add Group</title>
+                        <link>/category/manage/appreportgroup/add</link>
+                    </item>	
+                    <item>
+                        <title>Manage Groups</title>
+                        <link>/category/manage/appreportgroup</link>
+                    </item>				
+                </items>
+				<adminicon>
+					<type>FilePath</type>
+					<location>/component/appreport/interface_builder/icon.jpg</location>
+				</adminicon>
+            </menu>
+			<menu>
+                <title>Dictionary of Reports</title>
+                <items>
+				    <item>
+                        <title>Create Report</title>
+                        <link>/appreport/manage/add</link>
+                    </item>	
+                    <item>
+                        <title>Manage Reports</title>
+                        <link>/appreport/manage</link>
+                    </item>				
+                </items>
+				<adminicon>
+					<type>FilePath</type>
+					<location>/component/appreport/interface_builder/icon.jpg</location>
+				</adminicon>
+            </menu>		
+			<menu>
+                <title>Reports</title>
+                <items>
+                    <item>
+                        <title>Generate Report</title>
+                        <link>/appreport/executor</link>
+                    </item>				
+                </items>
+				<adminicon>
+					<type>FilePath</type>
+					<location>/component/appreport/interface_builder/icon.jpg</location>
+				</adminicon>
+            </menu>				
+        </child>
+    </navigation>
+</InterfaceBuilder>

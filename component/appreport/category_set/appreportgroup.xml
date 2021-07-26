@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.com)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.com/
+ *
+ * Download Link
+ * http://www.apprain.com/download
+ *
+ * Documents Link
+ * http ://www.apprain.com/documents
+ */
+-->
+<CategorySet>
+    <base>
+        <version>0.1.0</version>
+        <lastupdate>2012-04-23</lastupdate>
+        <title>Report Group</title>
+        <admin_tab>appreport</admin_tab>
+        <description>No</description>
+        <image>
+            <status>No</status>
+            <type>Single</type>
+        </image>
+        <haschild>No</haschild>
+        <generic>
+            <status>No</status>
+            <title>Sort Order</title>
+        </generic>
+        <sreach>
+            <status>No</status>
+            <field-selected>title</field-selected>
+            <parma-link>
+              <!-- Relative Absolute -->
+              <type>Relative</type>
+              <uri><![CDATA[blog-by-cat/[id]/[title]]]></uri>
+            </parma-link>
+        </sreach>
+    </base>
+</CategorySet>

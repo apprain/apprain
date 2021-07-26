@@ -447,6 +447,7 @@ class appRain_Base_Core extends appRain_Collection {
         }
 
         App::Module('Callbacks')->_before_theme_load($this);
+		//pre($this->layout);
 
         if (
                 !(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME && file_exists($view_render_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . $render_path . TPL_EXT))

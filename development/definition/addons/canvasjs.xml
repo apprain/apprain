@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addons>
+    <addon name="canvasjs">
+        <title><![CDATA[Canvas Js]]></title>
+        <description><![CDATA[Chart]]></description>
+        <javascripts>
+            <src>/addons/canvasjs/canvasjs.min.js</src>
+        </javascripts>
+        <style_sheets/>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.org</addon_uri>
+        <layouts>All</layouts>
+        <layouts_except></layouts_except>
+        <status>Active</status>
+        <load>OnRequest</load>        
+    </addon>
+</Addons>

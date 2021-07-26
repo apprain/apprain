@@ -51,7 +51,7 @@
 				if (strstr($val['link'], DS . $this->get['basicrout'])) {
 					$f = true;
 				}
-				$lis .= "<li><a href=\"" . $this->baseUrl($val['link']) . "\" class=\"collapsible plus\">{$val['title']}</a></li>";
+				$lis .= "<li><a href=\"" . $this->baseUrl($val['link']) . "\" class=\"collapsible plus\">" . $this->__($val['title']) . "</a></li>";
 			}
 		}
 		?>
@@ -73,4 +73,6 @@
 		<?php endforeach; ?>
 	<?php App::Hook('UI')->Render('admin_left_B'); #User Interface Hook ?>
 </div>
+<?php if(App::Config()->Setting('quick_navigation_show_calander','Yes') == 'Yes'):?>
 <div id="date-picker"></div>
+<?php endif;?>

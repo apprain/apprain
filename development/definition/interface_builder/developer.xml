@@ -31,7 +31,7 @@
     <navigation name="developer">
         <parent>
             <title>Preferences</title>
-            <action>/developer/sys-config</action>
+            <action>/admin/config/general</action>
             <acl>
                 <group>superadmin</group>
             </acl>
@@ -43,6 +43,10 @@
                 <item>
                     <title>Site Options</title>
                     <link>/admin/config/opts</link>
+                </item>
+				<item>
+                    <title>Business Date</title>
+                    <link>/admin/config/businessdate</link>
                 </item>
 				<item>
                     <title>Email Template</title>
@@ -92,6 +96,10 @@
                         <title>Site Options</title>
                         <link>/admin/config/opts</link>
                     </item>
+					<item>
+						<title>Business Date</title>
+						<link>/admin/config/businessdate</link>
+					</item>
                 </items>
             </menu>
             <menu>

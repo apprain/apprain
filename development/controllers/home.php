@@ -67,7 +67,7 @@ class homeController extends appRain_Base_Core
          * set Page Meta Information.
          */
         $pageinfo = $this->staticPageNameToMetaInfo('home-page');
-        $this->set('pageinfo', $pageinfo);
+		$this->set('pageinfo', $pageinfo);
 
         /* Set value to template */
         $this->set("selected", "home");

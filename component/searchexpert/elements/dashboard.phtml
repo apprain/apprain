@@ -1,0 +1,36 @@
+<div class="box search-dashboard" style="height:500px;width:90%;margin:auto">
+	<h3 style="color:#BBB">
+	<span style="color:red"><?php echo App::Config()->Setting('site_title');?></span> | <a href="<?php echo App::Config()->baseUrl("/admin/logout"); ?>">Logout</a> | 
+	[F2 = Full Menu, F4 = Back to dashboard]	
+	</h3>
+    <div class="inner" >
+		
+        <table width="100%">
+			<tr>
+				<td width="15%" valign="top">
+				<div class="form">
+					<div class="fields">
+					<?php foreach($data['data'] as $row):?>
+						<?php 
+							$Object = json_decode($row['fields']);
+							$url = App::Component('Search')->Helper('Data')->linkforated($Object->link);
+							
+						?>
+						<div class="buttons">
+							<input type="button" mode="<?php echo strtolower($row['mode']);?>" location="<?php echo $url;?>" value="<?php echo $row['title'];?>" title="<?php echo $row['title'];?>" class="button app_search_control" />							
+						</div>						
+					<?php endforeach;?>
+					</div>
+				</div>		
+				</td>
+				<td width="60%" valign="top">
+					<div class="form">
+					<?php App::Hook('UI')->Render('appserach_dashboard_content_area_A'); ?>
+					<?php App::Hook('UI')->Render('appserach_dashboard_content_area_B'); ?>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+    </div>
+</div>

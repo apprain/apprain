@@ -48,13 +48,14 @@ final class App
         "Module" => "appRain_Base_Modules_",
         "Helper" => "Development_Helper_",
         "Plugin" => "Development_Plugin_",
+        "View" => "Development_View_",
         "Installer" => "Development_Models_Installer_",
         "Component" => "Component_"
     );
 
     public static function getBaseDir()
     {
-        return dirname(__FILE__);
+        return strtolower(dirname(__FILE__));
     }
 
     public static function __pathToClass($path = "", $isObject = true)
@@ -170,6 +171,11 @@ final class App
     public static function component($name = NULL)
     {
         return isset($name) ? self::load("Component/{$name}_" . appRain_Base_component::BOOT_FILE) : NULL;
+    }
+	
+	public static function View($name = NULL)
+    {
+        return isset($name) ? self::load("View/{$name}_Definition_Register") : NULL;
     }
 
     public static function hook($name = NULL)

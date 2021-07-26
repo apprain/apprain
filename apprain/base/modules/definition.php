@@ -77,6 +77,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
         }
 
         $defnitionpath = VIEW_PATH . DS . strtolower($name . DS . self::DEFINITION . DS . self::INFO_XML_FILE);
+		
         if (!file_exists($defnitionpath)) {
             return $definition;
         }

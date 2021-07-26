@@ -178,11 +178,17 @@ class appRain_Base_Modules_Callbacks extends Development_AppCommon {
 
     public function _before_theme_load($_Obj = null) {
         $themeInfo = app::__def()->getThemeInfo($_Obj->theme);
+		if(!isset($themeInfo['callback'])){
+			return ;
+		}
         App::__Obj($themeInfo['callback'])->before_theme_load($_Obj);
     }
 
     public function _after_theme_load($_Obj = null) {
         $themeInfo = app::__def()->getThemeInfo($_Obj->theme);
+		if(!isset($themeInfo['callback'])){
+			return ;
+		}
         App::__Obj($themeInfo['callback'])->after_theme_load($_Obj);
     }
 

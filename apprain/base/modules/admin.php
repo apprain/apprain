@@ -59,7 +59,9 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
     }
 
     public function thisAdminSession() {
+		
         return App::Session()->read('User');
+		
     }
 
     public function isSuper($field = null) {
@@ -69,12 +71,30 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
 		return (self::SUPER == $type);
 	}
 	
+    public function AdminInfo($send = null,$isUserName=false) {
+		
+		if($isUserName){
+			$Entry = App::Model("Admin")->findByUserName($send);
+		}
+		else{
+			$Entry = App::Model("Admin")->findById($send);
+		}
+		
+		if($Entry['groupid']){
+			$Group = App::CategorySet()->findById($Entry['groupid']);
+			$description = json_decode($Group['description'],true);
+			$Entry['acl']= serialize($description['acl']);
+			$Entry['aclobject']= serialize($description['aclobject']);
+		}
+		
+		return $Entry;
+	}
+	
     public function thisAdminInfo($field = null) {
         if (empty($this->thisAdminInfo)) {
             $user_arr = $this->thisAdminSession();
 
-            $this->thisAdminInfo = isset($user_arr['adminref']) ?
-                    $this->listing($user_arr['adminref']) : Array();
+            $this->thisAdminInfo = isset($user_arr['adminref']) ? $this->listing($user_arr['adminref']) : Array();
         }
         return isset($this->thisAdminInfo[$field]) ? $this->thisAdminInfo[$field] : $this->thisAdminInfo;
     }
@@ -84,11 +104,23 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
      *
      * @return Array
      */
-    public function listing($id = null) {
-        if (isset($id))
-            return App::Load("Model/Admin")->findById($id);
-        else
+    public function Listing($id = null) {
+        if (isset($id)){
+            return $this->AdminInfo($id);
+		}
+        else {
+			
+			$thisAdmin = $this->thisAdminInfo();
+			if(!empty($thisAdmin['groupid'])){
+				
+				$GroupInfo = App::CategorySet()->findById($thisAdmin['groupid']);
+				if(!empty($GroupInfo['generic'])){
+					return App::Load("Model/Admin")->paging("groupid in ({$GroupInfo['generic']})");
+				}
+				
+			}
             return App::Load("Model/Admin")->paging();
+		}
     }
 
     /**
@@ -118,10 +150,6 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
      */
     public function save($data) {
 
-        /* if(isset($data['Admin']['acl']))
-          {
-          $data['Admin']['acl'] = implode(',',$data['Admin']['acl']);
-          } else $data['Admin']['acl'] = ""; */
         if (!empty($data['Admin']['acl'])) {
             $data['Admin']['acl'] = serialize($data['Admin']['acl']);
         }
@@ -138,8 +166,10 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
      * @return string
      */
     public function getAdminReferance($inforow) {
+		
         $inforow['adminref'] = isset($inforow['adminref']) ? $inforow['adminref'] : "";
         $adminInfo = App::Load("Model/Admin")->findById($inforow['adminref']);
+		
         return (!empty($adminInfo)) ? (app::__def()->sysConfig('ADMIN_REF_WITH_LINK')) ? App::Load("Helper/Html")->linkTag(App::Load("Helper/Config")->baseurl("/admin/manage/view/{$inforow['adminref']}"), "{$adminInfo['f_name']} {$adminInfo['l_name']}") . "<br />On " . App::Load("Helper/Date")->dateFormated($inforow["lastmodified"], 'long') : "{$adminInfo['f_name']} {$adminInfo['l_name']} <br />On " . App::Load("Helper/Date")->dateFormated($inforow["lastmodified"], 'long') : App::Load("Helper/Date")->dateFormated($inforow["lastmodified"]);
     }
 

@@ -1,0 +1,52 @@
+<?php if($action == 'complete'):?>
+	<?php App::Helper('Toolbar')->setTitle("Payment Complete")->setBtnBack()->Render(array('code' => 'toolbar_top')); ?>
+	<div style="height:300px">
+			
+			<h1 style="border:0;text-align:center">Your request is under process, we will get back to you within 5 hours.</h1>
+		
+			<h2 style="color:red;border:0;text-align:center">Thank your for being with appRain Technologies!!</h2>
+			<h2 style="color:red;border:0;text-align:center"><a href="<?php echo App::Config()->baseUrl("/admin/introduction") ?>">Go Back</a></h2>
+			
+			
+	</div>
+	<?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'toolbar_top')); ?>
+	
+<?php else: ?>
+
+	<form method="post" action="<?php echo App::Config()->baseUrl("/ethical/dopayment") ?>">
+
+	<?php App::Helper('Toolbar')->setTitle("Payment Process")->setBtnBack()->Render(array('code' => 'toolbar_top')); ?>
+	<?php
+
+		$Grid = App::Module('DataGrid')->setDisplay('FormListing');
+		
+		$def['TXN_CODE'] = isset($def['TXN_CODE']) ? $def['TXN_CODE'] : '';
+		$def['COMMENT'] = isset($def['TXN_CODE']) ? $def['COMMENT'] : '';
+		
+		App::Module('DataGrid')
+			->addRow("Due Bill",App::Utility()->numberFormate($def['OS']))
+			->addRow("Bkash No", "01717403818 (Call for more help)")
+			->addRow("BKash Transaction Id",App::Html()->inputTag("data[Payment][txnid]",$def['TXN_CODE'],array('class'=>"small")),"Enter the transaction id here and click submit")
+			->addRow("Comment",App::Html()->inputTag("data[Payment][comment]",$def['COMMENT'],array('class'=>"small")))
+			->Render();
+		
+		
+		
+		// def
+	?>
+	
+	<?php App::Helper('Toolbar')->setBtnSubmit()->setBtnBack()->setFormJustified(true)->Render(array('code' => 'toolbar_bottom')); ?>
+	</form>
+<?php endif;?>
+
+<div>
+		<ul>
+			<li> Pay the mantioned billin the bKash no and click on submit button</li>
+		</ul>
+	</div>
+	
+<style type="text/css">
+	#content{
+		margin-top:10px;
+	}
+</style>

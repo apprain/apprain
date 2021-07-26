@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addons>
+    <addon name="handsontable">
+        <title><![CDATA[handsontable]]></title>
+        <description><![CDATA[Js Spread Sheet]]></description>
+        <javascripts>
+            <src>/addons/handsontable/pikaday/pikaday.js</src>
+            <src>/addons/handsontable/moment/moment.js</src>
+            <src>/addons/handsontable/numbro/numbro.js</src>
+            <src>/addons/handsontable/handsontable.min.js</src>
+        </javascripts>
+         <style_sheets>
+            <link>/addons/handsontable/pikaday/pikaday.css</link>
+            <link>/addons/handsontable/handsontable.min.css</link>
+        </style_sheets>
+        <code/>
+		<author_name>Reazaul Karim</author_name>
+		<author_uri>http://reazulk.wordpress.com</author_uri>
+		<addon_uri>http://www.apprain.org</addon_uri>
+        <layouts>All</layouts>
+        <layouts_except></layouts_except>
+        <status>Active</status>
+        <load>OnRequest</load>        
+    </addon>
+</Addons>

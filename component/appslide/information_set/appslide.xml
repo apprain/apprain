@@ -121,10 +121,7 @@
 				<attribute name="null"></attribute>
 				<attribute name="default"></attribute>
 			</db-attribute>				
-            <validation>
-                <type>notEmpty</type>
-                <err-message>Description can't be empty!</err-message>
-            </validation>
+            <validation />
             <parameters />
             <tag-attributes>
                 <attribute name="id">description</attribute>

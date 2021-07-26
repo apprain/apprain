@@ -136,23 +136,30 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
         return $tmp;
     }
 
-    public function AdminNavList($id = null) {
+    public function AdminNavList($Send = null) {
 
         $adminDefinition = $this->getInterfaceBuilderDefinition();
 
-        if (isset($id)) {
-            $adminInfo = App::AdminManager()->Listing($id);
-            $adminInfoACL = ($adminInfo['acl'] != '') ? unserialize($adminInfo['acl']) : array();
+        if (isset($Send)) {
+			if(is_array($Send)){
+				$adminInfoACL = $Send;	
+			}
+			else{
+				$adminInfo = App::AdminManager()->Listing($Send);
+				$adminInfoACL = ($adminInfo['acl'] != '') ? unserialize($adminInfo['acl']) : array();
+			}
         }
+		
+		
         $str = '';
         foreach ($adminDefinition as $name => $row) {
 
             $accessLinks = array();
             if (isset($adminInfoACL[$name])) {
                 $accessLinks = $this->accessLinksOnly($adminInfoACL[$name]);
-                $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" checked="checked" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()"  />' . $row['parent']['title'] . '</label>');
+                $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" checked="checked" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()"  />' . $this->__($row['parent']['title']) . '</label>');
             } else {
-                $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()" />' . $row['parent']['title'] . '</label>');
+                $str .= App::Helper('Html')->getTag('h5', array("style" => "margin:10px 0 0 0;cursor:pointer"), '<input disabled=\"disable\" onclick="setparentval(this,\'' . $name . '\');" type="checkbox" id="' . $name . '" name="data[Admin][acl][' . $name . ']" value="" /> <label onclick="jQuery(\'#inner_' . $name . '\').toggle()" />' . $this->__($row['parent']['title']) . '</label>');
             }
             $str .= "<div id=\"inner_{$name}\" style=\"display:none\">";
             $str .= '<ul style="margin-left:15px">';
@@ -163,16 +170,16 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
                 foreach ($child['items'] as $itemkey => $item) {
                     if (in_array($item['link'], $accessLinks)) {
                         $hasOne = true;
-                        $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  checked=\"checked\" name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />{$item['title']}";
+                        $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  checked=\"checked\" name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />" . $this->__($item['title']);
                     } else {
-                        $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />{$item['title']}";
+                        $childstr .= "<li><input type=\"checkbox\" onclick=\"checkmyparents('{$name}');\"  name=\"data[Admin][acl][{$name}][{$childkey}][{$itemkey}]\" value=\"{$item['link']}\" />" .  $this->__($item['title']);
                     }
                 }
                 $childstr .= '</ul>';
                 if ($hasOne) {
-                    $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" checked=\"checked\"  name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />{$child['title']}";
+                    $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" checked=\"checked\"  name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />" . $this->__($child['title']);
                 } else {
-                    $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />{$child['title']}";
+                    $str .= "<li><input type=\"checkbox\" onclick=\"childselection(this);checkmyparents('{$name}');\" name=\"data[Admin][acl][{$name}][{$childkey}]\" value=\"Yes\" />" . $this->__($child['title']);
                 }
                 $str .= $childstr;
                 $str .= '</li>';
@@ -206,7 +213,11 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
     public function register_detail_acl_definition($user, $params) {
         $name = key($params['identity']);
         $title = $params['identity'][$name];
-        if (isset($user['aclobject'])) {
+		
+        if(is_array($user)){
+			 $userdata = $user;
+		}
+		else if (isset($user['aclobject'])) {
             $userdata = unserialize($user['aclobject']);
         }
 

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Inc. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/documents
+ */
+-->
+
+<InformationSet>
+    <!--
+    /**
+     * Base Section
+     * Contain all Global Options
+     */
+    -->
+    <base mode="db">
+        <version>0.2.0</version>
+        <lastupdate>2009-12-01</lastupdate>
+        <title>Search Role</title>
+        <admin_tab>component</admin_tab>
+		<addons />
+        <parameters />        
+        <max_entry>
+            <limit></limit>
+            <message><![CDATA[]]></message>
+        </max_entry>
+        <sreach>
+              <status>Yes</status>
+              <field-selected>title</field-selected>
+			  <field-description>description</field-description>
+              <parma-link>
+                <!-- Relative Absolute -->
+                <type>Relative</type>
+                <uri><![CDATA[]]></uri>
+              </parma-link>
+        </sreach>
+    </base>
+    <!--
+    /**
+     * Fields Section
+     * Contain all input Fields Definitions
+     */
+    -->
+    <fields>
+        <field name="title">
+            <title>Title</title>
+            <type>inputTag</type>
+            <searchable>Yes</searchable>
+            <validation>
+                <rule>
+                    <type>notEmpty</type>
+                    <err-message>Title can not left empty</err-message>
+                </rule>
+            </validation>
+            <parameters />
+            <tag-attributes>
+                <attribute name="id">name</attribute>
+                <attribute name="class">app_input</attribute>
+            </tag-attributes>
+        </field>
+        <field name="name">
+            <title>Name</title>
+            <type>inputTag</type>
+            <searchable>Yes</searchable>
+            <validation>
+                <rule>
+                    <type>notEmpty</type>
+                    <err-message>Title can not left empty</err-message>
+                </rule>
+            </validation>
+            <parameters />
+            <tag-attributes>
+                <attribute name="id">name</attribute>
+                <attribute name="class">app_input</attribute>
+            </tag-attributes>
+        </field> 
+        <field name="location">
+            <title>Location</title>
+            <type>inputTag</type>
+            <searchable>Yes</searchable>
+            <validation>
+                <rule>
+                    <type>notEmpty</type>
+                    <err-message>Title can not left empty</err-message>
+                </rule>
+            </validation>
+            <parameters />
+            <tag-attributes>
+                <attribute name="id">name</attribute>
+                <attribute name="class">app_input</attribute>
+            </tag-attributes>
+        </field>         
+        <field name="fields">
+            <title>Fields</title>
+            <type>textareaTag</type>
+            <searchable>Yes</searchable>
+			<db-attribute>
+				<attribute name="type ">text</attribute>
+                <attribute name="length"></attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <validation>
+                <type>notEmpty</type>
+                <err-message>Field can not empty</err-message>
+            </validation>
+            <parameters>
+                <parameter name="richtexteditor">No</parameter>
+            </parameters>
+            <tag-attributes>
+                <attribute name="id">fields</attribute>
+                <attribute name="class">app_input</attribute>
+                <attribute name="rows">20</attribute>
+            </tag-attributes>
+        </field>
+		<field name="smode">
+            <title>Mode</title>
+            <type>radioTag</type>
+			<db-attribute>
+				<attribute name="type ">enum</attribute>
+                <attribute name="length"></attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <validation />
+            <options>
+                <option value="search-window">Search Window</option>
+                <option value="link">Link</option>
+                <option value="popup-link">Popup Link</option>
+            </options>
+            <selected>search-window</selected>
+            <tag-attributes>
+                <attribute name="id">smode</attribute>
+            </tag-attributes>
+        </field>
+        <field name="status">
+            <title>Status</title>
+            <type>radioTag</type>
+			<db-attribute>
+				<attribute name="type ">enum</attribute>
+                <attribute name="length"></attribute>
+				<attribute name="null"></attribute>
+				<attribute name="default"></attribute>
+			</db-attribute>				
+            <validation>
+                <rule>
+                    <type>inList</type>
+                    <err-message>Status Must be Public/Inactive</err-message>
+                    <list><val>Active</val><val>Inactive</val></list>
+                </rule>
+            </validation>
+            <options>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </options>
+            <selected>Active</selected>
+            <tag-attributes>
+                <attribute name="id">status</attribute>
+            </tag-attributes>
+        </field>
+    </fields>
+</InformationSet>

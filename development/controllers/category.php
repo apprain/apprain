@@ -87,7 +87,7 @@ class categoryController extends appRain_Base_Core
         if (!empty($this->data)) {
             if (isset($this->data['Category']['parentid'])) {
                 $this->data['Category']['parentid'] = !isset($this->data['Category']['is_parent'])
-                    ? $this->data['Category']['parentid'] : "";
+                    ? $this->data['Category']['parentid'] : "0";
             }
 
             if (strtolower($definition['image']['type']) == 'single') {
@@ -110,6 +110,9 @@ class categoryController extends appRain_Base_Core
                 if (isset($this->post['Button']['button_save_and_update'])) {
                     $this->redirect('/category/manage/' . $type . '/update/' . $pdo->getId());
                 }
+				elseif (isset($this->post['Button']['button_save_and_add'])) {
+                    $this->redirect('/category/manage/' . $type . '/add');
+                }
                 else {
                     $this->redirect('/category/manage/' . $type);
                 }
@@ -127,8 +130,16 @@ class categoryController extends appRain_Base_Core
             $this->set('update_data_list', $update_data_list);
         }
 
-        $category_arr = App::CategorySet($type)->setPagination(true)->getRecursive();
-        $this->set('data_list', $category_arr);
+		if($action=='search'){
+			$src = isset($this->get['src']) ? $this->get['src'] : '';
+			$category_arr = App::Model('Category')->paging("type='{$type}' and (title like '%{$src}%' OR description like '%{$src}%') ORDER BY parentid ASC,title ASC",null,"?src={$src}");
+			$this->set('data_list', $category_arr);
+		}
+		else{
+			$category_arr = App::CategorySet($type)->setPagination(true)->getRecursive();
+			//pre($category_arr );
+			$this->set('data_list', $category_arr);
+		}
 
         /* Set Category structure to view */
         $this->set('definition', $definition);

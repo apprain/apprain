@@ -301,10 +301,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 			if (isset($data[$val['field']]) && $val['field'] != 'id') {					
 				if(is_array($data[$val['field']])){
 					$data[$val['field']] = implode(',',$data[$val['field']]);
-				}		
-				elseif(in_array('id',array('int'))){
-					$data[$val['field']] = 0;
-				}	
+				}				
 				$_sthSQLBody .= (isset($_sthSQLBody)) ? ",{$val['field']} = :{$val['field']}" : "{$val['field']} = :{$val['field']}";
 				$_sthBindValues[":{$val['field']}"] = $data[$val['field']];
 			}

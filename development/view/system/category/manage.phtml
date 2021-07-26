@@ -104,7 +104,7 @@ if ($action == 'update' || $action == 'add') {
     /*
     * Call the tools bar
     */
-    App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnBack()->setFormJustified(true)->Render(array('code' => 'category_update_bottom', 'id' => $id));
+    App::Helper('Toolbar')->setBtnSave()->setBtnSaveAndUpdate()->setBtnSaveAndAdd()->setBtnBack()->setFormJustified(true)->Render(array('code' => 'category_update_bottom', 'id' => $id));
 
     /*
     * HTML hidden fields
@@ -180,51 +180,74 @@ else {
     /*
      * Top Tool bar
      */
-    App::Helper('Toolbar')->setTitle($definition['title'])->setBtnBack()->Render(array('code' => 'category_view_top'));
+    App::Helper('Toolbar')->setTitle($definition['title'])->setbtnCustomHtml('<input type="text" id="srctxt" value="' . (isset($this->get['src']) ? $this->get['src'] : '') . '" /> <input id="search" type="button" value="Search" />')->setBtnBack()->Render(array('code' => 'category_view_top'));
 
     if (!empty($data_list['data'])) {
-        /*
-         * Display category area
-         */
-        foreach ($data_list['data'] as $key => $val) {
-            $tmp = Array();
-            $tmp[] = $this->get_tag('input', array('type' => 'checkbox', 'value' => "{$val['id']}", "class" => "checkrow"));
-            $tmp[] = $this->get_tag('span', array('title' => "Id:{$val['id']}"), (($data_list["page"] - 1) * $this->get_config('default_pagination') + $key + 1));
+		if($action == 'search'){
+			foreach ($data_list['data'] as $key => $val) {
+				App::Module('DataGrid')->addRow($val['id'],App::Html()->linkTag(App::Config()->baseUrl("/category/manage/{$type}/update/{$val['id']}"),$val['title']),App::CategorySet()->IdToName($val['id'],'long'));
+			}
+			App::Module('DataGrid')->setHeader(array('id','Name','Link'));
+			App::Module('DataGrid')->setFooter($data_list['paging_str']);
+			App::Module('DataGrid')->Render();
+		}
+		else{
+			/*
+			 * Display category area
+			 */
+			foreach ($data_list['data'] as $key => $val) {
+				$tmp = Array();
+				$tmp[] = $this->get_tag('input', array('type' => 'checkbox', 'value' => "{$val['id']}", "class" => "checkrow"));
+				$tmp[] = $this->get_tag('span', array('title' => "Id:{$val['id']}"), (($data_list["page"] - 1) * $this->get_config('default_pagination') + $key + 1));
 
-            if ($definition['image'] == 'Yes') {
-                $tmp[] = ($val['image'] != '') ? App::load("Helper/Html")->imgDTag($this->get_img_dir($val['image'])) : '';
-            }
+				if ($definition['image'] == 'Yes') {
+					$tmp[] = ($val['image'] != '') ? App::load("Helper/Html")->imgDTag($this->get_img_dir($val['image'])) : '';
+				}
 
-            $tmp[] = $val['title'];
-            $tmp[] = $val[CATEGORY_PATH_MODE];
+				$tmp[] = $val['title'];
+				$tmp[] = $val[CATEGORY_PATH_MODE];
 
-            if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
-                $tmp[] = App::AdminManager()->getAdminReferance($val);
-            }
+				if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
+					$tmp[] = App::AdminManager()->getAdminReferance($val);
+				}
 
-            $tmp[] = '<a href="' . $this->baseurl('/') . 'category/manage/' . $type . '/update/' . $val['id'] . '"><img src="' . $this->baseurl('/') . '/images/admin/edit.gif" title="Edit ' . $val['title'] . '" alt="Edit" /></a>' .
-                '<a href="javascript:void(0)"  class="link_delete" title="Category_' . $val['id'] . '" >' . '<img src="' . $this->baseurl('/') . '/images/admin/remove.gif" title="Delete ' . $val['title'] . '" alt="Delete" /></a>';
+				$tmp[] = '<a href="' . $this->baseurl('/') . 'category/manage/' . $type . '/update/' . $val['id'] . '"><img src="' . $this->baseurl('/') . '/images/admin/edit.gif" title="Edit ' . $val['title'] . '" alt="Edit" /></a>' .
+					'<a href="javascript:void(0)"  class="link_delete" title="Category_' . $val['id'] . '" >' . '<img src="' . $this->baseurl('/') . '/images/admin/remove.gif" title="Delete ' . $val['title'] . '" alt="Delete" /></a>';
 
-            App::Call(App::Module('DataGrid'), 'addRow', $tmp);
-        }
+				App::Call(App::Module('DataGrid'), 'addRow', $tmp);
+			}
 
-        $t_head = Array($this->get_tag('input', array('type' => 'checkbox', 'id' => 'checkall', 'class' => "checkall")), $this->__("ID")); //{'mode':'categoryset'}
-        if ($definition['image'] == 'Yes') $t_head[] = $this->__("Image");
-        $t_head[] = $definition['title'];
-        $t_head[] = $this->__("Tree");
-        $val['adminref'] = isset($val['adminref']) ? $val['adminref'] : false;
-        if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
-            $t_head[] = $this->__("Admin Refernace");
-        }
-        $t_head[] = $this->__("Options");
+			$t_head = Array($this->get_tag('input', array('type' => 'checkbox', 'id' => 'checkall', 'class' => "checkall")), $this->__("ID")); //{'mode':'categoryset'}
+			if ($definition['image'] == 'Yes') $t_head[] = $this->__("Image");
+			$t_head[] = $definition['title'];
+			$t_head[] = $this->__("Tree");
+			$val['adminref'] = isset($val['adminref']) ? $val['adminref'] : false;
+			if (app::__def()->sysConfig('ADMIN_REF_IN_CAT_INFO_SET') && $val['adminref']) {
+				$t_head[] = $this->__("Admin Refernace");
+			}
+			$t_head[] = $this->__("Options");
 
-        App::Module('DataGrid')->setHeader($t_head);
-        App::Module('DataGrid')->setFooter($data_list['paging_str']);
-        App::Module('DataGrid')->Render();
+			App::Module('DataGrid')->setHeader($t_head);
+			App::Module('DataGrid')->setFooter($data_list['paging_str']);
+			App::Module('DataGrid')->Render();
+		}
     }
     else {
         echo $this->callElement('default/tools/message', array('caption' => 'Message', 'type' => 'message', 'message' => 'No Data found.'));
     }
 
     App::Helper('Toolbar')->setBtnDelete(array("id" => "{'mode':'categoryset'}"))->setBtnBack()->Render(array('code' => 'category_view_bottom'));
+?>
+<script type="text/javascript">
+jQuery(document).ready(function () {
+	jQuery("#search").click(function(event) {
+		var str = jQuery('#srctxt').val();
+		if(str != ''){
+			window.location = siteInfo.baseUrl + '/category/manage/<?php echo $type; ?>/search?src=' + str;
+		}
+		
+	});
+});		
+</script>
+<?php	
 }

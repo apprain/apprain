@@ -62,6 +62,11 @@ class Apprain_Base_appModel extends appRain_Base_Objects
     public function fieldToField($key = null, $val = null, $field = null, $options = null) {
         if (isset($key) && isset($val)) {
             $data = $this->find("{$key}='{$val}'");
+			
+			if(strstr($field,',')){
+				$field = explode(",",$field);
+			}
+						
             if (is_array($field)) {
                 $a = Array();
                 if (!empty($data)) {

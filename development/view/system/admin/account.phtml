@@ -180,5 +180,5 @@
         ->addRow($this->__("Description"), $user_data['description'])
         ->Render();
     ?>
-<?php App::Helper('Toolbar')->setBtnCustomHtml(App::Helper("Html")->ButtonTag("Edit", "Edit Account", array("onclick" => "document.location='" . $this->baseurl("/admin/account/edit") . "';")))->setBtnBack()->Render(array('code' => 'admininfo_view_update_bottom', 'uid' => $user_data['id'])); ?>
+<?php App::Helper('Toolbar')->setFormJustified(true)->setBtnCustomHtml(App::Helper("Html")->ButtonTag("Edit", "Edit Account", array("onclick" => "document.location='" . $this->baseurl("/admin/account/edit") . "';")))->setBtnBack()->Render(array('code' => 'admininfo_view_update_bottom', 'uid' => $user_data['id'])); ?>
 <?php endif; ?>

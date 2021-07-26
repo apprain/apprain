@@ -1287,16 +1287,32 @@ class Development_Plugin_Mailing_Phpmailer extends appRain_Base_Objects
                 return false;
             }
         }
-        if (PHP_VERSION < 6) {
-            $magic_quotes = get_magic_quotes_runtime();
-            set_magic_quotes_runtime(0);
-        }
+		
+		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+		  set_magic_quotes_runtime(0);
+		}
+		else {
+		  ini_set('magic_quotes_runtime', 0);
+		}
+		
+     //   if (PHP_VERSION < 6) {
+     //       $magic_quotes = get_magic_quotes_runtime();
+      //      set_magic_quotes_runtime(0);
+      //  }
+	  
+		$magic_quotes = get_magic_quotes_runtime();
         $file_buffer = file_get_contents($path);
         $file_buffer = $this->EncodeString($file_buffer, $encoding);
         fclose($fd);
-        if (PHP_VERSION < 6) {
-            set_magic_quotes_runtime($magic_quotes);
-        }
+		
+        if ($magic_quotes) {
+		  if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+			set_magic_quotes_runtime($magic_quotes);
+		  }
+		  else {
+			ini_set('magic_quotes_runtime', $magic_quotes);
+		  }
+		}
         return $file_buffer;
     }
 

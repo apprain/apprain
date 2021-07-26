@@ -1,0 +1,121 @@
+<section id="page-title" class="p-b-40 p-t-30" >
+	<div class="container">
+		<div class="page-title">
+			<h1>Messenger</h1>
+		</div>
+		<div class="breadcrumb">
+			<ul>
+				<li><a href="<?php echo App::Config()->baseUrl(); ?>">Home</a></li>
+				<li><a href="<?php echo App::Config()->baseUrl("/messenger"); ?>">Message Board</a></li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+
+<style>
+	pre{
+		font-family:courier;
+		padding:0px 5px 0px 0px ;
+		margin:1px;
+		
+	}
+</style>
+
+<section>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-5">
+			
+			<div class="text-small">Guide Line</div>
+			<hr class="line" />
+			<p>
+			<ul class="list-icon list-icon-arrow-circle list-icon-colored">
+				<li> This chat system directly connected to merchant POS. </li>
+				<li>Post the query-merchant will response on time.</li>
+				<li>Enter Name &amp; Phone to start conversation.</li>
+				<li>System save each session so dont post duplicate content.</li>
+			</ul>
+			</p>
+		</div>
+		<div class="col-lg-7">
+			<div class="text-small">Chat</div>
+				<hr class="line" />
+				<?php if(empty($mbname)):?>
+					
+					<form method="post">
+						<div class="form-group">
+							<label for="name">Customer Name</label>
+							<input class="form-control" id="name" name="data[Message][name]" aria-describedby="emailHelp" placeholder="Name" type="text">
+						</div>
+						<div class="form-group">
+							<label for="phoneno">Customer Phone No</label>
+							<input class="form-control" id="phoneno" name="data[Message][senderid]"  placeholder="Phone No" type="text">
+						</div>		
+						<div class="form-group">
+							<label for="capacha">Enter the text in the box that displayed in the image. </label>
+                            <?php echo App::Helper('Html')->capachaTag("adminpasswordreset");?> 
+                            <input class="form-control" style="width: 50%;display:inline" type="text" id="capacha" name="data[Message][capacha]" size="40" value="" />
+                        </div>						
+						<button type="submit" class="btn m-t-5 mt-3">Start Chat</button>
+					</form>
+					
+					
+				<?php else:?>							
+					Welcome <?php echo  $mbname;?> |
+					Session: <?php echo  $mbsession;?> |
+					<a href="<?php echo App::Config()->baseUrl("/messenger/logout") ?>">Logout</a>
+					<hr />
+				
+					<div id="contentchat" style="overflow:auto;height:200px">
+						<?php 						
+						echo App::Component('Messenger')->Helper('Data')->LiveStatus(true);
+						
+						$list = App::Model('Message')->findAll("session='{$mbsession}' order by id desc limit 0,50");
+						$list['data'] = array_reverse($list['data']);
+						foreach($list['data'] as $row){
+							pr($row['sendertitle'] . ' : ' . $row['message']);
+						}
+						?>
+					</div>
+					<hr  />
+
+
+					<form method="post">
+						<div class="form-group" style="max-width: 25rem;">
+							<div class="input-group mb-3">
+								<input class="form-control" name="data[Message][message]"  type="text" />
+								<div class="input-group-append">
+								<button class="btn btn-light" type="submit" id="update">Send</button>
+							</div>
+						</div>
+						</div>
+					</form>
+
+					<script type="text/javascript">		
+						setInterval(getdata,4000);						
+						function getdata(){							
+							jQuery.ajax({
+							  url:  "<?php echo App::Config()->baseUrl("/");?>/messenger/getdata/<?php echo $mbsession; ?>",
+							  context: document.body
+							}).done(function(data) {
+							  jQuery('#contentchat').html( data );
+							});
+							
+							s2b();
+						}
+						s2b();						
+						function s2b(){
+							
+							var scroll = document.getElementById('contentchat');
+						   scroll.scrollTop = scroll.scrollHeight;
+						   scroll.animate({scrollTop: scroll.scrollHeight});
+						}
+					</script>
+				<?php endif;?>	
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+

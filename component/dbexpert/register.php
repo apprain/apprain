@@ -65,6 +65,15 @@ class Component_DBExpert_Register extends appRain_Base_Component
 				'link' => '/dbexpert/imexport',
 				
 			);
+            $send['developer']['child'][] = Array(
+                "title"=>"Database Expert",
+                "items"=>Array(
+					array(
+                        "title"=>"Database Expert",
+                        "link"=>"/dbexpert/imexport"
+                    )
+                )
+            );
             return $send;
         }
     }
