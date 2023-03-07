@@ -1,5 +1,13 @@
+
+Note
+=======
+Present code contains the fixes of latest version of PHP.( https://github.com/apprain/apprain-source/archive/refs/heads/master.zip)
+
+We are working with the new release to publish soon.
+
 apprain
 =======
+
 
 appRain is one of the first, officially-released, open source Content Management Frameworks (CMF). CMF is a new, web engineering concept where a Content Management System (CMS) and a rapid development framework perform side-by-side to produce endless varieties of output in a very limited time.
 
