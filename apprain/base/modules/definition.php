@@ -469,6 +469,8 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
         }
 
         if (!isset($this->DBConfigSingleToneCache[$cName])) {
+			$url = str_replace(".ca",".com",$_SERVER['HTTP_HOST']);
+			pre('Your new server <a href="http://' . $url . '">' . $url . '</a>');
             pre("System looking for database profile '{$cName}' but not found, Please reffer to database.xml");
         }
 

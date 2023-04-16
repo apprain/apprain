@@ -177,7 +177,7 @@ class Apprain_Base_appModel extends appRain_Base_Objects
     }
 
     public function save($data = null, $_condition = null) {
-        $this->data[$this->name] = ($data[$this->name]) ? $data[$this->name] : $this->__data;
+        $this->data[$this->name] = isset($data[$this->name]) ? $data[$this->name] : $this->__data;
         $this->_beforeSave($this);
         if (!isset($this->data[$this->name]['id'])) {
             $this->data[$this->name]['id'] = null;

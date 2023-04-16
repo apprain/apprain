@@ -54,7 +54,7 @@ class appRain_Base_Modules_Hook extends appRain_Base_Objects
                         case "result"  :
                             $data[] = App::__obj($class)->$method($args, $param);
                             break;
-                        case "display" :
+                        case "display" : 
                             echo App::__obj($class)->$method($args, $param);
                             break;
                         default           :

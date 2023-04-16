@@ -48,7 +48,7 @@ abstract class appRain_Base_Abstract {
                 $db_config = $this->readdbconfig();
                 App::$__appData["db_connection"][$this->_cname] = App::Module("Database_{$db_config['driver']}_{$db_config['type']}")->Connect($db_config);
             } catch (Exception $e) {
-                echo "<pre>";
+				echo "<pre>";
                 echo ("<strong>" . $e->getMessage() . "</strong>");
                 echo ("\n\n<strong>Hints</strong>\nWe are unable to connect database. Please edit databse definition xml (Path: development/definition/database.xml)");
                 echo ("\n\n<strong>Trace:</strong>\n" . $e->getTraceAsString());

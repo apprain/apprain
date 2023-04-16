@@ -39,6 +39,17 @@ class appRain_Base_Modules_log extends appRain_Base_Objects
 
     const MESSGE_ADMIN_GENERAL = 'admin-general';
     const MESSGE_ADMIN_DASHBOARD = 'admin-dashboard';
+	
+	public function __construct(){
+		
+		$file = App::Config()->get('baseurl');
+		$this->log_file_name = str_replace("/","_",$file) . "_app.log";
+		
+		$path = REPORT_CACHE_PATH . DS . $this->log_file_name;
+		if(!file_exists($path)){
+			file_put_contents($path,"");
+		}
+	}
 
     /**
      * Prepare the data set
@@ -102,6 +113,12 @@ class appRain_Base_Modules_log extends appRain_Base_Objects
         // Save Data to logged
         $this->save();
     }
+	
+	public function clear(){
+		
+		file_put_contents(REPORT_CACHE_PATH . DS . $this->log_file_name,'');
+		//die("FX Disabled");
+	}
 
 
     public function readFullLog($model = 'file')

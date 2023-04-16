@@ -27,18 +27,51 @@
  * http ://www.apprain.org/general-help-center
  */
 ?>
-<div class="clearfix"></div>
-<?php if( App::Config()->Setting('whitecloud_disable_footer','No') == 'No'):?>
-	<div class="container" >
-		<hr class="featurette-divider">
-		<footer>
-		<p class="pull-right">Developed By <a href="https://www.apprain.com"> appRain ERP</a> <a href="#">Back to top</a></p>
-		<p>
-			<?php App::Hook('UI')->Render('template_footer_A'); #User Interface Hook ?>
-			<?php echo App::Helper('Config')->setting('copy_right_text');?>	 
-			<?php App::Hook('UI')->Render('template_footer_menu'); #User Interface Hook ?>
-			<?php App::Hook('UI')->Render('template_footer_B'); #User Interface Hook ?>
-		</p>
-		</footer>
-	</div>
-<?php endif;?>
+
+<div class="container">
+  <?php App::Hook('UI')->Render('template_footer_A'); #User Interface Hook ?>
+  <footer class="py-5">
+    <div class="row">
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Themes</h5>
+        <ul class="nav flex-column">
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/theme-development"); ?>" class="nav-link p-0 text-muted">Website Theme</a></li>
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Admin Theme</a></li>
+        </ul>
+      </div>
+	  
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Developers</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/concept-of-development"); ?>" class="nav-link p-0 text-muted">Resouce List</a></li>
+		  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Create  Component</a></li>	        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Help</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/admin"); ?>" class="nav-link p-0 text-muted">Admin Login</a></li>
+          <li class="nav-item mb-2"><a href="https://www.apprain.org/general-help-center" class="nav-link p-0 text-muted" target="_blamk">Documentations</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-5 offset-md-1 mb-3">
+        <form>
+          <h5>appRain 4.0.5</h5>
+          <p>The new release focused on security and data interfacing through the Ethical Component.</p>
+          
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <p>&copy; <?php echo App::Helper('Config')->setting('copy_right_text');?></p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+      </ul>
+    </div>
+	<?php App::Hook('UI')->Render('template_footer_B'); #User Interface Hook ?>
+  </footer>
+</div>

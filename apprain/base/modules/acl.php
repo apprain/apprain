@@ -214,22 +214,27 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
         $name = key($params['identity']);
         $title = $params['identity'][$name];
 		
-        if(is_array($user)){
-			 $userdata = $user;
+        if (isset($user['aclobject'])) {
+			  $userdata = unserialize($user['aclobject']);
 		}
-		else if (isset($user['aclobject'])) {
-            $userdata = unserialize($user['aclobject']);
+		else if(is_array($user)){
+           $userdata = $user;
         }
 
         $str = App::Helper('Html')->getTag('h3', array("onclick" => "jQuery('#otherinnerdiv{$name}').toggle()", "style" => "margin:10px 0 0 0;cursor:pointer"), $title);
-        $str .= "<div id=\"otherinnerdiv{$name}\" style=\"display:none\">";
+        $str .= "<div id=\"otherinnerdiv{$name}\" style=\"display:none;padding:5px; border:1px solid #DDD\">";
         foreach ($params['options'] as $fieldname => $row) {
             $defaultvalue = isset($userdata[$name][$fieldname]) ? $userdata[$name][$fieldname] : $row['defaultvalue'];
+			
             $inputtype = $row['inputtype'];
+
             if (strtolower($inputtype) == 'checkboxtag') {
-                $str .= App::Helper('Html')->getTag('h5',array('style'=>'margin-left:0'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}][]", $row['options'], $defaultvalue);
+                $str .= App::Helper('Html')->getTag('h5',array('style'=>'margin-left:0;font-weight:normal;text-transform:underline;padding:1px;background-color:#E3E2E2'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}][]", $row['options'], $defaultvalue);
+            }
+			else if (strtolower($inputtype) == 'inputtag') {
+                $str .= App::Helper('Html')->getTag('h5',array('style'=>'margin-left:0;font-weight:normal;text-transform:underline;padding:1px;background-color:#E3E2E2'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $defaultvalue,array('class'=>'large'));
             } else {
-                $str .= App::Helper('Html')->getTag('h5', array('style'=>'margin-left:0'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $row['options'], $defaultvalue);
+                $str .= App::Helper('Html')->getTag('h5', array('style'=>'margin-left:0;font-weight:normal;text-transform:underline;padding:1px;background-color:#E3E2E2'), $row['title']) . App::Helper('Html')->$inputtype("data[Admin][aclobject][{$name}][{$fieldname}]", $row['options'], $defaultvalue);
             }
         }
         $str .= "</div>";

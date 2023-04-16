@@ -59,29 +59,15 @@
 						<ugroup>superadmin</ugroup>
 					</acl>
 				</base>
-				<selections>
-					<selection>
-                        <title>Home Page</title>
-                        <name>site_homepage_layout</name>
-                        <type>radioTag</type>
-                        <default>left_column</default>
-                        <options>
-                            <option value="right_column">Right Column</option>
-                            <option value="left_column">Left Column</option>
-                            <option value="three_column">Three Column</option>
-                            <option value="default">Single Column</option>
-                        </options>
-                    </selection>             
+				<selections>					      
 					<selection>
                         <title>Page View</title>
                         <name>site_pageview_layout</name>
                         <type>radioTag</type>
-                        <default>right_column</default>
+                        <default>left_column_layout</default>
                         <options>
-                            <option value="right_column">Right Column</option>
-                            <option value="left_column">Left Column</option>
-                            <option value="three_column">Three Column</option>
-                            <option value="default">Single Column</option>
+							<option value="left_column_layout">Left Column Layout</option>
+                            <option value="right_column_layout">Right Column Layout</option>                            
                         </options>
                     </selection>            
 				</selections>
@@ -103,17 +89,7 @@
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </options>
-                    </selection>
-                    <selection>
-                        <title>Disable Footer</title>
-                        <name>whitecloud_disable_footer</name>
-                        <type>radioTag</type>
-                        <default>No</default>
-                        <options>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </options>
-                    </selection>					
+                    </selection>				
                 </selections>
             </group>			
         </groups>

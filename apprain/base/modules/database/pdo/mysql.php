@@ -110,7 +110,8 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 		/*
         * Return fetched data
         */
-        return isset($data[0]["cnt"]) ? $data[0]["cnt"] : 0;
+		
+        return array_sum(array_column($data, 'cnt')); //isset($data[0]["cnt"]) ? $data[0]["cnt"] : 0;
 	}	
 	/*
 	// Create paging for all transaction

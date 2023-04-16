@@ -1,10 +1,20 @@
-<?php if (App::Config()->setting('disable_quick_links') != 'Yes'): ?>
-<ul class="list-group">    
-    <?php $qlinks = App::PageManager()->getQuickLinks(); ?>
-    <?php foreach ($qlinks as $links): ?>		
-		<li class="list-group-item <?php echo ($selected == $links['name'])?'active':'';?>">
-			<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
-		</li>
-    <?php endforeach;?>    
-</ul>
-<?php endif; ?>
+ <div class="position-sticky">
+	<div class="p-4 mb-3 bg-light rounded">
+		<h4 class="fst-italic">About appRain 4.0.5</h4>
+		<p class="mb-0">Version 4.0.5 has come up with many fixes with the new version of PHP.This release includes two components: ethincal and messenger, which play a significant role in development.</p>
+	</div>
+	<div class="p-4">
+	  <?php if (App::Config()->setting('disable_quick_links') != 'Yes'): ?>
+		<h4><?php echo $this->__("Quick Links");?></h4>
+		<hr />
+		<ul class="list-group list-group-flush">   
+			<?php $qlinks = App::PageManager()->getQuickLinks(); ?>
+			<?php foreach ($qlinks as $links): ?>		
+				<li class="list-group-item <?php echo ($selected == $links['name'])?'active':'';?>">
+					<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
+				</li>
+			<?php endforeach;?>    
+		</ul>
+		<?php endif; ?>
+	</div>
+</div>

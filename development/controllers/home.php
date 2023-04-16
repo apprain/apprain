@@ -95,7 +95,7 @@ class homeController extends appRain_Base_Core
             ->setLimit(App::Config()->Setting('default_pagination',50))
             ->setHLink(App::Config()->baseUrl("/search?ss={$srcstr}"))
             ->Search($srcstr);
-
+			///pre($srcData);
         /* Overwrite page title */
         $this->page_title = "{$srcstr} {$this->page_title}";
 

@@ -238,7 +238,11 @@ abstract class appRain_Base_Modules_Config extends appRain_Base_Objects {
     }
 
     public function getServerInfo($key = NULL) {
-        return isset($_SERVER[$key]) ? $_SERVER[$key] : $_SERVER;
+		if($key== NULL){
+			return $_SERVER;
+		}
+		
+        return isset($_SERVER[$key]) ? $_SERVER[$key] : '';
     }
 
     public function getProtocol() {

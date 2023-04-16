@@ -30,6 +30,6 @@
 class Development_AppCommon extends appRain_Base_Objects
 {
     public function hello(){
-        echo "Common FUnction";
+        echo "Common Function";
     }
 }

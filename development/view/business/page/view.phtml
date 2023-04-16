@@ -1,1 +1,22 @@
-<?php echo App::Module('Universal_Formating')->pageFormated($page_content['id']);    ?>
+<!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2><?php echo $page_content['title']; ?></h2>
+          <ol>
+            <li><a href="<?php echo App::Config()->baseUrl() ?>">Home</a></li>
+            <li><?php echo $page_content['title']; ?></li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+    <section class="inner-page mt-4">
+      <div class="container">
+        <p>
+           <?php echo App::Module('Universal_Formating')->pageFormated($page_content['id']); ?>
+        </p>
+      </div>
+    </section>

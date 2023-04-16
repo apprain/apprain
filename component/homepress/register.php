@@ -71,10 +71,10 @@ class Component_Homepress_Register extends appRain_Base_Component
             ->setAction("home_content_area_D")
             ->Register(get_class($this),"add_home_synopsis");	
 
-		App::Module('Hook')
+		/*App::Module('Hook')
             ->setHookName('UI')
             ->setAction("template_right_column_A")
-            ->Register(get_class($this),"add_quick_links");			
+            ->Register(get_class($this),"add_quick_links");	*/		
     }
 
     public function init_on_install(){}

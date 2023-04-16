@@ -1,0 +1,52 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+
+/**
+ * Check if site live
+ */
+echo App::Load("Helper/Config")->isSiteLive();
+
+$selected = isset($selected) ? $selected : "";
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<?php echo $this->callElement("header_info"); ?>
+		<script type="text/javascript">var base = '<?php echo $this->baseurl();?>';</script>
+		<?php $this->fetchAddonlibs();?>
+		<link href="<?php echo $this->baseurl("/css/app_default.css");?>" rel="stylesheet" type="text/css" media="all"/>
+		<link href="<?php echo $this->skinurl("/css/default.css");?>" rel="stylesheet" type="text/css" media="all"/>
+		<link href="<?php echo $this->baseurl("/common/default-css");?>" rel="stylesheet" type="text/css" media="all"/>
+
+	</head>
+	<body>
+		<?php echo $content_rendered;?>
+	</body>
+</html>

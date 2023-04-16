@@ -64,8 +64,11 @@
                         <title>Home Page</title>
                         <name>site_homepage_layout</name>
                         <type>radioTag</type>
-                        <default>default</default>
+                        <default>left_column</default>
                         <options>
+                            <option value="right_column">Right Column</option>
+                            <option value="left_column">Left Column</option>
+                            <option value="three_column">Three Column</option>
                             <option value="default">Single Column</option>
                         </options>
                     </selection>             
@@ -73,8 +76,11 @@
                         <title>Page View</title>
                         <name>site_pageview_layout</name>
                         <type>radioTag</type>
-                        <default>default</default>
+                        <default>right_column</default>
                         <options>
+                            <option value="right_column">Right Column</option>
+                            <option value="left_column">Left Column</option>
+                            <option value="three_column">Three Column</option>
                             <option value="default">Single Column</option>
                         </options>
                     </selection>            

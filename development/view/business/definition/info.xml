@@ -21,10 +21,33 @@
             <hook name="home_content_area_B">Home Content Area B</hook>
             <hook name="home_content_area_C">Home Content Area C</hook>
             <hook name="home_content_area_D">Home Content Area D</hook>
-        </hook_group>      
+        </hook_group>
+        <hook_group name="leftcol" title="Left Column">
+            <hook name="template_left_column_A">Left Column Section A</hook>
+            <hook name="template_left_column_B">Left Column Section B</hook>
+            <hook name="template_left_column_C">Left Column Section C</hook>
+            <hook name="template_left_column_D">Left Column Section D</hook>
+        </hook_group> 
+        <hook_group name="rightcol" title="Right Column">
+            <hook name="template_right_column_A">Right Column Section A</hook>
+            <hook name="template_right_column_B">Right Column Section B</hook>
+            <hook name="template_right_column_C">Right Column Section C</hook>
+            <hook name="template_right_column_D">Right Column Section D</hook>
+        </hook_group> 		
+        <hook_group name="footer" title="Footer">
+			<hook name="template_footer_menu">Footer Menu</hook>
+            <hook name="template_footer_A">Footer Point A</hook>
+            <hook name="template_footer_B">Footer Point B</hook>
+        </hook_group>       
     </pagemanager_hooks>
     <settings>themesettings.xml</settings>
 	<components>
+		<!--auto>
+			<install>
+				<component>appslide</component>
+			</install>
+			<uninstall />
+		</auto -->
 	</components>
-	<callback>Development_View_Business_Definition_Register</callback>
+	<callback>Development_View_bootstrap_Definition_Register</callback>
 </theme>

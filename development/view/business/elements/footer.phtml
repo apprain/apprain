@@ -27,3 +27,18 @@
  * http ://www.apprain.org/general-help-center
  */
 ?>
+<div class="clearfix"></div>
+<?php if( App::Config()->Setting('whitecloud_disable_footer','No') == 'No'):?>
+	<div class="container" >
+		<hr class="featurette-divider">
+		<footer>
+		<p class="pull-right">Developed By <a href="https://www.apprain.com"> appRain ERP</a> <a href="#">Back to top</a></p>
+		<p>
+			<?php App::Hook('UI')->Render('template_footer_A'); #User Interface Hook ?>
+			<?php echo App::Helper('Config')->setting('copy_right_text');?>	 
+			<?php App::Hook('UI')->Render('template_footer_menu'); #User Interface Hook ?>
+			<?php App::Hook('UI')->Render('template_footer_B'); #User Interface Hook ?>
+		</p>
+		</footer>
+	</div>
+<?php endif;?>

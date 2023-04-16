@@ -11,9 +11,8 @@
             <hook name="template_header_B">Header B</hook>
         </hook_group>
 		<hook_group name="homepage" title="Home Page">
-            <hook name="home_page_banner_top">Home Page Banner Top</hook>
-            <hook name="home_page_banner">Home Page Banner</hook>
-            <hook name="home_page_banner_bottom">Home Page Banner Bottom</hook>
+            <hook name="home_page_banner_top">Home Page Slide Top</hook>
+            <hook name="home_page_banner_bottom">Home Page Slide Bottom</hook>
             <hook name="home_content_area_A">Home Content Area A</hook>
             <hook name="home_content_area_B">Home Content Area B</hook>
             <hook name="home_content_area_C">Home Content Area C</hook>
@@ -32,19 +31,19 @@
             <hook name="template_right_column_D">Right Column Section D</hook>
         </hook_group> 		
         <hook_group name="footer" title="Footer">
-			<hook name="template_footer_menu">Footer Menu</hook>
             <hook name="template_footer_A">Footer Point A</hook>
             <hook name="template_footer_B">Footer Point B</hook>
         </hook_group>       
     </pagemanager_hooks>
     <settings>themesettings.xml</settings>
 	<components>
-		<!--auto>
+		<auto>
+			<!-- Auto install component needed -->
 			<install>
 				<component>appslide</component>
 			</install>
 			<uninstall />
-		</auto -->
+		</auto>
 	</components>
 	<callback>Development_View_bootstrap_Definition_Register</callback>
 </theme>

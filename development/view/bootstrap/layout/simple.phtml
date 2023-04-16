@@ -34,19 +34,14 @@ echo App::Load("Helper/Config")->isSiteLive();
 
 $selected = isset($selected) ? $selected : "";
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html lang="en">
 	<head>
 		<?php echo $this->callElement("header_info"); ?>
-		<script type="text/javascript">var base = '<?php echo $this->baseurl();?>';</script>
 		<?php $this->fetchAddonlibs();?>
-		<link href="<?php echo $this->baseurl("/css/app_default.css");?>" rel="stylesheet" type="text/css" media="all"/>
-		<link href="<?php echo $this->skinurl("/css/default.css");?>" rel="stylesheet" type="text/css" media="all"/>
-		<link href="<?php echo $this->baseurl("/common/default-css");?>" rel="stylesheet" type="text/css" media="all"/>
-
+		<link href="<?php echo App::Config()->skinUrl("/css/default.css"); ?>" rel="stylesheet">
 	</head>
 	<body>
-		<?php echo $content_rendered;?>
+	<?php echo $content_rendered;?>
 	</body>
 </html>

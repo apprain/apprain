@@ -80,7 +80,7 @@ class appRain_Base_Modules_Admin extends appRain_Base_Objects {
 			$Entry = App::Model("Admin")->findById($send);
 		}
 		
-		if($Entry['groupid']){
+		if(isset($Entry['groupid']) && !empty($Entry['groupid'])){
 			$Group = App::CategorySet()->findById($Entry['groupid']);
 			$description = json_decode($Group['description'],true);
 			$Entry['acl']= serialize($description['acl']);

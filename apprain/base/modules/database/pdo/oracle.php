@@ -485,7 +485,6 @@ class appRain_Base_Modules_Database_Pdo_Oracle extends appRain_Base_Modules_Data
 	}	
 	
 	public function Equal($fiend=null,$value=null,$quoted=true){
-		pre(2);
 		if(empty($value)){
 			return " {$fiend} is null";
 		}

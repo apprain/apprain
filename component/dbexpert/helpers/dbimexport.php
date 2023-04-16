@@ -132,10 +132,12 @@ class Component_DBExpert_Helpers_Dbimexport extends appRain_Base_Objects
 			$this->execute("UNLOCK TABLES");
 		}
 		else{
-			$start = (strpos($TabelDef['create view'],$table)-1);
-			$end = strlen($TabelDef['create view']);
-			$getDumpTable .= $this->getBOL() . "DROP VIEW IF EXISTS " . $table . $this->getEOL();		
-			$getDumpTable .= $this->getBOL() . 'CREATE VIEW ' . substr($TabelDef['create view'],$start,$end) . $this->getEOL();			
+			if(isset($TabelDef['create view'])){
+				$start = (strpos($TabelDef['create view'],$table)-1);
+				$end = strlen($TabelDef['create view']);
+				$getDumpTable .= $this->getBOL() . "DROP VIEW IF EXISTS " . $table . $this->getEOL();		
+				$getDumpTable .= $this->getBOL() . 'CREATE VIEW ' . substr($TabelDef['create view'],$start,$end) . $this->getEOL();			
+			}
 		}
 
         return $getDumpTable;
