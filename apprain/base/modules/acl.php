@@ -146,7 +146,7 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
 			}
 			else{
 				$adminInfo = App::AdminManager()->Listing($Send);
-				$adminInfoACL = ($adminInfo['acl'] != '') ? unserialize($adminInfo['acl']) : array();
+				$adminInfoACL = (isset($adminInfo['acl']) && !empty($adminInfo['acl'])) ? unserialize($adminInfo['acl']) : array();
 			}
         }
 		

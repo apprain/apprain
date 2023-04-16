@@ -1,209 +1,167 @@
-@import url(http://fonts.googleapis.com/css?family=Fjalla+One);
-
-* {
-    padding: 0;
-	margin:0;
-}
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
 
 body {
-    font: 14px Arial,Helvetica,sans-serif;
-    background-color: #EEE;
-    color: #444;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	line-height:20px;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+	color: #5a5a5a;
+	font-size: 1rem;
 }
 
-h1,h2,h3, h4,thead th, tfoot th{
-    font-family: "Fjalla One",Arial;
-    font-weight: normal;
-	
-}
-
-.top-title{
-    color: #555;
-    padding: 20px 0;
-	margin-bottom:50px;
-	border-bottom: 2px solid #DDD;
-}
-
-.align-right{
-	text-align:right;
-}
-
-.huge{
-	font-size:80px
-}
-
-
-hr{
-    border-color:#CCC;
-}
-
-
-.gap{
-	margin-top:50px;
-}
-
-
-
-.post-list{
-	list-style:none;
-}
-
-.bgdefault{
-		background:url(../images/content-bg.png) repeat-x scroll 0 100px #FFF
-}
-
-.bgstartfromtop{
-		background:url(../images/content-bg.png) repeat-x scroll 0 0 #FFF
-}
-
-.header{
-	padding-top:20px;
-	margin-bottom:10px;
-	height:80px;
-}
-
-h1{
-  font-size: 30px;
-  font-weight: normal;
-  margin:20px 0;
-}
-
-h2{
-    margin:15px 0 5px 0;
-	font-weight: normal;
-	font-size: 30px;
-}
-
-h3{
-	font-weight: normal;
-	font-size: 20px;
-	    margin:15px 0 5px 0;
-}
-
-.logo a{
-	color:#FF0000;
-}
-
-p{
-	margin-top:10px;
-	margin-bottom:10px;
-}
-
-pre{
-	background: none repeat scroll 0 0 #EEEEEE;
-    font-family: inherit;
-    padding: 5px;
-}
-
-.header h2 {
-	margin-top:15px;
-	font-weight:lighter;
-}
-
-.header h2  a {
-	color: #B21111;
+.list-group a{
 	text-decoration:none;
 }
 
-em{
-	color:#1177AA;
+.list-group .active a{
+	color:#FFF;
 }
 
-#menu {
-    margin: 20px 10px 0 0;
-	float:right;
+/* CUSTOMIZE COMMON AREA
+-------------------------------------------------- */
+
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	margin-bottom:30px;
+  }
+
+  @media (min-width: 768px) {
+	.bd-placeholder-img-lg {
+	  font-size: 3.5rem;
+	}
+  }
+
+  .b-example-divider {
+	height: 3rem;
+	background-color: rgba(0, 0, 0, .1);
+	border: solid rgba(0, 0, 0, .15);
+	border-width: 1px 0;
+	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+
+  .b-example-vr {
+	flex-shrink: 0;
+	width: 1.5rem;
+	height: 100vh;
+  }
+
+  .bi {
+	vertical-align: -.125em;
+	fill: currentColor;
+  }
+
+  .nav-scroller {
+	position: relative;
+	z-index: 2;
+	height: 2.75rem;
+	overflow-y: hidden;
+  }
+
+  .nav-scroller .nav {
+	display: flex;
+	flex-wrap: nowrap;
+	padding-bottom: 1rem;
+	margin-top: -1px;
+	overflow-x: auto;
+	text-align: center;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+  }
+  
+  .navbar-brand{
+	color:#FFF;
+	font-weight:bold;
+	font-size:30px;
+  }
+	  
+.background-grey {
+	border-top:1px solid #EEE;
+	background-color: #F7F9FB !important;
 }
 
-#menu li {
-    display: inline;
-    list-style: none;
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
 }
 
-#menu li a {
-    float: left;
-    margin: 0 0 0 20px;
-    color: #888;
-	text-transform:uppercase;
-}
-
-#menu li a:hover {
-    color: #FF0000;
-}
-
-
-#menu li a.selected {
-    color: #FF0000;
+/* Declare heights because of positioning of img element */
+.carousel-item {
+  height: 32rem;
 }
 
 
-a {
-    color: #000;
-    text-decoration: none;
-	
+
+
+
+/* COMMON CUSTOMIZATION
+-------------------------------------------------- */
+.definition .icon{
+	font-size: 4rem;
+	text-align: center;
 }
 
-a:hover {
-   text-decoration: underline;
-   color:#FF0000;
-}
-
-footer {
-    border-top: 1px solid #ddd;
-    padding: 30px 0 30px;
-    font-size: .9em;
-	margin:50px 0 0;
-	background:url(../images/content-bg.png) repeat-x scroll 0 -40px #FFF;
-	color:#000;
-}
-
-footer a{
-	text-decoration:underline;
-}
-header{
-	margin-bottom:150px;
-}
-
-.press-update .well{
-	text-align:center;
+.definition .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 
-.press-update .well img{
-	width:100%;
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+/* rtl:end:ignore */
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
 }
 
-
-.list{
-	margin-top:10px;
-	list-style:circle inside;
+/* Thin out the marketing headings */
+/* rtl:begin:remove */
+.featurette-heading {
+  letter-spacing: -.05rem;
 }
 
-.list li{
-	border-bottom: 1px solid #CCCCCC;
-    padding: 10px 0;
+/* rtl:end:remove */
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
 }
 
-.block-title{
-    margin: 20px 10px 20px;
-    padding: 10px;
-	text-transform:uppercase;
-	border-top:1px solid #AAA;
-	border-bottom:1px solid #AAA;
-	
-}
-
-.error{
-	background-color: #FF0000;
-    border: 1px solid #FF0000;
-    color: #FFFFFF;
-    padding: 5px;
-}
-
-.success{
-	background-color: green;
-    border: 1px solid green;
-    color: #FFFFFF;
-    padding: 5px;
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
 }

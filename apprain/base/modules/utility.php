@@ -195,7 +195,7 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
         $headers .= "Content-Type: text/html\n";
 
         // Sending the mail
-        mail("$recipient", "$subj", "$body", "$headers");
+        mail("{$recipient}", "{$subj}", "{$body}", "{$headers}");
     }
 
     /**

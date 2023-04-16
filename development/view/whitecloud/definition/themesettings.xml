@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+-->
+<SiteSettings>
+    <sections>
+        <base name="themesettings">
+            <title>Theme Setting</title>
+            <admin_tab>developer</admin_tab>
+        </base>				
+        <groups>
+			<group>
+				<base name="logooptions">
+					<title>Logo Options</title>
+					<acl>
+						<ugroup>superadmin</ugroup>
+					</acl>
+				</base>
+				<selections>
+					<selection>
+						<title>Website Logo</title>
+						<name>site_logo</name>
+						<hints>Webste Header Logo</hints>
+						<default></default>
+						<type>fileTag</type>
+					</selection>                
+				</selections>
+			</group>
+			<group>
+				<base name="themelayout">
+					<title>Theme Layout Setup</title>
+					<acl>
+						<ugroup>superadmin</ugroup>
+					</acl>
+				</base>
+				<selections>					      
+					<selection>
+                        <title>Page View</title>
+                        <name>site_pageview_layout</name>
+                        <type>radioTag</type>
+                        <default>left_column_layout</default>
+                        <options>
+							<option value="left_column_layout">Left Column Layout</option>
+                            <option value="right_column_layout">Right Column Layout</option>                            
+                        </options>
+                    </selection>            
+				</selections>
+			</group>		
+            <group>
+                <base name="common">
+                    <title>Common Settings</title>
+                    <acl>
+                        <ugroup>superadmin</ugroup>
+                    </acl>
+                </base>
+                <selections>			
+                    <selection>
+                        <title>Disable Quick Links</title>
+                        <name>disable_quick_links</name>
+                        <type>radioTag</type>
+                        <default>No</default>
+                        <options>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </options>
+                    </selection>				
+                </selections>
+            </group>			
+        </groups>
+    </sections>
+</SiteSettings>

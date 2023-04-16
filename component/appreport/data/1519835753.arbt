@@ -44,7 +44,7 @@ function ReportHeader(){
     $param = App::Config()->post['data'];
 	$Format = App::Component('AppReport')->Helper('formatting');
 	pr($Format->cpad(App::Config()->Setting('site_title'),$TW,' '));
-	pr($Format->cpad('TEST',$TW,' '));
+	pr($Format->cpad('All User Report',$TW,' '));
 	pr($Format->cpad('REPORT TIME: ' . App::Helper('Date')->getdate('d-M-Y H:s A'),$TW,' '));
 	pr($Format->cpad('DATE RANGE: ' . "'{$param['Report']['sdate']['day']}-{$param['Report']['sdate']['month']}-{$param['Report']['sdate']['year']}' To '{$param['Report']['tdate']['day']}-{$param['Report']['tdate']['month']}-{$param['Report']['tdate']['year']}'"));
 }

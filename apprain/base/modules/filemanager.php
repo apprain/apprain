@@ -72,13 +72,14 @@ class appRain_Base_Modules_FileManager extends appRain_Base_Objects
 			$Filelist['file'] = $List;
 		}
 		
-		$Filelist = App::Load("Helper/Utility")
+		if(isset($Filelist['file'])){
+			$Filelist = App::Load("Helper/Utility")
                 ->array_paginator(
                 array_reverse(
                    $Filelist['file']),
                 Array('limit' => "50")
             );		
-		
+		}
 		return $Filelist;
 	}
 	
@@ -128,30 +129,35 @@ class appRain_Base_Modules_FileManager extends appRain_Base_Objects
 	public function listView(){
 		$Filelist = $this->readFiles();
 		
-					
-		$Grid = App::Module('DataGrid')->setHeader(array("Image","Information","Size","Type","Date",""));
-		foreach($Filelist['data'] as $val){
-		
-			list($width, $hight) = getimagesize($val['dir_path'] . DS . $val['name']);
-			$n_hight = ($hight < self::MAX_HIGHT ) ? $hight : self::MAX_HIGHT ;
-			if($hight > 0 ){
-				$width = round(($width/$hight)* $n_hight);
-			}
-			$n_width = ($width < self::MAX_WIDTH ) ? $width : self::MAX_WIDTH ;
+		if(!empty($Filelist)){			
+			$Grid = App::Module('DataGrid')->setHeader(array("Image","Information","Size","Type","Date",""));
+			foreach($Filelist['data'] as $val){
 			
-			$title =  str_replace($this->searchstr,"<span style=\"background-color:yellow\">{$this->searchstr}</span>",App::Utility()->getName($val['name']));
-			$Grid->addrow(
-				App::Html()->imgTag(App::Config()->filemanagerUrl(DS . $val['name']),null,array("width"=>$n_width,"hight"=>$n_hight))
-				. '<br /><br /><strong>' . $title . '</strong><br />'  ,
-				'<input type="text" class="small" value="' . App::Config()->filemanagerUrl(DS . $val['name']) . '" />' .
-				'<br /><input type="text" class="small" value="' . $val['dir_path'] . DS . $val['name'] . '" />',
-				"{$width}x{$hight}",
-				App::Utility()->getExt($val['name']),
-				App::Helper("Date")->dateFormated($val['filemtime'],'long'),
-				App::Html()->linkTag(App::Config()->baseUrl("/admin/filemanager/delete/" . base64_encode($val['name'])),"Delete",array("class"=>"confirm-link"))
-			);
+				list($width, $hight) = getimagesize($val['dir_path'] . DS . $val['name']);
+				$n_hight = ($hight < self::MAX_HIGHT ) ? $hight : self::MAX_HIGHT ;
+				if($hight > 0 ){
+					$width = round(($width/$hight)* $n_hight);
+				}
+				$n_width = ($width < self::MAX_WIDTH ) ? $width : self::MAX_WIDTH ;
+				
+				$title =  str_replace($this->searchstr,"<span style=\"background-color:yellow\">{$this->searchstr}</span>",App::Utility()->getName($val['name']));
+				$Grid->addrow(
+					App::Html()->imgTag(App::Config()->filemanagerUrl(DS . $val['name']),null,array("width"=>$n_width,"hight"=>$n_hight))
+					. '<br /><br /><strong>' . $title . '</strong><br />'  ,
+					'<input type="text" class="small" value="' . App::Config()->filemanagerUrl(DS . $val['name']) . '" />' .
+					'<br /><input type="text" class="small" value="' . $val['dir_path'] . DS . $val['name'] . '" />',
+					"{$width}x{$hight}",
+					App::Utility()->getExt($val['name']),
+					App::Helper("Date")->dateFormated($val['filemtime'],'long'),
+					App::Html()->linkTag(App::Config()->baseUrl("/admin/filemanager/delete/" . base64_encode($val['name'])),"Delete",array("class"=>"confirm-link"))
+				);
+			}
+			
+			$Grid->setFooter($Filelist['paging_str'])->Render();
 		}
-		
-		$Grid->setFooter($Filelist['paging_str'])->Render();
+		else{
+			echo $this->__('<h3 class="first">No file found.</h3>');
+
+		}
 	}
 }

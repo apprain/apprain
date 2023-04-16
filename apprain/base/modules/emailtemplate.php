@@ -76,7 +76,7 @@ class appRain_Base_Modules_Emailtemplate extends appRain_Base_Objects {
             }
         }
 
-        return nl2br(App::Helper('Utility')->codeFormated($string));
+        return App::Helper('Utility')->codeFormated($string);
     }
 
     protected function sendMail() {

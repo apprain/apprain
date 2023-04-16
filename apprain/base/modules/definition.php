@@ -1157,7 +1157,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
                     }
 
                     $adminicon = array();
-                    if ($child->getElementsByTagName('adminicon')->item(0)) {
+                    if ($child->getElementsByTagName('adminicon')->item(0)) {pr($adminicon);
                         $adminicon['type'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('type')->item(0)->nodeValue;
                         $adminicon['location'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('location')->item(0)->nodeValue;
                     }

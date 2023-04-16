@@ -67,7 +67,7 @@ class Component_Pagemanager_Register extends appRain_Base_Component
 				"virtual" => Array($row['name'])
 			);
 		}
-		//pre($def);
+	
 		return $def;
 	 }
 }

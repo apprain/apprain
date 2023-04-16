@@ -1,0 +1,62 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+ 
+	# Logo uploaded in theme setting
+	$logo = App::Config()->Setting('site_logo');
+?>
+ <header>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top " aria-label="Thirteenth navbar example">
+	  <div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+		  
+		  <div class="d-lg-flex col-lg-4 me-0">
+			<?php if(!empty($logo)): ?>
+				<img src="<?php echo App::Config()->fileManagerUrl(DS . $logo); ?>" height="40" />
+			<?php else:?>
+				<a class="navbar-brand" href="<?php echo App::Config()->baseUrl(); ?>">
+					<?php echo App::Config()->Setting('site_title'); ?>
+				</a>
+			<?php endif;?>
+		  </div>
+		 	
+			<?php
+			/*
+			 *	Data as set in data helper to manage it from Pagemanager dynamic page.
+			 * 	It can be directly put in this template file
+			 */
+			echo App::View('Whitecloud')->Helper("Data")->getMenu(); ?>		
+		  		  
+		</div>
+	  </div>
+	</nav>
+
+</header>
