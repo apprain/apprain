@@ -129,7 +129,7 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
                 }
             } else {
                 if ($autoFormated) {
-                    //$this->content[$key] = App::Helper('Utility')->codeFormated($this->content[$key]);
+                    $this->content[$key] = App::Helper('Utility')->codeFormated($this->content[$key]);
                 }
             }
         }
@@ -155,7 +155,7 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
             $this->replaceData($key, $data);
         } else {
             $this->replacePHPCode($key, $data);
-            ;
+            
         }
     }
 

@@ -22,7 +22,7 @@ CREATE TABLE `app_administrators` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 -- query
-INSERT INTO app_administrators VALUES ('1','0','Website','Administrator','admin','21232f297a57a5a743894a0e4a801fc3','info@site.com','2023-03-08 16:08:36','1681672224','1681665783','Active','Super','','','','','1678288116');
+INSERT INTO app_administrators VALUES ('1','0','Website','Administrator','admin','21232f297a57a5a743894a0e4a801fc3','info@site.com','2023-03-08 16:08:36','1681683239','1681672224','Active','Super','','','','','1678288116');
 -- query
 DROP TABLE IF EXISTS app_appreportcodes;
 -- query

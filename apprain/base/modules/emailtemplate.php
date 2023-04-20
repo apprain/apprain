@@ -80,6 +80,12 @@ class appRain_Base_Modules_Emailtemplate extends appRain_Base_Objects {
     }
 
     protected function sendMail() {
+		
+		$emailsetup_enabled = App::Config()->Setting("emailsetup_enabled");
+		if($emailsetup_enabled != "Yes"){
+			return ;
+		}
+		
         $siteInfo = App::Helper('Config')->siteInfo();
 
         $to = $this->getTo();
@@ -101,22 +107,6 @@ class appRain_Base_Modules_Emailtemplate extends appRain_Base_Objects {
 		
 		$from = array($siteInfo['admin_email'], $siteInfo['admin_title']);
 		
-		/*$to      = "reazulk@gmail.com";
-		$subject = 'the subject';
-		$message = 'hello';
-		$headers = 'From: ' . $siteInfo['admin_email'] . "\r\n" .
-			'Reply-To: webmaster@example.com' . "\r\n" .
-			'X-Mailer: PHP/' . phpversion();
-
-		mail($to, $subject, $message, $headers);*/
-
-		
-        // Set configuration Admin > Preference > Sie Settings
-       // App::Plugin('Mailing_PHPMailer')->ContentType = "text/html";
-       // App::Plugin('Mailing_PHPMailer')->Host = App::Config()->setting('emailsetup_host', 'localhost');
-       // App::Plugin('Mailing_PHPMailer')->Port = App::Config()->setting('emailsetup_port', '25');
-       // App::Plugin('Mailing_PHPMailer')->Username = App::Config()->setting('emailsetup_username', '');
-       // App::Plugin('Mailing_PHPMailer')->Password = App::Config()->setting('emailsetup_password', '');
 
         if (isset($from[0])){
             App::Plugin('Mailing_PHPMailer')->From = $from[0];

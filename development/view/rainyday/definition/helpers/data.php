@@ -28,4 +28,13 @@
  */
 
  
-class Development_View_Rainyday_Definition_Helpers_Data extends appRain_Base_Objects {}
+class Development_View_Rainyday_Definition_Helpers_Data extends appRain_Collection {
+	
+	public function PrintCallBackMenus(){
+		$External_Menu_List =  $this->siteMenuClear()->siteMenuRender('ARRAY');
+		foreach($External_Menu_List as $menu){
+			echo '<li class="nav-item">' . App::Html()->linkTag($menu[0],$menu[1],array("class"=>"nav-link")) . "</li>";
+		}
+	}
+	
+}

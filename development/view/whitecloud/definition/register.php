@@ -34,9 +34,7 @@ class Development_View_Whitecloud_Definition_Register extends appRain_Base_View
 		if($Send->layout == 'admin'){
 			return;
 		}
-	
-		$BootInfo = App::Config()->getBootInfo(true);
-		
+
 		if(App::Config()->isPageView()){
 			$Send->layout = App::Config()->Setting('site_pageview_layout','right_column_layout');
 		}

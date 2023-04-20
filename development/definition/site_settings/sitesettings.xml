@@ -31,7 +31,7 @@
 <SiteSettings>
     <sections>
         <base name="general">
-            <title>Admin Setting</title>
+            <title>Admin Settings</title>
             <admin_tab>developer</admin_tab>
         </base>
         <groups>

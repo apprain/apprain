@@ -37,7 +37,7 @@
             </acl>
             <submenu>
                 <item>
-                    <title>Admin Setting</title>
+                    <title>Admin Settings</title>
                     <link>/admin/config/general</link>
                 </item>
                 <item>
@@ -89,7 +89,7 @@
                 <title>Preferences</title>
                 <items>
                     <item>
-                        <title>Admin Setting</title>
+                        <title>Admin Settings</title>
                         <link>/admin/config/general</link>
                     </item>
                     <item>

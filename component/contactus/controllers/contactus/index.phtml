@@ -1,34 +1,56 @@
- 
-	<div class="col-md-6">
-		<?php if (isset($staticpage['content']) && $staticpage['content'] != ""): ?><?php echo $staticpage['content']; ?><?php endif;?>
+<section class="container">
+	<div class="row py-5">
+	<h1>Contact Us</h1>
+						<nav>
+							<a href="<?php echo App::Config()->baseUrl() ?>">Home</a>  &gt;
+							<a><?php echo $staticpage['title']; ?></a>
+						</nav>
 	</div>
-	<div class="col-md-6">
-		<p><span class="message"></span></p>
-		<form method="post" class="app_contact form" action="<?php echo $this->baseUrl("/contactus"); ?>">
-			<div class="col-md-6">
-				<div class="form-group"><input type="text" name="data[Contact][f_name]" class="form-control check_notempty" placeholder="First Name" value="" /></div>					
+	<div class="row py-5">
+		<div class="col-md-6">
+			<?php if (isset($staticpage['content']) && $staticpage['content'] != ""): ?><?php echo $staticpage['content']; ?><?php endif;?>
+		</div>
+		<div class="col-md-6">
+			<form method="post" class="app_contact form" action="<?php echo $this->baseUrl("/contactus"); ?>">
+				<div class="form-group row py-1">
+					<div class="col-sm-6">
+						<input type="text" name="data[Contact][f_name]" class="form-control check_notempty" placeholder="First Name" value="" />
+					</div>
+					<div class="col-sm-6">
+						<input type="text" name="data[Contact][l_name]" class="form-control check_notempty" placeholder="Last Name" value="" />
+					</div>
+				</div>
+				
+				<div class="form-group row py-1">
+					<div class="col-sm-6">
+						<input type="text" name="data[Contact][phoneno]" class="form-control check_notempty" placeholder="Phone No" value="" />
+					</div>
+					<div class="col-sm-6">
+						<input type="text" name="data[Contact][email]" class="form-control check_email" placeholder="Email Address" value="" />
+					</div>
+				</div>
+				
+				<div class="form-group row py-1">
+					<div class="col-sm-12">
+					<textarea name="data[Contact][message]" class="form-control check_notempty" rows="5" placeholder="Message"></textarea>				
+					</div>
+				</div>
+				
+				<div class="form-group row py-1">
+					<div class="col-sm-3"><?php echo App::Helper('Html')->capachaTag("contactus", Array("bk_color" => "#111111", "font_color" => "#FFFFFF"));?></div>					
+					<div class="col-sm-9"><input type="text" name="data[Contact][capacha]" class="form-control check_notempty" placeholder="Please fill in the text display in the image" value="" /></div>					
+				</div>
+
+				<div class="form-group row py-1">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<span class="message"></span>
 			</div>
-			<div class="col-md-6">
-				<div class="form-group"><input type="text" name="data[Contact][l_name]" class="form-control check_notempty" placeholder="Last Name" value="" /></div>					
-            </div>
-			<div class="col-md-6">
-				<div class="form-group"><input type="text" name="data[Contact][phoneno]" class="form-control check_notempty" placeholder="Phone No" value="" /></div>					
-            </div>
-			<div class="col-md-6">
-				<div class="form-group"><input type="text" name="data[Contact][email]" class="form-control check_email" placeholder="Email Address" value="" /></div>					
-            </div>
-			<div class="col-md-12">
-			<div class="form-group"><textarea name="data[Contact][message]" class="form-control check_notempty" placeholder="Message"></textarea></div>					
-            </div>
-			<div class="col-md-3">
-			<div class="form-group"><?php echo App::Helper('Html')->capachaTag("contactus", Array("bk_color" => "#111111", "font_color" => "#FFFFFF"));?></div>					
-            </div>
-			<div class="col-md-9">
-			<div class="form-group"><input type="text" name="data[Contact][capacha]" class="form-control check_notempty" placeholder="Please fill in the text display in the image" value="" /></div>					
-            </div>
-			<div class="col-md-12">
-				<div class="form-group"><input type="submit" name="data[Contact][submit]" class="btn btn-default primary" value="Submit" /></div>
-			</div>
-		</form>
-		<?php  App::Helper('JavaScript')->setValidation(array('errorMark'=>'border'))->setAjax(array("debug" => false, "autoHide" => true))->appForm('.app_contact');?>
+			<?php  App::Helper('JavaScript')->setValidation(array('errorMark'=>'background'))->setAjax(array("debug" => false, "autoHide" => true))->appForm('.app_contact');?>
+		</div>
 	</div>
+</section>	

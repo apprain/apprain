@@ -29,8 +29,6 @@
  
 class Component_Messenger_Helpers_Service extends appRain_Base_Objects
 {   
-	
-		
 	public function checkGeneralStatuses($data){
 	
 		$list = array();	
@@ -44,7 +42,6 @@ class Component_Messenger_Helpers_Service extends appRain_Base_Objects
 		App::Config()->setSiteInfo("last_synced",time());
 		
 		return array('status'=>'1','trackid'=>$data['trackid'],'data'=>$list);
-	
 	}
 	
 	

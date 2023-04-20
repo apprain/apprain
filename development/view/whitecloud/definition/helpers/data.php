@@ -28,9 +28,16 @@
  */
 
  
-class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Base_Objects {
+class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Collection {
 	
 	const WHITECLOUD = "whitecloud";
+	
+	public function PrintCallBackMenus(){
+		$External_Menu_List =  $this->siteMenuClear()->siteMenuRender('ARRAY');
+		foreach($External_Menu_List as $menu){
+			echo '<li class="nav-item">' . App::Html()->linkTag($menu[0],$menu[1],array("class"=>"nav-link")) . "</li>";
+		}
+	}
 	
 	public function getDynamicPageData($name=null,$default=null){
 		
@@ -81,6 +88,7 @@ class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Base_O
 <li class="nav-item">
   <a class="nav-link" href="<?php echo App::Config()->baseUrl("/general-help-center");?>">Support</a>
 </li>
+<?php App::View("Whitecloud")->Helper("Data")->PrintCallBackMenus(); ## Printing a menu from the Call Back functions ?>
 <?php App::Hook("UI")->Render("template_header_B"); #User Interface Hook ?>
 </ul>';
 				
@@ -103,7 +111,7 @@ class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Base_O
 		</svg>
 		<div class="container">
 		  <div class="carousel-caption text-start">
-			<h1 class="display-5 fw-bold">&lt;XML&gt;Coding</h1>
+			<h1 class="display-5 fw-bold">Apprain 4.0.5</h1>
 			
 			 <p>
 				Are you ready to write some XML tags? It\'s pretty simple, right? XML-based coding will enable significant advancements in appRain. 
@@ -164,7 +172,7 @@ class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Base_O
 	  <div class="col d-flex flex-column align-items-start gap-2">
 		<h3 class="fw-bold">Concept of Development</h3>
 		<p class="text-muted">Working with appRain is all about planning our work. Split the work into three major phases. First, use all CMS tools to execute your first line of defense. Secondly, when you need to work with databases and other customized requirements, switch to using Framework Ready tools. Finally, start coding to do your job. Keep the source code untouched in the core library so applications can be upgraded in the next release.</p>
-		<p class="text-muted">appRain is well-equipped for enterprise project development, making it faster and more secure; appRain ERP is an example. All that remains is to select the appropriate tools. <a href="<?php echo App::Config()->baseUrl("/concept-of-development"); ?>">more</a></p>
+		<p class="text-muted">appRain is well-equipped for enterprise project development, making it faster and more secure; appRain ERP is an example. All that remains is to select the appropriate tools.</p>
   </div>
 
 	  <div class="col">
@@ -276,20 +284,20 @@ If multiple applications run in a single organization, then try to avoid going t
 	<h5>Themes</h5>
 	<ul class="nav flex-column">
 		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/theme-development"); ?>" class="nav-link p-0 text-muted">Website Theme</a></li>
-		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Admin Theme</a></li>
+		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/page-manager"); ?>" class="nav-link p-0 text-muted">Page Manager</a></li>
 	</ul>
-</div>
-
-<div class="col-6 col-md-2 mb-3">
-<h5>Developers</h5>
+  </div>
+  
+  <div class="col-6 col-md-2 mb-3">
+	<h5>Developers</h5>
 	<ul class="nav flex-column">
-		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/concept-of-development"); ?>" class="nav-link p-0 text-muted">Resouce List</a></li>
-		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Create  Component</a></li>
-	</ul>
-</div>
+	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Quick Start</a></li>
+	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/concept-of-development"); ?>" class="nav-link p-0 text-muted">Ideas and Concepts</a></li>
+	</ul>	
+  </div>
 
-<div class="col-6 col-md-2 mb-3">
-<h5>Help</h5>
+  <div class="col-6 col-md-2 mb-3">
+	<h5>Help</h5>
 	<ul class="nav flex-column">
 	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/admin"); ?>" class="nav-link p-0 text-muted">Admin Login</a></li>
 	  <li class="nav-item mb-2"><a href="https://www.apprain.org/general-help-center" class="nav-link p-0 text-muted" target="_blamk">Documentations</a></li>

@@ -54,32 +54,20 @@ class ethicalController extends appRain_Base_Core
 	
 	public function authAction($action='new'){
 
-
-		//#| $this->createSession(25);
-		//#| App::Component("Inventory")->Helper("Service")->Station();
-		//#| exit;
-
-		$auth = App::Component('Ethical')->Helper('Auth')->Login($this->post);	
-
+		$auth = App::Component('Ethical')->Helper('Auth')->Login($this->post);
 		if($auth['status'] == 1){
 			$this->createSession($auth['user']['adminref']);
 			$message['token'] = base64_encode('{' . App::__Def()->sysConfig('APPRAINLICENSEKEY') . ':' . $auth['user']['adminref'] . ':' . $auth['user']['latestlogin'] . '}');
 			$message['timestamp'] = $auth['user']['latestlogin'];
 			$message['status'] = '1';
 			$message['auth'] = $auth['user'];
-			$message['setting'] = App::Config()->siteInfo();
-			$message['accounts'] = App::Model('accchart')->findAll();
-			$message['entrycode'] = App::InformationSet('entrycode')->findAll();
-			$message['station'] = App::Component("Inventory")->Helper("Service")->Station();
 			$message['data'] = array();
 			$this->deleteSession();
 		}
 		else{
 			$message['status'] = '2';
 			$message['message'] = $auth['message'];
-		}
-		
-
+		}	
 		echo json_encode($message);
 		exit;
 	

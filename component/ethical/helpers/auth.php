@@ -1,12 +1,15 @@
 <?php
 class Component_Ethical_Helpers_Auth extends appRain_Base_Objects{
-
 	
     /**
      * 
      * @return token
      */
     public function Login($post=null) {
+		
+		if(empty($post)){
+			die("No credentials found.");
+		}
 		
 		$time = time();
 		$admin_name = isset($post['username']) ? $post['username'] : '';
@@ -33,7 +36,7 @@ class Component_Ethical_Helpers_Auth extends appRain_Base_Objects{
 			}
 				
 			if (!empty($admin_tab_access)) {
-				
+
 				App::Model('Admin')
 					->setId($admin_login_info['id'])
 					->setLatestLogin($time)
@@ -114,10 +117,6 @@ class Component_Ethical_Helpers_Auth extends appRain_Base_Objects{
 		if($Admin['status'] != 'Active'){
 			$error = 'USER_LOCKED';
 		}
-		
-		// CHECK LATER
-		//$latestlogin
-		//pre($Admin['latestlogin']);
 		
 		if(!empty($error)){
 			return array('status'=>2,'message'=>$error);

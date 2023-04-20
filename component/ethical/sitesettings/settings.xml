@@ -31,7 +31,7 @@
     <sections>
         <base name="ethical">
             <title>Settings</title>
-            <admin_tab>accounts</admin_tab>
+            <admin_tab>component</admin_tab>
         </base>
         <groups>
             <group>

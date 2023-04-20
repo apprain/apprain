@@ -9,12 +9,23 @@ body {
 	font-size: 1rem;
 }
 
+pre{
+    color: #d72f83;
+	border: 1px solid #EEE;
+	padding:10px;
+	background-color:#EEEEEE61;
+}
+
 .list-group a{
 	text-decoration:none;
 }
 
 .list-group .active a{
 	color:#FFF;
+}
+
+.marker{
+	background-color:yellow;
 }
 
 /* CUSTOMIZE COMMON AREA

@@ -28,25 +28,23 @@
  */
 class Development_View_Rainyday_Definition_Register extends appRain_Base_View
 {
-	
-	public function before_theme_load($Send=null){
+  
+  public function before_theme_load($Send=null){
 
-		if($Send->layout == 'admin'){
-			return;
-		}
-	
-		$BootInfo = App::Config()->getBootInfo(true);
-		
-		if(App::Config()->isPageView()){
-			$Send->layout = App::Config()->Setting('site_pageview_layout','right_column_layout');
-		}
-	}
-	
-	public function after_theme_load($Send=null){}	
-	
-	public function before_theme_install($Send=null){}
-	
-	public function after_theme_installed($Send=null){}
+    if($Send->layout == 'admin'){
+      return;
+    }
+    
+    if(App::Config()->isPageView()){
+      $Send->layout = App::Config()->Setting('site_pageview_layout','right_column_layout');
+    }
+  }
+  
+  public function after_theme_load($Send=null){}  
+  
+  public function before_theme_install($Send=null){}
+  
+  public function after_theme_installed($Send=null){}
 
-	public function on_theme_removed($Send=null){}
+  public function on_theme_removed($Send=null){}
 }

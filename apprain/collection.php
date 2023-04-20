@@ -398,16 +398,21 @@ class appRain_Collection extends Development_Callbacks {
                 $Html = App::Helper('Html');
                 $html = "";
                 foreach ($this->__menu as $key => $val) {
-                    $class = ($val[2] == $spage) ? $sClass : $nClass;
-
-                    if ($key == 0) {
-                        $opts = $this->formatedHtmlOptions($this->getFirstItemHtmlOpts(), $class);
-                    } else if ($key == (count($this->__menu) - 1)) {
-                        $opts = $this->formatedHtmlOptions($this->getLastItemHtmlOpts(), $class);
-                    }
-                    $html .= $this->get_tag("li", $opts, $Html->linkTag($val[0], $this->__($val[1]), array('class' => $class)));
+                    $class = ($val[2] == $spage) ? $sClass . ' ' . $nClass : $nClass;
+					$opts = $this->formatedHtmlOptions($this->getLastItemHtmlOpts(), $class);
+                    $html .= $this->get_tag("li", $opts, $Html->linkTag($val[0], $this->__($val[1]), array('class' => $class )));
                 }
-                return $Html->getTag('ul', $rootOpts, $html);
+                return $html;
+			case 'LI' :
+                $rootOpts = $this->getRootHtmlOpts();
+                $Html = App::Helper('Html');
+                $html = "";
+                foreach ($this->__menu as $key => $val) {
+                    $class = ($val[2] == $spage) ? $sClass . ' ' . $nClass : $nClass;
+					$opts = $this->formatedHtmlOptions($this->getLastItemHtmlOpts(), $class);
+                    $html .= $this->get_tag("li", $opts, $Html->linkTag($val[0], $this->__($val[1]), array('class' => $class )));
+                }
+                return $html;
             default :
                 return $this->__menu;
         }

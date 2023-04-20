@@ -5,7 +5,8 @@
     <author_uri>https://www.apprain.org</author_uri>
     <description><a target="_blank" href="http://getbootstrap.com/">Bootstrap</a> is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web</description>
     <image>logo.jpg</image>
-    <pagemanager_hooks>
+    
+	<pagemanager_hooks>
         <hook_group name="header" title="Header">
             <hook name="template_header_A">Header A</hook>
             <hook name="template_header_B">Header B</hook>
