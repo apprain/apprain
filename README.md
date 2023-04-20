@@ -1,9 +1,7 @@
 
-Note
+MySQL 
 =======
-Present code contains the fixes of latest version of PHP.( https://github.com/apprain/apprain-source/archive/refs/heads/master.zip)
-
-We are working with the new release to publish soon.
+Ensure the MySQL sql mode shold be NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION
 
 apprain
 =======
