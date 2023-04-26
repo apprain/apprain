@@ -714,6 +714,7 @@ INSERT INTO {_prefix_}pages VALUES ('56','0','','','','whitecloud_menu','','<ul 
 <li class="nav-item">
   <a class="nav-link" href="<?php echo App::Config()->baseUrl("/general-help-center");?>">Support</a>
 </li>
+<?php App::View("Whitecloud")->Helper("Data")->PrintCallBackMenus(); ## Printing a menu from the Call Back functions ?>
 <?php App::Hook("UI")->Render("template_header_B"); #User Interface Hook ?>
 </ul>','','','Yes','h_link','Snip','0');
 -- query
