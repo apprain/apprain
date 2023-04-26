@@ -142,6 +142,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
                     ->dbUI();
                 break;
             case 3 :
+		
                 $html = $this->checksecurity()
                     ->installdbUI();
                 break;
@@ -350,6 +351,7 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function installdbUI()
     {
+		
         $error = "";
         if (!empty($_POST)) {
             $result = $this->installDB();
@@ -375,15 +377,18 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function installDB()
     {
+
         if ($this->get_conn()) {
             $queris = $this->getQueris($this->readDBSource());
-            foreach ($queris as $query) {
-                if ($query != '') {
-                   $this->get_conn()->custom_execute($query);
+			if(!empty($queris) && is_array($queris)){
+				foreach ($queris as $query) {
+					if ($query != '') {
+					   $this->get_conn()->custom_execute($query);
 
-                }
-            }
-            return true;
+					}
+				}
+				return true;
+			}            
         }
 
         return false;
@@ -411,6 +416,10 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function readDBSource()
     {
+		if(!file_exists($this->DB_FILE_PATH())){
+			return "";
+		}
+		
         $handle = fopen($this->DB_FILE_PATH(), "r");
         $contents = '';
         while (!feof($handle)) {
