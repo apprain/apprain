@@ -91,7 +91,8 @@ $__AdminNavDefs = $this->get_admin_nav();
             <?php if (isset($__AdminNavDefs[$assigntab])): ?>
                 <?php $__AdminNavDef = $__AdminNavDefs[$assigntab]; ?>
                 <li>
-                    <a href="<?php echo $this->baseUrl($__AdminNavDef['parent']['action']);?>"
+					<?php $link = !empty($__AdminNavDef['parent']['action']) ? $this->baseUrl($__AdminNavDef['parent']['action']) : 'javascript:void(0)'; ?>
+                    <a href="<?php echo $link;?>"
                        title="<?php echo $__AdminNavDef['parent']['title'];?>"
                        class="<?php echo ($this->admin_tab == $assigntab) ? "selected" : "normal"; ?> ">
                         <?php if (file_exists($this->baseDir($__AdminNavDef['parent']['icon'])) && $__AdminNavDef['parent']['icon'] != '' && App::Config()->setting('disable_menu_icon') != 'Yes'): ?>
