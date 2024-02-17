@@ -31,6 +31,7 @@
 abstract class appRain_Base_Objects extends appRain_Base_Abstract
 {
     public $__data = array();
+    public $fetchtype = "";
 
     /**
      *
@@ -39,7 +40,7 @@ abstract class appRain_Base_Objects extends appRain_Base_Abstract
      */
     public function __call($method, $params)
     {
-        $this->fetchtype = isset($this->fetchtype) ? $this->fetchtype : null;
+       // $this->fetchtype = isset($this->fetchtype) ? $this->fetchtype : null;
 
         if( substr($method, 0, 3) == 'get'){
             $key = $this->method2_var_name(substr($method,3));

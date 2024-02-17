@@ -447,11 +447,9 @@ class appRain_Base_Core extends appRain_Collection {
         }
 
         App::Module('Callbacks')->_before_theme_load($this);
-		//pre($this->layout);
+		
 
-        if (
-                !(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME && file_exists($view_render_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . $render_path . TPL_EXT))
-        ) {
+        if (!(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME && file_exists($view_render_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . $render_path . TPL_EXT))) {
 			
 			$view_render_path = VIEW_PATH . DS . $this->theme . DS . $render_path . TPL_EXT;
 			
@@ -460,24 +458,33 @@ class appRain_Base_Core extends appRain_Collection {
             } 
         }
 
-        if (!(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME && file_exists($layout_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . appRain_Base_Core::LAYOUT_DIR_NAME . DS . $this->layout . TPL_EXT))
-        ) {
+        if (!(strtolower($this->layout) == appRain_Base_Core::ADMIN_VIEW_LAYOUT_NAME && file_exists($layout_path = VIEW_PATH . DS . appRain_Base_Core::ADMIN_VIEW_NAME . DS . appRain_Base_Core::LAYOUT_DIR_NAME . DS . $this->layout . TPL_EXT))) {
             $layout_path = VIEW_PATH . DS . $this->theme . DS . appRain_Base_Core::LAYOUT_DIR_NAME . DS . $this->layout . TPL_EXT;
         }
 
         $contents = '';
-        if ($this->layout == appRain_Base_Core::LAYOUT_BLANK || $this->layout == appRain_Base_Core::LAYOUT_EMPTY) {
-            if ($this->layout == appRain_Base_Core::LAYOUT_BLANK) {
+        if ($this->layout == appRain_Base_Core::LAYOUT_BLANK || $this->layout == appRain_Base_Core::LAYOUT_EMPTY) 
+		{
+            if ($this->layout == appRain_Base_Core::LAYOUT_BLANK) 
+			{
                 $contents = file_exists($view_render_path) ? $this->get_include_contents($view_render_path) : "";
             }
-        } else {
+        }
+		else 
+		{
             $content_rendered = file_exists($view_render_path) ? $this->get_include_contents($view_render_path) : "";
 
             if (file_exists($layout_path)) {
-                ob_start();
-                include $layout_path;
-                $contents = ob_get_contents();
-                ob_end_clean();
+                
+				ob_start();
+               
+				include $layout_path;
+               
+				$contents = ob_get_contents();
+                
+				ob_end_clean();
+				
+				
             } else {
                 App::__transfer("/developer/exception/theme_not_defined");
             }
@@ -618,7 +625,9 @@ class appRain_Base_Core extends appRain_Collection {
 
         foreach ($sys_addons as $addon_name => $addon) {
             if (
-                    ($addon['status'] == 'Active') && (strtolower($addon['layouts']) == 'all' || in_array($this->layout, explode(',', strtolower($addon['layouts'])))) && !in_array($this->layout, explode(',', strtolower($addon['layouts_except'])))
+				($addon['status'] == 'Active') && 
+				(strtolower($addon['layouts']) == 'all' || in_array($this->layout, explode(',', strtolower($addon['layouts'])))) && 
+				!in_array($this->layout, explode(',', strtolower($addon['layouts_except'])))
             ) {
                 if ($addon['load'] == 'Always' || in_array($addon_name, $this->addons)) {
                     echo "\n<!-- START {$addon['title']} -->";
@@ -629,12 +638,12 @@ class appRain_Base_Core extends appRain_Collection {
                             echo App::Load("Helper/Html")->add_javascript($src);
                     }
 
-                    if (isset($addon['style_sheets'])) {
+                   if (isset($addon['style_sheets'])) {
                         foreach ($addon['style_sheets'] as $link)
                             echo App::Load("Helper/Html")->add_css($link);
                     }
 
-                    if ($addon['code'] != "") {
+                     if ($addon['code'] != "") {
                         echo App::Helper('Utility')->codeFormated($addon['code']);
                     }
                     $this->_after_addon_load($addon_name);

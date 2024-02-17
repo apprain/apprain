@@ -45,8 +45,8 @@
 
 class appRain_Base_Modules_InformationSet extends appRain_Base_Objects
 {
-     private $default_condition = '=';
-    private $idbprifix = "";
+	private $default_condition = '=';
+	private $idbprifix = "";
 
     public function __construct()
     {
@@ -60,6 +60,7 @@ class appRain_Base_Modules_InformationSet extends appRain_Base_Objects
             $this->setInformationSetFetchType(strtolower($type));
         }
 		App::Model('Information')->db_table = strtolower($type);
+		
         return $this;
     }
 

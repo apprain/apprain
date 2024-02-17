@@ -581,11 +581,11 @@ abstract class appRain_Base_Modules_Utility extends appRain_Base_Objects
         $data = str_replace('{baseurl}', App::Load("Helper/Config")->baseUrl(), $data);
         $data = str_replace('{skinurl}', App::Load("Helper/Config")->skinUrl(), $data);
         $data = str_replace('{filemanagerurl}', App::Load("Helper/Config")->filemanagerUrl(), $data);
-        $data = str_replace('{filemanagerpath}', App::Load("Helper/Config")->get_img_url(), $data);
+        ##$data = str_replace('{filemanagerpath}', App::Load("Helper/Config")->filemanagerDir(), $data);
 		
 		
 		$data = str_replace('{basedir}', App::Load("Helper/Config")->baseDir(), $data);
-		$data = str_replace('{rootdir}', App::Load("Helper/Config")->rootDir(), $data);
+		#$data = str_replace('{rootdir}', App::Load("Helper/Config")->rootDir(), $data);
 
         $data = str_replace('{link}', '<a href="', $data);
         $data = str_replace('{innertext}', '">', $data);

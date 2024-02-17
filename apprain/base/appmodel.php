@@ -175,14 +175,17 @@ class Apprain_Base_appModel extends appRain_Base_Objects
         $this->__data = array();
         return $this;
     }
-
-    public function save($data = null, $_condition = null) {
+	public $data = array();
+    public function save($data = null, $_condition = null) {	
+	
         $this->data[$this->name] = isset($data[$this->name]) ? $data[$this->name] : $this->__data;
+		
         $this->_beforeSave($this);
+		
         if (!isset($this->data[$this->name]['id'])) {
             $this->data[$this->name]['id'] = null;
         }
-
+	
         if ($this->modelDataValidation($this->data)) {
             $this->_onValidationSuccess($this);
             $_model = $this->obj2str($this->name);

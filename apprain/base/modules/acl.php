@@ -299,49 +299,52 @@ class appRain_Base_Modules_ACL extends appRain_Base_Objects {
 
     public function verifyInformationSetModifyAccessByAction($type = null, $action = null, $redirect = true) {
         $definition = app::__def()->getInformationSetDefinition($type);
-        switch (strtolower($action)) {
-            case 'add' :
-                if (isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no') {
-                    App::Module('Notification')->Push("Entry Add is restricted.", "Warning");
-                    if ($redirect) {
-                        App::Config()->redirect("/information/manage/{$type}");
-                    }
-                }
-                break;
-            case 'update' :
-                if (isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no') {
-                    App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
-                    if ($redirect) {
-                        App::Config()->redirect("/information/manage/{$type}");
-                    }
-                }
-                break;
-            case 'delete' :
-                if (isset($definition['base']['parameters']['delete']) && strtolower($definition['base']['parameters']['delete']) == 'no') {
-                    App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
-                    if ($redirect) {
-                        App::Config()->redirect("/information/manage/{$type}");
-                    }
-                }
-                break;
-            case 'view' :
-                if (isset($definition['base']['parameters']['view']) && strtolower($definition['base']['parameters']['view']) == 'no') {
-                    App::Module('Notification')->Push("Entry view is restricted.", "Warning");
-                    if ($redirect) {
-                        App::Config()->redirect("/information/manage/{$type}");
-                    }
-                }
-                break;
-            default:
-                if (isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no') {
-                    App::Module('Notification')->Push("User access restricted.", "Warning");
-                    if ($redirect) {
-                        App::Config()->redirect('/admin/introduction');
-                    }
-                }
-                break;
-        }
-
+		
+		if(!empty($action)){
+			switch (strtolower($action)) {
+				case 'add' :
+					if (isset($definition['base']['parameters']['add']) && strtolower($definition['base']['parameters']['add']) == 'no') {
+						App::Module('Notification')->Push("Entry Add is restricted.", "Warning");
+						if ($redirect) {
+							App::Config()->redirect("/information/manage/{$type}");
+						}
+					}
+					break;
+				case 'update' :
+					if (isset($definition['base']['parameters']['edit']) && strtolower($definition['base']['parameters']['edit']) == 'no') {
+						App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
+						if ($redirect) {
+							App::Config()->redirect("/information/manage/{$type}");
+						}
+					}
+					break;
+				case 'delete' :
+					if (isset($definition['base']['parameters']['delete']) && strtolower($definition['base']['parameters']['delete']) == 'no') {
+						App::Module('Notification')->Push("Entry edit is restricted.", "Warning");
+						if ($redirect) {
+							App::Config()->redirect("/information/manage/{$type}");
+						}
+					}
+					break;
+				case 'view' :
+					if (isset($definition['base']['parameters']['view']) && strtolower($definition['base']['parameters']['view']) == 'no') {
+						App::Module('Notification')->Push("Entry view is restricted.", "Warning");
+						if ($redirect) {
+							App::Config()->redirect("/information/manage/{$type}");
+						}
+					}
+					break;
+				default:
+					if (isset($definition['base']['parameters']['listview']) && strtolower($definition['base']['parameters']['listview']) == 'no') {
+						App::Module('Notification')->Push("User access restricted.", "Warning");
+						if ($redirect) {
+							App::Config()->redirect('/admin/introduction');
+						}
+					}
+					break;
+			}
+		}
+		
         return $definition;
     }
 

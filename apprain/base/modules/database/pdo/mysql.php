@@ -29,6 +29,7 @@
 
 class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 
+	private $sql;
 	public $dbdriver = 'pdo';
 	public $options = array();
 	public $dbconn = null;

@@ -58,7 +58,9 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
             $content = implode(" ", $content);
         }
 
-        return $this->secretary($content, $hash, $isCache);
+        $result =  $this->secretary($content, $hash, $isCache);
+		
+		return $result;
     }
 
     public function pageFormated($page, $isCache = true) {
@@ -92,6 +94,11 @@ class appRain_Base_Modules_Universal_Formating extends appRain_Base_Modules_Util
     }
 
     private function typeWritter($content = "", $autoFormated = true) {
+		
+		if(empty($content)){
+			return "";
+		}
+		
         // First fragmentize the
         // the content by TAG
         $this->Fragmentize($content)
