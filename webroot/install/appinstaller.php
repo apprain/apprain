@@ -638,7 +638,6 @@ class Webroot_Install_Appinstaller extends appRain_Base_Objects
 
     private function hasAdmin()
     {
-        $res = App::Model('Admin')->findAll();
-        return !empty($res['data']);
+        return false;
     }
 }
