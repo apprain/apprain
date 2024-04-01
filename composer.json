@@ -13,9 +13,7 @@
         "php": ">=7.2"
     },	
 	"autoload": {
-    },
-    "homepage": "https://github.com/apprain/apprain",
-    
+    }    
     "authors": [
         {
             "name": "Mohammad Reazaul Karim",
