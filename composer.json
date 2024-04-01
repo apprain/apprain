@@ -1,33 +1,31 @@
 {
-    "name": "apprain/apprain",
+	"name": "apprain/apprain",
 	"type": "project",
-    "description": "Apprain PHP Framework",
-    
-    "keywords": [
-        "Apprain",
-        "PHP Framework",
+	"description": "Apprain PHP Framework",    
+	"keywords": [
+		"Apprain",
+		"PHP Framework",
 		"CMS"		
-    ],
+	],
 	"license": "MIT",
 	"require": {
-        "php": ">=7.2"
-    },	
+		"php": ">=7.2"
+	},
 	"autoload": {
-    }    
-    "authors": [
-        {
-            "name": "Mohammad Reazaul Karim",
-            "email": "reza@apprain.com",
-            "homepage": "https://www.apprain.org",
-            "role": "Developer"
-        }
+	},    
+	"authors": [
+		{
+			"name": "Mohammad Reazaul Karim",
+			"email": "reza@apprain.com",
+			"homepage": "https://www.apprain.org",
+			"role": "Developer"
+		}
     ],
     "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
+		"optimize-autoloader": false,
+		"preferred-install": "dist",
+		"sort-packages": false
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
-    
+	"minimum-stability": "stable",
+	"prefer-stable": true 
 }
