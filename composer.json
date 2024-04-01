@@ -22,7 +22,7 @@
     },
     "autoload": {
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0"
-    }
+	"require": {
+		"apprain/apprain": "^1.0"
+	}
 }
