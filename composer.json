@@ -11,11 +11,8 @@
 	"license": "MIT",
 	"require": {
         "php": ">=7.2",
-		"apprain/apprain": "^4.0.5"
-    },
-	"require-dev": {
-        "apprain/apprain": "^4.0.5"
-    },
+		"apprain/apprain": "^4.0"
+    },	
 	"autoload": {
     },
     "homepage": "https://github.com/apprain/apprain",
