@@ -1,14 +1,25 @@
 {
     "name": "apprain/apprain",
-    "description": "Apprain a PHP framework",
-    "type": "library",
+	"type": "project",
+    "description": "Apprain PHP Framework",
+    
     "keywords": [
         "Apprain",
         "PHP Framework",
 		"CMS"		
     ],
+	"license": "MIT",
+	"require": {
+        "php": ">=7.2",
+		"apprain/apprain": "^4.0.5"
+    },
+	"require-dev": {
+        "apprain/apprain": "^4.0.5"
+    },
+	"autoload": {
+    },
     "homepage": "https://github.com/apprain/apprain",
-    "license": "MIT",
+    
     "authors": [
         {
             "name": "Mohammad Reazaul Karim",
@@ -17,9 +28,12 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "php": ">=7.2"
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
-    "autoload": {
-    }
+    "minimum-stability": "dev",
+    "prefer-stable": true
+    
 }
