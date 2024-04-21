@@ -38,7 +38,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	/*
 	// Create Connection
 	*/	
-	public function Connect($db_config,$persistent = FALSE)
+	public function Connect($db_config = array(),$persistent = FALSE)
 	{
 		$this->options[PDO::ATTR_PERSISTENT] = $persistent;
 		$this->options['1002'] = "SET NAMES {$db_config['charset']}";
@@ -262,7 +262,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	// Return full description of a table 
 	*/
 	//-------------------------------------------------------------
-	public function collumns($_dbTable){
+	public function collumns($_dbTable=""){
 		$_tableFieldInfo = $this->describe($_dbTable);		
 		$list = array();
 		foreach($_tableFieldInfo as $row){
@@ -275,7 +275,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	/*
 	// Return full description of a table 
 	*/
-	public function describe($table){
+	public function describe($table=""){
 		$data = array();
 		$query = "DESC {$table}";	
         $sth = $this->dbconn->prepare($query);
@@ -425,7 +425,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	/*
 	 // Add/Modify fields
 	 */
-	public function createModifyInformationSetFields($_dbTable=null,$field_name,$db_attributes=null){
+	public function createModifyInformationSetFields($_dbTable=null,$field_name="",$db_attributes=null){
 
 		$description = $this->Describe($_dbTable);
 		$db_attributes_old = array();

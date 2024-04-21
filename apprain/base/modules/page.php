@@ -61,7 +61,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
         }
     }
 
-    public function register_sitemenu($send, $data)
+    public function register_sitemenu($send=null, $data = array())
     {
         $menu = Array();
         if ($data['rendertype'] == 'smart_h_link') {
@@ -85,7 +85,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
         return $menu;
     }
 
-    public function register_page_to_hook($send = null, $data)
+    public function register_page_to_hook($send = null, $data = array())
     {
         switch ($data['rendertype']) {
             case 'smart_h_link' :
@@ -114,7 +114,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
         }
     }
 
-    public function register_newrole($def = null, $data)
+    public function register_newrole($def = null, $data = array())
     {
         if ($data['rendertype'] == 'smart_h_link') {
             $def['pagerouter'][] = array(
@@ -129,7 +129,7 @@ class appRain_Base_Modules_Page extends appRain_Base_Objects
         return $def;
     }
 
-	public function getPagemanagerHookList($theme, $id)
+	public function getPagemanagerHookList($theme, $id = null)
     {
 		$page_current = App::PageManager()->getDataById($id);
 		$page_current['hook'] = isset($page_current['hook']) ? $page_current['hook'] : '';
