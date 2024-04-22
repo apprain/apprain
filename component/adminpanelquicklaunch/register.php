@@ -32,14 +32,16 @@ class Component_AdminpanelQuicklaunch_Register extends appRain_Base_Component {
     public function init() {
 
         App::Module('Hook')
+                ->setHookName('controller')
+                ->setAction("register_controller")
+                ->Register(get_class($this), "register_controller");
+				
+        App::Module('Hook')
                 ->setHookName('UI')
                 ->setAction("adminpanel_toolbar_menu_bottom")
                 ->Register(get_class($this), "adminpanel_toolbar_menu_bottom");
 
-        App::Module('Hook')
-                ->setHookName('Controller')
-                ->setAction("register_controller")
-                ->Register(get_class($this), "register_controller");
+
     }
 
     public function register_controller() {
@@ -48,6 +50,7 @@ class Component_AdminpanelQuicklaunch_Register extends appRain_Base_Component {
             'name' => 'adminpanelquicklaunch',
             'controller_path' => $this->attachMyPath('controllers')
         );
+		
         return $srcpaths;
     }
 

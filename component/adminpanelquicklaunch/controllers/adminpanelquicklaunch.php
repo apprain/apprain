@@ -32,6 +32,7 @@
 class adminpanelquicklaunchController extends appRain_Base_Core {
 
     public $name = 'Adminpanelquicklaunch';
+	public $Admin = array();
 
     public function __preDispatch() {
         $this->Admin = App::Module('Admin')->thisAdminInfo();
@@ -39,7 +40,7 @@ class adminpanelquicklaunchController extends appRain_Base_Core {
     }
 
     public function indexAction() {
-        
+      
     }
 
     public function configureAction($id = null) {

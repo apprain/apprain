@@ -149,12 +149,8 @@ class Component_Homepress_Register extends appRain_Base_Component
                         "title"=>"Manage Slides",
                         "link"=>"/information/manage/homepress"
                     )
-                ),
-                "adminicon" => array(
-                    "type"=>"filePath",
-                    'location'=>'/component/homepress/icon/logo.jpg'
                 )
-            );
+		);
             return $send;
         }
     }

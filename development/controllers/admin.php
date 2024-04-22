@@ -265,9 +265,7 @@ class adminController extends appRain_Base_Core {
          * the user
          */
         $this->check_admin_login();
-        #$this->setIsAdminLeftPanCollapse(true);
-        //App::Module('Notification')->Push('We are offering free e-commerce module to sale by internet, <a href="http://ecommerce.plexus.com.bd/">See more</a> . Contact Us Soon.', 'Notice');
-      
+
         $this->layout = 'admin';
         $this->admin_tab = 'blunk';
         $this->addons = Array('dialogs', 'validation');

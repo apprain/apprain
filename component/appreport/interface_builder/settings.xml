@@ -52,10 +52,6 @@
                         <link>/category/manage/appreportgroup</link>
                     </item>				
                 </items>
-				<adminicon>
-					<type>FilePath</type>
-					<location>/component/appreport/interface_builder/icon.jpg</location>
-				</adminicon>
             </menu>
 			<menu>
                 <title>Dictionary of Reports</title>
@@ -69,10 +65,6 @@
                         <link>/appreport/manage</link>
                     </item>				
                 </items>
-				<adminicon>
-					<type>FilePath</type>
-					<location>/component/appreport/interface_builder/icon.jpg</location>
-				</adminicon>
             </menu>		
 			<menu>
                 <title>Reports</title>
@@ -82,10 +74,6 @@
                         <link>/appreport/executor</link>
                     </item>				
                 </items>
-				<adminicon>
-					<type>FilePath</type>
-					<location>/component/appreport/interface_builder/icon.jpg</location>
-				</adminicon>
             </menu>				
         </child>
     </navigation>

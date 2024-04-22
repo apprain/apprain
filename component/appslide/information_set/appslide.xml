@@ -43,21 +43,6 @@
         <admin_tab>component</admin_tab>
 		<addons />
         <parameters />
-        <!--generic-field> Deprecated from version 4.0.1 
-            <enabled>Yes</enabled>
-            <title>Sort Order</title>
-            <type>genericTag</type>
-            <validation>
-                <rule>
-                    <type>isNumber</type>
-                    <err-message>Sort Order must be integer type value</err-message>
-                </rule>
-            </validation>
-            <tag-attributes>
-                <attribute name="id">generic</attribute>
-                <attribute name="class">app_input</attribute>
-            </tag-attributes>
-        </generic-field -->
         <max_entry>
             <limit></limit>
             <message><![CDATA[]]></message>

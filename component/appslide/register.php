@@ -124,8 +124,8 @@ class Component_Appslide_Register extends appRain_Base_Component
                     array(
                         "title"=>"Manage Slides",
                         "link"=>"/information/manage/appslide")
-                    ),
-                    "adminicon" => array("type"=>"filePath",'location'=>'/component/appslide/icon/logo.jpg'));
+                    )
+				);
             return $send;
         }
     }

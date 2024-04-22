@@ -47,7 +47,7 @@
          -->
         <option type="Integer" name="DEBUG_MODE">
             <title>Debug Mode</title>
-            <value><![CDATA[0]]></value>
+            <value><![CDATA[1]]></value>
             <default><![CDATA[0]]></default>
             <flag>0</flag>
             <choice>0|1|2</choice>

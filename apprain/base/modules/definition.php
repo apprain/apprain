@@ -609,72 +609,7 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
         return $definition;
     }
 
-    /* ==========================================================================================
-      Profile User Config
-      =========================================================================================== */
-    /* public function getProfileUserConfigDefinition()
-      {
-      if (empty($this->ProfileUserConfigSingleToneCache)) {
-      $this->cache_path = PROFILEUSERCONFIG_CACHE_PATH;
-
-      // Read Cache
-      $definition = ($this->cache_exists("profileuserconfig")) ? $this->read_cache("profileuserconfig") : $this->parseProfileUserConfigDefinition();
-
-      // Set Single tone cache
-      $this->ProfileUserConfigSingleToneCache = $definition;
-
-      // Create Physical cache
-      if (app::__def()->sysConfig('PROFILE_USER_CONFIG_CACHE')) {
-      if (!$this->cache_exists("profileuserconfig")) {
-      $this->do_cache($definition, "profileuserconfig");
-      }
-      }
-      }
-
-      // Return defination
-      return $this->ProfileUserConfigSingleToneCache;
-      }
-
-      private function parseProfileUserConfigDefinition()
-      {
-      $file_path = PROFILEUSERCONFIG_PATH;
-
-      //Halt if information set is not exists
-      if (!file_exists($file_path)) {
-      pre("Profile User Config missing  <br /> #Path: {$file_path} <br /> #Tipe: Do not forget to set \"admin_tab\"");
-      }
-
-      $definition = Array();
-      $dom = new DOMDocument();
-      $dom->load($file_path . DS . "static_pages" . $this->ext);
-
-      $prfileuserconfig = $dom->getElementsByTagName('PrfileUserConfig')->item(0);
-
-      // Read Predefine pages
-      $pages = $prfileuserconfig->getElementsByTagName('static_pages')->item(0)->getElementsByTagName('page');
-      foreach ($pages as $page) {
-      $definition['pages'][] = array(
-      'name' => $page->getElementsByTagName('name')->item(0)->nodeValue,
-      'title' => $page->getElementsByTagName('title')->item(0)->nodeValue,
-      'content' => $page->getElementsByTagName('content')->item(0)->nodeValue
-      );
-      }
-
-      $dom = new DOMDocument();
-      $dom->load($file_path . DS . "settings" . $this->ext);
-
-      $settings = $dom->getElementsByTagName('settings')->item(0)->getElementsByTagName('group');
-      foreach ($settings as $options) {
-      $definition['settings'][] = array(
-      'name' => $options->getElementsByTagName('name')->item(0)->nodeValue,
-      'value' => $options->getElementsByTagName('value')->item(0)->nodeValue,
-      'sort_order' => $options->getElementsByTagName('sort_order')->item(0)->nodeValue,
-      'section' => $options->getElementsByTagName('section')->item(0)->nodeValue
-      );
-      }
-      return $definition;
-      } */
-
+   
     /* ==========================================================================================
       URI Manager
       =========================================================================================== */
@@ -1157,9 +1092,14 @@ class appRain_Base_Modules_Definition extends appRain_Base_Objects {
                     }
 
                     $adminicon = array();
-                    if ($child->getElementsByTagName('adminicon')->item(0)) {pr($adminicon);
-                        $adminicon['type'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('type')->item(0)->nodeValue;
-                        $adminicon['location'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('location')->item(0)->nodeValue;
+                    if ($child->getElementsByTagName('adminicon')->item(0)) {
+						if ($menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('type')->item(0)) {
+							$adminicon['type'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('type')->item(0)->nodeValue;
+						}
+						if($menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('type')->item(0))
+						{
+							$adminicon['location'] = $menu->getElementsByTagName('adminicon')->item(0)->getElementsByTagName('location')->item(0)->nodeValue;
+						}
                     }
                     $menu_arr[] = array('title' => $menu->getElementsByTagName('title')->item(0)->nodeValue, "items" => $menu_items, 'adminicon' => $adminicon);
                 }
