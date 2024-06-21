@@ -61,6 +61,8 @@
 <?php endif;?>
 
 <h3>Theme Collection</h3>
+<?php if(!empty($themes)):?>
+
 <table>
 <tr>
     <?php foreach ($themes as $key => $val): ?>
@@ -89,6 +91,10 @@
     <?php endforeach;?>
 </tr>
 </table>
+<?php else: ?>
+	<?php echo $this->callElement('default/tools/message', array('caption' =>'Message','type' => 'message', 'message' => "No theme installed in collection!"));?>
+	
+<?php endif ?>
 <?php App::Helper('Toolbar')->setBtnBack()->Render(array('code' => 'theme_bottom')); ?>
 
 <script type="text/javascript">

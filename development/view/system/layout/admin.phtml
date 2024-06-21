@@ -56,8 +56,8 @@
                         <td class="content-left-bg" valign="top" id="left">
                             <?php echo $this->callElement("default/admin_layout/adminleft"); ?>
                         </td>
-                        <td valign="top" align="left" >
-                            <div id="right">
+                        <td valign="top" align="left" style="background-color:white;border-left:6px solid #EEE;">
+                            <div id="right" style="border-right:2px solid #EEE;">
                                 <?php App::Module('Notification')->Display(); ?>								
                                 <?php echo $content_rendered; ?>
                             </div>
