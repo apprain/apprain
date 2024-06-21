@@ -42,6 +42,7 @@ class appRain_Base_Modules_Database_Pdo_Mysql extends appRain_Base_Objects{
 	{
 		$this->options[PDO::ATTR_PERSISTENT] = $persistent;
 		$this->options['1002'] = "SET NAMES {$db_config['charset']}";
+		$this->options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET sql_mode="NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION"';
 		
 		try	{
 			$this->dbconn = new PDO("mysql:host={$db_config['host']};dbname={$db_config['dbname']};port={$db_config['port']}",$db_config['username'],$db_config['password'],$this->options);
