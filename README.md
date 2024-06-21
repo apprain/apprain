@@ -1,8 +1,3 @@
-
-MySQL 
-=======
-Ensure the MySQL sql mode shold be NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION
-
 apprain
 =======
 
