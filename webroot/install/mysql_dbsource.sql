@@ -107,13 +107,13 @@ INSERT INTO {_prefix_}coreresources VALUES ('12','homepress','Component','0.1.0'
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('13','pagemanager','Component','1.2.6','Active','a:1:{s:11:"installdate";s:19:"2021-07-26 22:18:13";}');
 -- query
-INSERT INTO {_prefix_}coreresources VALUES ('14','adminpanelquicklaunch','Component','1.0.1','Active','a:1:{s:11:"installdate";s:19:"2023-04-15 20:55:05";}');
+INSERT INTO {_prefix_}coreresources VALUES ('14','adminpanelquicklaunch','Component','1.0.1','Inactive','a:1:{s:11:"installdate";s:19:"2023-04-15 20:55:05";}');
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('15','dbexpert','Component','0.1.2','Active','a:1:{s:11:"installdate";s:19:"2021-07-26 22:51:31";}');
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('16','ethical','Component','2.1.1','Active','a:1:{s:11:"installdate";s:19:"2021-07-26 23:06:08";}');
 -- query
-INSERT INTO {_prefix_}coreresources VALUES ('17','appreport','Component','2.1.1','Active','a:1:{s:11:"installdate";s:19:"2023-04-19 23:42:39";}');
+INSERT INTO {_prefix_}coreresources VALUES ('17','appreport','Component','2.1.1','Inactive','a:1:{s:11:"installdate";s:19:"2023-04-19 23:42:39";}');
 -- query
 INSERT INTO {_prefix_}coreresources VALUES ('18','Appreportcode','Model','0.1.0','Active','');
 -- query
@@ -998,9 +998,9 @@ INSERT INTO {_prefix_}sconfigs VALUES ('7','0','admin_title','Start with appRain
 -- query
 INSERT INTO {_prefix_}sconfigs VALUES ('8','0','admin_email','info@site.com','','');
 -- query
-INSERT INTO {_prefix_}sconfigs VALUES ('9','0','activity_widget','Yes','','');
+INSERT INTO {_prefix_}sconfigs VALUES ('9','0','activity_widget','No','','');
 -- query
-INSERT INTO {_prefix_}sconfigs VALUES ('10','0','leave_amessage_widget','Yes','','');
+INSERT INTO {_prefix_}sconfigs VALUES ('10','0','leave_amessage_widget','No','','');
 -- query
 INSERT INTO {_prefix_}sconfigs VALUES ('11','0','disable_quick_links','No','','themesettings');
 -- query

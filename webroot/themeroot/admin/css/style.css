@@ -140,7 +140,7 @@ div.color a.greyblue
 #header
 {
     margin: 0 ;
-    padding: 10px 60px 0 60px;
+    padding: 10px 20px 0 20px;
     background: #b0b0b0 url("../images/header_background.png") repeat;
 }
 
@@ -493,7 +493,7 @@ div.color a.greyblue
 #content #left
 {
     left: 0;
-    width: 280px;
+    width: 240px;
 }
 
 .content-left-bg
@@ -508,7 +508,7 @@ div.color a.greyblue
 
 #content #left #menu
 {
-    margin: 5px 10px 0 60px;
+    margin: 5px 10px 0 20px;
     padding: 0;
     clear: both;
     overflow: hidden;
@@ -724,7 +724,7 @@ div.color a.greyblue
 
 #content #left #date-picker
 {
-    margin: 5px 10px 0 60px;
+    margin: 5px 10px 0 20px;
     padding: 0;
     clear: both;
     overflow: hidden;
@@ -837,9 +837,16 @@ div.color a.greyblue
         content -> right
 ----------------------------------------------------------- */
 
+#content .content-right
+{
+	background-color:white;
+	border-left:6px solid #EEE;
+}
+
 #content #right
 {
-    margin: 0px 60px 0 0px;
+    margin: 0px 20px 0 0px;
+	border-right:2px solid #EEE;
 }
 
 /* -----------------------------------------------------------
@@ -857,14 +864,14 @@ div.color a.greyblue
 
 #content div.box-left
 {
-    width: 49%;
+    width: 50%;
     clear: both;
     float: left;
 }
 
 #content div.box-right
 {
-    width: 49%;
+    width: 50%;
     clear: none;
     float: right;
 }
@@ -878,6 +885,7 @@ div.color a.greyblue
     padding: 0;
     clear: both;
     height:38px;
+	border-left:2px solid #386592;
 }
 
 #content div.box div.title h1,
