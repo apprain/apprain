@@ -1,7 +1,6 @@
 <div id="dialog-modal" title="Add FTP Account">
     <div class="message"></div>
-    <form method="post" action="<?php echo $this->baseUrl("/developer/uinstallarftp");?>" class="addftp"
-          onsubmit="return false;">
+    <form method="post" action="<?php echo App::Config()->baseUrl("/developer/uinstallarftp");?>" class="addftp"     onsubmit="return false;">
         <p>
             <strong><?php echo $this->__('Sever Name:');?></strong><br/>
             <input type="text" name="data[Ftp][servername]" value="<?php echo App::Config()->setting('ftpserver'); ?>"
@@ -32,15 +31,14 @@
 
         <p>
             <strong><?php echo $this->__('Status:');?></strong><br/>
-            <?php echo App::Helper('Html')->selectTag('data[Ftp][Status]', array('Enable' => 'Enable', 'Disabled' => 'Disabled'), App::Config()->setting('ftpstatus'), array('id' => 'status'));?>
+            <?php echo App::Helper('Html')->selectTag('data[Ftp][Status]', array('Enable' => 'Enable', 'Disabled' => 'Disabled'), App::Config()->Setting('ftpstatus'), array('id' => 'status'));?>
         </p>
 
         <p class="buttons">
-            <input type="submit" name="data[Ftp][Submit]" onclick="saveFtp()" value="SAVE" id="savebutton"
-                   class="common-button"/>
+            <input type="submit" name="data[Ftp][Submit]" onclick="saveFtp()" value="SAVE" id="savebutton"  class="common-button"/>
         </p>
 
-        <form>
+    </form>
             <?php App::Helper('JavaScript')->setValidation(array('autoSubmit' => false))->appForm('.addftp'); ?>
 </div>
 <script type="text/javascript">

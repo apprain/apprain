@@ -29,7 +29,7 @@
 ?>
 
 <?php App::Helper('Toolbar')->setTitle("Theme" . App::Helper('Html')->helpTag('theme'))->setBtnBack()->setBtnCustomHTML(App::load("Helper/Html")->buttonTag("Button[Toggle]", "Install New Theme", array("class" => "installtheme")))->Render(array('code' => 'theme_top')); ?>
-    <div id="hidden_content" <?php if ($action != 'install'): ?>class="displaynone"<?php endif; ?>">
+    <div id="hidden_content" <?php if ($action != 'install'): ?>class="displaynone"<?php endif; ?>>
 <h3 class="first">Upload a theme in ZIP format form your computer.</h3>
 <form method="post" action="<?php echo $this->baseUrl("/developer/theme");?>" enctype="multipart/form-data">
     <div class="field  field-first">
@@ -41,12 +41,12 @@
         </div>
     </div>
     <div class="buttons">
-        <input type="submit" name="submit" value="Install" class="app_button"/> <a id="dialog-modal-open" href="#">Save
-        FTP Information(Recommandad)</a>
+        <input type="submit" name="submit" value="Install" class="app_button"/> 
+        <!--a id="dialog-modal-open" href="#">Save  FTP Information(Recommandad)</a -->
     </div>
 </form>
 </div>
-<?php echo $this->callElement("default/admin_layout/ftpform"); ?>
+<?php #echo $this->callElement("default/admin_layout/ftpform"); ?>
 <?php if(!empty($themes_default)):?>
 	<br/>
 	<h3 class="first">Current Theme </h3>
