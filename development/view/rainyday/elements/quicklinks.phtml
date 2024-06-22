@@ -1,0 +1,18 @@
+ <div class="position-sticky">
+	<?php App::Hook('UI')->Render('quick_links_top'); #User Interface Hook ?>	
+	<div class="p-4">
+	  <?php if (App::Config()->setting('disable_quick_links') != 'Yes'): ?>
+		<h4><?php echo $this->__("Quick Links");?></h4>
+		<hr />
+		<ul class="list-group list-group-flush">   
+			<?php $qlinks = App::PageManager()->getQuickLinks(); ?>
+			<?php foreach ($qlinks as $links): ?>		
+				<li class="list-group-item <?php echo ($selected == $links['name'])?'active':'';?>">
+					<a href="<?php echo($links['link']);?>" title="<?php echo($links['title']);?>"><?php echo($links['title']);?></a>
+				</li>
+			<?php endforeach;?>    
+		</ul>
+		<?php endif; ?>
+	</div>
+	<?php App::Hook('UI')->Render('quick_links_bottom'); #User Interface Hook ?>
+</div>

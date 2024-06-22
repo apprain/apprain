@@ -72,39 +72,4 @@ class homeController extends appRain_Base_Core
         /* Set value to template */
         $this->set("selected", "home");
     }
-
-    /**
-     * Create search result based on Definitions
-     * and call back functions.
-     */
-    public function searchAction()
-    {
-        /* Attach Addons and Set meta information */
-        $staticpage = $this->staticPageNameToMetaInfo('search');
-
-        /**
-         * Fetch all search data definition in defintion
-         * for Information Set and Category set
-         */
-        $srcstr = isset($this->get['ss']) ? $this->get['ss'] : '';
-        $page = isset($this->get['page']) ? $this->get['page'] : '';
-		
-        $srcData = App::Helper("Search")
-            //->setSmartPaging(true)
-            ->setPage($page)
-            ->setLimit(App::Config()->Setting('default_pagination',50))
-            ->setHLink(App::Config()->baseUrl("/search?ss={$srcstr}"))
-            ->Search($srcstr);
-			///pre($srcData);
-        /* Overwrite page title */
-        $this->page_title = "{$srcstr} {$this->page_title}";
-
-        /* Set Search data */
-        $this->set('srcstr', $srcstr);
-        $this->set('srcarr', $srcData);
-
-        /* Set Common variables */
-        $this->set("section_title", "Search Reasult");
-        $this->set("selected", "search");
-    }
 }

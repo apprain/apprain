@@ -28,7 +28,7 @@
  */
 ?>
 <form method="get" action="<?php echo $this->baseurl("/developer/debug-log/db");?>">
-    <?php App::Helper('Toolbar')->setTitle("Log")->setBtnCustomHTML('<input type="text" name="s" class="small" style="width:100px" value="' .  $s . '" /> <input type="submit" class="button" value="Search" /> ' . App::Helper("Html")->ButtonTag("ClearDbLog", "Flush All Log", array("onclick" => "document.location='" . $this->baseurl("/developer/debug-log/{$mode}/clear") . "';")))->setBtnBack()->Render(array('code' => 'debug_top'));?>
+    <?php App::Helper('Toolbar')->setTitle("Log")->setBtnCustomHTML('<input type="text" name="s" class="small" style="width:100px" value="' .  $s . '" /> <input type="submit" class="button" value="Search" /> ' . App::Helper("Html")->ButtonTag("ClearDbLog", "Clear all", array("onclick" => "document.location='" . $this->baseurl("/developer/debug-log/{$mode}/clear") . "';")))->setBtnBack()->Render(array('code' => 'debug_top'));?>
     <?php if ($mode == 'file'): ?>
     <div class="field field-first">
         <textarea class="app_input" style="height:500px;width:99%;margin:auto"

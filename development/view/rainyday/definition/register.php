@@ -9,8 +9,8 @@
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/mit-license.php
  * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@apprain.com so we can send you a copy immediately.
+ * obtain it through the world-wide-web, please Send an email
+ * to license@apprain.com so we can Send you a copy immediately.
  *
  * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
  * @license    http://www.opensource.org/licenses/mit-license.php MIT license
@@ -26,16 +26,25 @@
  * Documents Link
  * http ://www.apprain.org/general-help-center
  */
+class Development_View_Rainyday_Definition_Register extends appRain_Base_View
+{
+  
+  public function before_theme_load($Send=null){
 
-?>
-<?php if(!empty($srcarr['data'])):?>
-<?php foreach($srcarr['data'] as $row): ?>
-	<div class="well">
-		<p><strong><?php echo($row['_parmalink']);?></strong></p>
-		<p><?php echo($row['_parmadesc']);?></p>
-	</div>
-<?php endforeach;?>
-<?php echo $srcarr['link'] . ' &nbsp; '  . $srcarr['paging']; ?>
-<?php else:?>
-	<h2><?php echo $this->__("No Search result found");?></h2>
-<?php endif;?>
+    if($Send->layout == 'admin'){
+      return;
+    }
+    
+    if(App::Config()->isPageView()){
+      $Send->layout = App::Config()->Setting('site_pageview_layout','right_column_layout');
+    }
+  }
+  
+  public function after_theme_load($Send=null){}  
+  
+  public function before_theme_install($Send=null){}
+  
+  public function after_theme_installed($Send=null){}
+
+  public function on_theme_removed($Send=null){}
+}

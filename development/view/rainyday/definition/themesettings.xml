@@ -64,7 +64,7 @@
                         <title>Page View</title>
                         <name>site_pageview_layout</name>
                         <type>radioTag</type>
-                        <default>left_column_layout</default>
+                        <default>single_column_layout</default>
                         <options>
 							<option value="left_column_layout">Left Column Layout</option>
 							<option value="single_column_layout">Single Column Layout</option>

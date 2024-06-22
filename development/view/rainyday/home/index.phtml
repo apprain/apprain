@@ -1,0 +1,126 @@
+<?php App::Hook('UI')->Render('home_page_banner_top'); ?>
+<section id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+			<rect width="100%" height="100%" fill="#666"/>
+		</svg>
+		<div class="container">
+          <div class="carousel-caption text-start">
+            <h1 class="display-5 fw-bold">Apprain</h1>
+            
+			 <p>
+				Are you ready to write some XML tags? It's pretty simple, right? XML-based coding will enable significant advancements in appRain. 
+				You can create an admin panel interface, configure software, work with databases, and many other things.
+			 </p>
+			 <p>
+			 appRain is the best fit for your enterprise projects with less effort.</p><hr />
+			 <p><a class="btn btn-lg btn-primary" href="<?php echo App::Config()->baseUrl("/quick-start");?>">Quick Start</a></p>
+
+          </div>
+        </div>
+      </div>
+	  <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#444"/></svg>
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1 class="display-5 fw-bold">CMS + Framework</h1>
+            <p>Website or enterprise project, plan it first properly to make the development faster and more convenient. First, use the built-in tools available in CMS. Secondly, use the configureable tools in Framework, and then go for coding for customized development in MVC.</p>
+			<p>appRain enables the maximum amount of customized development through its standard libraries. </p>
+			<hr />
+			<p><a class="btn btn-lg btn-primary" href="<?php echo App::Config()->baseUrl("/concept-of-development");?>">Concept of development.</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+			<rect width="100%" height="100%" fill="#555"/>
+		</svg>
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1 class="display-5 fw-bold">API Service</h1>
+            <p>Convert your work into APIs; it's very easy. The application can be securely integrated with any other system on any platform.</p>
+			<p>Ethical is a security plugin in-built with version 4.0.5 that also works as an API layer. Install the component, create a service helper, and that's all it takes to make the method callable from other systems through user authentication and a secure token. </p>
+            <p><a class="btn btn-lg btn-primary" href="<?php echo App::Config()->baseUrl("/api-development");?>">API Development</a></p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</section>
+<?php App::Hook('UI')->Render('home_page_banner_bottom'); ?>
+
+<section>
+<div class="container px-4 py-4">
+    <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <h3 class="fw-bold">Concept of Development</h3>
+		<p class="text-muted">Working with appRain is all about planning our work. Split the work into three major phases. First, use all CMS tools to execute your first line of defense. Secondly, when you need to work with databases and other customized requirements, switch to using Framework Ready tools. Finally, start coding to do your job. Keep the source code untouched in the core library so applications can be upgraded in the next release.</p>
+
+		<p class="text-muted">appRain is well-equipped for enterprise project development, making it faster and more secure; appRain ERP is an example. All that remains is to select the appropriate tools.</p>
+		
+  </div>
+
+      <div class="col">
+        <div class="row row-cols-1 row-cols-sm-2 g-4">
+          <div class="col d-flex flex-column gap-2">
+			<h4 class="fw-semibold mb-0">&check;  Information Set</h4>		
+            <p class="text-muted">Helps to work with database tables without manual intervention.</p>
+          </div>
+
+          <div class="col d-flex flex-column gap-2">
+            <h4 class="fw-semibold mb-0">&check; Category Set</h4>
+            <p class="text-muted">It aids in categorizing information for more meaningful use.</p>
+          </div>
+
+          <div class="col d-flex flex-column gap-2">
+            <h4 class="fw-semibold mb-0">&check; Static Page</h4>
+            <p class="text-muted">Use to manage your content and publish to present on your website </p>
+          </div>
+
+          <div class="col d-flex flex-column gap-2">
+            <h4 class="fw-semibold mb-0">&check; Dynamic Page</h4>
+            <p class="text-muted">Write code from the interface to prepare content for Page Manager.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<?php App::Hook('UI')->Render('home_content_area_A'); #User Interface Hook ?>
+
+<section class="background-grey">
+<div class="container px-4 py-4">
+    <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <h3 class="fw-bold">COMPONENT</h3>
+        <p class="text-muted">Always try to make your work reusable. Each component works independently and is reusable, so create a component when the requirement is new. 
+		Use all resources through App Factory, staying within the component folder; if needed, access other components resources or send back references using Hooks.</p>
+     </div>
+      <div class="col">
+        <h3 class="fw-bold">Base Pattern</h3>
+        <p class="text-muted"><code>App</code> Factory helps manage all resources in the system. It is recommended to use that to ensure compliance.</p>
+        <p class="text-muted"><code>App::Module('Hook')</code>  is primarily used in components to register all resources and utilize them in a standalone manner.</p>
+     
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php App::Hook('UI')->Render('home_content_area_B'); #User Interface Hook ?>
+<?php App::Hook('UI')->Render('home_content_area_C'); #User Interface Hook ?>
+<?php App::Hook('UI')->Render('home_content_area_D'); #User Interface Hook ?>
+

@@ -39,7 +39,7 @@ $__AdminNavDefs = $this->get_admin_nav();
         <li class="first"><?php echo App::Module('AdminpanelUI')->currentDate(); ?></li>
         <li ><?php echo App::Module('AdminpanelUI')->adminName(); ?></li>      
         <li><a href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("Profile"); ?></a></li>
-		<li><a onclick="window.open(siteInfo.baseUrl + '/admin/filemanager','Window1','menubar=no,toolbar=no,scrollbars=yes');" href="<?php echo $this->baseurl("/admin/account");?>"><?php echo $this->__("File Manager"); ?></a></li>
+		<li><a onclick="window.open(siteInfo.baseUrl + '/admin/filemanager','Window1','menubar=no,toolbar=no,scrollbars=yes');" href="javascript:void(0)"><?php echo $this->__("File Manager"); ?></a></li>
         <li><a href="<?php echo $this->baseUrl('/admin/logout');?>"><?php echo $this->__("Logout"); ?></a></li>
         <li class="highlight last"><a href="<?php echo $this->baseUrl();?>" target="_blank"><?php echo $this->__("View Site"); ?></a></li>
 		

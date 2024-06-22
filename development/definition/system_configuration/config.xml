@@ -33,7 +33,7 @@
         <!--
             CHANGE DEFINATION OF THIS FILE WITH YOUR OWEN RISK
         -->
-        <appRainversion>4.0.5</appRainversion>
+        <appRainversion>4.0.6</appRainversion>
         <appRainLicenseKey>123456789012</appRainLicenseKey>
     </base>
     <options>
@@ -47,9 +47,9 @@
          -->
         <option type="Integer" name="DEBUG_MODE">
             <title>Debug Mode</title>
-            <value><![CDATA[1]]></value>
+            <value><![CDATA[0]]></value>
             <default><![CDATA[0]]></default>
-            <flag>0</flag>
+            <flag>1</flag>
             <choice>0|1|2</choice>
             <editable>1</editable>
         </option>
@@ -66,7 +66,7 @@
             <title>Error Report Mode</title>
             <value><![CDATA[None]]></value>
             <default><![CDATA[None]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Save|Email|None</choice>
             <editable>1</editable>
         </option>
@@ -75,7 +75,7 @@
             <title>Show Hook Positions</title>
             <value><![CDATA[No]]></value>
             <default><![CDATA[No]]></default>
-            <flag>1</flag>
+            <flag>0</flag>
             <choice>Yes|No</choice>
             <editable>1</editable>
         </option>

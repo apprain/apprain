@@ -95,7 +95,7 @@
 		<?php App::Helper('Toolbar')->setBtnSave()->setBtnBack()->Render(array('code'=>'snip_bottom'));?>
 	</div>
 <?php else: ?>
-	<?php App::Helper('Toolbar')->setTitle("Manage Static Pages")->setBtnBack()->Render(array('code'=>'toolbar_top'));?>
+	<?php App::Helper('Toolbar')->setTitle("Manage Dynamic Pages")->setBtnBack()->Render(array('code'=>'toolbar_top'));?>
 	<?php
 		if(!empty($List['data'])){
 			$Grid = App::Module('DataGrid');

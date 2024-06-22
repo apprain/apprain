@@ -70,24 +70,6 @@ class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Collec
 <li class="nav-item">
   <a class="nav-link" aria-current="page" href="<?php echo App::Config()->baseUrl(); ?>">Home</a>
 </li>
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Hand Book</a>
-  <ul class="dropdown-menu">
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/quick-start");?>">Quick Start</a></li>
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/page-manager");?>">Page Manager</a></li>
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/concept-of-development");?>">Concept of Development</a></li>
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/informationset-categoryset");?>">InformationSet and CategorySet</a></li>
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/theme-development");?>">Theme Development</a></li>
-	<li><a class="dropdown-item" href="<?php echo App::Config()->baseUrl("/terms-of-use");?>">Terms of Use</a></li>
-  </ul>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="<?php echo App::Config()->baseUrl("/about-us");?>">About Apprain</a>
- 
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="<?php echo App::Config()->baseUrl("/general-help-center");?>">Support</a>
-</li>
 <?php App::View("Whitecloud")->Helper("Data")->PrintCallBackMenus(); ## Printing a menu from the Call Back functions ?>
 <?php App::Hook("UI")->Render("template_header_B"); #User Interface Hook ?>
 </ul>';
@@ -111,7 +93,7 @@ class Development_View_Whitecloud_Definition_Helpers_Data extends appRain_Collec
 		</svg>
 		<div class="container">
 		  <div class="carousel-caption text-start">
-			<h1 class="display-5 fw-bold">Apprain 4.0.5</h1>
+			<h1 class="display-5 fw-bold">Apprain</h1>
 			
 			 <p>
 				Are you ready to write some XML tags? It\'s pretty simple, right? XML-based coding will enable significant advancements in appRain. 
@@ -281,28 +263,26 @@ If multiple applications run in a single organization, then try to avoid going t
 		
 		$default_content = 
 '<div class="col-6 col-md-2 mb-3">
-	<h5>Themes</h5>
-	<ul class="nav flex-column">
-		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/theme-development"); ?>" class="nav-link p-0 text-muted">Website Theme</a></li>
-		<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/page-manager"); ?>" class="nav-link p-0 text-muted">Page Manager</a></li>
-	</ul>
-  </div>
-  
-  <div class="col-6 col-md-2 mb-3">
-	<h5>Developers</h5>
-	<ul class="nav flex-column">
-	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/quick-start"); ?>" class="nav-link p-0 text-muted">Quick Start</a></li>
-	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/concept-of-development"); ?>" class="nav-link p-0 text-muted">Ideas and Concepts</a></li>
-	</ul>	
-  </div>
+        <h5>Page</h5>
+        <ul class="nav flex-column">
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/theme-development"); ?>" class="nav-link p-0 text-muted">Home</a></li>
+        </ul>
+      </div>
+	  
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Access</h5>
+        <ul class="nav flex-column">
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/admin"); ?>" class="nav-link p-0 text-muted">Admin Login</a></li>
+		</ul>
+	  </div>
 
-  <div class="col-6 col-md-2 mb-3">
-	<h5>Help</h5>
-	<ul class="nav flex-column">
-	  <li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/admin"); ?>" class="nav-link p-0 text-muted">Admin Login</a></li>
-	  <li class="nav-item mb-2"><a href="https://www.apprain.org/general-help-center" class="nav-link p-0 text-muted" target="_blamk">Documentations</a></li>
-	</ul>
-</div>';
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Help</h5>
+        <ul class="nav flex-column">
+          
+          <li class="nav-item mb-2"><a href="https://www.apprain.org/general-help-center" class="nav-link p-0 text-muted" target="_blamk">Documentations</a></li>
+        </ul>
+ </div>';
 			  
 		return $this->getDynamicPageData('footer-menu',$default_content);
 		

@@ -1,0 +1,80 @@
+<?php
+/**
+ * appRain CMF
+ *
+ * LICENSE
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/mit-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@apprain.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2010 appRain, Team. (http://www.apprain.org)
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT license
+ *
+ * HELP
+ *
+ * Official Website
+ * http://www.apprain.org/
+ *
+ * Download Link
+ * http://www.apprain.org/download
+ *
+ * Documents Link
+ * http ://www.apprain.org/general-help-center
+ */
+?>
+
+<div class="container">
+  <?php App::Hook('UI')->Render('template_footer_A'); #User Interface Hook ?>
+  <footer class="py-5">
+    <div class="row">
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Page</h5>
+        <ul class="nav flex-column">
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/theme-development"); ?>" class="nav-link p-0 text-muted">Home</a></li>
+        </ul>
+      </div>
+	  
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Access</h5>
+        <ul class="nav flex-column">
+			<li class="nav-item mb-2"><a href="<?php echo App::Config()->baseUrl("/admin"); ?>" class="nav-link p-0 text-muted">Admin Login</a></li>
+		</ul>
+	  </div>
+
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Help</h5>
+        <ul class="nav flex-column">
+          
+          <li class="nav-item mb-2"><a href="https://www.apprain.org/general-help-center" class="nav-link p-0 text-muted" target="_blamk">Documentations</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-5 offset-md-1 mb-3">
+			<h5>
+				<?php 
+					## Check in Language file Admin Panel > Preferances > Language > default.xml
+					echo $this->__("APPRAIN");
+				?>
+				<?php
+					## Check in System Configuration file in source code. This is an hidden field
+					## definition/system_configuration/config.xml 
+					echo App::__Def()->sysConfig('APPRAINVERSION'); 
+				?>
+			</h5>
+			<p>
+				The new release focused on security and data interfacing through API.
+			</p>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+		<p>&copy; <?php echo App::Helper('Config')->setting('copy_right_text');?></p>
+    </div>
+	<?php App::Hook('UI')->Render('template_footer_B'); #User Interface Hook ?>
+  </footer>
+</div>

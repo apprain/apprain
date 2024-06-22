@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<theme>
+    <name>Rainy Day</name>
+    <author>Apprain Team</author>
+    <author_uri>https://www.apprain.org</author_uri>
+    <description><a target="_blank" href="http://getbootstrap.com/">Bootstrap</a> is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web</description>
+    <image>logo.jpg</image>
+    
+	<pagemanager_hooks>
+        <hook_group name="header" title="Header">
+            <hook name="template_header_A">Header A</hook>
+            <hook name="template_header_B">Header B</hook>
+        </hook_group>
+		<hook_group name="homepage" title="Home Page">
+            <hook name="home_page_banner_top">Home Page Slide Top</hook>
+            <hook name="home_page_banner_bottom">Home Page Slide Bottom</hook>
+            <hook name="home_content_area_A">Home Content Area A</hook>
+            <hook name="home_content_area_B">Home Content Area B</hook>
+            <hook name="home_content_area_C">Home Content Area C</hook>
+            <hook name="home_content_area_D">Home Content Area D</hook>
+        </hook_group>
+        <hook_group name="leftcol" title="Left Column">
+            <hook name="template_left_column_A">Left Column Section A</hook>
+            <hook name="template_left_column_B">Left Column Section B</hook>
+            <hook name="template_left_column_C">Left Column Section C</hook>
+            <hook name="template_left_column_D">Left Column Section D</hook>
+        </hook_group> 
+        <hook_group name="rightcol" title="Right Column">
+            <hook name="template_right_column_A">Right Column Section A</hook>
+            <hook name="template_right_column_B">Right Column Section B</hook>
+            <hook name="template_right_column_C">Right Column Section C</hook>
+            <hook name="template_right_column_D">Right Column Section D</hook>
+        </hook_group>
+		<hook_group name="quicklinks" title="Quick Links">
+            <hook name="quick_links_top">Quick Links Top</hook>
+            <hook name="quick_links_bottom">Quick Links Bottom</hook>
+        </hook_group>		
+        <hook_group name="footer" title="Footer">
+            <hook name="template_footer_A">Footer Point A</hook>
+            <hook name="template_footer_B">Footer Point B</hook>
+        </hook_group>       
+    </pagemanager_hooks>
+    <settings>themesettings.xml</settings>
+	<components />
+	<callback>Development_View_Rainyday_Definition_Register</callback>
+</theme>
