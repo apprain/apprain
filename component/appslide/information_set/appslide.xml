@@ -39,7 +39,7 @@
     <base mode="db">
         <version>0.2.0</version>
         <lastupdate>2009-12-01</lastupdate>
-        <title>Home Slide</title>
+        <title>Slides</title>
         <admin_tab>component</admin_tab>
 		<addons />
         <parameters />

@@ -142,11 +142,11 @@ class Component_Homepress_Register extends appRain_Base_Component
                         "link"=>"/admin/config/homepresssettings"
                     ),
                     array(
-                        "title"=>"Add Slide",
+                        "title"=>"Add New Post",
                         "link"=>"/information/manage/homepress/add"
                     ),
                     array(
-                        "title"=>"Manage Slides",
+                        "title"=>"Manage Posts",
                         "link"=>"/information/manage/homepress"
                     )
                 )

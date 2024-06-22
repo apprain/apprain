@@ -1,20 +1,26 @@
-<div class="press-update"> 
-	<?php if(!empty($home_synopsis['data'])):?> 
-		<hr />
-		<?php foreach( $home_synopsis['data'] as $key => $val):?>			   			
-			<div  style="margin-bottom:20px" class="<?php 
+<?php if(!empty($home_synopsis['data'])):?> 
+<section>
+<div class="container">
+
+			<?php 
 			$pgpr = App::Config()->Setting('homepresssettings_box_per_row',"3");			
-			if( $pgpr == "4"){echo 'col-md-3';}
-			else if($pgpr == "3"){echo 'col-md-4';}
-			else if($pgpr == "2"){echo 'col-md-6';}
-			else {echo 'col-md-12';}				
-			?>">
+							
+			?>
+			
+        <div class="row row-cols-1 row-cols-sm-<?php echo $pgpr;?>">
+		
+         
+        
+
+		<?php foreach( $home_synopsis['data'] as $key => $val):?>			   			
+			<div  class="col d-flex flex-column gap-2">
 				<div <?php if(App::Config()->setting('homepresssettings_displaybox') == 'Yes'):?>class="well"<?php endif;?>>	
 					<?php if( App::Config()->setting('homepresssettings_displaymode','TextWithImage') != 'TextBased'):?>
-					<a href="<?php echo App::PageManager()->LinkById($val['linkedto']); ?>">
-						<img class="thumbnail" src="<?php echo App::Config()->filemanagerUrl("/{$val['image']}");?>" />
-					</a>
+						<a href="<?php echo App::PageManager()->LinkById($val['linkedto']); ?>">
+							<img class="thumbnail" src="<?php echo App::Config()->filemanagerUrl("/{$val['image']}");?>" />
+						</a>
 					<?php endif;?>		
+					
 					<?php if( App::Config()->setting('homepresssettings_displaymode','TextWithImage') != 'ImageBased'):?>				
 						<h2 class="head-title"><?php echo($val['title']); ?></h2>
 						<p><?php echo(nl2br($val['shortdesc']));?></p>				
@@ -23,6 +29,8 @@
 				</div>
 			</div>
 		<?php endforeach;?>	
-	<?php endif; ?>			
+</div>		
 </div>
+</section>
+<?php endif; ?>
      

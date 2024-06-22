@@ -43,13 +43,6 @@
         <admin_tab>component</admin_tab>
 		<addons />
         <parameters />
-        <!--generic-field> Deprecated from version 4.0.1 
-            <enabled>No</enabled>
-            <title>Sort Order</title>
-            <type>genericTag</type>
-            <validation />
-            <tag-attributes />
-        </generic-field -->
         <max_entry>
             <limit></limit>
             <message><![CDATA[]]></message>
