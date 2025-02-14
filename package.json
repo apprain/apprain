@@ -1,0 +1,16 @@
+{
+  "name": "apprain",
+  "version": "4.0.5",
+  "description": "A PHP Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mohammad Reazaul Karim",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apprain/apprain.git"
+  }
+}
