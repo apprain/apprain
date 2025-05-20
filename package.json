@@ -2,7 +2,10 @@
   "name": "apprain",
   "version": "4.0.5",
   "description": "A PHP Framework",
-  "main": "index.js",
+  "main": "index.php",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
